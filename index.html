@@ -1,571 +1,556 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>RS TECH</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
-<style>
-:root {
-    --neon-pink: #ff00cc;
-    --neon-cyan: #00ffe7;
-    --neon-yellow: #fff800;
-    --neon-green: #39ff14;
-    --neon-red: #ff1e00;
-    --card-bg: #241e35;
-    --input-bg: #18192a;
-    --input-border: #00ffe7;
-    --gradient-btn: linear-gradient(90deg, var(--neon-cyan) 5%, var(--neon-pink) 100%);
-    --gradient-btn-hover: linear-gradient(90deg, var(--neon-pink) 5%, var(--neon-cyan) 100%);
-    --font-title: 'Orbitron', Arial, sans-serif;
-    --font-body: 'Share Tech Mono', monospace;
-    --text-light: #e0e0ff;
-    --text-dark: #18192a;
-}
-body {
-    background: radial-gradient(ellipse at top left, #2c1c45 30%, #18192a 80%);
-    font-family: var(--font-body);
-    color: var(--text-light);
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-header {
-    width: 100%;
-    background: linear-gradient(90deg, var(--neon-cyan) 10%, var(--neon-pink) 90%);
-    color: var(--text-dark);
-    text-align: center;
-    font-family: var(--font-title);
-    font-size: 2.1rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px var(--neon-pink), 0 0 25px var(--neon-cyan);
-    padding: 1.3rem 1rem;
-    border-radius: 0 0 24px 24px;
-    box-shadow: 0 4px 32px #ff00cc30;
-    z-index: 20;
-    flex-shrink: 0;
-}
-
-/* === ESTILO UNIFORME PARA BOTÕES DE AÇÃO === */
-.btn-cyber-uniforme {
-    background: var(--gradient-btn);
-    color: var(--text-dark);
-    font-family: var(--font-title);
-    font-size: 1.05rem;
-    font-weight: bold;
-    letter-spacing: 1.2px;
-    border: none;
-    border-radius: 10px;
-    padding: 0.75rem 1.5rem;
-    box-shadow: 0 0 15px var(--neon-cyan);
-    cursor: pointer;
-    transition: filter 0.18s, background 0.2s, color 0.2s, box-shadow 0.2s;
-    text-align: center;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    line-height: 1.2;
-}
-.btn-cyber-uniforme:hover, .btn-cyber-uniforme:focus {
-    filter: brightness(1.15);
-    background: var(--gradient-btn-hover);
-    color: var(--text-light);
-    box-shadow: 0 0 25px var(--neon-pink), 0 0 10px var(--neon-cyan);
-    outline: none;
-}
-.btn-cyber-uniforme i {
-    font-size: 0.95em;
-}
-
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin: 2rem auto 1rem auto;
-    flex-shrink: 0;
-}
-input[type="file"] {display: none;}
-
-.dashboard-grid {
-    max-width: 1400px;
-    margin: 0 auto 4rem auto;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1.8rem;
-    padding: 0 1.5rem;
-    grid-template-areas:
-        "agenda agenda agenda agenda agenda agenda"
-        "atalhos atalhos tarefas tarefas anydesk anydesk"
-        "links links biblioteca biblioteca anotacoes anotacoes"
-        "portal portal portal financas financas financas";
-    flex-grow: 1;
-}
-.agenda-card      { grid-area: agenda; }
-.atalhos-card     { grid-area: atalhos; }
-.tarefas-card     { grid-area: tarefas; }
-.cadastro-card    { grid-area: anydesk; }
-.links-card       { grid-area: links; }
-.biblioteca-card  { grid-area: biblioteca; }
-.anotacoes-card   { grid-area: anotacoes; }
-.portal-card      { grid-area: portal; }
-.financeiro-card  { grid-area: financas; }
-
-.card-cyber {
-    background: var(--card-bg);
-    border-radius: 20px;
-    box-shadow: 0 0 0 3px var(--neon-pink), 0 0 30px 6px #00ffe766;
-    padding: 1.8rem 1.5rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 450px;
-}
-.card-cyber-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-}
-.card-cyber h2 {
-    font-family: var(--font-title);
-    font-size: 1.4rem;
-    color: var(--neon-cyan);
-    letter-spacing: 1.7px;
-    text-shadow: 0 0 8px var(--neon-pink);
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    flex-shrink: 0;
-}
-.card-cyber h2 > i {
-    min-width: 25px;
-    text-align: center;
-    font-size: 1.1em;
-}
-
-.card-cyber > .btn-cyber-uniforme,
-.card-cyber form > .btn-cyber-uniforme {
-    width: calc(100% - 0rem);
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    flex-shrink: 0;
-}
-
-.card-cyber form {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-.card-cyber input, .card-cyber textarea, .card-cyber select {
-    background: var(--input-bg);
-    border: 2px solid var(--input-border);
-    border-radius: 8px;
-    color: var(--text-light);
-    font-size: 1rem;
-    font-family: var(--font-body);
-    margin-bottom: 0.8rem;
-    padding: 0.75rem 1rem;
-    width: 100%;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.18s, box-shadow 0.18s;
-    text-align: center;
-}
-.card-cyber input::placeholder, .card-cyber textarea::placeholder {
-    text-align: center;
-    color: #c6c7f7a0;
-    opacity: 1;
-}
-.card-cyber input:focus, .card-cyber textarea:focus, .card-cyber select:focus {
-    border-color: var(--neon-pink);
-    box-shadow: 0 0 10px var(--neon-pink);
-}
-.card-cyber select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2300ffe7' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1em;
-    padding-right: 2.5rem;
-}
-.card-cyber select option {
-    background-color: var(--input-bg);
-    color: var(--text-light);
-}
-
-/* Atalhos */
-.atalhos-card .card-cyber-content > div { margin-bottom: 1.2rem; }
-.atalhos-card .card-cyber-content > div > div {
-    font-family: var(--font-title);
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    letter-spacing: 1px;
-    color: var(--neon-yellow);
-}
-.atalhos-card .btn-cyber-uniforme {
-    width: 100%;
-    margin-bottom: 0.5rem;
-}
-
-/* Tabelas */
-.alunos-table, .financeiro-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-body);
-    margin-top: 1.2rem;
-    font-size: 0.95rem;
-    table-layout: fixed;
-}
-.alunos-table th, .alunos-table td,
-.financeiro-table th, .financeiro-table td {
-    border-bottom: 1px solid #00ffe733;
-    padding: 0.7rem 0.5rem;
-    text-align: left;
-    word-break: break-word;
-}
-.alunos-table th, .financeiro-table th {
-    color: var(--neon-yellow);
-    font-family: var(--font-title);
-    background: #1a1625cc;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-}
-.alunos-table tr:last-child td,
-.financeiro-table tr:last-child td { border-bottom: none;}
-
-.status-pago { color: var(--neon-green); font-weight: bold; }
-.status-pendente { color: var(--neon-yellow); }
-.status-atrasado { color: var(--neon-red); font-weight: bold; }
-
-/* Listas (Links, Biblioteca, Tarefas, Anotações) */
-.card-cyber ul {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: 1rem;
-}
-.card-cyber ul li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: .6rem;
-    margin-bottom: 0.6rem;
-    padding: 0.4rem 0.3rem;
-    border-bottom: 1px dashed #ffffff22;
-    color: var(--text-light);
-    font-size: 0.98rem;
-}
-.card-cyber ul li:last-child { border-bottom: none; }
-.card-cyber ul li a {
-    color: var(--neon-cyan);
-    text-decoration: none;
-    word-break: break-all;
-}
-.card-cyber ul li a:hover { text-decoration: underline; color: var(--neon-pink); }
-.tarefas-lista li input[type="checkbox"] { margin-right: 0.6rem; accent-color: var(--neon-pink); transform: scale(1.2); }
-.tarefas-lista li.concluida label { text-decoration: line-through; color: #ffffff80; }
-
-.btn-del {
-    background: transparent;
-    border: none;
-    color: var(--neon-pink);
-    font-size: 1.25rem;
-    cursor: pointer;
-    transition: color .15s, transform 0.15s;
-    padding: 0.2rem 0.4rem;
-}
-.btn-del:hover { color: var(--neon-yellow); transform: scale(1.1); }
-
-/* Agenda */
-.agenda-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1.2rem;
-    overflow-x: auto;
-    padding: 0.2rem 0.1rem;
-    flex-shrink: 0;
-}
-.agenda-tab {
-    min-width: 80px;
-    flex-shrink: 0;
-    font-size: 0.9rem !important;
-    padding: 0.5rem 0.8rem !important;
-}
-.agenda-tab span:last-child { font-size: 0.85em; opacity: 0.8; }
-.agenda-tab.selected {
-    background: var(--gradient-btn-hover) !important;
-    color: var(--text-light) !important;
-    box-shadow: 0 0 20px var(--neon-pink), 0 0 8px var(--neon-cyan) !important;
-}
-.agenda-dia {
-    background: #1b1020cc;
-    border-radius: 12px;
-    min-height: 100px;
-    color: var(--text-light);
-    font-size: 1.03rem;
-    margin-bottom: 1rem;
-    box-shadow: inset 0 0 15px #00000055, 0 2px 20px #00ffe710;
-    padding: 1.2rem 1rem;
-    line-height: 1.6;
-}
-.agenda-dia ul { margin: 0; padding-left: 0; list-style-type: none; }
-.agenda-dia li { margin-bottom: 0.6rem; padding-left: 0.8rem; border-left: 3px solid var(--neon-pink); }
-.agenda-dia li a { color: var(--neon-pink); text-decoration: none; margin-left: 0.5rem; font-weight: bold; }
-.agenda-dia li a:hover { color: var(--neon-yellow); }
-
-/* Portal Card */
-.portal-card {
-    align-items: center;
-    cursor: pointer;
-    text-align: center;
-    justify-content: center;
-}
-.portal-card .card-cyber-content {
-    justify-content: center;
-    align-items: center;
-}
-.portal-img {
-    width: 90%;
-    max-width: 420px;
-    height: auto;
-    max-height: 280px;
-    object-fit: contain;
-    border-radius: 16px;
-    margin: 0 auto;
-    box-shadow: 0 0 24px 2px var(--neon-cyan), 0 0 36px 4px #ff00cc55;
-    display: block;
-}
-.portal-card:hover { border-color: var(--neon-cyan); box-shadow: 0 0 38px 7px var(--neon-cyan), 0 0 100px 30px var(--neon-pink); }
-
-/* Modal */
-#modalAnotacao { display:none; position:fixed; top:0;left:0;width:100vw;height:100vh;background:#18192ACC;backdrop-filter: blur(5px);z-index:200;align-items:center;justify-content:center; padding: 1rem; }
-#modalAnotacao > div { background:var(--card-bg);color:var(--text-light);padding:2.2rem;border-radius:22px;box-shadow:0 0 40px var(--neon-cyan),0 0 60px #ff00cc55;max-width:600px; width:100%; max-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:space-between; border: 2px solid var(--neon-pink); }
-#modalTitulo { font-family:var(--font-title);color:var(--neon-cyan);font-size:1.6rem;margin-bottom:1.5rem;text-align:center; }
-#modalTexto { white-space:pre-wrap;line-height:1.7;font-size:1.15rem;color:var(--text-light);overflow-y:auto;width:100%;text-align:left;padding:0 0.5rem; margin-bottom:1.5rem; max-height: 60vh; }
-
-/* Responsividade */
-@media (max-width: 1200px) {
-    .dashboard-grid {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:
-            "agenda agenda agenda agenda"
-            "atalhos tarefas anydesk links"
-            "biblioteca anotacoes portal financas";
-        gap: 1.5rem;
-    }
-     .portal-img { max-height: 240px; max-width: 380px; }
-}
-@media (max-width: 992px) {
-    .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-areas:
-            "agenda agenda"
-            "atalhos tarefas"
-            "anydesk links"
-            "biblioteca anotacoes"
-            "portal portal"
-            "financas financas";
-        padding: 0 1rem;
-    }
-    .card-cyber { min-height: 420px; }
-    .portal-img { max-height: 200px; max-width: 350px; }
-}
-@media (max-width: 768px) {
-    header { font-size: 1.8rem; padding: 1rem 0.5rem; }
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "agenda"
-            "atalhos"
-            "tarefas"
-            "anydesk"
-            "links"
-            "biblioteca"
-            "anotacoes"
-            "portal"
-            "financas";
-        gap: 1.2rem;
-    }
-    .card-cyber { padding: 1.5rem 1rem; min-height: auto; }
-    .btn-cyber-uniforme { font-size: 1rem; padding: 0.7rem 1.2rem; }
-    .card-cyber h2 { font-size: 1.3rem; }
-    .atalhos-card .btn-cyber-uniforme { margin-bottom: 0.6rem; }
-    .portal-img { max-height: 200px; width: 80%; }
-}
-@media (max-width: 480px) {
-    header { font-size: 1.5rem; }
-    .btn-cyber-uniforme { font-size: 0.95rem; padding: 0.6rem 1rem; }
-    .card-cyber h2 { font-size: 1.2rem; }
-    .card-cyber input, .card-cyber textarea, .card-cyber select { font-size: 0.95rem; padding: 0.65rem 0.8rem; }
-    .agenda-tab { min-width: 70px; font-size: 0.85rem !important; padding: 0.4rem 0.6rem !important; }
-    .portal-img { max-height: 180px; width: 75%;}
-}
-
-</style>
+    <meta charset="UTF-8">
+    <title>RS TECH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <style>
+        :root {
+            --neon-pink: #ff00cc;
+            --neon-cyan: #00ffe7;
+            --neon-yellow: #fff800;
+            --neon-green: #39ff14;
+            --neon-red: #ff1e00;
+            --card-bg: #241e35;
+            --input-bg: #18192a;
+            --input-border: #00ffe7;
+            --gradient-btn: linear-gradient(90deg, var(--neon-cyan) 5%, var(--neon-pink) 100%);
+            --gradient-btn-hover: linear-gradient(90deg, var(--neon-pink) 5%, var(--neon-cyan) 100%);
+            --font-title: 'Orbitron', Arial, sans-serif;
+            --font-body: 'Share Tech Mono', monospace;
+            --text-light: #e0e0ff;
+            --text-dark: #18192a;
+        }
+        body {
+            background: radial-gradient(ellipse at top left, #2c1c45 30%, #18192a 80%);
+            font-family: var(--font-body);
+            color: var(--text-light);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            width: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan) 10%, var(--neon-pink) 90%);
+            color: var(--text-dark);
+            text-align: center;
+            font-family: var(--font-title);
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 25px var(--neon-cyan);
+            padding: 1.3rem 1rem;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 32px #ff00cc30;
+            z-index: 20;
+            flex-shrink: 0;
+        }
+        /* === ESTILO UNIFORME PARA BOTÕES DE AÇÃO === */
+        .btn-cyber-uniforme {
+            background: var(--gradient-btn);
+            color: var(--text-dark);
+            font-family: var(--font-title);
+            font-size: 1.05rem;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 0 15px var(--neon-cyan);
+            cursor: pointer;
+            transition: filter 0.18s, background 0.2s, color 0.2s, box-shadow 0.2s;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            line-height: 1.2;
+        }
+        .btn-cyber-uniforme:hover, .btn-cyber-uniforme:focus {
+            filter: brightness(1.15);
+            background: var(--gradient-btn-hover);
+            color: var(--text-light);
+            box-shadow: 0 0 25px var(--neon-pink), 0 0 10px var(--neon-cyan);
+            outline: none;
+        }
+        .btn-cyber-uniforme i {
+            font-size: 0.95em;
+        }
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem auto 1rem auto;
+            flex-shrink: 0;
+        }
+        input[type="file"] {display: none;}
+        .dashboard-grid {
+            max-width: 1400px;
+            margin: 0 auto 4rem auto;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1.8rem;
+            padding: 0 1.5rem;
+            grid-template-areas:
+                "agenda agenda agenda agenda agenda agenda"
+                "atalhos atalhos tarefas tarefas anydesk anydesk"
+                "links links biblioteca biblioteca anotacoes anotacoes"
+                "portal portal portal financas financas financas";
+            flex-grow: 1;
+        }
+        .agenda-card      { grid-area: agenda; }
+        .atalhos-card     { grid-area: atalhos; }
+        .tarefas-card     { grid-area: tarefas; }
+        .cadastro-card    { grid-area: anydesk; }
+        .links-card       { grid-area: links; }
+        .biblioteca-card  { grid-area: biblioteca; }
+        .anotacoes-card   { grid-area: anotacoes; }
+        .portal-card      { grid-area: portal; }
+        .financeiro-card  { grid-area: financas; }
+        .card-cyber {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 0 0 3px var(--neon-pink), 0 0 30px 6px #00ffe766;
+            padding: 1.8rem 1.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
+        }
+        .card-cyber-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        .card-cyber h2 {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            letter-spacing: 1.7px;
+            text-shadow: 0 0 8px var(--neon-pink);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+            width: 100%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .card-cyber h2 > i {
+            min-width: 25px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .card-cyber > .btn-cyber-uniforme,
+        .card-cyber form > .btn-cyber-uniforme {
+            width: calc(100% - 0rem);
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+        .card-cyber form {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-cyber input, .card-cyber textarea, .card-cyber select {
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: var(--font-body);
+            margin-bottom: 0.8rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.18s, box-shadow 0.18s;
+            text-align: center;
+        }
+        .card-cyber input::placeholder, .card-cyber textarea::placeholder {
+            text-align: center;
+            color: #c6c7f7a0;
+            opacity: 1;
+        }
+        .card-cyber input:focus, .card-cyber textarea:focus, .card-cyber select:focus {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        .card-cyber select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2300ffe7' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+        .card-cyber select option {
+            background-color: var(--input-bg);
+            color: var(--text-light);
+        }
+        /* Atalhos */
+        .atalhos-card .card-cyber-content > div { margin-bottom: 1.2rem; }
+        .atalhos-card .card-cyber-content > div > div {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+            color: var(--neon-yellow);
+        }
+        .atalhos-card .btn-cyber-uniforme {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        /* Tabelas */
+        .alunos-table, .financeiro-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-body);
+            margin-top: 1.2rem;
+            font-size: 0.95rem;
+            table-layout: fixed;
+        }
+        .alunos-table th, .alunos-table td,
+        .financeiro-table th, .financeiro-table td {
+            border-bottom: 1px solid #00ffe733;
+            padding: 0.7rem 0.5rem;
+            text-align: left;
+            word-break: break-word;
+        }
+        .alunos-table th, .financeiro-table th {
+            color: var(--neon-yellow);
+            font-family: var(--font-title);
+            background: #1a1625cc;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .alunos-table tr:last-child td,
+        .financeiro-table tr:last-child td { border-bottom: none;}
+        .status-pago { color: var(--neon-green); font-weight: bold; }
+        .status-pendente { color: var(--neon-yellow); }
+        .status-atrasado { color: var(--neon-red); font-weight: bold; }
+        /* Listas (Links, Biblioteca, Tarefas, Anotações) */
+        .card-cyber ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+        .card-cyber ul li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .6rem;
+            margin-bottom: 0.6rem;
+            padding: 0.4rem 0.3rem;
+            border-bottom: 1px dashed #ffffff22;
+            color: var(--text-light);
+            font-size: 0.98rem;
+        }
+        .card-cyber ul li:last-child { border-bottom: none; }
+        .card-cyber ul li a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .card-cyber ul li a:hover { text-decoration: underline; color: var(--neon-pink); }
+        .tarefas-lista li input[type="checkbox"] { margin-right: 0.6rem; accent-color: var(--neon-pink); transform: scale(1.2); }
+        .tarefas-lista li.concluida label { text-decoration: line-through; color: #ffffff80; }
+        .btn-del {
+            background: transparent;
+            border: none;
+            color: var(--neon-pink);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color .15s, transform 0.15s;
+            padding: 0.2rem 0.4rem;
+        }
+        .btn-del:hover { color: var(--neon-yellow); transform: scale(1.1); }
+        /* Agenda */
+        .agenda-tabs {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+            overflow-x: auto;
+            padding: 0.2rem 0.1rem;
+            flex-shrink: 0;
+        }
+        .agenda-tab {
+            min-width: 80px;
+            flex-shrink: 0;
+            font-size: 0.9rem !important;
+            padding: 0.5rem 0.8rem !important;
+        }
+        .agenda-tab span:last-child { font-size: 0.85em; opacity: 0.8; }
+        .agenda-tab.selected {
+            background: var(--gradient-btn-hover) !important;
+            color: var(--text-light) !important;
+            box-shadow: 0 0 20px var(--neon-pink), 0 0 8px var(--neon-cyan) !important;
+        }
+        .agenda-dia {
+            background: #1b1020cc;
+            border-radius: 12px;
+            min-height: 100px;
+            color: var(--text-light);
+            font-size: 1.03rem;
+            margin-bottom: 1rem;
+            box-shadow: inset 0 0 15px #00000055, 0 2px 20px #00ffe710;
+            padding: 1.2rem 1rem;
+            line-height: 1.6;
+        }
+        .agenda-dia ul { margin: 0; padding-left: 0; list-style-type: none; }
+        .agenda-dia li { margin-bottom: 0.6rem; padding-left: 0.8rem; border-left: 3px solid var(--neon-pink); }
+        .agenda-dia li a { color: var(--neon-pink); text-decoration: none; margin-left: 0.5rem; font-weight: bold; }
+        .agenda-dia li a:hover { color: var(--neon-yellow); }
+        /* Portal Card */
+        .portal-card {
+            align-items: center;
+            cursor: pointer;
+            text-align: center;
+            justify-content: center;
+        }
+        .portal-card .card-cyber-content {
+            justify-content: center;
+            align-items: center;
+        }
+        .portal-img {
+            width: 90%;
+            max-width: 420px;
+            height: auto;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 16px;
+            margin: 0 auto;
+            box-shadow: 0 0 24px 2px var(--neon-cyan), 0 0 36px 4px #ff00cc55;
+            display: block;
+        }
+        .portal-card:hover { border-color: var(--neon-cyan); box-shadow: 0 0 38px 7px var(--neon-cyan), 0 0 100px 30px var(--neon-pink); }
+        /* Modal */
+        #modalAnotacao { display:none; position:fixed; top:0;left:0;width:100vw;height:100vh;background:#18192ACC;backdrop-filter: blur(5px);z-index:200;align-items:center;justify-content:center; padding: 1rem; }
+        #modalAnotacao > div { background:var(--card-bg);color:var(--text-light);padding:2.2rem;border-radius:22px;box-shadow:0 0 40px var(--neon-cyan),0 0 60px #ff00cc55;max-width:600px; width:100%; max-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:space-between; border: 2px solid var(--neon-pink); }
+        #modalTitulo { font-family:var(--font-title);color:var(--neon-cyan);font-size:1.6rem;margin-bottom:1.5rem;text-align:center; }
+        #modalTexto { white-space:pre-wrap;line-height:1.7;font-size:1.15rem;color:var(--text-light);overflow-y:auto;width:100%;text-align:left;padding:0 0.5rem; margin-bottom:1.5rem; max-height: 60vh; }
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-areas:
+                    "agenda agenda agenda agenda"
+                    "atalhos tarefas anydesk links"
+                    "biblioteca anotacoes portal financas";
+                gap: 1.5rem;
+            }
+            .portal-img { max-height: 240px; max-width: 380px; }
+        }
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-areas:
+                    "agenda agenda"
+                    "atalhos tarefas"
+                    "anydesk links"
+                    "biblioteca anotacoes"
+                    "portal portal"
+                    "financas financas";
+                padding: 0 1rem;
+            }
+            .card-cyber { min-height: 420px; }
+            .portal-img { max-height: 200px; max-width: 350px; }
+        }
+        @media (max-width: 768px) {
+            header { font-size: 1.8rem; padding: 1rem 0.5rem; }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "agenda"
+                    "atalhos"
+                    "tarefas"
+                    "anydesk"
+                    "links"
+                    "biblioteca"
+                    "anotacoes"
+                    "portal"
+                    "financas";
+                gap: 1.2rem;
+            }
+            .card-cyber { padding: 1.5rem 1rem; min-height: auto; }
+            .btn-cyber-uniforme { font-size: 1rem; padding: 0.7rem 1.2rem; }
+            .card-cyber h2 { font-size: 1.3rem; }
+            .atalhos-card .btn-cyber-uniforme { margin-bottom: 0.6rem; }
+            .portal-img { max-height: 200px; width: 80%; }
+        }
+        @media (max-width: 480px) {
+            header { font-size: 1.5rem; }
+            .btn-cyber-uniforme { font-size: 0.95rem; padding: 0.6rem 1rem; }
+            .card-cyber h2 { font-size: 1.2rem; }
+            .card-cyber input, .card-cyber textarea, .card-cyber select { font-size: 0.95rem; padding: 0.65rem 0.8rem; }
+            .agenda-tab { min-width: 70px; font-size: 0.85rem !important; padding: 0.4rem 0.6rem !important; }
+            .portal-img { max-height: 180px; width: 75%;}
+        }
+    </style>
 </head>
 <body>
-<header>
-    <i class="fas fa-user-astronaut"></i> RS TECH
-</header>
+    <header>
+        <i class="fas fa-user-astronaut"></i> RS TECH
+    </header>
 
-<div class="actions">
-    <button class="btn-cyber-uniforme btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
-    <label class="btn-cyber-uniforme btn-import" for="importar-arquivo"><i class="fas fa-upload"></i> Importar Dados
-        <input type="file" id="importar-arquivo" accept=".json" onchange="importarDados(event)">
-    </label>
-</div>
-
-<div class="dashboard-grid">
-    <div class="card-cyber agenda-card">
-        <h2><i class="fas fa-calendar-alt"></i> Agenda Semanal</h2>
-        <div class="card-cyber-content">
-            <div class="agenda-tabs" id="agendaTabs"></div>
-            <div class="agenda-dia" id="agendaDia"></div>
-            </div>
-        <form class="agenda-form" onsubmit="adicionarAula(event)">
-            <div style="margin-bottom: 1rem;"> <input type="text" id="dataAula" placeholder="dd/mm ou Descrição (Ex: Prova)" maxlength="30" autocomplete="off" required>
-                <input type="text" id="conteudoAula" placeholder="Conteúdo/Detalhes da aula" maxlength="70" required>
-            </div>
-            <button type="submit" class="btn-cyber-uniforme"><i class="fas fa-plus-circle"></i> Adicionar Aula</button>
-        </form>
+    <div class="actions">
+        <button class="btn-cyber-uniforme btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
+        <label class="btn-cyber-uniforme btn-import" for="importar-arquivo"><i class="fas fa-upload"></i> Importar Dados
+            <input type="file" id="importar-arquivo" accept=".json" onchange="importarDados(event)">
+        </label>
     </div>
 
-    <div class="card-cyber atalhos-card">
-        <h2><i class="fas fa-bolt"></i> Atalhos Rápidos</h2>
-        <div class="card-cyber-content">
-            <div>
-                <div><i class="fas fa-chalkboard-teacher"></i> Ambientes de Aula</div>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://classroom.google.com','_blank')"><i class="fab fa-google"></i> Classroom</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://meet.google.com','_blank')"><i class="fas fa-video"></i> Meet</button>
+    <div class="dashboard-grid">
+        <div class="card-cyber agenda-card">
+            <h2><i class="fas fa-calendar-alt"></i> Agenda Semanal</h2>
+            <div class="card-cyber-content">
+                <div class="agenda-tabs" id="agendaTabs"></div>
+                <div class="agenda-dia" id="agendaDia"></div>
             </div>
-            <div>
-                <div><i class="fas fa-folder-open"></i> Documentos & Arquivos</div>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://drive.google.com','_blank')"><i class="fab fa-google-drive"></i> Drive</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://docs.google.com','_blank')"><i class="fas fa-file-word"></i> Docs</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://sheets.google.com','_blank')"><i class="fas fa-file-excel"></i> Planilhas</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://slides.google.com','_blank')"><i class="fas fa-file-powerpoint"></i> Apresentações</button>
-            </div>
-            <div>
-                <div><i class="fas fa-cogs"></i> Ferramentas Úteis</div>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://fast.com','_blank')"><i class="fas fa-tachometer-alt"></i> FAST Test</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/ferramenta-busca-noticias/','_blank')"><i class="fas fa-newspaper"></i> News Search</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/ferramenta-dev-links/','_blank')"><i class="fas fa-code"></i> Dev Links</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://convertio.co/pt/archive-converter/','_blank')"><i class="fas fa-exchange-alt"></i> Conversor</button>
-                <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/agentes-de-IA/','_blank')"><i class="fas fa-robot"></i> Agentes IA</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="card-cyber tarefas-card">
-        <h2><i class="fas fa-tasks"></i> Tarefas Pendentes</h2>
-        <div class="card-cyber-content">
-            <form class="tarefas-form-inputs" style="margin-bottom: 1rem;"> <input type="text" id="novaTarefa" placeholder="Descreva a tarefa ou lembrete" required>
+            <form class="agenda-form" onsubmit="adicionarAula(event)">
+                <div style="margin-bottom: 1rem;">
+                    <input type="text" id="dataAula" placeholder="dd/mm ou Descrição (Ex: Prova)" maxlength="30" autocomplete="off" required>
+                    <input type="text" id="conteudoAula" placeholder="Conteúdo/Detalhes da aula" maxlength="70" required>
+                </div>
+                <button type="submit" class="btn-cyber-uniforme"><i class="fas fa-plus-circle"></i> Adicionar Aula</button>
             </form>
-            <ul class="tarefas-lista" id="listaTarefas" style="max-height: none; flex-grow:1;"></ul>
         </div>
-        <button class="btn-cyber-uniforme" onclick="document.getElementById('form-tarefas-submit-trigger').click(); return false;"><i class="fas fa-check-circle"></i> Adicionar Tarefa</button>
-        <form id="form-tarefas-submit-trigger" onsubmit="adicionarTarefa(event)" style="display:none;"><input type="submit"></form>
-    </div>
 
-
-    <div class="card-cyber cadastro-card">
-        <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
-        <div class="card-cyber-content">
-            <form id="formAnydesk" autocomplete="off" onsubmit="cadastrarAluno(event)" style="flex-grow: 0; margin-bottom: 1rem;">
-                <input type="text" id="nomeAlunoAnydesk" placeholder="Nome do Aluno" maxlength="50" required>
-                <input type="text" id="codigoAnydesk" placeholder="Código AnyDesk (9 dígitos)" maxlength="11" pattern="[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}|[0-9]{9}" title="Ex: 123 456 789 ou 123456789" required>
-            </form>
-            <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;">
-                <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ação</th></tr></thead>
-                <tbody></tbody>
-            </table>
+        <div class="card-cyber atalhos-card">
+            <h2><i class="fas fa-bolt"></i> Atalhos Rápidos</h2>
+            <div class="card-cyber-content">
+                <div>
+                    <div><i class="fas fa-chalkboard-teacher"></i> Ambientes de Aula</div>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://classroom.google.com','_blank')"><i class="fab fa-google"></i> Classroom</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://meet.google.com','_blank')"><i class="fas fa-video"></i> Meet</button>
+                </div>
+                <div>
+                    <div><i class="fas fa-folder-open"></i> Documentos & Arquivos</div>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://drive.google.com','_blank')"><i class="fab fa-google-drive"></i> Drive</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://docs.google.com','_blank')"><i class="fas fa-file-word"></i> Docs</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://sheets.google.com','_blank')"><i class="fas fa-file-excel"></i> Planilhas</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://slides.google.com','_blank')"><i class="fas fa-file-powerpoint"></i> Apresentações</button>
+                </div>
+                <div>
+                    <div><i class="fas fa-cogs"></i> Ferramentas Úteis</div>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://fast.com','_blank')"><i class="fas fa-tachometer-alt"></i> FAST Test</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/ferramenta-busca-noticias/','_blank')"><i class="fas fa-newspaper"></i> News Search</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/ferramenta-dev-links/','_blank')"><i class="fas fa-code"></i> Dev Links</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://convertio.co/pt/archive-converter/','_blank')"><i class="fas fa-exchange-alt"></i> Conversor</button>
+                    <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/agentes-de-IA/','_blank')"><i class="fas fa-robot"></i> Agentes IA</button>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn-cyber-uniforme" form="formAnydesk"><i class="fas fa-user-plus"></i> Cadastrar Aluno</button>
-    </div>
 
-    <div class="card-cyber links-card">
-        <h2><i class="fas fa-link"></i> Links Personalizados</h2>
-        <div class="card-cyber-content">
-            <input type="text" id="nomeLink" placeholder="Nome ou descrição do link" style="margin-top:0;">
-            <input type="url" id="urlLink" placeholder="https://exemplo.com">
-            <ul id="listaLinks" style="max-height: none; flex-grow:1;"></ul>
+        <div class="card-cyber tarefas-card">
+            <h2><i class="fas fa-tasks"></i> Tarefas Pendentes</h2>
+            <div class="card-cyber-content">
+                <form class="tarefas-form-inputs" style="margin-bottom: 1rem;">
+                    <input type="text" id="novaTarefa" placeholder="Descreva a tarefa ou lembrete" required>
+                </form>
+                <ul class="tarefas-lista" id="listaTarefas" style="max-height: none; flex-grow:1;"></ul>
+            </div>
+            <button class="btn-cyber-uniforme" onclick="document.getElementById('form-tarefas-submit-trigger').click(); return false;"><i class="fas fa-check-circle"></i> Adicionar Tarefa</button>
+            <form id="form-tarefas-submit-trigger" onsubmit="adicionarTarefa(event)" style="display:none;"><input type="submit"></form>
         </div>
-        <button class="btn-cyber-uniforme" onclick="adicionarLink()"><i class="fas fa-plus-square"></i> Adicionar Link</button>
-    </div>
 
-    <div class="card-cyber biblioteca-card">
-        <h2><i class="fas fa-book-open"></i> Biblioteca Digital</h2>
-        <div class="card-cyber-content">
-            <input type="text" id="nomeMaterial" placeholder="Título/descrição do material" style="margin-top:0;">
-            <input type="url" id="urlMaterial" placeholder="Link do material (PDF, site, etc.)">
-            <ul class="biblioteca-lista" id="listaMateriais" style="max-height: none; flex-grow:1;"></ul>
+        <div class="card-cyber cadastro-card">
+            <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
+            <div class="card-cyber-content">
+                <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+                    <input type="text" id="nomeAlunoAnydesk" placeholder="Nome do Aluno" maxlength="50" required>
+                    <input type="text" id="codigoAnydesk" placeholder="Código AnyDesk (9 dígitos)" maxlength="11" pattern="[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}|[0-9]{9}" title="Ex: 123 456 789 ou 123456789" required>
+                    <input type="hidden" id="alunoEditIdAnydesk"> </form>
+                <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;">
+                    <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn-cyber-uniforme" id="btnSubmitAnydesk" form="formAnydesk"><i class="fas fa-user-plus"></i> Cadastrar Aluno</button>
         </div>
-        <button class="btn-cyber-uniforme" onclick="adicionarMaterial()"><i class="fas fa-bookmark"></i> Adicionar Material</button>
-    </div>
 
-    <div class="card-cyber anotacoes-card">
-        <h2><i class="fas fa-pen-fancy"></i> Anotações Rápidas</h2>
-        <div class="card-cyber-content">
-            <form id="formAnotacao" autocomplete="off" onsubmit="adicionarAnotacao(event)" style="flex-grow: 0; margin-bottom: 1rem;">
-                <input type="text" id="tituloAnotacao" placeholder="Título da anotação" maxlength="45" required>
-                <textarea id="textoAnotacao" rows="3" placeholder="Digite sua anotação aqui..." required></textarea>
-            </form>
-            <ul id="listaAnotacoes" style="max-height: none; flex-grow:1;"></ul>
+        <div class="card-cyber links-card">
+            <h2><i class="fas fa-link"></i> Links Personalizados</h2>
+            <div class="card-cyber-content">
+                <input type="text" id="nomeLink" placeholder="Nome ou descrição do link" style="margin-top:0;">
+                <input type="url" id="urlLink" placeholder="https://exemplo.com">
+                <ul id="listaLinks" style="max-height: none; flex-grow:1;"></ul>
+            </div>
+            <button class="btn-cyber-uniforme" onclick="adicionarLink()"><i class="fas fa-plus-square"></i> Adicionar Link</button>
         </div>
-        <button type="submit" class="btn-cyber-uniforme" form="formAnotacao"><i class="fas fa-save"></i> Salvar Anotação</button>
-    </div>
 
-    <div class="card-cyber portal-card" onclick="window.open('https://ravellsl.github.io/rstech/','_blank')" tabindex="0" role="link" aria-label="Abrir Portal RS Tech">
-        <h2><i class="fas fa-rocket"></i> Portal RS Tech</h2>
-        <div class="card-cyber-content">
-            <img src="https://i.ibb.co/WNGLPKF3/home.png" alt="Home Portal" class="portal-img" />
+        <div class="card-cyber biblioteca-card">
+            <h2><i class="fas fa-book-open"></i> Biblioteca Digital</h2>
+            <div class="card-cyber-content">
+                <input type="text" id="nomeMaterial" placeholder="Título/descrição do material" style="margin-top:0;">
+                <input type="url" id="urlMaterial" placeholder="Link do material (PDF, site, etc.)">
+                <ul class="biblioteca-lista" id="listaMateriais" style="max-height: none; flex-grow:1;"></ul>
+            </div>
+            <button class="btn-cyber-uniforme" onclick="adicionarMaterial()"><i class="fas fa-bookmark"></i> Adicionar Material</button>
         </div>
-        <a class="portal-link" href="https://ravellsl.github.io/rstech/" target="_blank" tabindex="-1" aria-hidden="true" style="display:none;"></a>
-    </div>
 
-    <div class="card-cyber financeiro-card">
-        <h2><i class="fas fa-file-invoice-dollar"></i> Controle Financeiro</h2>
-        <div class="card-cyber-content">
-            <form id="formFinanceiro" autocomplete="off" onsubmit="adicionarLancamentoFinanceiro(event)" style="flex-grow: 0; margin-bottom: 1rem;">
-                <input type="text" id="nomeAlunoFinanceiro" placeholder="Nome do Aluno" maxlength="50" required>
-                <input type="number" id="valorMensalidade" placeholder="Valor (Ex: 150.00)" step="0.01" min="0" required>
-                <input type="date" id="dataVencimento" title="Data de Vencimento" required>
-                <select id="statusPagamento" required>
-                    <option value="Pendente">Pendente</option>
-                    <option value="Pago">Pago</option>
-                </select>
-                <input type="date" id="dataPagamento" title="Data de Pagamento (se Pago)">
-            </form>
-            <table class="financeiro-table" id="tabelaFinanceiro" style="margin-top:1.5rem; display:none; flex-grow:1;">
-                <thead><tr><th>Aluno</th><th>Valor</th><th>Venc.</th><th>Pag.</th><th>Status</th><th>Ações</th></tr></thead>
-                <tbody></tbody>
-            </table>
+        <div class="card-cyber anotacoes-card">
+            <h2><i class="fas fa-pen-fancy"></i> Anotações Rápidas</h2>
+            <div class="card-cyber-content">
+                <form id="formAnotacao" autocomplete="off" onsubmit="adicionarAnotacao(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+                    <input type="text" id="tituloAnotacao" placeholder="Título da anotação" maxlength="45" required>
+                    <textarea id="textoAnotacao" rows="3" placeholder="Digite sua anotação aqui..." required></textarea>
+                </form>
+                <ul id="listaAnotacoes" style="max-height: none; flex-grow:1;"></ul>
+            </div>
+            <button type="submit" class="btn-cyber-uniforme" form="formAnotacao"><i class="fas fa-save"></i> Salvar Anotação</button>
         </div>
-        <button type="submit" class="btn-cyber-uniforme" form="formFinanceiro"><i class="fas fa-hand-holding-usd"></i> Adicionar Lançamento</button>
-    </div>
-</div>
 
-<div id="modalAnotacao">
-    <div>
-        <h3 id="modalTitulo"></h3>
-        <div id="modalTexto"></div>
-        <button class="btn-cyber-uniforme" onclick="fecharModalAnotacao()"><i class="fas fa-times-circle"></i> Fechar</button>
+        <div class="card-cyber portal-card" onclick="window.open('https://ravellsl.github.io/rstech/','_blank')" tabindex="0" role="link" aria-label="Abrir Portal RS Tech">
+            <h2><i class="fas fa-rocket"></i> Portal RS Tech</h2>
+            <div class="card-cyber-content">
+                <img src="https://i.ibb.co/WNGLPKF3/home.png" alt="Home Portal" class="portal-img" />
+            </div>
+            <a class="portal-link" href="https://ravellsl.github.io/rstech/" target="_blank" tabindex="-1" aria-hidden="true" style="display:none;"></a>
+        </div>
+
+        <div class="card-cyber financeiro-card">
+            <h2><i class="fas fa-file-invoice-dollar"></i> Controle Financeiro</h2>
+            <div class="card-cyber-content">
+                <form id="formFinanceiro" autocomplete="off" onsubmit="adicionarLancamentoFinanceiro(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+                    <input type="text" id="nomeAlunoFinanceiro" placeholder="Nome do Aluno" maxlength="50" required>
+                    <input type="number" id="valorMensalidade" placeholder="Valor (Ex: 150.00)" step="0.01" min="0" required>
+                    <input type="date" id="dataVencimento" title="Data de Vencimento" required>
+                    <select id="statusPagamento" required>
+                        <option value="Pendente">Pendente</option>
+                        <option value="Pago">Pago</option>
+                    </select>
+                    <input type="date" id="dataPagamento" title="Data de Pagamento (se Pago)">
+                </form>
+                <table class="financeiro-table" id="tabelaFinanceiro" style="margin-top:1.5rem; display:none; flex-grow:1;">
+                    <thead><tr><th>Aluno</th><th>Valor</th><th>Venc.</th><th>Pag.</th><th>Status</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn-cyber-uniforme" form="formFinanceiro"><i class="fas fa-hand-holding-usd"></i> Adicionar Lançamento</button>
+        </div>
     </div>
-</div>
+
+    <div id="modalAnotacao">
+        <div>
+            <h3 id="modalTitulo"></h3>
+            <div id="modalTexto"></div>
+            <button class="btn-cyber-uniforme" onclick="fecharModalAnotacao()"><i class="fas fa-times-circle"></i> Fechar</button>
+        </div>
+    </div>
 
 <script>
 // --------------------- Variáveis Globais e Constantes ---------------------
@@ -596,7 +581,7 @@ function getWeekDays(startDate) {
 
 function formatDate(dateObj) {
     if (!dateObj) return '---';
-    const d = dateObj instanceof Date ? dateObj : new Date(dateObj + 'T00:00:00-03:00');
+    const d = dateObj instanceof Date ? dateObj : new Date(dateObj + 'T00:00:00-03:00'); // Ajustado para fuso horário -03:00
     if (isNaN(d.getTime())) return 'Data Inválida';
     return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
 }
@@ -608,14 +593,14 @@ function parseDateInput(input) {
         return new Date(parseInt(partsHtmlDate[1]), parseInt(partsHtmlDate[2]) - 1, parseInt(partsHtmlDate[3]));
     }
     const partsFull = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (partsFull) {
+    if (partsFull) { // dd/mm/yyyy
         return new Date(partsFull[2], partsFull[1] - 1, partsFull[0]);
     }
-    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/);
+    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/); // dd/mm
     if (partsShort) {
         return new Date(new Date().getFullYear(), partsShort[1] - 1, partsShort[0]);
     }
-    return null;
+    return null; // Se não for nenhum dos formatos, ou for apenas texto
 }
 
 // --------------------- Agenda Semanal ---------------------
@@ -665,19 +650,39 @@ function adicionarAula(event) {
         let dataObjParaAula = parseDateInput(dataInputValue);
         let diaDaSemanaParaArmazenar = diaSelecionadoVisualmente;
 
-        if (dataObjParaAula) {
+        if (dataObjParaAula) { // Se o usuário digitou uma data válida no campo de data
             diaDeReferencia = dataObjParaAula;
             diaDaSemanaParaArmazenar = dataObjParaAula.getDay();
+             // Verificar se a data fornecida pertence a uma semana diferente da atual
+            const semanaDaDataInput = getWeekDays(dataObjParaAula);
+            let pertenceSemanaAtual = semanaDaDataInput.some(d => 
+                d.dataCompleta.getFullYear() === semanaAtual[0].dataCompleta.getFullYear() &&
+                d.dataCompleta.getMonth() === semanaAtual[0].dataCompleta.getMonth() &&
+                d.dataCompleta.getDate() === semanaAtual[0].dataCompleta.getDate()
+            );
+            if (semanaDaDataInput[0].dataCompleta.getTime() !== semanaAtual[0].dataCompleta.getTime()) {
+                 // A data não pertence à semana atual exibida, então armazenamos apenas.
+                 // Não vamos mudar a visualização da semana automaticamente.
+                 // O usuário pode navegar para a semana correta para ver a aula.
+            }
         }
+        // Se não foi fornecida data ou foi texto, usa o dia selecionado visualmente
+        // e o texto do input `dataInputValue` será usado como label.
         
         aulasPorDia[diaDaSemanaParaArmazenar].push({
             id: Date.now().toString(),
-            dataInput: dataInputValue || formatDate(diaDeReferencia),
+            dataInput: dataInputValue || formatDate(diaDeReferencia), // Usa o input original se houver, senão formata
             dataObj: diaDeReferencia.toISOString(),
             conteudo: conteudo
         });
         aulasPorDia[diaDaSemanaParaArmazenar].sort((a, b) => new Date(a.dataObj) - new Date(b.dataObj));
-        renderAulas();
+        
+        // Re-renderiza apenas se a aula adicionada for no dia atualmente visualizado
+        if (diaDaSemanaParaArmazenar === diaSelecionadoVisualmente && 
+            new Date(diaDeReferencia).toDateString() === semanaAtual[diaSelecionadoVisualmente].dataCompleta.toDateString()) {
+            renderAulas();
+        }
+        
         dataInputEl.value = '';
         conteudoEl.value = '';
         salvarDadosLocalmente();
@@ -685,14 +690,13 @@ function adicionarAula(event) {
 }
 function removerAula(diaDaSemanaIndex, aulaId) {
     aulasPorDia[diaDaSemanaIndex] = aulasPorDia[diaDaSemanaIndex].filter(aula => aula.id !== aulaId);
-    renderAulas();
+    renderAulas(); // Re-renderiza as aulas do dia selecionado
     salvarDadosLocalmente();
 }
 
 // --------------------- Tarefas Pendentes ---------------------
 function adicionarTarefa(event) {
     event.preventDefault();
-    // Pegar o valor do input que está fora do form de submit, mas associado logicamente
     const tarefaInput = document.querySelector('.tarefas-card .card-cyber-content #novaTarefa');
     const tarefa = tarefaInput.value.trim();
     if (tarefa) {
@@ -701,7 +705,7 @@ function adicionarTarefa(event) {
         const id = 'tarefa-' + Date.now();
         item.innerHTML = `<span><input type="checkbox" id="${id}" onchange="toggleConcluidaTarefa(this)"> <label for="${id}">${tarefa}</label></span><button class="btn-del" title="Excluir Tarefa" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
         listaTarefas.appendChild(item);
-        tarefaInput.value = ''; // Limpa o input correto
+        tarefaInput.value = '';
         salvarDadosLocalmente();
     }
 }
@@ -711,43 +715,98 @@ function toggleConcluidaTarefa(checkbox) {
 }
 
 // --------------------- Cadastro Alunos (AnyDesk) ---------------------
-function cadastrarAluno(e) {
+function manipularCadastroOuEdicaoAluno(e) {
     e.preventDefault();
     const nomeInput = document.getElementById('nomeAlunoAnydesk');
     const codigoInput = document.getElementById('codigoAnydesk');
     const nome = nomeInput.value.trim();
-    let codigo = codigoInput.value.trim().replace(/\s/g, '');
-    if (codigo.length === 9 && /^\d+$/.test(codigo)) { 
-        codigo = `${codigo.substring(0,3)} ${codigo.substring(3,6)} ${codigo.substring(6,9)}`;
-    } else if (!/^\d{3}\s?\d{3}\s?\d{3}$/.test(codigoInput.value.trim())) {
-        alert("Formato de código AnyDesk inválido. Use 9 dígitos ou 123 456 789.");
+    let codigoOriginalInput = codigoInput.value.trim(); // Valor original do input
+    let codigoFormatado = codigoOriginalInput.replace(/\s/g, ''); // Remove espaços para validação e formatação inicial
+
+    // Validação e formatação do código AnyDesk
+    if (codigoFormatado.length === 9 && /^\d+$/.test(codigoFormatado)) {
+        // Formata para "123 456 789" se eram 9 dígitos
+        codigoFormatado = `${codigoFormatado.substring(0,3)} ${codigoFormatado.substring(3,6)} ${codigoFormatado.substring(6,9)}`;
+    } else if (!/^\d{3}\s\d{3}\s\d{3}$/.test(codigoOriginalInput)) { // Valida se já está no formato com espaços
+        alert("Formato de código AnyDesk inválido. Use 9 dígitos ou o formato 123 456 789.");
+        codigoInput.focus();
         return;
+    } else {
+        // Se já estava no formato "123 456 789", usa o valor original com espaços
+        codigoFormatado = codigoOriginalInput;
     }
 
-    if (nome && codigo) {
-        alunosAnydesk.push({ id: Date.now().toString(), nome, codigo });
+    if (nome && codigoFormatado) {
+        const alunoEditIdInput = document.getElementById('alunoEditIdAnydesk');
+        const idEmEdicao = alunoEditIdInput.value;
+
+        if (idEmEdicao) { // Modo Edição
+            const alunoIndex = alunosAnydesk.findIndex(aluno => aluno.id === idEmEdicao);
+            if (alunoIndex > -1) {
+                alunosAnydesk[alunoIndex].nome = nome;
+                alunosAnydesk[alunoIndex].codigo = codigoFormatado;
+            }
+            alunoEditIdInput.value = ''; // Limpa o ID de edição
+            document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
+        } else { // Modo Cadastro
+            alunosAnydesk.push({ id: Date.now().toString(), nome, codigo: codigoFormatado });
+        }
+
         nomeInput.value = '';
         codigoInput.value = '';
+        nomeInput.focus();
         renderTabelaAlunosAnydesk();
         salvarDadosLocalmente();
     }
 }
+
+function iniciarEdicaoAlunoAnydesk(alunoId) {
+    const aluno = alunosAnydesk.find(a => a.id === alunoId);
+    if (aluno) {
+        document.getElementById('nomeAlunoAnydesk').value = aluno.nome;
+        document.getElementById('codigoAnydesk').value = aluno.codigo;
+        document.getElementById('alunoEditIdAnydesk').value = aluno.id;
+        document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-save"></i> Salvar Alterações';
+        document.getElementById('nomeAlunoAnydesk').focus();
+    }
+}
+
+function cancelarEdicaoAlunoAnydesk() {
+    document.getElementById('nomeAlunoAnydesk').value = '';
+    document.getElementById('codigoAnydesk').value = '';
+    document.getElementById('alunoEditIdAnydesk').value = '';
+    document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
+}
+
 function renderTabelaAlunosAnydesk() {
     const table = document.getElementById('tabelaAlunosAnydesk');
     const tbody = table.querySelector('tbody');
     tbody.innerHTML = '';
+    alunosAnydesk.sort((a, b) => a.nome.localeCompare(b.nome));
+
     alunosAnydesk.forEach(aluno => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${aluno.nome}</td>
             <td>${aluno.codigo}</td>
-            <td><button class="btn-del" title="Remover Aluno" onclick="removerAlunoAnydesk('${aluno.id}')"><i class="fas fa-trash"></i></button></td>
+            <td style="display: flex; gap: 0.5rem; justify-content: center; align-items: center;">
+                <button class="btn-del" style="color: var(--neon-cyan);" title="Editar Aluno" onclick="iniciarEdicaoAlunoAnydesk('${aluno.id}')"><i class="fas fa-edit"></i></button>
+                <button class="btn-del" title="Remover Aluno" onclick="removerAlunoAnydesk('${aluno.id}')"><i class="fas fa-trash"></i></button>
+            </td>
         `;
         tbody.appendChild(tr);
     });
     table.style.display = alunosAnydesk.length ? 'table' : 'none';
+
+    if (alunosAnydesk.length === 0 && document.getElementById('alunoEditIdAnydesk').value) {
+        cancelarEdicaoAlunoAnydesk();
+    }
 }
+
 function removerAlunoAnydesk(alunoId) {
+    if (document.getElementById('alunoEditIdAnydesk').value === alunoId) {
+        cancelarEdicaoAlunoAnydesk();
+    }
     alunosAnydesk = alunosAnydesk.filter(aluno => aluno.id !== alunoId);
     renderTabelaAlunosAnydesk();
     salvarDadosLocalmente();
@@ -812,6 +871,7 @@ function adicionarAnotacao(e) {
 function renderAnotacoes() {
     const ul = document.getElementById('listaAnotacoes');
     ul.innerHTML = '';
+    anotacoes.sort((a,b) => a.titulo.localeCompare(b.titulo)); // Ordena por título
     anotacoes.forEach(a => {
         const li = document.createElement('li');
         li.innerHTML = `<span style="cursor:pointer;text-decoration:underline;color:var(--neon-cyan);" onclick="abrirModalAnotacao('${a.id}')">${a.titulo}</span>
@@ -850,13 +910,13 @@ function adicionarLancamentoFinanceiro(event) {
             id: Date.now().toString(),
             aluno: nomeAluno,
             valor: valor,
-            vencimento: vencimentoStr,
+            vencimento: vencimentoStr, // YYYY-MM-DD
             status: status,
-            dataPagamento: (status === 'Pago' && pagamentoStr) ? pagamentoStr : null
+            dataPagamento: (status === 'Pago' && pagamentoStr) ? pagamentoStr : null // YYYY-MM-DD
         });
         renderFinancas();
         document.getElementById('formFinanceiro').reset();
-        document.getElementById('dataPagamento').disabled = true;
+        document.getElementById('dataPagamento').disabled = true; // Reseta o estado do campo de data de pagamento
         salvarDadosLocalmente();
     }
 }
@@ -867,7 +927,7 @@ document.getElementById('statusPagamento').addEventListener('change', function()
     if(this.value !== 'Pago') {
         dataPagamentoEl.value = '';
     } else {
-        if(!dataPagamentoEl.value) {
+        if(!dataPagamentoEl.value) { // Preenche com data atual se estiver vazio e mudar para Pago
             dataPagamentoEl.value = new Date().toISOString().split('T')[0];
         }
     }
@@ -879,10 +939,12 @@ function renderFinancas() {
     const hoje = new Date();
     hoje.setHours(0,0,0,0);
 
-    financas.sort((a,b) => new Date(a.vencimento) - new Date(b.vencimento));
+    financas.sort((a,b) => new Date(a.vencimento + 'T00:00:00-03:00') - new Date(b.vencimento + 'T00:00:00-03:00'));
 
     financas.forEach(item => {
         const tr = document.createElement('tr');
+        // Ao ler do objeto 'item', as datas já estão como string YYYY-MM-DD.
+        // Para criar objetos Date para comparação ou formatação, adicione o T00:00:00 e fuso horário.
         const vencimentoDate = new Date(item.vencimento + 'T00:00:00-03:00');
         let statusFinal = item.status;
         let statusClass = '';
@@ -896,8 +958,7 @@ function renderFinancas() {
             case 'Pendente': statusClass = 'status-pendente'; break;
             case 'Atrasado': statusClass = 'status-atrasado'; break;
         }
-        
-        const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---';
+        const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---'; // formatDate já lida com string YYYY-MM-DD
 
         tr.innerHTML = `
             <td>${item.aluno}</td>
@@ -905,8 +966,8 @@ function renderFinancas() {
             <td>${formatDate(vencimentoDate)}</td>
             <td>${dataPagamentoFormatada}</td>
             <td class="${statusClass}">${statusFinal}</td>
-            <td>
-                ${item.status !== 'Pago' ? `<button class="btn-del" title="Marcar como Pago" onclick="marcarComoPago('${item.id}')"><i class="fas fa-check-square"></i></button>` : ''}
+            <td style="display: flex; gap: 0.5rem; justify-content: center; align-items:center;">
+                ${item.status !== 'Pago' ? `<button class="btn-del" style="color: var(--neon-green);" title="Marcar como Pago" onclick="marcarComoPago('${item.id}')"><i class="fas fa-check-square"></i></button>` : ''}
                 <button class="btn-del" title="Excluir Lançamento" onclick="removerLancamentoFinanceiro('${item.id}')"><i class="fas fa-trash"></i></button>
             </td>
         `;
@@ -920,7 +981,7 @@ function marcarComoPago(itemId) {
     if (item) {
         item.status = 'Pago';
         if (!item.dataPagamento) {
-            item.dataPagamento = new Date().toISOString().split('T')[0];
+            item.dataPagamento = new Date().toISOString().split('T')[0]; // Salva como YYYY-MM-DD
         }
         renderFinancas();
         salvarDadosLocalmente();
@@ -956,7 +1017,12 @@ function salvarDadosLocalmente() {
     });
 
     const dados = { aulasPorDia, alunosAnydesk, tarefas, links, materiais, anotacoes, financas };
-    localStorage.setItem(localStorageKey, JSON.stringify(dados));
+    try {
+        localStorage.setItem(localStorageKey, JSON.stringify(dados));
+    } catch (e) {
+        console.error("Erro ao salvar dados no localStorage:", e);
+        alert("Erro ao salvar dados. Verifique se o localStorage não está cheio ou desabilitado.");
+    }
 }
 
 function carregarDadosLocalmente() {
@@ -966,14 +1032,14 @@ function carregarDadosLocalmente() {
             const dados = JSON.parse(dadosSalvos);
             aulasPorDia = (Array.isArray(dados.aulasPorDia) && dados.aulasPorDia.length === semanaNomes.length) ?
                 dados.aulasPorDia.map(dia => dia.map(aula => ({...aula, dataObj: new Date(aula.dataObj)}))) : aulasPorDia = semanaNomes.map(() => []);
-            
+
             alunosAnydesk = Array.isArray(dados.alunosAnydesk) ? dados.alunosAnydesk : [];
-            
+
             document.getElementById('listaTarefas').innerHTML = '';
             if(Array.isArray(dados.tarefas)) dados.tarefas.forEach(t => {
                 const item = document.createElement('li');
                 if(t.concluida) item.classList.add('concluida');
-                const id = 'tarefa-' + Date.now() + Math.random();
+                const id = 'tarefa-' + Date.now() + Math.random().toString(36).substr(2, 9);
                 item.innerHTML = `<span><input type="checkbox" id="${id}" ${t.concluida ? 'checked' : ''} onchange="toggleConcluidaTarefa(this)"> <label for="${id}">${t.texto}</label></span><button class="btn-del" title="Excluir Tarefa" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
                 document.getElementById('listaTarefas').appendChild(item);
             });
@@ -991,7 +1057,7 @@ function carregarDadosLocalmente() {
                 item.innerHTML = `<span><a href="${m.url}" target="_blank" style="color:var(--neon-pink);"><i class="fas fa-atlas"></i> ${m.nome}</a></span><button class="btn-del" title="Excluir Material" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
                 document.getElementById('listaMateriais').appendChild(item);
             });
-            
+
             anotacoes = Array.isArray(dados.anotacoes) ? dados.anotacoes : [];
             financas = Array.isArray(dados.financas) ? dados.financas : [];
 
@@ -1002,15 +1068,15 @@ function carregarDadosLocalmente() {
 
         } catch (err) {
             console.error("Falha ao carregar dados do localStorage:", err);
-            aulasPorDia = semanaNomes.map(() => []);
+            aulasPorDia = semanaNomes.map(() => []); // Reset para estado padrão
         }
     } else {
-        renderAgendaTabs(); renderAulas();
+        renderAgendaTabs(); renderAulas(); // Renderiza a agenda vazia se não houver dados
     }
 }
 
 function exportarDados() {
-    salvarDadosLocalmente();
+    salvarDadosLocalmente(); // Garante que os dados mais recentes sejam salvos antes de exportar
     const dadosParaExportar = localStorage.getItem(localStorageKey);
     if (!dadosParaExportar || dadosParaExportar === "{}") { alert("Nenhum dado para exportar."); return; }
     const blob = new Blob([dadosParaExportar], {type: 'application/json'});
@@ -1029,24 +1095,57 @@ function importarDados(event) {
     reader.onload = function(e) {
         try {
             const dadosImportados = e.target.result;
-            JSON.parse(dadosImportados);
+            JSON.parse(dadosImportados); // Testa se o JSON é válido
             localStorage.setItem(localStorageKey, dadosImportados);
-            carregarDadosLocalmente();
+            carregarDadosLocalmente(); // Recarrega tudo a partir do novo localStorage
             alert("Dados importados com sucesso!");
         } catch (err) { alert("Falha ao importar: arquivo inválido ou corrompido.\n" + err.message); }
-        finally { event.target.value = null; }
+        finally { event.target.value = null; } // Limpa o input de arquivo para permitir reimportar o mesmo arquivo
     };
     reader.readAsText(file);
 }
 
 // --------------------- Inicialização ---------------------
 document.addEventListener('DOMContentLoaded', () => {
-    carregarDadosLocalmente();
-    diaSelecionadoVisualmente = new Date().getDay();
-    renderAgendaTabs();
-    renderAulas();
-    renderFinancas();
-    document.getElementById('dataPagamento').disabled = document.getElementById('statusPagamento').value !== 'Pago';
+    carregarDadosLocalmente(); // Carrega os dados primeiro
+    diaSelecionadoVisualmente = new Date().getDay(); // Define o dia atual como selecionado
+    renderAgendaTabs(); // Renderiza as abas da agenda
+    renderAulas();      // Renderiza as aulas para o dia selecionado
+    renderFinancas();   // Renderiza a tabela financeira
+
+    // Garante que o campo data de pagamento seja desabilitado se o status não for 'Pago'
+    const statusPagamentoEl = document.getElementById('statusPagamento');
+    const dataPagamentoEl = document.getElementById('dataPagamento');
+    if (statusPagamentoEl && dataPagamentoEl) {
+        dataPagamentoEl.disabled = statusPagamentoEl.value !== 'Pago';
+    }
+
+
+    // Listeners para o formulário AnyDesk (cancelar edição com ESC)
+    const formAnydesk = document.getElementById('formAnydesk');
+    const nomeAlunoAnydeskInput = document.getElementById('nomeAlunoAnydesk');
+    const codigoAnydeskInput = document.getElementById('codigoAnydesk');
+
+    if (formAnydesk && nomeAlunoAnydeskInput && codigoAnydeskInput) {
+        [nomeAlunoAnydeskInput, codigoAnydeskInput].forEach(input => {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === "Escape") {
+                    if (document.getElementById('alunoEditIdAnydesk').value) {
+                        event.preventDefault();
+                        cancelarEdicaoAlunoAnydesk();
+                    }
+                }
+            });
+        });
+
+        formAnydesk.addEventListener('reset', () => {
+            setTimeout(() => {
+                 if (!document.getElementById('alunoEditIdAnydesk').value) {
+                    document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
+                 }
+            }, 0);
+        });
+    }
 });
 window.addEventListener('beforeunload', salvarDadosLocalmente);
 
