@@ -119,13 +119,13 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            min-height: 450px;
+            min-height: 450px; /* Altura mínima do card */
         }
         .card-cyber-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
+            overflow-y: auto; /* Permite rolagem se o conteúdo interno exceder */
             margin-bottom: 1rem;
         }
         .card-cyber h2 {
@@ -154,13 +154,13 @@
             width: calc(100% - 0rem);
             margin-left: auto;
             margin-right: auto;
-            margin-top: auto;
+            margin-top: auto; /* Empurra o botão para baixo */
             flex-shrink: 0;
         }
         .card-cyber form {
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
+            /* Não definir flex-grow: 1 aqui para o form não ocupar todo o espaço se a tabela for pequena */
         }
         .card-cyber input, .card-cyber textarea, .card-cyber select {
             background: var(--input-bg);
@@ -219,7 +219,7 @@
             font-family: var(--font-body);
             margin-top: 1.2rem;
             font-size: 0.95rem;
-            table-layout: fixed;
+            table-layout: fixed; /* Ajuda a controlar larguras de coluna */
         }
         .alunos-table th, .alunos-table td,
         .financeiro-table th, .financeiro-table td {
@@ -227,16 +227,22 @@
             padding: 0.7rem 0.5rem;
             text-align: left;
             word-break: break-word;
+            vertical-align: top; /* Alterado para 'top' */
         }
-        .alunos-table th, .financeiro-table th {
+        .alunos-table th, .financeiro-table th { /* Cabeçalhos podem continuar centralizados se desejado */
             color: var(--neon-yellow);
             font-family: var(--font-title);
             background: #1a1625cc;
             font-size: 0.9rem;
             text-transform: uppercase;
+            vertical-align: middle; /* Cabeçalhos podem ficar no meio */
+        }
+         .alunos-table td:last-child, .financeiro-table td:last-child { /* Célula de ações */
+            text-align: center; /* Centraliza o divAcoes horizontalmente */
         }
         .alunos-table tr:last-child td,
         .financeiro-table tr:last-child td { border-bottom: none;}
+
         .status-pago { color: var(--neon-green); font-weight: bold; }
         .status-pendente { color: var(--neon-yellow); }
         .status-atrasado { color: var(--neon-red); font-weight: bold; }
@@ -467,15 +473,13 @@
             <form id="form-tarefas-submit-trigger" onsubmit="adicionarTarefa(event)" style="display:none;"><input type="submit"></form>
         </div>
 
-        <div class="card-cyber cadastro-card">
-            <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
-            <div class="card-cyber-content">
-                <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+        <div class="card-cyber cadastro-card"> <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
+            <div class="card-cyber-content"> <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-grow: 0; margin-bottom: 1rem;">
                     <input type="text" id="nomeAlunoAnydesk" placeholder="Nome do Aluno" maxlength="50" required>
                     <input type="text" id="codigoAnydesk" placeholder="Código ou Alias AnyDesk" maxlength="15" pattern=".{3,15}" title="Código ou Alias AnyDesk (3-15 caracteres)" required>
-                    <input type="hidden" id="alunoEditIdAnydesk"> </form>
-                <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;">
-                    <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
+                    <input type="hidden" id="alunoEditIdAnydesk">
+                </form>
+                <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;"> <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -581,7 +585,6 @@ function getWeekDays(startDate) {
 
 function formatDate(dateObj) {
     if (!dateObj) return '---';
-    // Adiciona T00:00:00 e o fuso -03:00 (aproximação para Brasília) para consistência ao converter string para Date
     const d = dateObj instanceof Date ? dateObj : new Date(dateObj + 'T00:00:00-03:00');
     if (isNaN(d.getTime())) return 'Data Inválida';
     return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
@@ -589,19 +592,19 @@ function formatDate(dateObj) {
 
 function parseDateInput(input) {
     if (!input) return null;
-    const partsHtmlDate = input.match(/^(\d{4})-(\d{2})-(\d{2})$/); // YYYY-MM-DD (input date)
+    const partsHtmlDate = input.match(/^(\d{4})-(\d{2})-(\d{2})$/);
     if (partsHtmlDate) {
         return new Date(parseInt(partsHtmlDate[1]), parseInt(partsHtmlDate[2]) - 1, parseInt(partsHtmlDate[3]));
     }
-    const partsFull = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); // DD/MM/YYYY
+    const partsFull = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
     if (partsFull) {
         return new Date(partsFull[2], partsFull[1] - 1, partsFull[0]);
     }
-    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/); // DD/MM
+    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/);
     if (partsShort) {
         return new Date(new Date().getFullYear(), partsShort[1] - 1, partsShort[0]);
     }
-    return null; // Se não for nenhum dos formatos, ou for apenas texto descritivo
+    return null;
 }
 
 // --------------------- Agenda Semanal ---------------------
@@ -688,7 +691,7 @@ function adicionarTarefa(event) {
     if (tarefa) {
         const listaTarefas = document.getElementById('listaTarefas');
         const item = document.createElement('li');
-        const id = 'tarefa-' + Date.now() + Math.random().toString(36).substr(2, 9); // ID mais único
+        const id = 'tarefa-' + Date.now() + Math.random().toString(36).substr(2, 9);
         item.innerHTML = `<span><input type="checkbox" id="${id}" onchange="toggleConcluidaTarefa(this)"> <label for="${id}">${tarefa}</label></span><button class="btn-del" title="Excluir Tarefa" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
         listaTarefas.appendChild(item);
         tarefaInput.value = '';
@@ -769,14 +772,40 @@ function renderTabelaAlunosAnydesk() {
 
     alunosAnydesk.forEach(aluno => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${aluno.nome}</td>
-            <td>${aluno.codigo}</td>
-            <td style="display: flex; gap: 0.5rem; justify-content: center; align-items: center;">
-                <button class="btn-del" style="color: var(--neon-cyan);" title="Editar Aluno" onclick="iniciarEdicaoAlunoAnydesk('${aluno.id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-del" title="Remover Aluno" onclick="removerAlunoAnydesk('${aluno.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
+
+        const tdNome = document.createElement('td');
+        tdNome.textContent = aluno.nome;
+        tr.appendChild(tdNome);
+
+        const tdCodigo = document.createElement('td');
+        tdCodigo.textContent = aluno.codigo;
+        tr.appendChild(tdCodigo);
+
+        const tdAcoes = document.createElement('td');
+        const divAcoes = document.createElement('div');
+        divAcoes.style.display = 'flex';
+        divAcoes.style.gap = '0.5rem';
+        divAcoes.style.justifyContent = 'flex-start'; // Alinha botões à esquerda na célula
+        divAcoes.style.alignItems = 'center'; // Alinha botões verticalmente entre si
+
+        const btnEditar = document.createElement('button');
+        btnEditar.className = 'btn-del';
+        btnEditar.style.color = 'var(--neon-cyan)';
+        btnEditar.title = 'Editar Aluno';
+        btnEditar.innerHTML = '<i class="fas fa-edit"></i>';
+        btnEditar.onclick = () => iniciarEdicaoAlunoAnydesk(aluno.id);
+        divAcoes.appendChild(btnEditar);
+
+        const btnRemover = document.createElement('button');
+        btnRemover.className = 'btn-del';
+        btnRemover.title = 'Remover Aluno';
+        btnRemover.innerHTML = '<i class="fas fa-trash"></i>';
+        btnRemover.onclick = () => removerAlunoAnydesk(aluno.id);
+        divAcoes.appendChild(btnRemover);
+        
+        tdAcoes.appendChild(divAcoes);
+        tr.appendChild(tdAcoes);
+        
         tbody.appendChild(tr);
     });
     table.style.display = alunosAnydesk.length ? 'table' : 'none';
@@ -785,6 +814,7 @@ function renderTabelaAlunosAnydesk() {
         cancelarEdicaoAlunoAnydesk();
     }
 }
+
 
 function removerAlunoAnydesk(alunoId) {
     if (document.getElementById('alunoEditIdAnydesk').value === alunoId) {
@@ -884,9 +914,9 @@ function adicionarLancamentoFinanceiro(event) {
     event.preventDefault();
     const nomeAluno = document.getElementById('nomeAlunoFinanceiro').value.trim();
     const valor = parseFloat(document.getElementById('valorMensalidade').value);
-    const vencimentoStr = document.getElementById('dataVencimento').value; // Formato YYYY-MM-DD
+    const vencimentoStr = document.getElementById('dataVencimento').value;
     const status = document.getElementById('statusPagamento').value;
-    const pagamentoStr = document.getElementById('dataPagamento').value; // Formato YYYY-MM-DD
+    const pagamentoStr = document.getElementById('dataPagamento').value;
 
     if (nomeAluno && !isNaN(valor) && vencimentoStr) {
         financas.push({
@@ -920,13 +950,13 @@ function renderFinancas() {
     const tbody = document.getElementById('tabelaFinanceiro').querySelector('tbody');
     tbody.innerHTML = '';
     const hoje = new Date();
-    hoje.setHours(0,0,0,0); // Normaliza para o início do dia
+    hoje.setHours(0,0,0,0);
 
     financas.sort((a,b) => new Date(a.vencimento + 'T00:00:00-03:00') - new Date(b.vencimento + 'T00:00:00-03:00'));
 
     financas.forEach(item => {
         const tr = document.createElement('tr');
-        const vencimentoDate = new Date(item.vencimento + 'T00:00:00-03:00'); // Adiciona fuso para comparação
+        const vencimentoDate = new Date(item.vencimento + 'T00:00:00-03:00');
         let statusFinal = item.status;
         let statusClass = '';
 
@@ -941,17 +971,40 @@ function renderFinancas() {
         }
         const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---';
 
+        // Célula de Ações para Financeiro
+        const tdAcoesFinanceiro = document.createElement('td');
+        const divAcoesFinanceiro = document.createElement('div');
+        divAcoesFinanceiro.style.display = 'flex';
+        divAcoesFinanceiro.style.gap = '0.5rem';
+        divAcoesFinanceiro.style.justifyContent = 'flex-start'; // Ou 'center'
+        divAcoesFinanceiro.style.alignItems = 'center';
+
+        if (item.status !== 'Pago') {
+            const btnPagar = document.createElement('button');
+            btnPagar.className = 'btn-del';
+            btnPagar.style.color = 'var(--neon-green)';
+            btnPagar.title = 'Marcar como Pago';
+            btnPagar.innerHTML = '<i class="fas fa-check-square"></i>';
+            btnPagar.onclick = () => marcarComoPago(item.id);
+            divAcoesFinanceiro.appendChild(btnPagar);
+        }
+
+        const btnExcluir = document.createElement('button');
+        btnExcluir.className = 'btn-del';
+        btnExcluir.title = 'Excluir Lançamento';
+        btnExcluir.innerHTML = '<i class="fas fa-trash"></i>';
+        btnExcluir.onclick = () => removerLancamentoFinanceiro(item.id);
+        divAcoesFinanceiro.appendChild(btnExcluir);
+        tdAcoesFinanceiro.appendChild(divAcoesFinanceiro);
+
         tr.innerHTML = `
             <td>${item.aluno}</td>
             <td>R$ ${item.valor.toFixed(2).replace('.',',')}</td>
             <td>${formatDate(vencimentoDate)}</td>
             <td>${dataPagamentoFormatada}</td>
             <td class="${statusClass}">${statusFinal}</td>
-            <td style="display: flex; gap: 0.5rem; justify-content: center; align-items:center;">
-                ${item.status !== 'Pago' ? `<button class="btn-del" style="color: var(--neon-green);" title="Marcar como Pago" onclick="marcarComoPago('${item.id}')"><i class="fas fa-check-square"></i></button>` : ''}
-                <button class="btn-del" title="Excluir Lançamento" onclick="removerLancamentoFinanceiro('${item.id}')"><i class="fas fa-trash"></i></button>
-            </td>
         `;
+        tr.appendChild(tdAcoesFinanceiro); // Adiciona a célula de ações construída
         tbody.appendChild(tr);
     });
     document.getElementById('tabelaFinanceiro').style.display = financas.length ? 'table' : 'none';
@@ -962,7 +1015,7 @@ function marcarComoPago(itemId) {
     if (item) {
         item.status = 'Pago';
         if (!item.dataPagamento) {
-            item.dataPagamento = new Date().toISOString().split('T')[0]; // Salva como YYYY-MM-DD
+            item.dataPagamento = new Date().toISOString().split('T')[0];
         }
         renderFinancas();
         salvarDadosLocalmente();
