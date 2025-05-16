@@ -581,26 +581,27 @@ function getWeekDays(startDate) {
 
 function formatDate(dateObj) {
     if (!dateObj) return '---';
-    const d = dateObj instanceof Date ? dateObj : new Date(dateObj + 'T00:00:00-03:00'); // Ajustado para fuso horário -03:00
+    // Adiciona T00:00:00 e o fuso -03:00 (aproximação para Brasília) para consistência ao converter string para Date
+    const d = dateObj instanceof Date ? dateObj : new Date(dateObj + 'T00:00:00-03:00');
     if (isNaN(d.getTime())) return 'Data Inválida';
     return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
 }
 
 function parseDateInput(input) {
     if (!input) return null;
-    const partsHtmlDate = input.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    const partsHtmlDate = input.match(/^(\d{4})-(\d{2})-(\d{2})$/); // YYYY-MM-DD (input date)
     if (partsHtmlDate) {
         return new Date(parseInt(partsHtmlDate[1]), parseInt(partsHtmlDate[2]) - 1, parseInt(partsHtmlDate[3]));
     }
-    const partsFull = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (partsFull) { // dd/mm/yyyy
+    const partsFull = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); // DD/MM/YYYY
+    if (partsFull) {
         return new Date(partsFull[2], partsFull[1] - 1, partsFull[0]);
     }
-    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/); // dd/mm
+    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/); // DD/MM
     if (partsShort) {
         return new Date(new Date().getFullYear(), partsShort[1] - 1, partsShort[0]);
     }
-    return null; // Se não for nenhum dos formatos, ou for apenas texto
+    return null; // Se não for nenhum dos formatos, ou for apenas texto descritivo
 }
 
 // --------------------- Agenda Semanal ---------------------
@@ -650,34 +651,19 @@ function adicionarAula(event) {
         let dataObjParaAula = parseDateInput(dataInputValue);
         let diaDaSemanaParaArmazenar = diaSelecionadoVisualmente;
 
-        if (dataObjParaAula) { // Se o usuário digitou uma data válida no campo de data
+        if (dataObjParaAula) {
             diaDeReferencia = dataObjParaAula;
             diaDaSemanaParaArmazenar = dataObjParaAula.getDay();
-             // Verificar se a data fornecida pertence a uma semana diferente da atual
-            const semanaDaDataInput = getWeekDays(dataObjParaAula);
-            let pertenceSemanaAtual = semanaDaDataInput.some(d =>
-                d.dataCompleta.getFullYear() === semanaAtual[0].dataCompleta.getFullYear() &&
-                d.dataCompleta.getMonth() === semanaAtual[0].dataCompleta.getMonth() &&
-                d.dataCompleta.getDate() === semanaAtual[0].dataCompleta.getDate()
-            );
-            if (semanaDaDataInput[0].dataCompleta.getTime() !== semanaAtual[0].dataCompleta.getTime()) {
-                 // A data não pertence à semana atual exibida, então armazenamos apenas.
-                 // Não vamos mudar a visualização da semana automaticamente.
-                 // O usuário pode navegar para a semana correta para ver a aula.
-            }
         }
-        // Se não foi fornecida data ou foi texto, usa o dia selecionado visualmente
-        // e o texto do input `dataInputValue` será usado como label.
 
         aulasPorDia[diaDaSemanaParaArmazenar].push({
             id: Date.now().toString(),
-            dataInput: dataInputValue || formatDate(diaDeReferencia), // Usa o input original se houver, senão formata
+            dataInput: dataInputValue || formatDate(diaDeReferencia),
             dataObj: diaDeReferencia.toISOString(),
             conteudo: conteudo
         });
         aulasPorDia[diaDaSemanaParaArmazenar].sort((a, b) => new Date(a.dataObj) - new Date(b.dataObj));
 
-        // Re-renderiza apenas se a aula adicionada for no dia atualmente visualizado
         if (diaDaSemanaParaArmazenar === diaSelecionadoVisualmente &&
             new Date(diaDeReferencia).toDateString() === semanaAtual[diaSelecionadoVisualmente].dataCompleta.toDateString()) {
             renderAulas();
@@ -690,7 +676,7 @@ function adicionarAula(event) {
 }
 function removerAula(diaDaSemanaIndex, aulaId) {
     aulasPorDia[diaDaSemanaIndex] = aulasPorDia[diaDaSemanaIndex].filter(aula => aula.id !== aulaId);
-    renderAulas(); // Re-renderiza as aulas do dia selecionado
+    renderAulas();
     salvarDadosLocalmente();
 }
 
@@ -702,7 +688,7 @@ function adicionarTarefa(event) {
     if (tarefa) {
         const listaTarefas = document.getElementById('listaTarefas');
         const item = document.createElement('li');
-        const id = 'tarefa-' + Date.now();
+        const id = 'tarefa-' + Date.now() + Math.random().toString(36).substr(2, 9); // ID mais único
         item.innerHTML = `<span><input type="checkbox" id="${id}" onchange="toggleConcluidaTarefa(this)"> <label for="${id}">${tarefa}</label></span><button class="btn-del" title="Excluir Tarefa" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
         listaTarefas.appendChild(item);
         tarefaInput.value = '';
@@ -722,33 +708,30 @@ function manipularCadastroOuEdicaoAluno(e) {
     const nome = nomeInput.value.trim();
     let codigoParaSalvar = codigoInput.value.trim();
 
-    // Validação de comprimento do código/alias AnyDesk
     if (codigoParaSalvar.length < 3 || codigoParaSalvar.length > 15) {
         alert("O código ou alias AnyDesk deve ter entre 3 e 15 caracteres.");
         codigoInput.focus();
         return;
     }
 
-    // Formatação opcional para códigos puramente numéricos de 9 dígitos
-    const tempCodigoNumerico = codigoParaSalvar.replace(/\s/g, ''); // Remove espaços para checagem
+    const tempCodigoNumerico = codigoParaSalvar.replace(/\s/g, '');
     if (tempCodigoNumerico.length === 9 && /^\d+$/.test(tempCodigoNumerico)) {
         codigoParaSalvar = `${tempCodigoNumerico.substring(0,3)} ${tempCodigoNumerico.substring(3,6)} ${tempCodigoNumerico.substring(6,9)}`;
     }
-    // Se não for 9 dígitos numéricos, mantém o input original trimado (permitindo espaços internos em aliases)
 
     if (nome && codigoParaSalvar) {
         const alunoEditIdInput = document.getElementById('alunoEditIdAnydesk');
         const idEmEdicao = alunoEditIdInput.value;
 
-        if (idEmEdicao) { // Modo Edição
+        if (idEmEdicao) {
             const alunoIndex = alunosAnydesk.findIndex(aluno => aluno.id === idEmEdicao);
             if (alunoIndex > -1) {
                 alunosAnydesk[alunoIndex].nome = nome;
                 alunosAnydesk[alunoIndex].codigo = codigoParaSalvar;
             }
-            alunoEditIdInput.value = ''; // Limpa o ID de edição
+            alunoEditIdInput.value = '';
             document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
-        } else { // Modo Cadastro
+        } else {
             alunosAnydesk.push({ id: Date.now().toString(), nome, codigo: codigoParaSalvar });
         }
 
@@ -871,7 +854,7 @@ function adicionarAnotacao(e) {
 function renderAnotacoes() {
     const ul = document.getElementById('listaAnotacoes');
     ul.innerHTML = '';
-    anotacoes.sort((a,b) => a.titulo.localeCompare(b.titulo)); // Ordena por título
+    anotacoes.sort((a,b) => a.titulo.localeCompare(b.titulo));
     anotacoes.forEach(a => {
         const li = document.createElement('li');
         li.innerHTML = `<span style="cursor:pointer;text-decoration:underline;color:var(--neon-cyan);" onclick="abrirModalAnotacao('${a.id}')">${a.titulo}</span>
@@ -901,22 +884,22 @@ function adicionarLancamentoFinanceiro(event) {
     event.preventDefault();
     const nomeAluno = document.getElementById('nomeAlunoFinanceiro').value.trim();
     const valor = parseFloat(document.getElementById('valorMensalidade').value);
-    const vencimentoStr = document.getElementById('dataVencimento').value;
+    const vencimentoStr = document.getElementById('dataVencimento').value; // Formato YYYY-MM-DD
     const status = document.getElementById('statusPagamento').value;
-    const pagamentoStr = document.getElementById('dataPagamento').value;
+    const pagamentoStr = document.getElementById('dataPagamento').value; // Formato YYYY-MM-DD
 
     if (nomeAluno && !isNaN(valor) && vencimentoStr) {
         financas.push({
             id: Date.now().toString(),
             aluno: nomeAluno,
             valor: valor,
-            vencimento: vencimentoStr, // YYYY-MM-DD
+            vencimento: vencimentoStr,
             status: status,
-            dataPagamento: (status === 'Pago' && pagamentoStr) ? pagamentoStr : null // YYYY-MM-DD
+            dataPagamento: (status === 'Pago' && pagamentoStr) ? pagamentoStr : null
         });
         renderFinancas();
         document.getElementById('formFinanceiro').reset();
-        document.getElementById('dataPagamento').disabled = true; // Reseta o estado do campo de data de pagamento
+        document.getElementById('dataPagamento').disabled = true;
         salvarDadosLocalmente();
     }
 }
@@ -927,7 +910,7 @@ document.getElementById('statusPagamento').addEventListener('change', function()
     if(this.value !== 'Pago') {
         dataPagamentoEl.value = '';
     } else {
-        if(!dataPagamentoEl.value) { // Preenche com data atual se estiver vazio e mudar para Pago
+        if(!dataPagamentoEl.value) {
             dataPagamentoEl.value = new Date().toISOString().split('T')[0];
         }
     }
@@ -937,15 +920,13 @@ function renderFinancas() {
     const tbody = document.getElementById('tabelaFinanceiro').querySelector('tbody');
     tbody.innerHTML = '';
     const hoje = new Date();
-    hoje.setHours(0,0,0,0);
+    hoje.setHours(0,0,0,0); // Normaliza para o início do dia
 
     financas.sort((a,b) => new Date(a.vencimento + 'T00:00:00-03:00') - new Date(b.vencimento + 'T00:00:00-03:00'));
 
     financas.forEach(item => {
         const tr = document.createElement('tr');
-        // Ao ler do objeto 'item', as datas já estão como string YYYY-MM-DD.
-        // Para criar objetos Date para comparação ou formatação, adicione o T00:00:00 e fuso horário.
-        const vencimentoDate = new Date(item.vencimento + 'T00:00:00-03:00');
+        const vencimentoDate = new Date(item.vencimento + 'T00:00:00-03:00'); // Adiciona fuso para comparação
         let statusFinal = item.status;
         let statusClass = '';
 
@@ -958,7 +939,7 @@ function renderFinancas() {
             case 'Pendente': statusClass = 'status-pendente'; break;
             case 'Atrasado': statusClass = 'status-atrasado'; break;
         }
-        const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---'; // formatDate já lida com string YYYY-MM-DD
+        const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---';
 
         tr.innerHTML = `
             <td>${item.aluno}</td>
@@ -1068,15 +1049,15 @@ function carregarDadosLocalmente() {
 
         } catch (err) {
             console.error("Falha ao carregar dados do localStorage:", err);
-            aulasPorDia = semanaNomes.map(() => []); // Reset para estado padrão
+            aulasPorDia = semanaNomes.map(() => []);
         }
     } else {
-        renderAgendaTabs(); renderAulas(); // Renderiza a agenda vazia se não houver dados
+        renderAgendaTabs(); renderAulas();
     }
 }
 
 function exportarDados() {
-    salvarDadosLocalmente(); // Garante que os dados mais recentes sejam salvos antes de exportar
+    salvarDadosLocalmente();
     const dadosParaExportar = localStorage.getItem(localStorageKey);
     if (!dadosParaExportar || dadosParaExportar === "{}") { alert("Nenhum dado para exportar."); return; }
     const blob = new Blob([dadosParaExportar], {type: 'application/json'});
@@ -1095,33 +1076,30 @@ function importarDados(event) {
     reader.onload = function(e) {
         try {
             const dadosImportados = e.target.result;
-            JSON.parse(dadosImportados); // Testa se o JSON é válido
+            JSON.parse(dadosImportados);
             localStorage.setItem(localStorageKey, dadosImportados);
-            carregarDadosLocalmente(); // Recarrega tudo a partir do novo localStorage
+            carregarDadosLocalmente();
             alert("Dados importados com sucesso!");
         } catch (err) { alert("Falha ao importar: arquivo inválido ou corrompido.\n" + err.message); }
-        finally { event.target.value = null; } // Limpa o input de arquivo para permitir reimportar o mesmo arquivo
+        finally { event.target.value = null; }
     };
     reader.readAsText(file);
 }
 
 // --------------------- Inicialização ---------------------
 document.addEventListener('DOMContentLoaded', () => {
-    carregarDadosLocalmente(); // Carrega os dados primeiro
-    diaSelecionadoVisualmente = new Date().getDay(); // Define o dia atual como selecionado
-    renderAgendaTabs(); // Renderiza as abas da agenda
-    renderAulas();      // Renderiza as aulas para o dia selecionado
-    renderFinancas();   // Renderiza a tabela financeira
+    carregarDadosLocalmente();
+    diaSelecionadoVisualmente = new Date().getDay();
+    renderAgendaTabs();
+    renderAulas();
+    renderFinancas();
 
-    // Garante que o campo data de pagamento seja desabilitado se o status não for 'Pago'
     const statusPagamentoEl = document.getElementById('statusPagamento');
     const dataPagamentoEl = document.getElementById('dataPagamento');
     if (statusPagamentoEl && dataPagamentoEl) {
         dataPagamentoEl.disabled = statusPagamentoEl.value !== 'Pago';
     }
 
-
-    // Listeners para o formulário AnyDesk (cancelar edição com ESC)
     const formAnydesk = document.getElementById('formAnydesk');
     const nomeAlunoAnydeskInput = document.getElementById('nomeAlunoAnydesk');
     const codigoAnydeskInput = document.getElementById('codigoAnydesk');
