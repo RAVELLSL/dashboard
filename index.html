@@ -472,7 +472,7 @@
             <div class="card-cyber-content">
                 <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-grow: 0; margin-bottom: 1rem;">
                     <input type="text" id="nomeAlunoAnydesk" placeholder="Nome do Aluno" maxlength="50" required>
-                    <input type="text" id="codigoAnydesk" placeholder="Código AnyDesk (9 dígitos)" maxlength="11" pattern="[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}|[0-9]{9}" title="Ex: 123 456 789 ou 123456789" required>
+                    <input type="text" id="codigoAnydesk" placeholder="Código ou Alias AnyDesk" maxlength="15" pattern=".{3,15}" title="Código ou Alias AnyDesk (3-15 caracteres)" required>
                     <input type="hidden" id="alunoEditIdAnydesk"> </form>
                 <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;">
                     <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
@@ -655,7 +655,7 @@ function adicionarAula(event) {
             diaDaSemanaParaArmazenar = dataObjParaAula.getDay();
              // Verificar se a data fornecida pertence a uma semana diferente da atual
             const semanaDaDataInput = getWeekDays(dataObjParaAula);
-            let pertenceSemanaAtual = semanaDaDataInput.some(d => 
+            let pertenceSemanaAtual = semanaDaDataInput.some(d =>
                 d.dataCompleta.getFullYear() === semanaAtual[0].dataCompleta.getFullYear() &&
                 d.dataCompleta.getMonth() === semanaAtual[0].dataCompleta.getMonth() &&
                 d.dataCompleta.getDate() === semanaAtual[0].dataCompleta.getDate()
@@ -668,7 +668,7 @@ function adicionarAula(event) {
         }
         // Se não foi fornecida data ou foi texto, usa o dia selecionado visualmente
         // e o texto do input `dataInputValue` será usado como label.
-        
+
         aulasPorDia[diaDaSemanaParaArmazenar].push({
             id: Date.now().toString(),
             dataInput: dataInputValue || formatDate(diaDeReferencia), // Usa o input original se houver, senão formata
@@ -676,13 +676,13 @@ function adicionarAula(event) {
             conteudo: conteudo
         });
         aulasPorDia[diaDaSemanaParaArmazenar].sort((a, b) => new Date(a.dataObj) - new Date(b.dataObj));
-        
+
         // Re-renderiza apenas se a aula adicionada for no dia atualmente visualizado
-        if (diaDaSemanaParaArmazenar === diaSelecionadoVisualmente && 
+        if (diaDaSemanaParaArmazenar === diaSelecionadoVisualmente &&
             new Date(diaDeReferencia).toDateString() === semanaAtual[diaSelecionadoVisualmente].dataCompleta.toDateString()) {
             renderAulas();
         }
-        
+
         dataInputEl.value = '';
         conteudoEl.value = '';
         salvarDadosLocalmente();
@@ -720,23 +720,23 @@ function manipularCadastroOuEdicaoAluno(e) {
     const nomeInput = document.getElementById('nomeAlunoAnydesk');
     const codigoInput = document.getElementById('codigoAnydesk');
     const nome = nomeInput.value.trim();
-    let codigoOriginalInput = codigoInput.value.trim(); // Valor original do input
-    let codigoFormatado = codigoOriginalInput.replace(/\s/g, ''); // Remove espaços para validação e formatação inicial
+    let codigoParaSalvar = codigoInput.value.trim();
 
-    // Validação e formatação do código AnyDesk
-    if (codigoFormatado.length === 9 && /^\d+$/.test(codigoFormatado)) {
-        // Formata para "123 456 789" se eram 9 dígitos
-        codigoFormatado = `${codigoFormatado.substring(0,3)} ${codigoFormatado.substring(3,6)} ${codigoFormatado.substring(6,9)}`;
-    } else if (!/^\d{3}\s\d{3}\s\d{3}$/.test(codigoOriginalInput)) { // Valida se já está no formato com espaços
-        alert("Formato de código AnyDesk inválido. Use 9 dígitos ou o formato 123 456 789.");
+    // Validação de comprimento do código/alias AnyDesk
+    if (codigoParaSalvar.length < 3 || codigoParaSalvar.length > 15) {
+        alert("O código ou alias AnyDesk deve ter entre 3 e 15 caracteres.");
         codigoInput.focus();
         return;
-    } else {
-        // Se já estava no formato "123 456 789", usa o valor original com espaços
-        codigoFormatado = codigoOriginalInput;
     }
 
-    if (nome && codigoFormatado) {
+    // Formatação opcional para códigos puramente numéricos de 9 dígitos
+    const tempCodigoNumerico = codigoParaSalvar.replace(/\s/g, ''); // Remove espaços para checagem
+    if (tempCodigoNumerico.length === 9 && /^\d+$/.test(tempCodigoNumerico)) {
+        codigoParaSalvar = `${tempCodigoNumerico.substring(0,3)} ${tempCodigoNumerico.substring(3,6)} ${tempCodigoNumerico.substring(6,9)}`;
+    }
+    // Se não for 9 dígitos numéricos, mantém o input original trimado (permitindo espaços internos em aliases)
+
+    if (nome && codigoParaSalvar) {
         const alunoEditIdInput = document.getElementById('alunoEditIdAnydesk');
         const idEmEdicao = alunoEditIdInput.value;
 
@@ -744,12 +744,12 @@ function manipularCadastroOuEdicaoAluno(e) {
             const alunoIndex = alunosAnydesk.findIndex(aluno => aluno.id === idEmEdicao);
             if (alunoIndex > -1) {
                 alunosAnydesk[alunoIndex].nome = nome;
-                alunosAnydesk[alunoIndex].codigo = codigoFormatado;
+                alunosAnydesk[alunoIndex].codigo = codigoParaSalvar;
             }
             alunoEditIdInput.value = ''; // Limpa o ID de edição
             document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
         } else { // Modo Cadastro
-            alunosAnydesk.push({ id: Date.now().toString(), nome, codigo: codigoFormatado });
+            alunosAnydesk.push({ id: Date.now().toString(), nome, codigo: codigoParaSalvar });
         }
 
         nomeInput.value = '';
