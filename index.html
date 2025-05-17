@@ -119,13 +119,13 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            min-height: 450px; /* Altura mínima do card */
+            height: 450px; /* ALTERADO DE min-height PARA height */
         }
         .card-cyber-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Permite rolagem se o conteúdo interno exceder */
+            overflow-y: auto; 
             margin-bottom: 1rem;
         }
         .card-cyber h2 {
@@ -154,13 +154,12 @@
             width: calc(100% - 0rem);
             margin-left: auto;
             margin-right: auto;
-            margin-top: auto; /* Empurra o botão para baixo */
+            margin-top: auto; 
             flex-shrink: 0;
         }
         .card-cyber form {
             display: flex;
             flex-direction: column;
-            /* Não definir flex-grow: 1 aqui para o form não ocupar todo o espaço se a tabela for pequena */
         }
         .card-cyber input, .card-cyber textarea, .card-cyber select {
             background: var(--input-bg);
@@ -219,7 +218,7 @@
             font-family: var(--font-body);
             margin-top: 1.2rem;
             font-size: 0.95rem;
-            table-layout: fixed; /* Ajuda a controlar larguras de coluna */
+            table-layout: fixed; 
         }
         .alunos-table th, .alunos-table td,
         .financeiro-table th, .financeiro-table td {
@@ -227,18 +226,18 @@
             padding: 0.7rem 0.5rem;
             text-align: left;
             word-break: break-word;
-            vertical-align: top; /* Alterado para 'top' */
+            vertical-align: top; 
         }
-        .alunos-table th, .financeiro-table th { /* Cabeçalhos podem continuar centralizados se desejado */
+        .alunos-table th, .financeiro-table th { 
             color: var(--neon-yellow);
             font-family: var(--font-title);
             background: #1a1625cc;
             font-size: 0.9rem;
             text-transform: uppercase;
-            vertical-align: middle; /* Cabeçalhos podem ficar no meio */
+            vertical-align: middle; 
         }
-         .alunos-table td:last-child, .financeiro-table td:last-child { /* Célula de ações */
-            text-align: center; /* Centraliza o divAcoes horizontalmente */
+         .alunos-table td:last-child, .financeiro-table td:last-child { 
+            text-align: center; 
         }
         .alunos-table tr:last-child td,
         .financeiro-table tr:last-child td { border-bottom: none;}
@@ -358,6 +357,7 @@
                     "biblioteca anotacoes portal financas";
                 gap: 1.5rem;
             }
+             .card-cyber { height: 420px; } /* Ajuste de altura para telas menores */
             .portal-img { max-height: 240px; max-width: 380px; }
         }
         @media (max-width: 992px) {
@@ -372,7 +372,7 @@
                     "financas financas";
                 padding: 0 1rem;
             }
-            .card-cyber { min-height: 420px; }
+            .card-cyber { height: 400px; } /* Ajuste de altura para telas menores */
             .portal-img { max-height: 200px; max-width: 350px; }
         }
         @media (max-width: 768px) {
@@ -391,7 +391,8 @@
                     "financas";
                 gap: 1.2rem;
             }
-            .card-cyber { padding: 1.5rem 1rem; min-height: auto; }
+            /* Para telas mobile, permitir que a altura seja automática pode ser melhor */
+            .card-cyber { padding: 1.5rem 1rem; height: auto; min-height: 350px; }
             .btn-cyber-uniforme { font-size: 1rem; padding: 0.7rem 1.2rem; }
             .card-cyber h2 { font-size: 1.3rem; }
             .atalhos-card .btn-cyber-uniforme { margin-bottom: 0.6rem; }
@@ -399,6 +400,7 @@
         }
         @media (max-width: 480px) {
             header { font-size: 1.5rem; }
+            .card-cyber { min-height: 320px; }
             .btn-cyber-uniforme { font-size: 0.95rem; padding: 0.6rem 1rem; }
             .card-cyber h2 { font-size: 1.2rem; }
             .card-cyber input, .card-cyber textarea, .card-cyber select { font-size: 0.95rem; padding: 0.65rem 0.8rem; }
@@ -473,13 +475,16 @@
             <form id="form-tarefas-submit-trigger" onsubmit="adicionarTarefa(event)" style="display:none;"><input type="submit"></form>
         </div>
 
-        <div class="card-cyber cadastro-card"> <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
-            <div class="card-cyber-content"> <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+        <div class="card-cyber cadastro-card"> 
+            <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
+            <div class="card-cyber-content"> 
+                <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-shrink: 0; margin-bottom: 1rem;">
                     <input type="text" id="nomeAlunoAnydesk" placeholder="Nome do Aluno" maxlength="50" required>
                     <input type="text" id="codigoAnydesk" placeholder="Código ou Alias AnyDesk" maxlength="15" pattern=".{3,15}" title="Código ou Alias AnyDesk (3-15 caracteres)" required>
                     <input type="hidden" id="alunoEditIdAnydesk">
                 </form>
-                <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;"> <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
+                <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;"> 
+                    <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -509,7 +514,7 @@
         <div class="card-cyber anotacoes-card">
             <h2><i class="fas fa-pen-fancy"></i> Anotações Rápidas</h2>
             <div class="card-cyber-content">
-                <form id="formAnotacao" autocomplete="off" onsubmit="adicionarAnotacao(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+                <form id="formAnotacao" autocomplete="off" onsubmit="adicionarAnotacao(event)" style="flex-shrink: 0; margin-bottom: 1rem;">
                     <input type="text" id="tituloAnotacao" placeholder="Título da anotação" maxlength="45" required>
                     <textarea id="textoAnotacao" rows="3" placeholder="Digite sua anotação aqui..." required></textarea>
                 </form>
@@ -529,7 +534,7 @@
         <div class="card-cyber financeiro-card">
             <h2><i class="fas fa-file-invoice-dollar"></i> Controle Financeiro</h2>
             <div class="card-cyber-content">
-                <form id="formFinanceiro" autocomplete="off" onsubmit="adicionarLancamentoFinanceiro(event)" style="flex-grow: 0; margin-bottom: 1rem;">
+                <form id="formFinanceiro" autocomplete="off" onsubmit="adicionarLancamentoFinanceiro(event)" style="flex-shrink: 0; margin-bottom: 1rem;">
                     <input type="text" id="nomeAlunoFinanceiro" placeholder="Nome do Aluno" maxlength="50" required>
                     <input type="number" id="valorMensalidade" placeholder="Valor (Ex: 150.00)" step="0.01" min="0" required>
                     <input type="date" id="dataVencimento" title="Data de Vencimento" required>
@@ -785,8 +790,8 @@ function renderTabelaAlunosAnydesk() {
         const divAcoes = document.createElement('div');
         divAcoes.style.display = 'flex';
         divAcoes.style.gap = '0.5rem';
-        divAcoes.style.justifyContent = 'flex-start'; // Alinha botões à esquerda na célula
-        divAcoes.style.alignItems = 'center'; // Alinha botões verticalmente entre si
+        divAcoes.style.justifyContent = 'flex-start'; 
+        divAcoes.style.alignItems = 'center'; 
 
         const btnEditar = document.createElement('button');
         btnEditar.className = 'btn-del';
@@ -971,12 +976,11 @@ function renderFinancas() {
         }
         const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---';
 
-        // Célula de Ações para Financeiro
         const tdAcoesFinanceiro = document.createElement('td');
         const divAcoesFinanceiro = document.createElement('div');
         divAcoesFinanceiro.style.display = 'flex';
         divAcoesFinanceiro.style.gap = '0.5rem';
-        divAcoesFinanceiro.style.justifyContent = 'flex-start'; // Ou 'center'
+        divAcoesFinanceiro.style.justifyContent = 'flex-start'; 
         divAcoesFinanceiro.style.alignItems = 'center';
 
         if (item.status !== 'Pago') {
@@ -1004,7 +1008,7 @@ function renderFinancas() {
             <td>${dataPagamentoFormatada}</td>
             <td class="${statusClass}">${statusFinal}</td>
         `;
-        tr.appendChild(tdAcoesFinanceiro); // Adiciona a célula de ações construída
+        tr.appendChild(tdAcoesFinanceiro);
         tbody.appendChild(tr);
     });
     document.getElementById('tabelaFinanceiro').style.display = financas.length ? 'table' : 'none';
