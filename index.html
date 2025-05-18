@@ -3,352 +3,237 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Corporativa - RS TECH</title>
+  <title>RS TECH</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
   <style>
     :root {
-  --c1: #18f2b2;   /* Verde-água neon */
-  --c2: #13b0fa;   /* Azul neon */
-  --c3: #2ae5ec;   /* Verde-azul intermediário */
-  --c4: #1e63b6;   /* Azul escuro */
-  --bg-card: #202737;
-  --bg-main: linear-gradient(135deg, #103445 0%, #1c3150 100%);
-  --txt: #e0eaff;
-  --txt-dark: #112130;
-  --accent: #25314a;
-  --danger: #f24b86;
-  --highlight: linear-gradient(90deg, #18f2b2 0%, #13b0fa 100%);
-  --tit: 'Orbitron', Arial, sans-serif;
-  --bod: 'Share Tech Mono', monospace;
-}
-
-/* Garante box-sizing correto em toda a aplicação */
-html, body, *, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* Corpo e fundo */
-body {
-  background: var(--bg-main) fixed;
-  font-family: var(--bod);
-  color: var(--txt);
-  margin: 0; padding: 0;
-  min-height: 100vh;
-  padding-left: 65px;
-  transition: padding-left 0.18s;
-}
-
-header {
-  background: var(--highlight);
-  color: #103445;
-  text-align: center;
-  padding: 2rem 1rem 1rem 1rem;
-  font-family: var(--tit);
-  font-size: 2.2rem;
-  letter-spacing: 2px;
-  font-weight: bold;
-  box-shadow: 0 2px 12px #10203044;
-}
-
-/* Barra lateral fixa e vertical */
-.atalhos-lateral {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 65px;
-  height: 100vh;
-  background: #1a2030;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
-  z-index: 99;
-  box-shadow: 2px 0 12px #18f2b226;
-  padding-top: 1.2rem;
-}
-.atalhos-lateral .ataho-link {
-  width: 46px;
-  height: 46px;
-  margin: 0.16rem 0;
-  background: #242940;
-  color: #13b0fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  font-size: 1.4rem;
-  transition: background 0.18s, color 0.13s, box-shadow 0.16s;
-  box-shadow: 0 1px 8px #13b0fa19;
-  border: none;
-  outline: none;
-  text-decoration: none;
-}
-.atalhos-lateral .ataho-link:hover, .atalhos-lateral .ataho-link:focus {
-  background: var(--c1);
-  color: #183448;
-  box-shadow: 0 2px 18px #18f2b244;
-}
-.atalhos-lateral .ataho-link.active, .atalhos-lateral .ataho-link[aria-current="page"] {
-  background: #f24b86;
-  color: #fff;
-}
-
-@media (max-width: 600px) {
-  body { padding-left: 52px; }
-  .atalhos-lateral {
-    width: 52px;
-    padding-top: 0.6rem;
-  }
-  .atalhos-lateral .ataho-link {
-    width: 38px;
-    height: 38px;
-    font-size: 1.09rem;
-    margin: 0.08rem 0;
-  }
-}
-
-/* Top controls (Exportar/Importar) */
-.top-controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1.2rem;
-  margin: 1.2rem 2vw 0 2vw;
-}
-.btn-export, .btn-import {
-  background: var(--c2);
-  color: #251f33;
-  font-family: var(--tit);
-  border: none;
-  border-radius: 1.2rem;
-  padding: 0.6rem 1.5rem;
-  font-size: 1.05rem;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px #0003;
-  transition: background .18s;
-}
-.btn-export:hover, .btn-import:hover {
-  background: var(--c1);
-  color: #fff;
-}
-
-/* Grid de cards */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  padding: 2rem 2vw 1rem 2vw;
-  max-width: 1440px;
-  margin: auto;
-}
-@media (max-width: 1100px) {
-  .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-}
-@media (max-width: 800px) {
-  .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
-  .dashboard-grid .card { min-width: 92vw; }
-}
-@media (max-width: 600px) {
-  header { font-size: 1.1rem; padding: 1rem 0.4rem; }
-  .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
-  .dashboard-grid .card { padding: 0.5rem 0.1rem 0.8rem 0.1rem; min-width: 98vw; max-width: 100vw; }
-}
-
-.card {
-  background: var(--bg-card);
-  border-radius: 1.7rem;
-  box-shadow: 0 2px 24px #09162b66;
-  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
-  display: flex;
-  flex-direction: column;
-  min-width: 250px;
-  max-width: 100%;
-  min-height: 340px;
-  margin-bottom: 0.5rem;
-  transition: box-shadow 0.2s, transform 0.18s;
-  overflow: hidden; /* Impede que qualquer conteúdo ultrapasse o card */
-}
-.card:hover {
-  box-shadow: 0 6px 32px #18f2b244, 0 0 0 2px #13b0fa44;
-  transform: translateY(-4px) scale(1.013);
-}
-.card h2 {
-  font-family: var(--tit);
-  font-size: 1.22rem;
-  letter-spacing: 1.2px;
-  margin: 0 0 1.2rem 0;
-  text-align: center;
-  background: var(--highlight);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  border-bottom: 2px solid var(--c3);
-  padding-bottom: 0.5rem;
-}
-
-/* Campos de dados (inputs, textarea, select) ajustados */
-input, textarea, select {
-  width: 100%;
-  max-width: 100%;     /* Nunca ultrapassa o card */
-  border-radius: 0.9rem;
-  background: var(--accent);
-  color: var(--txt);
-  border: none;
-  padding: 0.75rem 1rem; /* Padding enxuto para manter dentro do card */
-  margin: 0.25rem 0 0.7rem 0;
-  font-size: 1rem;
-  resize: vertical;
-  font-family: var(--bod);
-  outline: none;
-  transition: border 0.18s, background 0.13s, box-shadow 0.2s;
-  box-sizing: border-box;
-  display: block;
-}
-
-input:focus, textarea:focus, select:focus {
-  border: 2px solid #16e2c6;
-  background: #203850;
-  box-shadow: 0 0 0 2px #13b0fa44;
-  transition: box-shadow 0.2s, border 0.2s;
-}
-
-/* Ajuste final de margem no último campo de cada form */
-form > input:last-child,
-form > textarea:last-child,
-form > select:last-child {
-  margin-bottom: 0.7rem !important;
-}
-
-@media (max-width: 800px) {
-  .dashboard-grid .card {
-    padding: 1rem 0.5rem 1rem 0.5rem;
-    min-width: 94vw;
-    max-width: 100vw;
-  }
-  input, textarea, select {
-    font-size: 1rem;
-    padding: 0.6rem 0.8rem;
-    margin-bottom: 0.55rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .dashboard-grid .card {
-    padding: 0.5rem 0.1rem 0.8rem 0.1rem;
-    min-width: 98vw;
-    max-width: 100vw;
-  }
-  input, textarea, select {
-    font-size: 0.99rem;
-    padding: 0.48rem 0.65rem;
-    margin-bottom: 0.48rem;
-  }
-}
-
-/* Botões com gradiente neon */
-.btn, .btn-remove {
-  background: linear-gradient(90deg, #16e2c6 10%, #13b0fa 90%);
-  color: #112130 !important;
-  border: none;
-  border-radius: 0.9rem;
-  font-weight: bold;
-  text-shadow: none;
-  box-shadow: 0 2px 6px #16e2c622;
-  transition: background 0.19s, color 0.13s, box-shadow 0.12s;
-  text-align: center;
-  min-width: 105px;
-  font-family: var(--tit);
-  font-size: 1rem;
-  letter-spacing: 1px;
-  padding: 0.48rem 1.15rem;
-  margin: 0.16rem 0.2rem 0.16rem 0;
-  cursor: pointer;
-  display: inline-block;
-}
-.btn:hover, .btn:focus {
-  background: linear-gradient(90deg, #13b0fa 10%, #16e2c6 90%);
-  color: #fff !important;
-  box-shadow: 0 3px 16px #13b0fa42;
-}
-.btn-remove {
-  background: linear-gradient(90deg, #f24b86 10%, #13b0fa 90%);
-  color: #fff !important;
-}
-.btn-remove:hover {
-  background: linear-gradient(90deg, #13b0fa 10%, #f24b86 90%);
-}
-
-/* Tabelas e cabeçalho com gradiente */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #19314b;
-  color: var(--txt);
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.99rem;
-  overflow: hidden;
-  box-shadow: 0 1px 6px #13b0fa11;
-}
-th, td {
-  padding: 0.68rem 0.5rem;
-  text-align: left;
-  border-bottom: 1px solid #274169;
-}
-th {
-  background: linear-gradient(90deg, #16e2c6 10%, #13b0fa 90%);
-  color: #112130 !important;
-  font-family: var(--tit);
-  font-size: 1.04rem;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #16e2c6;
-}
-tr:last-child td { border-bottom: none; }
-.table-actions button {
-  background: none;
-  border: none;
-  color: var(--c2);
-  font-size: 1.13rem;
-  margin: 0 0.18rem;
-  cursor: pointer;
-  transition: color 0.14s;
-}
-.table-actions button:hover { color: var(--c1); }
-
-::-webkit-scrollbar {
-  height: 7px;
-  width: 9px;
-  background: #17243b;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--c3);
-  border-radius: 4px;
-}
-
-/* Botão do portal principal (opcional) */
-.portal-acesso {
-  background: var(--highlight);
-  color: #16162a;
-  border-radius: 1.5rem;
-  font-family: var(--tit);
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  box-shadow: 0 2px 12px #0005;
-  padding: 2.5rem 1rem;
-  margin: 2rem auto 1rem auto;
-  max-width: 700px;
-  transition: transform 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  letter-spacing: 1.2px;
-  display: block;
-}
-.portal-acesso:hover { transform: scale(1.03); box-shadow: 0 4px 20px #00ffe766; }
-
+      --c-cyan:   #19fff7;
+      --c-green:  #46ff86;
+      --c-yellow: #ffe066;
+      --c-blue:   #02a6ff;
+      --c-purple: #977cff;
+      --c-bg-dark:#16271d;
+      --c-bg-card:#193c2c;
+      --txt: #eaffea;
+      --tit: 'Orbitron', Arial, sans-serif;
+      --bod: 'Share Tech Mono', monospace;
+    }
+    body {
+      background: linear-gradient(120deg, #16271d 0%, #1b3440 100%);
+      color: var(--txt);
+      font-family: var(--bod);
+      margin: 0;
+      padding: 0 0 0 70px;
+      min-height: 100vh;
+    }
+    header {
+      background: transparent;
+      color: var(--c-green);
+      text-align: center;
+      padding: 2.2rem 1rem 1.2rem 1rem;
+      font-family: var(--tit);
+      font-size: 2.2rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px var(--c-cyan);
+      border-bottom: 3px solid var(--c-cyan);
+    }
+    .atalhos-lateral {
+      position: fixed;
+      top: 0; left: 0;
+      width: 70px; height: 100vh;
+      background: #153826;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.6rem; z-index: 99;
+      box-shadow: 2px 0 14px #19fff733;
+      padding-top: 1.2rem; overflow-y: auto;
+      border-right: 2px solid var(--c-green);
+    }
+    .atalhos-lateral .ataho-link {
+      width: 44px; height: 44px;
+      margin: 0.16rem 0;
+      background: #143a22;
+      color: var(--c-cyan);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; font-size: 1.22rem;
+      border: 1.5px solid transparent;
+      transition: border .2s, color .2s, box-shadow .2s;
+    }
+    .atalhos-lateral .ataho-link:hover, .atalhos-lateral .ataho-link:focus {
+      color: var(--c-yellow);
+      border: 1.5px solid var(--c-yellow);
+      box-shadow: 0 0 10px var(--c-yellow);
+    }
+    .atalhos-lateral .ataho-link.active {
+      color: var(--c-green);
+      border: 1.5px solid var(--c-green);
+      box-shadow: 0 0 14px var(--c-green);
+    }
+    @media (max-width: 800px) {
+      .atalhos-lateral { width: 54px; }
+      body { padding-left: 54px; }
+      .atalhos-lateral .ataho-link { width: 36px; height: 36px;}
+    }
+    @media (max-width: 600px) {
+      .atalhos-lateral { width: 50px; }
+      body { padding-left: 50px; }
+      .atalhos-lateral .ataho-link { width: 30px; height: 30px; }
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 2rem 2vw 1rem 2vw;
+      max-width: 1440px;
+      margin: auto;
+    }
+    @media (max-width: 1100px) {
+      .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    }
+    @media (max-width: 800px) {
+      .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+    }
+    @media (max-width: 600px) {
+      .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
+    }
+    .card {
+      background: var(--c-bg-card);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 18px #19fff733;
+      padding: 1.2rem 1rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      min-width: 250px;
+      max-width: 100%;
+      min-height: 340px;
+      margin-bottom: 0.5rem;
+      border: 2px solid var(--c-green);
+      transition: border .16s, box-shadow .14s;
+      overflow: hidden;
+    }
+    .card:hover {
+      border: 2px solid var(--c-yellow);
+      box-shadow: 0 6px 18px #ffe06633;
+    }
+    .card h2 {
+      font-family: var(--tit);
+      font-size: 1.14rem;
+      color: var(--c-cyan);
+      letter-spacing: 1px;
+      margin: 0 0 1rem 0;
+      text-align: center;
+      border-bottom: 1.5px solid var(--c-yellow);
+      padding-bottom: 0.5rem;
+    }
+    input, textarea, select {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      display: block;
+      border-radius: 0.7rem;
+      background: #163221;
+      color: var(--txt);
+      border: 1.5px solid var(--c-green);
+      padding: 0.7rem 1rem;
+      margin: 0.2rem 0 0.6rem 0;
+      font-size: 1rem;
+      font-family: var(--bod);
+      transition: border 0.13s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border: 1.5px solid var(--c-yellow);
+    }
+    .table-actions button {
+      background: none;
+      border: none;
+      color: var(--c-green);
+      font-size: 1.13rem;
+      cursor: pointer;
+      transition: color 0.14s;
+    }
+    .table-actions button:hover { color: var(--c-yellow); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #133829;
+      color: var(--txt);
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.97rem;
+      box-shadow: 0 1px 6px #19fff722;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 0.6rem 0.4rem;
+      text-align: left;
+      border-bottom: 1px solid #263b2b;
+    }
+    th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+    }
+    .portal-acesso {
+      background: transparent;
+      color: var(--c-green);
+      border-radius: 1.2rem;
+      border: 2px solid var(--c-cyan);
+      font-family: var(--tit);
+      text-align: center;
+      font-size: 1.08rem;
+      font-weight: bold;
+      box-shadow: 0 2px 12px #19fff733;
+      padding: 2rem 1rem;
+      margin: 2rem auto 1.5rem auto;
+      max-width: 700px;
+      transition: border .19s, color .19s;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 1.15px;
+      display: block;
+    }
+    .portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow);}
+    .main-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 0 0 2.5rem 0;
+    }
+    .btn-export, .btn-import, .btn {
+      background: transparent;
+      color: var(--c-cyan);
+      font-family: var(--tit);
+      border: 1.5px solid var(--c-cyan);
+      border-radius: 1.1rem;
+      padding: 0.7rem 1.6rem;
+      font-size: 1.06rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: border .14s, color .14s, background .14s;
+      margin-top: 0.2rem;
+    }
+    .btn-export:hover, .btn-import:hover, .btn:hover {
+      color: var(--c-green);
+      border: 1.5px solid var(--c-green);
+      background: #1d342a;
+    }
+    ::-webkit-scrollbar-thumb { background: var(--c-green); border-radius: 3px; }
+    ::-webkit-scrollbar { background: #153826; width: 8px; }
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #5beebb;
+      font-size: 1rem;
+      font-family: var(--tit);
+      letter-spacing: 0.2em;
+      margin-top: 2.4rem;
+      margin-bottom: 1.2rem;
+      opacity: 0.7;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -359,6 +244,7 @@ tr:last-child td { border-bottom: none; }
     <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive"><i class="fab fa-google-drive"></i></a>
     <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs"><i class="far fa-file-alt"></i></a>
     <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas"><i class="fas fa-table"></i></a>
+    <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda"><i class="far fa-calendar-alt"></i></a>
     <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
     <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)"><i class="fas fa-laptop"></i></a>
     <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio"><i class="fas fa-globe"></i></a>
@@ -368,15 +254,8 @@ tr:last-child td { border-bottom: none; }
     <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias"><i class="fas fa-newspaper"></i></a>
   </nav>
   <header>
-    DASHBOARD CORPORATIVA | RS TECH
+    RS TECH
   </header>
-  <div class="top-controls">
-    <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
-    <label class="btn-import" style="display:inline-block;cursor:pointer;">
-      <i class="fas fa-upload"></i> Importar Dados
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
-    </label>
-  </div>
   <main class="dashboard-grid">
     <!-- Bloco de Notas -->
     <div class="card bloco-notas">
@@ -394,9 +273,9 @@ tr:last-child td { border-bottom: none; }
     <div class="card anotacoes-rapidas">
       <h2>Anotações Rápidas</h2>
       <form onsubmit="event.preventDefault(); adicionarAnotacao();">
-        <input id="anotacaoInput" placeholder="Digite uma anotação rápida">
-        <button class="btn" type="submit">Adicionar</button>
-        <button class="btn" type="button" onclick="limparAnotacoes()">Limpar Tudo</button>
+        <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
+        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
+        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
       </form>
       <table id="tabelaAnotacoes">
         <thead>
@@ -409,12 +288,12 @@ tr:last-child td { border-bottom: none; }
     <div class="card cadastro-alunos">
       <h2>Cadastro de Alunos (AnyDesk)</h2>
       <form onsubmit="event.preventDefault(); adicionarAluno();">
-        <input id="nomeAluno" placeholder="Nome do Aluno">
-        <input id="anydeskAluno" placeholder="AnyDesk do Aluno">
-        <button class="btn" type="submit" id="btnAlunoAdd">Cadastrar</button>
+        <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+        <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+        <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
         <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
         <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
-        <button class="btn" type="button" onclick="limparAlunos()">Limpar Tudo</button>
+        <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
       </form>
       <table id="tabelaAlunos">
         <thead>
@@ -427,11 +306,11 @@ tr:last-child td { border-bottom: none; }
     <div class="card tarefas-pendentes">
       <h2>Tarefas Pendentes</h2>
       <form onsubmit="event.preventDefault(); adicionarTarefa();">
-        <input id="tarefaInput" placeholder="Adicionar nova tarefa">
-        <button class="btn" type="submit" id="btnTarefaAdd">Adicionar</button>
+        <input id="tarefaInput" placeholder="Adicionar nova tarefa" autocomplete="off" oninput="mostrarBotoesTarefa()">
+        <button class="btn" type="submit" id="btnTarefaAdd" style="display:none;">Adicionar</button>
         <button class="btn" type="button" id="btnTarefaEdit" style="display:none;" onclick="confirmarEdicaoTarefa()">Salvar Edição</button>
         <button class="btn" type="button" id="btnTarefaCancel" style="display:none;" onclick="cancelarEdicaoTarefa()">Cancelar</button>
-        <button class="btn" type="button" onclick="limparTarefas()">Limpar Tudo</button>
+        <button class="btn" type="button" id="btnTarefaLimpar" style="display:none;" onclick="limparTarefaCampos()">Limpar Tudo</button>
       </form>
       <table id="tabelaTarefas">
         <thead>
@@ -444,16 +323,16 @@ tr:last-child td { border-bottom: none; }
     <div class="card controle-financeiro">
       <h2>Controle Financeiro de Mensalidades</h2>
       <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
-        <input id="nomeFinanceiro" placeholder="Nome do Aluno">
-        <input id="valorFinanceiro" type="number" placeholder="Valor (R$)">
-        <select id="statusFinanceiro">
+        <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+        <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+        <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
           <option value="Pago">Pago</option>
           <option value="Pendente">Pendente</option>
         </select>
-        <button class="btn" type="submit" id="btnFinAdd">Lançar</button>
+        <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
         <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
         <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
-        <button class="btn" type="button" onclick="limparFinanceiro()">Limpar Tudo</button>
+        <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
       </form>
       <table id="tabelaFinanceiro">
         <thead>
@@ -466,6 +345,17 @@ tr:last-child td { border-bottom: none; }
   <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
     <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
   </a>
+  <!-- Botões principais após portal -->
+  <div class="main-controls">
+    <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
+    <label class="btn-import" style="display:inline-block;cursor:pointer;">
+      <i class="fas fa-upload"></i> Importar Dados
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
+    </label>
+  </div>
+  <footer>
+    2025
+  </footer>
   <script>
     // BLOCO DE NOTAS E DIÁRIO DE CLASSE
     function salvarBlocoNotas() {
@@ -478,7 +368,32 @@ tr:last-child td { border-bottom: none; }
       alert('Diário de Classe salvo.');
     }
     document.getElementById('diarioClasse').value = localStorage.getItem('diarioClasse') || '';
-    // ANOTAÇÕES RÁPIDAS
+
+    function mostrarBotoesAnotacao() {
+      const val = document.getElementById('anotacaoInput').value.trim();
+      document.getElementById('btnAddAnotacao').style.display = val ? '' : 'none';
+      document.getElementById('btnLimparAnotacao').style.display = val ? '' : 'none';
+    }
+    function mostrarBotoesAluno() {
+      const nome = document.getElementById('nomeAluno').value.trim();
+      const anydesk = document.getElementById('anydeskAluno').value.trim();
+      const show = nome || anydesk;
+      document.getElementById('btnAlunoAdd').style.display = show ? '' : 'none';
+      document.getElementById('btnAlunoLimpar').style.display = show ? '' : 'none';
+    }
+    function mostrarBotoesTarefa() {
+      const val = document.getElementById('tarefaInput').value.trim();
+      document.getElementById('btnTarefaAdd').style.display = val ? '' : 'none';
+      document.getElementById('btnTarefaLimpar').style.display = val ? '' : 'none';
+    }
+    function mostrarBotoesFinanceiro() {
+      const nome = document.getElementById('nomeFinanceiro').value.trim();
+      const valor = document.getElementById('valorFinanceiro').value.trim();
+      const show = nome || valor;
+      document.getElementById('btnFinAdd').style.display = show ? '' : 'none';
+      document.getElementById('btnFinLimpar').style.display = show ? '' : 'none';
+    }
+    // --- ANOTAÇÕES RÁPIDAS ---
     let anotacaoEditIdx = null;
     function adicionarAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
@@ -489,27 +404,25 @@ tr:last-child td { border-bottom: none; }
       } else {
         anotacoes[anotacaoEditIdx] = val;
         anotacaoEditIdx = null;
-        document.getElementById('btnTarefaAdd').style.display = '';
+        document.getElementById('btnTarefaAdd').style.display = 'none';
         document.getElementById('btnTarefaEdit').style.display = 'none';
         document.getElementById('btnTarefaCancel').style.display = 'none';
       }
       localStorage.setItem('anotacoesRapidas', JSON.stringify(anotacoes));
       listarAnotacoes();
       document.getElementById('anotacaoInput').value = '';
+      mostrarBotoesAnotacao();
     }
     function editarAnotacao(idx) {
       let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
       document.getElementById('anotacaoInput').value = anotacoes[idx];
       anotacaoEditIdx = idx;
-      document.getElementById('btnTarefaAdd').style.display = 'none';
-      document.getElementById('btnTarefaEdit').style.display = '';
-      document.getElementById('btnTarefaCancel').style.display = '';
+      document.getElementById('btnAddAnotacao').style.display = 'none';
+      document.getElementById('btnLimparAnotacao').style.display = 'none';
     }
-    function limparAnotacoes() {
-      if (confirm("Limpar todas as anotações?")) {
-        localStorage.removeItem('anotacoesRapidas');
-        listarAnotacoes();
-      }
+    function limparAnotacaoCampos() {
+      document.getElementById('anotacaoInput').value = '';
+      mostrarBotoesAnotacao();
     }
     function removerAnotacao(idx) {
       let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
@@ -520,9 +433,7 @@ tr:last-child td { border-bottom: none; }
     function cancelarEdicaoAnotacao() {
       anotacaoEditIdx = null;
       document.getElementById('anotacaoInput').value = '';
-      document.getElementById('btnTarefaAdd').style.display = '';
-      document.getElementById('btnTarefaEdit').style.display = 'none';
-      document.getElementById('btnTarefaCancel').style.display = 'none';
+      mostrarBotoesAnotacao();
     }
     function listarAnotacoes() {
       let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
@@ -533,7 +444,6 @@ tr:last-child td { border-bottom: none; }
           <tr>
             <td>${a}</td>
             <td class="table-actions">
-              <button onclick="editarAnotacao(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerAnotacao(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
           </tr>`;
@@ -541,7 +451,7 @@ tr:last-child td { border-bottom: none; }
       cancelarEdicaoAnotacao();
     }
     listarAnotacoes();
-    // CADASTRO DE ALUNOS
+    // --- CADASTRO DE ALUNOS ---
     let alunoEditIdx = null;
     function adicionarAluno() {
       const nome = document.getElementById('nomeAluno').value.trim();
@@ -553,7 +463,7 @@ tr:last-child td { border-bottom: none; }
       } else {
         lista[alunoEditIdx] = {nome, anydesk};
         alunoEditIdx = null;
-        document.getElementById('btnAlunoAdd').style.display = '';
+        document.getElementById('btnAlunoAdd').style.display = 'none';
         document.getElementById('btnAlunoEdit').style.display = 'none';
         document.getElementById('btnAlunoCancel').style.display = 'none';
       }
@@ -561,6 +471,7 @@ tr:last-child td { border-bottom: none; }
       listarAlunos();
       document.getElementById('nomeAluno').value = '';
       document.getElementById('anydeskAluno').value = '';
+      mostrarBotoesAluno();
     }
     function editarAluno(idx) {
       let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
@@ -570,21 +481,22 @@ tr:last-child td { border-bottom: none; }
       document.getElementById('btnAlunoAdd').style.display = 'none';
       document.getElementById('btnAlunoEdit').style.display = '';
       document.getElementById('btnAlunoCancel').style.display = '';
+      document.getElementById('btnAlunoLimpar').style.display = 'none';
     }
     function confirmarEdicaoAluno() { adicionarAluno(); }
     function cancelarEdicaoAluno() {
       alunoEditIdx = null;
       document.getElementById('nomeAluno').value = '';
       document.getElementById('anydeskAluno').value = '';
-      document.getElementById('btnAlunoAdd').style.display = '';
+      document.getElementById('btnAlunoAdd').style.display = 'none';
       document.getElementById('btnAlunoEdit').style.display = 'none';
       document.getElementById('btnAlunoCancel').style.display = 'none';
+      mostrarBotoesAluno();
     }
-    function limparAlunos() {
-      if (confirm("Limpar todos os alunos?")) {
-        localStorage.removeItem('alunosAnyDesk');
-        listarAlunos();
-      }
+    function limparAlunoCampos() {
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('anydeskAluno').value = '';
+      mostrarBotoesAluno();
     }
     function removerAluno(idx) {
       let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
@@ -602,7 +514,6 @@ tr:last-child td { border-bottom: none; }
             <td>${a.nome}</td>
             <td>${a.anydesk}</td>
             <td class="table-actions">
-              <button onclick="editarAluno(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerAluno(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
           </tr>`;
@@ -610,7 +521,7 @@ tr:last-child td { border-bottom: none; }
       cancelarEdicaoAluno();
     }
     listarAlunos();
-    // TAREFAS PENDENTES
+    // --- TAREFAS PENDENTES ---
     let tarefaEditIdx = null;
     function adicionarTarefa() {
       const val = document.getElementById('tarefaInput').value.trim();
@@ -621,13 +532,14 @@ tr:last-child td { border-bottom: none; }
       } else {
         tarefas[tarefaEditIdx].tarefa = val;
         tarefaEditIdx = null;
-        document.getElementById('btnTarefaAdd').style.display = '';
+        document.getElementById('btnTarefaAdd').style.display = 'none';
         document.getElementById('btnTarefaEdit').style.display = 'none';
         document.getElementById('btnTarefaCancel').style.display = 'none';
       }
       localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
       listarTarefas();
       document.getElementById('tarefaInput').value = '';
+      mostrarBotoesTarefa();
     }
     function editarTarefa(idx) {
       let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
@@ -636,20 +548,20 @@ tr:last-child td { border-bottom: none; }
       document.getElementById('btnTarefaAdd').style.display = 'none';
       document.getElementById('btnTarefaEdit').style.display = '';
       document.getElementById('btnTarefaCancel').style.display = '';
+      document.getElementById('btnTarefaLimpar').style.display = 'none';
     }
     function confirmarEdicaoTarefa() { adicionarTarefa(); }
     function cancelarEdicaoTarefa() {
       tarefaEditIdx = null;
       document.getElementById('tarefaInput').value = '';
-      document.getElementById('btnTarefaAdd').style.display = '';
+      document.getElementById('btnTarefaAdd').style.display = 'none';
       document.getElementById('btnTarefaEdit').style.display = 'none';
       document.getElementById('btnTarefaCancel').style.display = 'none';
+      mostrarBotoesTarefa();
     }
-    function limparTarefas() {
-      if (confirm("Limpar todas as tarefas?")) {
-        localStorage.removeItem('tarefasPendentes');
-        listarTarefas();
-      }
+    function limparTarefaCampos() {
+      document.getElementById('tarefaInput').value = '';
+      mostrarBotoesTarefa();
     }
     function removerTarefa(idx) {
       let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
@@ -677,7 +589,6 @@ tr:last-child td { border-bottom: none; }
               </button>
             </td>
             <td class="table-actions">
-              <button onclick="editarTarefa(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerTarefa(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
           </tr>`;
@@ -685,7 +596,7 @@ tr:last-child td { border-bottom: none; }
       cancelarEdicaoTarefa();
     }
     listarTarefas();
-    // CONTROLE FINANCEIRO
+    // --- CONTROLE FINANCEIRO ---
     let finEditIdx = null;
     function adicionarFinanceiro() {
       const nome = document.getElementById('nomeFinanceiro').value.trim();
@@ -698,7 +609,7 @@ tr:last-child td { border-bottom: none; }
       } else {
         lista[finEditIdx] = {nome, valor, status};
         finEditIdx = null;
-        document.getElementById('btnFinAdd').style.display = '';
+        document.getElementById('btnFinAdd').style.display = 'none';
         document.getElementById('btnFinEdit').style.display = 'none';
         document.getElementById('btnFinCancel').style.display = 'none';
       }
@@ -706,6 +617,7 @@ tr:last-child td { border-bottom: none; }
       listarFinanceiro();
       document.getElementById('nomeFinanceiro').value = '';
       document.getElementById('valorFinanceiro').value = '';
+      mostrarBotoesFinanceiro();
     }
     function editarFinanceiro(idx) {
       let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
@@ -716,6 +628,7 @@ tr:last-child td { border-bottom: none; }
       document.getElementById('btnFinAdd').style.display = 'none';
       document.getElementById('btnFinEdit').style.display = '';
       document.getElementById('btnFinCancel').style.display = '';
+      document.getElementById('btnFinLimpar').style.display = 'none';
     }
     function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
     function cancelarEdicaoFinanceiro() {
@@ -723,15 +636,15 @@ tr:last-child td { border-bottom: none; }
       document.getElementById('nomeFinanceiro').value = '';
       document.getElementById('valorFinanceiro').value = '';
       document.getElementById('statusFinanceiro').value = 'Pago';
-      document.getElementById('btnFinAdd').style.display = '';
+      document.getElementById('btnFinAdd').style.display = 'none';
       document.getElementById('btnFinEdit').style.display = 'none';
       document.getElementById('btnFinCancel').style.display = 'none';
+      mostrarBotoesFinanceiro();
     }
-    function limparFinanceiro() {
-      if (confirm("Limpar todos os dados financeiros?")) {
-        localStorage.removeItem('controleFinanceiro');
-        listarFinanceiro();
-      }
+    function limparFinanceiroCampos() {
+      document.getElementById('nomeFinanceiro').value = '';
+      document.getElementById('valorFinanceiro').value = '';
+      mostrarBotoesFinanceiro();
     }
     function removerFinanceiro(idx) {
       let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
@@ -750,7 +663,6 @@ tr:last-child td { border-bottom: none; }
             <td>R$ ${f.valor}</td>
             <td>${f.status}</td>
             <td class="table-actions">
-              <button onclick="editarFinanceiro(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerFinanceiro(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
           </tr>`;
