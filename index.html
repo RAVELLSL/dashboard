@@ -1,1189 +1,808 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>RS TECH</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
-    <style>
-        :root {
-            --neon-pink: #ff00cc;
-            --neon-cyan: #00ffe7;
-            --neon-yellow: #fff800;
-            --neon-green: #39ff14;
-            --neon-red: #ff1e00;
-            --card-bg: #241e35;
-            --input-bg: #18192a;
-            --input-border: #00ffe7;
-            --gradient-btn: linear-gradient(90deg, var(--neon-cyan) 5%, var(--neon-pink) 100%);
-            --gradient-btn-hover: linear-gradient(90deg, var(--neon-pink) 5%, var(--neon-cyan) 100%);
-            --font-title: 'Orbitron', Arial, sans-serif;
-            --font-body: 'Share Tech Mono', monospace;
-            --text-light: #e0e0ff;
-            --text-dark: #18192a;
-        }
-        body {
-            background: radial-gradient(ellipse at top left, #2c1c45 30%, #18192a 80%);
-            font-family: var(--font-body);
-            color: var(--text-light);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        header {
-            width: 100%;
-            background: linear-gradient(90deg, var(--neon-cyan) 10%, var(--neon-pink) 90%);
-            color: var(--text-dark);
-            text-align: center;
-            font-family: var(--font-title);
-            font-size: 2.1rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 25px var(--neon-cyan);
-            padding: 1.3rem 1rem;
-            border-radius: 0 0 24px 24px;
-            box-shadow: 0 4px 32px #ff00cc30;
-            z-index: 20;
-            flex-shrink: 0;
-        }
-        /* === ESTILO UNIFORME PARA BOTÕES DE AÇÃO === */
-        .btn-cyber-uniforme {
-            background: var(--gradient-btn);
-            color: var(--text-dark);
-            font-family: var(--font-title);
-            font-size: 1.05rem;
-            font-weight: bold;
-            letter-spacing: 1.2px;
-            border: none;
-            border-radius: 10px;
-            padding: 0.75rem 1.5rem;
-            box-shadow: 0 0 15px var(--neon-cyan);
-            cursor: pointer;
-            transition: filter 0.18s, background 0.2s, color 0.2s, box-shadow 0.2s;
-            text-align: center;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            line-height: 1.2;
-        }
-        .btn-cyber-uniforme:hover, .btn-cyber-uniforme:focus {
-            filter: brightness(1.15);
-            background: var(--gradient-btn-hover);
-            color: var(--text-light);
-            box-shadow: 0 0 25px var(--neon-pink), 0 0 10px var(--neon-cyan);
-            outline: none;
-        }
-        .btn-cyber-uniforme i {
-            font-size: 0.95em;
-        }
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem auto 1rem auto;
-            flex-shrink: 0;
-        }
-        input[type="file"] {display: none;}
-        .dashboard-grid {
-            max-width: 1400px;
-            margin: 0 auto 4rem auto;
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1.8rem;
-            padding: 0 1.5rem;
-            grid-template-areas:
-                "agenda agenda agenda agenda agenda agenda"
-                "atalhos atalhos tarefas tarefas anydesk anydesk"
-                "links links biblioteca biblioteca anotacoes anotacoes"
-                "portal portal portal financas financas financas";
-            flex-grow: 1;
-        }
-        .agenda-card      { grid-area: agenda; }
-        .atalhos-card     { grid-area: atalhos; }
-        .tarefas-card     { grid-area: tarefas; }
-        .cadastro-card    { grid-area: anydesk; }
-        .links-card       { grid-area: links; }
-        .biblioteca-card  { grid-area: biblioteca; }
-        .anotacoes-card   { grid-area: anotacoes; }
-        .portal-card      { grid-area: portal; }
-        .financeiro-card  { grid-area: financas; }
-        .card-cyber {
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 0 0 3px var(--neon-pink), 0 0 30px 6px #00ffe766;
-            padding: 1.8rem 1.5rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            height: 450px; /* ALTERADO DE min-height PARA height */
-        }
-        .card-cyber-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto; 
-            margin-bottom: 1rem;
-        }
-        .card-cyber h2 {
-            font-family: var(--font-title);
-            font-size: 1.4rem;
-            color: var(--neon-cyan);
-            letter-spacing: 1.7px;
-            text-shadow: 0 0 8px var(--neon-pink);
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            justify-content: center;
-            width: 100%;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .card-cyber h2 > i {
-            min-width: 25px;
-            text-align: center;
-            font-size: 1.1em;
-        }
-        .card-cyber > .btn-cyber-uniforme,
-        .card-cyber form > .btn-cyber-uniforme {
-            width: calc(100% - 0rem);
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: auto; 
-            flex-shrink: 0;
-        }
-        .card-cyber form {
-            display: flex;
-            flex-direction: column;
-        }
-        .card-cyber input, .card-cyber textarea, .card-cyber select {
-            background: var(--input-bg);
-            border: 2px solid var(--input-border);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 1rem;
-            font-family: var(--font-body);
-            margin-bottom: 0.8rem;
-            padding: 0.75rem 1rem;
-            width: 100%;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.18s, box-shadow 0.18s;
-            text-align: center;
-        }
-        .card-cyber input::placeholder, .card-cyber textarea::placeholder {
-            text-align: center;
-            color: #c6c7f7a0;
-            opacity: 1;
-        }
-        .card-cyber input:focus, .card-cyber textarea:focus, .card-cyber select:focus {
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
-        }
-        .card-cyber select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2300ffe7' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1em;
-            padding-right: 2.5rem;
-        }
-        .card-cyber select option {
-            background-color: var(--input-bg);
-            color: var(--text-light);
-        }
-        /* Atalhos */
-        .atalhos-card .card-cyber-content > div { margin-bottom: 1.2rem; }
-        .atalhos-card .card-cyber-content > div > div {
-            font-family: var(--font-title);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-            letter-spacing: 1px;
-            color: var(--neon-yellow);
-        }
-        .atalhos-card .btn-cyber-uniforme {
-            width: 100%;
-            margin-bottom: 0.5rem;
-        }
-        /* Tabelas */
-        .alunos-table, .financeiro-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: var(--font-body);
-            margin-top: 1.2rem;
-            font-size: 0.95rem;
-            table-layout: fixed; 
-        }
-        .alunos-table th, .alunos-table td,
-        .financeiro-table th, .financeiro-table td {
-            border-bottom: 1px solid #00ffe733;
-            padding: 0.7rem 0.5rem;
-            text-align: left;
-            word-break: break-word;
-            vertical-align: top; 
-        }
-        .alunos-table th, .financeiro-table th { 
-            color: var(--neon-yellow);
-            font-family: var(--font-title);
-            background: #1a1625cc;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            vertical-align: middle; 
-        }
-         .alunos-table td:last-child, .financeiro-table td:last-child { 
-            text-align: center; 
-        }
-        .alunos-table tr:last-child td,
-        .financeiro-table tr:last-child td { border-bottom: none;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Corporativa - RS TECH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+  <style>
+    :root {
+  --c1: #18f2b2;   /* Verde-água neon */
+  --c2: #13b0fa;   /* Azul neon */
+  --c3: #2ae5ec;   /* Verde-azul intermediário */
+  --c4: #1e63b6;   /* Azul escuro */
+  --bg-card: #202737;
+  --bg-main: linear-gradient(135deg, #103445 0%, #1c3150 100%);
+  --txt: #e0eaff;
+  --txt-dark: #112130;
+  --accent: #25314a;
+  --danger: #f24b86;
+  --highlight: linear-gradient(90deg, #18f2b2 0%, #13b0fa 100%);
+  --tit: 'Orbitron', Arial, sans-serif;
+  --bod: 'Share Tech Mono', monospace;
+}
 
-        .status-pago { color: var(--neon-green); font-weight: bold; }
-        .status-pendente { color: var(--neon-yellow); }
-        .status-atrasado { color: var(--neon-red); font-weight: bold; }
-        /* Listas (Links, Biblioteca, Tarefas, Anotações) */
-        .card-cyber ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin-top: 1rem;
-        }
-        .card-cyber ul li {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: .6rem;
-            margin-bottom: 0.6rem;
-            padding: 0.4rem 0.3rem;
-            border-bottom: 1px dashed #ffffff22;
-            color: var(--text-light);
-            font-size: 0.98rem;
-        }
-        .card-cyber ul li:last-child { border-bottom: none; }
-        .card-cyber ul li a {
-            color: var(--neon-cyan);
-            text-decoration: none;
-            word-break: break-all;
-        }
-        .card-cyber ul li a:hover { text-decoration: underline; color: var(--neon-pink); }
-        .tarefas-lista li input[type="checkbox"] { margin-right: 0.6rem; accent-color: var(--neon-pink); transform: scale(1.2); }
-        .tarefas-lista li.concluida label { text-decoration: line-through; color: #ffffff80; }
-        .btn-del {
-            background: transparent;
-            border: none;
-            color: var(--neon-pink);
-            font-size: 1.25rem;
-            cursor: pointer;
-            transition: color .15s, transform 0.15s;
-            padding: 0.2rem 0.4rem;
-        }
-        .btn-del:hover { color: var(--neon-yellow); transform: scale(1.1); }
-        /* Agenda */
-        .agenda-tabs {
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1.2rem;
-            overflow-x: auto;
-            padding: 0.2rem 0.1rem;
-            flex-shrink: 0;
-        }
-        .agenda-tab {
-            min-width: 80px;
-            flex-shrink: 0;
-            font-size: 0.9rem !important;
-            padding: 0.5rem 0.8rem !important;
-        }
-        .agenda-tab span:last-child { font-size: 0.85em; opacity: 0.8; }
-        .agenda-tab.selected {
-            background: var(--gradient-btn-hover) !important;
-            color: var(--text-light) !important;
-            box-shadow: 0 0 20px var(--neon-pink), 0 0 8px var(--neon-cyan) !important;
-        }
-        .agenda-dia {
-            background: #1b1020cc;
-            border-radius: 12px;
-            min-height: 100px;
-            color: var(--text-light);
-            font-size: 1.03rem;
-            margin-bottom: 1rem;
-            box-shadow: inset 0 0 15px #00000055, 0 2px 20px #00ffe710;
-            padding: 1.2rem 1rem;
-            line-height: 1.6;
-        }
-        .agenda-dia ul { margin: 0; padding-left: 0; list-style-type: none; }
-        .agenda-dia li { margin-bottom: 0.6rem; padding-left: 0.8rem; border-left: 3px solid var(--neon-pink); }
-        .agenda-dia li a { color: var(--neon-pink); text-decoration: none; margin-left: 0.5rem; font-weight: bold; }
-        .agenda-dia li a:hover { color: var(--neon-yellow); }
-        /* Portal Card */
-        .portal-card {
-            align-items: center;
-            cursor: pointer;
-            text-align: center;
-            justify-content: center;
-        }
-        .portal-card .card-cyber-content {
-            justify-content: center;
-            align-items: center;
-        }
-        .portal-img {
-            width: 90%;
-            max-width: 420px;
-            height: auto;
-            max-height: 280px;
-            object-fit: contain;
-            border-radius: 16px;
-            margin: 0 auto;
-            box-shadow: 0 0 24px 2px var(--neon-cyan), 0 0 36px 4px #ff00cc55;
-            display: block;
-        }
-        .portal-card:hover { border-color: var(--neon-cyan); box-shadow: 0 0 38px 7px var(--neon-cyan), 0 0 100px 30px var(--neon-pink); }
-        /* Modal */
-        #modalAnotacao { display:none; position:fixed; top:0;left:0;width:100vw;height:100vh;background:#18192ACC;backdrop-filter: blur(5px);z-index:200;align-items:center;justify-content:center; padding: 1rem; }
-        #modalAnotacao > div { background:var(--card-bg);color:var(--text-light);padding:2.2rem;border-radius:22px;box-shadow:0 0 40px var(--neon-cyan),0 0 60px #ff00cc55;max-width:600px; width:100%; max-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:space-between; border: 2px solid var(--neon-pink); }
-        #modalTitulo { font-family:var(--font-title);color:var(--neon-cyan);font-size:1.6rem;margin-bottom:1.5rem;text-align:center; }
-        #modalTexto { white-space:pre-wrap;line-height:1.7;font-size:1.15rem;color:var(--text-light);overflow-y:auto;width:100%;text-align:left;padding:0 0.5rem; margin-bottom:1.5rem; max-height: 60vh; }
-        /* Responsividade */
-        @media (max-width: 1200px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(4, 1fr);
-                grid-template-areas:
-                    "agenda agenda agenda agenda"
-                    "atalhos tarefas anydesk links"
-                    "biblioteca anotacoes portal financas";
-                gap: 1.5rem;
-            }
-             .card-cyber { height: 420px; } /* Ajuste de altura para telas menores */
-            .portal-img { max-height: 240px; max-width: 380px; }
-        }
-        @media (max-width: 992px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-areas:
-                    "agenda agenda"
-                    "atalhos tarefas"
-                    "anydesk links"
-                    "biblioteca anotacoes"
-                    "portal portal"
-                    "financas financas";
-                padding: 0 1rem;
-            }
-            .card-cyber { height: 400px; } /* Ajuste de altura para telas menores */
-            .portal-img { max-height: 200px; max-width: 350px; }
-        }
-        @media (max-width: 768px) {
-            header { font-size: 1.8rem; padding: 1rem 0.5rem; }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-                grid-template-areas:
-                    "agenda"
-                    "atalhos"
-                    "tarefas"
-                    "anydesk"
-                    "links"
-                    "biblioteca"
-                    "anotacoes"
-                    "portal"
-                    "financas";
-                gap: 1.2rem;
-            }
-            /* Para telas mobile, permitir que a altura seja automática pode ser melhor */
-            .card-cyber { padding: 1.5rem 1rem; height: auto; min-height: 350px; }
-            .btn-cyber-uniforme { font-size: 1rem; padding: 0.7rem 1.2rem; }
-            .card-cyber h2 { font-size: 1.3rem; }
-            .atalhos-card .btn-cyber-uniforme { margin-bottom: 0.6rem; }
-            .portal-img { max-height: 200px; width: 80%; }
-        }
-        @media (max-width: 480px) {
-            header { font-size: 1.5rem; }
-            .card-cyber { min-height: 320px; }
-            .btn-cyber-uniforme { font-size: 0.95rem; padding: 0.6rem 1rem; }
-            .card-cyber h2 { font-size: 1.2rem; }
-            .card-cyber input, .card-cyber textarea, .card-cyber select { font-size: 0.95rem; padding: 0.65rem 0.8rem; }
-            .agenda-tab { min-width: 70px; font-size: 0.85rem !important; padding: 0.4rem 0.6rem !important; }
-            .portal-img { max-height: 180px; width: 75%;}
-        }
-    </style>
+/* Garante box-sizing correto em toda a aplicação */
+html, body, *, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Corpo e fundo */
+body {
+  background: var(--bg-main) fixed;
+  font-family: var(--bod);
+  color: var(--txt);
+  margin: 0; padding: 0;
+  min-height: 100vh;
+  padding-left: 65px;
+  transition: padding-left 0.18s;
+}
+
+header {
+  background: var(--highlight);
+  color: #103445;
+  text-align: center;
+  padding: 2rem 1rem 1rem 1rem;
+  font-family: var(--tit);
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  font-weight: bold;
+  box-shadow: 0 2px 12px #10203044;
+}
+
+/* Barra lateral fixa e vertical */
+.atalhos-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 65px;
+  height: 100vh;
+  background: #1a2030;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  z-index: 99;
+  box-shadow: 2px 0 12px #18f2b226;
+  padding-top: 1.2rem;
+}
+.atalhos-lateral .ataho-link {
+  width: 46px;
+  height: 46px;
+  margin: 0.16rem 0;
+  background: #242940;
+  color: #13b0fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  font-size: 1.4rem;
+  transition: background 0.18s, color 0.13s, box-shadow 0.16s;
+  box-shadow: 0 1px 8px #13b0fa19;
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+.atalhos-lateral .ataho-link:hover, .atalhos-lateral .ataho-link:focus {
+  background: var(--c1);
+  color: #183448;
+  box-shadow: 0 2px 18px #18f2b244;
+}
+.atalhos-lateral .ataho-link.active, .atalhos-lateral .ataho-link[aria-current="page"] {
+  background: #f24b86;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  body { padding-left: 52px; }
+  .atalhos-lateral {
+    width: 52px;
+    padding-top: 0.6rem;
+  }
+  .atalhos-lateral .ataho-link {
+    width: 38px;
+    height: 38px;
+    font-size: 1.09rem;
+    margin: 0.08rem 0;
+  }
+}
+
+/* Top controls (Exportar/Importar) */
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  margin: 1.2rem 2vw 0 2vw;
+}
+.btn-export, .btn-import {
+  background: var(--c2);
+  color: #251f33;
+  font-family: var(--tit);
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0003;
+  transition: background .18s;
+}
+.btn-export:hover, .btn-import:hover {
+  background: var(--c1);
+  color: #fff;
+}
+
+/* Grid de cards */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2rem 2vw 1rem 2vw;
+  max-width: 1440px;
+  margin: auto;
+}
+@media (max-width: 1100px) {
+  .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+}
+@media (max-width: 800px) {
+  .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+  .dashboard-grid .card { min-width: 92vw; }
+}
+@media (max-width: 600px) {
+  header { font-size: 1.1rem; padding: 1rem 0.4rem; }
+  .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
+  .dashboard-grid .card { padding: 0.5rem 0.1rem 0.8rem 0.1rem; min-width: 98vw; max-width: 100vw; }
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 1.7rem;
+  box-shadow: 0 2px 24px #09162b66;
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 100%;
+  min-height: 340px;
+  margin-bottom: 0.5rem;
+  transition: box-shadow 0.2s, transform 0.18s;
+  overflow: hidden; /* Impede que qualquer conteúdo ultrapasse o card */
+}
+.card:hover {
+  box-shadow: 0 6px 32px #18f2b244, 0 0 0 2px #13b0fa44;
+  transform: translateY(-4px) scale(1.013);
+}
+.card h2 {
+  font-family: var(--tit);
+  font-size: 1.22rem;
+  letter-spacing: 1.2px;
+  margin: 0 0 1.2rem 0;
+  text-align: center;
+  background: var(--highlight);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  border-bottom: 2px solid var(--c3);
+  padding-bottom: 0.5rem;
+}
+
+/* Campos de dados (inputs, textarea, select) ajustados */
+input, textarea, select {
+  width: 100%;
+  max-width: 100%;     /* Nunca ultrapassa o card */
+  border-radius: 0.9rem;
+  background: var(--accent);
+  color: var(--txt);
+  border: none;
+  padding: 0.75rem 1rem; /* Padding enxuto para manter dentro do card */
+  margin: 0.25rem 0 0.7rem 0;
+  font-size: 1rem;
+  resize: vertical;
+  font-family: var(--bod);
+  outline: none;
+  transition: border 0.18s, background 0.13s, box-shadow 0.2s;
+  box-sizing: border-box;
+  display: block;
+}
+
+input:focus, textarea:focus, select:focus {
+  border: 2px solid #16e2c6;
+  background: #203850;
+  box-shadow: 0 0 0 2px #13b0fa44;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+
+/* Ajuste final de margem no último campo de cada form */
+form > input:last-child,
+form > textarea:last-child,
+form > select:last-child {
+  margin-bottom: 0.7rem !important;
+}
+
+@media (max-width: 800px) {
+  .dashboard-grid .card {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    min-width: 94vw;
+    max-width: 100vw;
+  }
+  input, textarea, select {
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.55rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-grid .card {
+    padding: 0.5rem 0.1rem 0.8rem 0.1rem;
+    min-width: 98vw;
+    max-width: 100vw;
+  }
+  input, textarea, select {
+    font-size: 0.99rem;
+    padding: 0.48rem 0.65rem;
+    margin-bottom: 0.48rem;
+  }
+}
+
+/* Botões com gradiente neon */
+.btn, .btn-remove {
+  background: linear-gradient(90deg, #16e2c6 10%, #13b0fa 90%);
+  color: #112130 !important;
+  border: none;
+  border-radius: 0.9rem;
+  font-weight: bold;
+  text-shadow: none;
+  box-shadow: 0 2px 6px #16e2c622;
+  transition: background 0.19s, color 0.13s, box-shadow 0.12s;
+  text-align: center;
+  min-width: 105px;
+  font-family: var(--tit);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  padding: 0.48rem 1.15rem;
+  margin: 0.16rem 0.2rem 0.16rem 0;
+  cursor: pointer;
+  display: inline-block;
+}
+.btn:hover, .btn:focus {
+  background: linear-gradient(90deg, #13b0fa 10%, #16e2c6 90%);
+  color: #fff !important;
+  box-shadow: 0 3px 16px #13b0fa42;
+}
+.btn-remove {
+  background: linear-gradient(90deg, #f24b86 10%, #13b0fa 90%);
+  color: #fff !important;
+}
+.btn-remove:hover {
+  background: linear-gradient(90deg, #13b0fa 10%, #f24b86 90%);
+}
+
+/* Tabelas e cabeçalho com gradiente */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #19314b;
+  color: var(--txt);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.99rem;
+  overflow: hidden;
+  box-shadow: 0 1px 6px #13b0fa11;
+}
+th, td {
+  padding: 0.68rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #274169;
+}
+th {
+  background: linear-gradient(90deg, #16e2c6 10%, #13b0fa 90%);
+  color: #112130 !important;
+  font-family: var(--tit);
+  font-size: 1.04rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #16e2c6;
+}
+tr:last-child td { border-bottom: none; }
+.table-actions button {
+  background: none;
+  border: none;
+  color: var(--c2);
+  font-size: 1.13rem;
+  margin: 0 0.18rem;
+  cursor: pointer;
+  transition: color 0.14s;
+}
+.table-actions button:hover { color: var(--c1); }
+
+::-webkit-scrollbar {
+  height: 7px;
+  width: 9px;
+  background: #17243b;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c3);
+  border-radius: 4px;
+}
+
+/* Botão do portal principal (opcional) */
+.portal-acesso {
+  background: var(--highlight);
+  color: #16162a;
+  border-radius: 1.5rem;
+  font-family: var(--tit);
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 2px 12px #0005;
+  padding: 2.5rem 1rem;
+  margin: 2rem auto 1rem auto;
+  max-width: 700px;
+  transition: transform 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 1.2px;
+  display: block;
+}
+.portal-acesso:hover { transform: scale(1.03); box-shadow: 0 4px 20px #00ffe766; }
+
+  </style>
 </head>
 <body>
-    <header>
-        <i class="fas fa-user-astronaut"></i> RS TECH
-    </header>
-
-    <div class="actions">
-        <button class="btn-cyber-uniforme btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
-        <label class="btn-cyber-uniforme btn-import" for="importar-arquivo"><i class="fas fa-upload"></i> Importar Dados
-            <input type="file" id="importar-arquivo" accept=".json" onchange="importarDados(event)">
-        </label>
+  <!-- Barra lateral fixa vertical com todos os atalhos -->
+  <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
+    <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom"><i class="fab fa-google"></i></a>
+    <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet"><i class="fas fa-video"></i></a>
+    <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive"><i class="fab fa-google-drive"></i></a>
+    <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs"><i class="far fa-file-alt"></i></a>
+    <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas"><i class="fas fa-table"></i></a>
+    <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
+    <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)"><i class="fas fa-laptop"></i></a>
+    <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio"><i class="fas fa-globe"></i></a>
+    <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links"><i class="fas fa-code"></i></a>
+    <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA"><i class="fas fa-robot"></i></a>
+    <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
+    <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias"><i class="fas fa-newspaper"></i></a>
+  </nav>
+  <header>
+    DASHBOARD CORPORATIVA | RS TECH
+  </header>
+  <div class="top-controls">
+    <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
+    <label class="btn-import" style="display:inline-block;cursor:pointer;">
+      <i class="fas fa-upload"></i> Importar Dados
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
+    </label>
+  </div>
+  <main class="dashboard-grid">
+    <!-- Bloco de Notas -->
+    <div class="card bloco-notas">
+      <h2>Bloco de Notas</h2>
+      <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
+      <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
     </div>
-
-    <div class="dashboard-grid">
-        <div class="card-cyber agenda-card">
-            <h2><i class="fas fa-calendar-alt"></i> Agenda Semanal</h2>
-            <div class="card-cyber-content">
-                <div class="agenda-tabs" id="agendaTabs"></div>
-                <div class="agenda-dia" id="agendaDia"></div>
-            </div>
-            <form class="agenda-form" onsubmit="adicionarAula(event)">
-                <div style="margin-bottom: 1rem;">
-                    <input type="text" id="dataAula" placeholder="dd/mm ou Descrição (Ex: Prova)" maxlength="30" autocomplete="off" required>
-                    <input type="text" id="conteudoAula" placeholder="Conteúdo/Detalhes da aula" maxlength="70" required>
-                </div>
-                <button type="submit" class="btn-cyber-uniforme"><i class="fas fa-plus-circle"></i> Adicionar Aula</button>
-            </form>
-        </div>
-
-        <div class="card-cyber atalhos-card">
-            <h2><i class="fas fa-bolt"></i> Atalhos Rápidos</h2>
-            <div class="card-cyber-content">
-                <div>
-                    <div><i class="fas fa-chalkboard-teacher"></i> Ambientes de Aula</div>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://classroom.google.com','_blank')"><i class="fab fa-google"></i> Classroom</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://meet.google.com','_blank')"><i class="fas fa-video"></i> Meet</button>
-                </div>
-                <div>
-                    <div><i class="fas fa-folder-open"></i> Documentos & Arquivos</div>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://drive.google.com','_blank')"><i class="fab fa-google-drive"></i> Drive</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://docs.google.com','_blank')"><i class="fas fa-file-word"></i> Docs</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://sheets.google.com','_blank')"><i class="fas fa-file-excel"></i> Planilhas</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://slides.google.com','_blank')"><i class="fas fa-file-powerpoint"></i> Apresentações</button>
-                </div>
-                <div>
-                    <div><i class="fas fa-cogs"></i> Ferramentas Úteis</div>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://fast.com','_blank')"><i class="fas fa-tachometer-alt"></i> FAST Test</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/ferramenta-busca-noticias/','_blank')"><i class="fas fa-newspaper"></i> News Search</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/ferramenta-dev-links/','_blank')"><i class="fas fa-code"></i> Dev Links</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://convertio.co/pt/archive-converter/','_blank')"><i class="fas fa-exchange-alt"></i> Conversor</button>
-                    <button class="btn-cyber-uniforme" onclick="window.open('https://ravellsl.github.io/agentes-de-IA/','_blank')"><i class="fas fa-robot"></i> Agentes IA</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-cyber tarefas-card">
-            <h2><i class="fas fa-tasks"></i> Tarefas Pendentes</h2>
-            <div class="card-cyber-content">
-                <form class="tarefas-form-inputs" style="margin-bottom: 1rem;">
-                    <input type="text" id="novaTarefa" placeholder="Descreva a tarefa ou lembrete" required>
-                </form>
-                <ul class="tarefas-lista" id="listaTarefas" style="max-height: none; flex-grow:1;"></ul>
-            </div>
-            <button class="btn-cyber-uniforme" onclick="document.getElementById('form-tarefas-submit-trigger').click(); return false;"><i class="fas fa-check-circle"></i> Adicionar Tarefa</button>
-            <form id="form-tarefas-submit-trigger" onsubmit="adicionarTarefa(event)" style="display:none;"><input type="submit"></form>
-        </div>
-
-        <div class="card-cyber cadastro-card"> 
-            <h2><i class="fas fa-users"></i> Alunos (AnyDesk)</h2>
-            <div class="card-cyber-content"> 
-                <form id="formAnydesk" autocomplete="off" onsubmit="manipularCadastroOuEdicaoAluno(event)" style="flex-shrink: 0; margin-bottom: 1rem;">
-                    <input type="text" id="nomeAlunoAnydesk" placeholder="Nome do Aluno" maxlength="50" required>
-                    <input type="text" id="codigoAnydesk" placeholder="Código ou Alias AnyDesk" maxlength="15" pattern=".{3,15}" title="Código ou Alias AnyDesk (3-15 caracteres)" required>
-                    <input type="hidden" id="alunoEditIdAnydesk">
-                </form>
-                <table class="alunos-table" id="tabelaAlunosAnydesk" style="display:none; flex-grow:1;"> 
-                    <thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <button type="submit" class="btn-cyber-uniforme" id="btnSubmitAnydesk" form="formAnydesk"><i class="fas fa-user-plus"></i> Cadastrar Aluno</button>
-        </div>
-
-        <div class="card-cyber links-card">
-            <h2><i class="fas fa-link"></i> Links Personalizados</h2>
-            <div class="card-cyber-content">
-                <input type="text" id="nomeLink" placeholder="Nome ou descrição do link" style="margin-top:0;">
-                <input type="url" id="urlLink" placeholder="https://exemplo.com">
-                <ul id="listaLinks" style="max-height: none; flex-grow:1;"></ul>
-            </div>
-            <button class="btn-cyber-uniforme" onclick="adicionarLink()"><i class="fas fa-plus-square"></i> Adicionar Link</button>
-        </div>
-
-        <div class="card-cyber biblioteca-card">
-            <h2><i class="fas fa-book-open"></i> Biblioteca Digital</h2>
-            <div class="card-cyber-content">
-                <input type="text" id="nomeMaterial" placeholder="Título/descrição do material" style="margin-top:0;">
-                <input type="url" id="urlMaterial" placeholder="Link do material (PDF, site, etc.)">
-                <ul class="biblioteca-lista" id="listaMateriais" style="max-height: none; flex-grow:1;"></ul>
-            </div>
-            <button class="btn-cyber-uniforme" onclick="adicionarMaterial()"><i class="fas fa-bookmark"></i> Adicionar Material</button>
-        </div>
-
-        <div class="card-cyber anotacoes-card">
-            <h2><i class="fas fa-pen-fancy"></i> Anotações Rápidas</h2>
-            <div class="card-cyber-content">
-                <form id="formAnotacao" autocomplete="off" onsubmit="adicionarAnotacao(event)" style="flex-shrink: 0; margin-bottom: 1rem;">
-                    <input type="text" id="tituloAnotacao" placeholder="Título da anotação" maxlength="45" required>
-                    <textarea id="textoAnotacao" rows="3" placeholder="Digite sua anotação aqui..." required></textarea>
-                </form>
-                <ul id="listaAnotacoes" style="max-height: none; flex-grow:1;"></ul>
-            </div>
-            <button type="submit" class="btn-cyber-uniforme" form="formAnotacao"><i class="fas fa-save"></i> Salvar Anotação</button>
-        </div>
-
-        <div class="card-cyber portal-card" onclick="window.open('https://ravellsl.github.io/rstech/','_blank')" tabindex="0" role="link" aria-label="Abrir Portal RS Tech">
-            <h2><i class="fas fa-rocket"></i> Portal RS Tech</h2>
-            <div class="card-cyber-content">
-                <img src="https://i.ibb.co/WNGLPKF3/home.png" alt="Home Portal" class="portal-img" />
-            </div>
-            <a class="portal-link" href="https://ravellsl.github.io/rstech/" target="_blank" tabindex="-1" aria-hidden="true" style="display:none;"></a>
-        </div>
-
-        <div class="card-cyber financeiro-card">
-            <h2><i class="fas fa-file-invoice-dollar"></i> Controle Financeiro</h2>
-            <div class="card-cyber-content">
-                <form id="formFinanceiro" autocomplete="off" onsubmit="adicionarLancamentoFinanceiro(event)" style="flex-shrink: 0; margin-bottom: 1rem;">
-                    <input type="text" id="nomeAlunoFinanceiro" placeholder="Nome do Aluno" maxlength="50" required>
-                    <input type="number" id="valorMensalidade" placeholder="Valor (Ex: 150.00)" step="0.01" min="0" required>
-                    <input type="date" id="dataVencimento" title="Data de Vencimento" required>
-                    <select id="statusPagamento" required>
-                        <option value="Pendente">Pendente</option>
-                        <option value="Pago">Pago</option>
-                    </select>
-                    <input type="date" id="dataPagamento" title="Data de Pagamento (se Pago)">
-                </form>
-                <table class="financeiro-table" id="tabelaFinanceiro" style="margin-top:1.5rem; display:none; flex-grow:1;">
-                    <thead><tr><th>Aluno</th><th>Valor</th><th>Venc.</th><th>Pag.</th><th>Status</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <button type="submit" class="btn-cyber-uniforme" form="formFinanceiro"><i class="fas fa-hand-holding-usd"></i> Adicionar Lançamento</button>
-        </div>
+    <!-- Diário de Classe -->
+    <div class="card diario-classe">
+      <h2>Diário de Classe</h2>
+      <textarea id="diarioClasse" rows="5" placeholder="Descreva o que foi realizado em aula..."></textarea>
+      <button class="btn" onclick="salvarDiarioClasse()">Salvar</button>
     </div>
-
-    <div id="modalAnotacao">
-        <div>
-            <h3 id="modalTitulo"></h3>
-            <div id="modalTexto"></div>
-            <button class="btn-cyber-uniforme" onclick="fecharModalAnotacao()"><i class="fas fa-times-circle"></i> Fechar</button>
-        </div>
+    <!-- Anotações Rápidas -->
+    <div class="card anotacoes-rapidas">
+      <h2>Anotações Rápidas</h2>
+      <form onsubmit="event.preventDefault(); adicionarAnotacao();">
+        <input id="anotacaoInput" placeholder="Digite uma anotação rápida">
+        <button class="btn" type="submit">Adicionar</button>
+        <button class="btn" type="button" onclick="limparAnotacoes()">Limpar Tudo</button>
+      </form>
+      <table id="tabelaAnotacoes">
+        <thead>
+          <tr><th>Anotação</th><th style="width:70px;">Ações</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
-
-<script>
-// --------------------- Variáveis Globais e Constantes ---------------------
-const semanaNomes = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-const localStorageKey = 'dashboardCyberpunkProfessorData_v4';
-let aulasPorDia = semanaNomes.map(() => []);
-let diaSelecionadoVisualmente = new Date().getDay();
-let semanaAtual = getWeekDays(new Date());
-let alunosAnydesk = [];
-let anotacoes = [];
-let financas = [];
-
-// --------------------- Funções Utilitárias de Data ---------------------
-function getWeekDays(startDate) {
-    const start = new Date(startDate);
-    start.setDate(start.getDate() - start.getDay());
-    return Array(7).fill().map((_, i) => {
-        const d = new Date(start);
-        d.setDate(d.getDate() + i);
-        return {
-            label: semanaNomes[i],
-            dataCompleta: d,
-            dataLabel: `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}`,
-            diaDaSemanaIndex: i
-        };
-    });
-}
-
-function formatDate(dateObj) {
-    if (!dateObj) return '---';
-    const d = dateObj instanceof Date ? dateObj : new Date(dateObj + 'T00:00:00-03:00');
-    if (isNaN(d.getTime())) return 'Data Inválida';
-    return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
-}
-
-function parseDateInput(input) {
-    if (!input) return null;
-    const partsHtmlDate = input.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (partsHtmlDate) {
-        return new Date(parseInt(partsHtmlDate[1]), parseInt(partsHtmlDate[2]) - 1, parseInt(partsHtmlDate[3]));
+    <!-- Cadastro de Alunos -->
+    <div class="card cadastro-alunos">
+      <h2>Cadastro de Alunos (AnyDesk)</h2>
+      <form onsubmit="event.preventDefault(); adicionarAluno();">
+        <input id="nomeAluno" placeholder="Nome do Aluno">
+        <input id="anydeskAluno" placeholder="AnyDesk do Aluno">
+        <button class="btn" type="submit" id="btnAlunoAdd">Cadastrar</button>
+        <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
+        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
+        <button class="btn" type="button" onclick="limparAlunos()">Limpar Tudo</button>
+      </form>
+      <table id="tabelaAlunos">
+        <thead>
+          <tr><th>Nome</th><th>AnyDesk</th><th style="width:80px;">Ações</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Tarefas Pendentes -->
+    <div class="card tarefas-pendentes">
+      <h2>Tarefas Pendentes</h2>
+      <form onsubmit="event.preventDefault(); adicionarTarefa();">
+        <input id="tarefaInput" placeholder="Adicionar nova tarefa">
+        <button class="btn" type="submit" id="btnTarefaAdd">Adicionar</button>
+        <button class="btn" type="button" id="btnTarefaEdit" style="display:none;" onclick="confirmarEdicaoTarefa()">Salvar Edição</button>
+        <button class="btn" type="button" id="btnTarefaCancel" style="display:none;" onclick="cancelarEdicaoTarefa()">Cancelar</button>
+        <button class="btn" type="button" onclick="limparTarefas()">Limpar Tudo</button>
+      </form>
+      <table id="tabelaTarefas">
+        <thead>
+          <tr><th>Tarefa</th><th>Status</th><th style="width:90px;">Ações</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Controle Financeiro -->
+    <div class="card controle-financeiro">
+      <h2>Controle Financeiro de Mensalidades</h2>
+      <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
+        <input id="nomeFinanceiro" placeholder="Nome do Aluno">
+        <input id="valorFinanceiro" type="number" placeholder="Valor (R$)">
+        <select id="statusFinanceiro">
+          <option value="Pago">Pago</option>
+          <option value="Pendente">Pendente</option>
+        </select>
+        <button class="btn" type="submit" id="btnFinAdd">Lançar</button>
+        <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
+        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
+        <button class="btn" type="button" onclick="limparFinanceiro()">Limpar Tudo</button>
+      </form>
+      <table id="tabelaFinanceiro">
+        <thead>
+          <tr><th>Nome</th><th>Valor</th><th>Status</th><th style="width:90px;">Ações</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+  <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
+    <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
+  </a>
+  <script>
+    // BLOCO DE NOTAS E DIÁRIO DE CLASSE
+    function salvarBlocoNotas() {
+      localStorage.setItem('blocoNotas', document.getElementById('blocoNotas').value);
+      alert('Bloco de Notas salvo com sucesso.');
     }
-    const partsFull = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (partsFull) {
-        return new Date(partsFull[2], partsFull[1] - 1, partsFull[0]);
+    document.getElementById('blocoNotas').value = localStorage.getItem('blocoNotas') || '';
+    function salvarDiarioClasse() {
+      localStorage.setItem('diarioClasse', document.getElementById('diarioClasse').value);
+      alert('Diário de Classe salvo.');
     }
-    const partsShort = input.match(/^(\d{1,2})\/(\d{1,2})$/);
-    if (partsShort) {
-        return new Date(new Date().getFullYear(), partsShort[1] - 1, partsShort[0]);
+    document.getElementById('diarioClasse').value = localStorage.getItem('diarioClasse') || '';
+    // ANOTAÇÕES RÁPIDAS
+    let anotacaoEditIdx = null;
+    function adicionarAnotacao() {
+      const val = document.getElementById('anotacaoInput').value.trim();
+      if (!val) return;
+      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      if (anotacaoEditIdx === null) {
+        anotacoes.push(val);
+      } else {
+        anotacoes[anotacaoEditIdx] = val;
+        anotacaoEditIdx = null;
+        document.getElementById('btnTarefaAdd').style.display = '';
+        document.getElementById('btnTarefaEdit').style.display = 'none';
+        document.getElementById('btnTarefaCancel').style.display = 'none';
+      }
+      localStorage.setItem('anotacoesRapidas', JSON.stringify(anotacoes));
+      listarAnotacoes();
+      document.getElementById('anotacaoInput').value = '';
     }
-    return null;
-}
-
-// --------------------- Agenda Semanal ---------------------
-function renderAgendaTabs() {
-    const tabsContainer = document.getElementById('agendaTabs');
-    tabsContainer.innerHTML = '';
-    semanaAtual.forEach((diaInfo) => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-cyber-uniforme agenda-tab' + (diaInfo.diaDaSemanaIndex === diaSelecionadoVisualmente ? ' selected' : '');
-        btn.innerHTML = `<span>${diaInfo.label}</span><span style="font-size:0.9em;">${diaInfo.dataLabel}</span>`;
-        btn.onclick = () => {
-            diaSelecionadoVisualmente = diaInfo.diaDaSemanaIndex;
-            renderAgendaTabs(); renderAulas();
-        };
-        tabsContainer.appendChild(btn);
-    });
-    const selectedTab = tabsContainer.querySelector('.selected');
-    if (selectedTab) {
-        selectedTab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    function editarAnotacao(idx) {
+      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      document.getElementById('anotacaoInput').value = anotacoes[idx];
+      anotacaoEditIdx = idx;
+      document.getElementById('btnTarefaAdd').style.display = 'none';
+      document.getElementById('btnTarefaEdit').style.display = '';
+      document.getElementById('btnTarefaCancel').style.display = '';
     }
-}
-function renderAulas() {
-    const diaAtualInfo = semanaAtual[diaSelecionadoVisualmente];
-    const aulasDoDia = aulasPorDia[diaSelecionadoVisualmente].filter(aula => {
-        if (!aula.dataObj) return false;
-        const aulaDate = new Date(aula.dataObj);
-        return aulaDate.getDate() === diaAtualInfo.dataCompleta.getDate() &&
-               aulaDate.getMonth() === diaAtualInfo.dataCompleta.getMonth() &&
-               aulaDate.getFullYear() === diaAtualInfo.dataCompleta.getFullYear();
-    });
-    const divDia = document.getElementById('agendaDia');
-    if (!aulasDoDia.length) {
-        divDia.innerHTML = `<span style="color:var(--neon-pink); opacity:0.7; display:block; text-align:center; padding-top:1rem;">Nenhuma aula para ${diaAtualInfo.label}, ${diaAtualInfo.dataLabel}.</span>`;
-        return;
+    function limparAnotacoes() {
+      if (confirm("Limpar todas as anotações?")) {
+        localStorage.removeItem('anotacoesRapidas');
+        listarAnotacoes();
+      }
     }
-    divDia.innerHTML = `<ul>${aulasDoDia.map((aula) => `<li>${aula.dataInput || formatDate(new Date(aula.dataObj))} – <strong>${aula.conteudo}</strong> <a href="#" title="Remover Aula" onclick="removerAula(${diaSelecionadoVisualmente}, '${aula.id}');return false;"><i class='fas fa-times'></i></a></li>`).join('')}</ul>`;
-}
-function adicionarAula(event) {
-    event.preventDefault();
-    const dataInputEl = document.getElementById('dataAula');
-    const conteudoEl = document.getElementById('conteudoAula');
-    const dataInputValue = dataInputEl.value.trim();
-    const conteudo = conteudoEl.value.trim();
-
-    if (conteudo) {
-        let diaDeReferencia = new Date(semanaAtual[diaSelecionadoVisualmente].dataCompleta);
-        let dataObjParaAula = parseDateInput(dataInputValue);
-        let diaDaSemanaParaArmazenar = diaSelecionadoVisualmente;
-
-        if (dataObjParaAula) {
-            diaDeReferencia = dataObjParaAula;
-            diaDaSemanaParaArmazenar = dataObjParaAula.getDay();
-        }
-
-        aulasPorDia[diaDaSemanaParaArmazenar].push({
-            id: Date.now().toString(),
-            dataInput: dataInputValue || formatDate(diaDeReferencia),
-            dataObj: diaDeReferencia.toISOString(),
-            conteudo: conteudo
-        });
-        aulasPorDia[diaDaSemanaParaArmazenar].sort((a, b) => new Date(a.dataObj) - new Date(b.dataObj));
-
-        if (diaDaSemanaParaArmazenar === diaSelecionadoVisualmente &&
-            new Date(diaDeReferencia).toDateString() === semanaAtual[diaSelecionadoVisualmente].dataCompleta.toDateString()) {
-            renderAulas();
-        }
-
-        dataInputEl.value = '';
-        conteudoEl.value = '';
-        salvarDadosLocalmente();
+    function removerAnotacao(idx) {
+      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      anotacoes.splice(idx,1);
+      localStorage.setItem('anotacoesRapidas', JSON.stringify(anotacoes));
+      listarAnotacoes();
     }
-}
-function removerAula(diaDaSemanaIndex, aulaId) {
-    aulasPorDia[diaDaSemanaIndex] = aulasPorDia[diaDaSemanaIndex].filter(aula => aula.id !== aulaId);
-    renderAulas();
-    salvarDadosLocalmente();
-}
-
-// --------------------- Tarefas Pendentes ---------------------
-function adicionarTarefa(event) {
-    event.preventDefault();
-    const tarefaInput = document.querySelector('.tarefas-card .card-cyber-content #novaTarefa');
-    const tarefa = tarefaInput.value.trim();
-    if (tarefa) {
-        const listaTarefas = document.getElementById('listaTarefas');
-        const item = document.createElement('li');
-        const id = 'tarefa-' + Date.now() + Math.random().toString(36).substr(2, 9);
-        item.innerHTML = `<span><input type="checkbox" id="${id}" onchange="toggleConcluidaTarefa(this)"> <label for="${id}">${tarefa}</label></span><button class="btn-del" title="Excluir Tarefa" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
-        listaTarefas.appendChild(item);
-        tarefaInput.value = '';
-        salvarDadosLocalmente();
+    function cancelarEdicaoAnotacao() {
+      anotacaoEditIdx = null;
+      document.getElementById('anotacaoInput').value = '';
+      document.getElementById('btnTarefaAdd').style.display = '';
+      document.getElementById('btnTarefaEdit').style.display = 'none';
+      document.getElementById('btnTarefaCancel').style.display = 'none';
     }
-}
-function toggleConcluidaTarefa(checkbox) {
-    checkbox.closest('li').classList.toggle('concluida', checkbox.checked);
-    salvarDadosLocalmente();
-}
-
-// --------------------- Cadastro Alunos (AnyDesk) ---------------------
-function manipularCadastroOuEdicaoAluno(e) {
-    e.preventDefault();
-    const nomeInput = document.getElementById('nomeAlunoAnydesk');
-    const codigoInput = document.getElementById('codigoAnydesk');
-    const nome = nomeInput.value.trim();
-    let codigoParaSalvar = codigoInput.value.trim();
-
-    if (codigoParaSalvar.length < 3 || codigoParaSalvar.length > 15) {
-        alert("O código ou alias AnyDesk deve ter entre 3 e 15 caracteres.");
-        codigoInput.focus();
-        return;
+    function listarAnotacoes() {
+      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+      anotacoes.forEach((a, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${a}</td>
+            <td class="table-actions">
+              <button onclick="editarAnotacao(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerAnotacao(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>`;
+      });
+      cancelarEdicaoAnotacao();
     }
-
-    const tempCodigoNumerico = codigoParaSalvar.replace(/\s/g, '');
-    if (tempCodigoNumerico.length === 9 && /^\d+$/.test(tempCodigoNumerico)) {
-        codigoParaSalvar = `${tempCodigoNumerico.substring(0,3)} ${tempCodigoNumerico.substring(3,6)} ${tempCodigoNumerico.substring(6,9)}`;
+    listarAnotacoes();
+    // CADASTRO DE ALUNOS
+    let alunoEditIdx = null;
+    function adicionarAluno() {
+      const nome = document.getElementById('nomeAluno').value.trim();
+      const anydesk = document.getElementById('anydeskAluno').value.trim();
+      if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
+      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
+      if (alunoEditIdx === null) {
+        lista.push({nome, anydesk});
+      } else {
+        lista[alunoEditIdx] = {nome, anydesk};
+        alunoEditIdx = null;
+        document.getElementById('btnAlunoAdd').style.display = '';
+        document.getElementById('btnAlunoEdit').style.display = 'none';
+        document.getElementById('btnAlunoCancel').style.display = 'none';
+      }
+      localStorage.setItem('alunosAnyDesk', JSON.stringify(lista));
+      listarAlunos();
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('anydeskAluno').value = '';
     }
-
-    if (nome && codigoParaSalvar) {
-        const alunoEditIdInput = document.getElementById('alunoEditIdAnydesk');
-        const idEmEdicao = alunoEditIdInput.value;
-
-        if (idEmEdicao) {
-            const alunoIndex = alunosAnydesk.findIndex(aluno => aluno.id === idEmEdicao);
-            if (alunoIndex > -1) {
-                alunosAnydesk[alunoIndex].nome = nome;
-                alunosAnydesk[alunoIndex].codigo = codigoParaSalvar;
-            }
-            alunoEditIdInput.value = '';
-            document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
-        } else {
-            alunosAnydesk.push({ id: Date.now().toString(), nome, codigo: codigoParaSalvar });
-        }
-
-        nomeInput.value = '';
-        codigoInput.value = '';
-        nomeInput.focus();
-        renderTabelaAlunosAnydesk();
-        salvarDadosLocalmente();
+    function editarAluno(idx) {
+      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
+      document.getElementById('nomeAluno').value = lista[idx].nome;
+      document.getElementById('anydeskAluno').value = lista[idx].anydesk;
+      alunoEditIdx = idx;
+      document.getElementById('btnAlunoAdd').style.display = 'none';
+      document.getElementById('btnAlunoEdit').style.display = '';
+      document.getElementById('btnAlunoCancel').style.display = '';
     }
-}
-
-function iniciarEdicaoAlunoAnydesk(alunoId) {
-    const aluno = alunosAnydesk.find(a => a.id === alunoId);
-    if (aluno) {
-        document.getElementById('nomeAlunoAnydesk').value = aluno.nome;
-        document.getElementById('codigoAnydesk').value = aluno.codigo;
-        document.getElementById('alunoEditIdAnydesk').value = aluno.id;
-        document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-save"></i> Salvar Alterações';
-        document.getElementById('nomeAlunoAnydesk').focus();
+    function confirmarEdicaoAluno() { adicionarAluno(); }
+    function cancelarEdicaoAluno() {
+      alunoEditIdx = null;
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('anydeskAluno').value = '';
+      document.getElementById('btnAlunoAdd').style.display = '';
+      document.getElementById('btnAlunoEdit').style.display = 'none';
+      document.getElementById('btnAlunoCancel').style.display = 'none';
     }
-}
-
-function cancelarEdicaoAlunoAnydesk() {
-    document.getElementById('nomeAlunoAnydesk').value = '';
-    document.getElementById('codigoAnydesk').value = '';
-    document.getElementById('alunoEditIdAnydesk').value = '';
-    document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
-}
-
-function renderTabelaAlunosAnydesk() {
-    const table = document.getElementById('tabelaAlunosAnydesk');
-    const tbody = table.querySelector('tbody');
-    tbody.innerHTML = '';
-    alunosAnydesk.sort((a, b) => a.nome.localeCompare(b.nome));
-
-    alunosAnydesk.forEach(aluno => {
-        const tr = document.createElement('tr');
-
-        const tdNome = document.createElement('td');
-        tdNome.textContent = aluno.nome;
-        tr.appendChild(tdNome);
-
-        const tdCodigo = document.createElement('td');
-        tdCodigo.textContent = aluno.codigo;
-        tr.appendChild(tdCodigo);
-
-        const tdAcoes = document.createElement('td');
-        const divAcoes = document.createElement('div');
-        divAcoes.style.display = 'flex';
-        divAcoes.style.gap = '0.5rem';
-        divAcoes.style.justifyContent = 'flex-start'; 
-        divAcoes.style.alignItems = 'center'; 
-
-        const btnEditar = document.createElement('button');
-        btnEditar.className = 'btn-del';
-        btnEditar.style.color = 'var(--neon-cyan)';
-        btnEditar.title = 'Editar Aluno';
-        btnEditar.innerHTML = '<i class="fas fa-edit"></i>';
-        btnEditar.onclick = () => iniciarEdicaoAlunoAnydesk(aluno.id);
-        divAcoes.appendChild(btnEditar);
-
-        const btnRemover = document.createElement('button');
-        btnRemover.className = 'btn-del';
-        btnRemover.title = 'Remover Aluno';
-        btnRemover.innerHTML = '<i class="fas fa-trash"></i>';
-        btnRemover.onclick = () => removerAlunoAnydesk(aluno.id);
-        divAcoes.appendChild(btnRemover);
-        
-        tdAcoes.appendChild(divAcoes);
-        tr.appendChild(tdAcoes);
-        
-        tbody.appendChild(tr);
-    });
-    table.style.display = alunosAnydesk.length ? 'table' : 'none';
-
-    if (alunosAnydesk.length === 0 && document.getElementById('alunoEditIdAnydesk').value) {
-        cancelarEdicaoAlunoAnydesk();
+    function limparAlunos() {
+      if (confirm("Limpar todos os alunos?")) {
+        localStorage.removeItem('alunosAnyDesk');
+        listarAlunos();
+      }
     }
-}
-
-
-function removerAlunoAnydesk(alunoId) {
-    if (document.getElementById('alunoEditIdAnydesk').value === alunoId) {
-        cancelarEdicaoAlunoAnydesk();
+    function removerAluno(idx) {
+      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
+      lista.splice(idx,1);
+      localStorage.setItem('alunosAnyDesk', JSON.stringify(lista));
+      listarAlunos();
     }
-    alunosAnydesk = alunosAnydesk.filter(aluno => aluno.id !== alunoId);
-    renderTabelaAlunosAnydesk();
-    salvarDadosLocalmente();
-}
-
-// --------------------- Links Personalizáveis ---------------------
-function adicionarLink() {
-    const nomeInput = document.getElementById('nomeLink');
-    const urlInput = document.getElementById('urlLink');
-    const nome = nomeInput.value.trim();
-    let url = urlInput.value.trim();
-
-    if (nome && url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            url = 'https://' + url;
-        }
-        const item = document.createElement('li');
-        item.innerHTML = `<span><a href="${url}" target="_blank"><i class="fas fa-external-link-alt"></i> ${nome}</a></span><button class="btn-del" title="Excluir Link" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
-        document.getElementById('listaLinks').appendChild(item);
-        nomeInput.value = '';
-        urlInput.value = '';
-        salvarDadosLocalmente();
+    function listarAlunos() {
+      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
+      let tbody = document.getElementById('tabelaAlunos').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+      lista.forEach((a, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${a.nome}</td>
+            <td>${a.anydesk}</td>
+            <td class="table-actions">
+              <button onclick="editarAluno(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerAluno(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>`;
+      });
+      cancelarEdicaoAluno();
     }
-}
-
-// --------------------- Biblioteca Online ---------------------
-function adicionarMaterial() {
-    const nomeInput = document.getElementById('nomeMaterial');
-    const urlInput = document.getElementById('urlMaterial');
-    const nome = nomeInput.value.trim();
-    let url = urlInput.value.trim();
-
-    if (nome && url) {
-         if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            url = 'https://' + url;
-        }
-        const item = document.createElement('li');
-        item.innerHTML = `<span><a href="${url}" target="_blank" style="color:var(--neon-pink);"><i class="fas fa-atlas"></i> ${nome}</a></span><button class="btn-del" title="Excluir Material" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
-        document.getElementById('listaMateriais').appendChild(item);
-        nomeInput.value = '';
-        urlInput.value = '';
-        salvarDadosLocalmente();
+    listarAlunos();
+    // TAREFAS PENDENTES
+    let tarefaEditIdx = null;
+    function adicionarTarefa() {
+      const val = document.getElementById('tarefaInput').value.trim();
+      if (!val) return;
+      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      if (tarefaEditIdx === null) {
+        tarefas.push({tarefa: val, done: false});
+      } else {
+        tarefas[tarefaEditIdx].tarefa = val;
+        tarefaEditIdx = null;
+        document.getElementById('btnTarefaAdd').style.display = '';
+        document.getElementById('btnTarefaEdit').style.display = 'none';
+        document.getElementById('btnTarefaCancel').style.display = 'none';
+      }
+      localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+      listarTarefas();
+      document.getElementById('tarefaInput').value = '';
     }
-}
-
-// --------------------- Anotações Rápidas ---------------------
-function adicionarAnotacao(e) {
-    e.preventDefault();
-    const tituloInput = document.getElementById('tituloAnotacao');
-    const textoInput = document.getElementById('textoAnotacao');
-    const titulo = tituloInput.value.trim();
-    const texto = textoInput.value.trim();
-
-    if (titulo && texto) {
-        anotacoes.push({id: Date.now().toString(), titulo, texto});
-        renderAnotacoes();
-        tituloInput.value = '';
-        textoInput.value = '';
-        salvarDadosLocalmente();
+    function editarTarefa(idx) {
+      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      document.getElementById('tarefaInput').value = tarefas[idx].tarefa;
+      tarefaEditIdx = idx;
+      document.getElementById('btnTarefaAdd').style.display = 'none';
+      document.getElementById('btnTarefaEdit').style.display = '';
+      document.getElementById('btnTarefaCancel').style.display = '';
     }
-}
-function renderAnotacoes() {
-    const ul = document.getElementById('listaAnotacoes');
-    ul.innerHTML = '';
-    anotacoes.sort((a,b) => a.titulo.localeCompare(b.titulo));
-    anotacoes.forEach(a => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span style="cursor:pointer;text-decoration:underline;color:var(--neon-cyan);" onclick="abrirModalAnotacao('${a.id}')">${a.titulo}</span>
-        <button class="btn-del" title="Excluir Anotação" onclick="removerAnotacao('${a.id}')"><i class="fas fa-trash"></i></button>`;
-        ul.appendChild(li);
-    });
-}
-function removerAnotacao(anotacaoId) {
-    anotacoes = anotacoes.filter(a => a.id !== anotacaoId);
-    renderAnotacoes();
-    salvarDadosLocalmente();
-}
-function abrirModalAnotacao(anotacaoId) {
-    const anotacao = anotacoes.find(a => a.id === anotacaoId);
-    if (anotacao) {
-        document.getElementById('modalTitulo').innerText = anotacao.titulo;
-        document.getElementById('modalTexto').innerText = anotacao.texto;
-        document.getElementById('modalAnotacao').style.display = 'flex';
+    function confirmarEdicaoTarefa() { adicionarTarefa(); }
+    function cancelarEdicaoTarefa() {
+      tarefaEditIdx = null;
+      document.getElementById('tarefaInput').value = '';
+      document.getElementById('btnTarefaAdd').style.display = '';
+      document.getElementById('btnTarefaEdit').style.display = 'none';
+      document.getElementById('btnTarefaCancel').style.display = 'none';
     }
-}
-function fecharModalAnotacao() {
-    document.getElementById('modalAnotacao').style.display = 'none';
-}
-
-// --------------------- Controle Financeiro ---------------------
-function adicionarLancamentoFinanceiro(event) {
-    event.preventDefault();
-    const nomeAluno = document.getElementById('nomeAlunoFinanceiro').value.trim();
-    const valor = parseFloat(document.getElementById('valorMensalidade').value);
-    const vencimentoStr = document.getElementById('dataVencimento').value;
-    const status = document.getElementById('statusPagamento').value;
-    const pagamentoStr = document.getElementById('dataPagamento').value;
-
-    if (nomeAluno && !isNaN(valor) && vencimentoStr) {
-        financas.push({
-            id: Date.now().toString(),
-            aluno: nomeAluno,
-            valor: valor,
-            vencimento: vencimentoStr,
-            status: status,
-            dataPagamento: (status === 'Pago' && pagamentoStr) ? pagamentoStr : null
-        });
-        renderFinancas();
-        document.getElementById('formFinanceiro').reset();
-        document.getElementById('dataPagamento').disabled = true;
-        salvarDadosLocalmente();
+    function limparTarefas() {
+      if (confirm("Limpar todas as tarefas?")) {
+        localStorage.removeItem('tarefasPendentes');
+        listarTarefas();
+      }
     }
-}
-
-document.getElementById('statusPagamento').addEventListener('change', function() {
-    const dataPagamentoEl = document.getElementById('dataPagamento');
-    dataPagamentoEl.disabled = this.value !== 'Pago';
-    if(this.value !== 'Pago') {
-        dataPagamentoEl.value = '';
-    } else {
-        if(!dataPagamentoEl.value) {
-            dataPagamentoEl.value = new Date().toISOString().split('T')[0];
-        }
+    function removerTarefa(idx) {
+      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      tarefas.splice(idx, 1);
+      localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+      listarTarefas();
     }
-});
-
-function renderFinancas() {
-    const tbody = document.getElementById('tabelaFinanceiro').querySelector('tbody');
-    tbody.innerHTML = '';
-    const hoje = new Date();
-    hoje.setHours(0,0,0,0);
-
-    financas.sort((a,b) => new Date(a.vencimento + 'T00:00:00-03:00') - new Date(b.vencimento + 'T00:00:00-03:00'));
-
-    financas.forEach(item => {
-        const tr = document.createElement('tr');
-        const vencimentoDate = new Date(item.vencimento + 'T00:00:00-03:00');
-        let statusFinal = item.status;
-        let statusClass = '';
-
-        if (item.status === 'Pendente' && vencimentoDate < hoje) {
-            statusFinal = 'Atrasado';
-        }
-
-        switch(statusFinal) {
-            case 'Pago': statusClass = 'status-pago'; break;
-            case 'Pendente': statusClass = 'status-pendente'; break;
-            case 'Atrasado': statusClass = 'status-atrasado'; break;
-        }
-        const dataPagamentoFormatada = item.dataPagamento ? formatDate(item.dataPagamento) : '---';
-
-        const tdAcoesFinanceiro = document.createElement('td');
-        const divAcoesFinanceiro = document.createElement('div');
-        divAcoesFinanceiro.style.display = 'flex';
-        divAcoesFinanceiro.style.gap = '0.5rem';
-        divAcoesFinanceiro.style.justifyContent = 'flex-start'; 
-        divAcoesFinanceiro.style.alignItems = 'center';
-
-        if (item.status !== 'Pago') {
-            const btnPagar = document.createElement('button');
-            btnPagar.className = 'btn-del';
-            btnPagar.style.color = 'var(--neon-green)';
-            btnPagar.title = 'Marcar como Pago';
-            btnPagar.innerHTML = '<i class="fas fa-check-square"></i>';
-            btnPagar.onclick = () => marcarComoPago(item.id);
-            divAcoesFinanceiro.appendChild(btnPagar);
-        }
-
-        const btnExcluir = document.createElement('button');
-        btnExcluir.className = 'btn-del';
-        btnExcluir.title = 'Excluir Lançamento';
-        btnExcluir.innerHTML = '<i class="fas fa-trash"></i>';
-        btnExcluir.onclick = () => removerLancamentoFinanceiro(item.id);
-        divAcoesFinanceiro.appendChild(btnExcluir);
-        tdAcoesFinanceiro.appendChild(divAcoesFinanceiro);
-
-        tr.innerHTML = `
-            <td>${item.aluno}</td>
-            <td>R$ ${item.valor.toFixed(2).replace('.',',')}</td>
-            <td>${formatDate(vencimentoDate)}</td>
-            <td>${dataPagamentoFormatada}</td>
-            <td class="${statusClass}">${statusFinal}</td>
-        `;
-        tr.appendChild(tdAcoesFinanceiro);
-        tbody.appendChild(tr);
-    });
-    document.getElementById('tabelaFinanceiro').style.display = financas.length ? 'table' : 'none';
-}
-
-function marcarComoPago(itemId) {
-    const item = financas.find(f => f.id === itemId);
-    if (item) {
-        item.status = 'Pago';
-        if (!item.dataPagamento) {
-            item.dataPagamento = new Date().toISOString().split('T')[0];
-        }
-        renderFinancas();
-        salvarDadosLocalmente();
+    function concluirTarefa(idx) {
+      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      tarefas[idx].done = !tarefas[idx].done;
+      localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+      listarTarefas();
     }
-}
-
-function removerLancamentoFinanceiro(itemId) {
-    financas = financas.filter(f => f.id !== itemId);
-    renderFinancas();
-    salvarDadosLocalmente();
-}
-
-// --------------------- Persistência de Dados (localStorage e Export/Import) ---------------------
-function salvarDadosLocalmente() {
-    const tarefas = [];
-    document.querySelectorAll('#listaTarefas li').forEach(li => {
-        tarefas.push({
-            texto: li.querySelector('label').innerText.trim(),
-            concluida: li.classList.contains('concluida')
-        });
-    });
-    const links = [];
-    document.querySelectorAll('#listaLinks li a').forEach(a => {
-        const iconText = a.querySelector('i') ? a.querySelector('i').outerHTML : '';
-        const nomeLimpo = a.innerHTML.replace(iconText, '').trim();
-        links.push({ nome: nomeLimpo, url: a.getAttribute('href') });
-    });
-    const materiais = [];
-    document.querySelectorAll('#listaMateriais li a').forEach(a => {
-        const iconText = a.querySelector('i') ? a.querySelector('i').outerHTML : '';
-        const nomeLimpo = a.innerHTML.replace(iconText, '').trim();
-        materiais.push({ nome: nomeLimpo, url: a.getAttribute('href') });
-    });
-
-    const dados = { aulasPorDia, alunosAnydesk, tarefas, links, materiais, anotacoes, financas };
-    try {
-        localStorage.setItem(localStorageKey, JSON.stringify(dados));
-    } catch (e) {
-        console.error("Erro ao salvar dados no localStorage:", e);
-        alert("Erro ao salvar dados. Verifique se o localStorage não está cheio ou desabilitado.");
+    function listarTarefas() {
+      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      let tbody = document.getElementById('tabelaTarefas').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+      tarefas.forEach((t, idx) => {
+        tbody.innerHTML += `
+          <tr${t.done ? ' style="text-decoration:line-through;opacity:.6;"' : ''}>
+            <td>${t.tarefa}</td>
+            <td>
+              <button onclick="concluirTarefa(${idx})" title="Concluir" style="color:var(--c4);background:none;border:none;font-size:1.1rem;">
+                <i class="fas fa-${t.done ? 'undo' : 'check'}"></i>
+              </button>
+            </td>
+            <td class="table-actions">
+              <button onclick="editarTarefa(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerTarefa(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>`;
+      });
+      cancelarEdicaoTarefa();
     }
-}
-
-function carregarDadosLocalmente() {
-    const dadosSalvos = localStorage.getItem(localStorageKey);
-    if (dadosSalvos) {
+    listarTarefas();
+    // CONTROLE FINANCEIRO
+    let finEditIdx = null;
+    function adicionarFinanceiro() {
+      const nome = document.getElementById('nomeFinanceiro').value.trim();
+      const valor = document.getElementById('valorFinanceiro').value.trim();
+      const status = document.getElementById('statusFinanceiro').value;
+      if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
+      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
+      if (finEditIdx === null) {
+        lista.push({nome, valor, status});
+      } else {
+        lista[finEditIdx] = {nome, valor, status};
+        finEditIdx = null;
+        document.getElementById('btnFinAdd').style.display = '';
+        document.getElementById('btnFinEdit').style.display = 'none';
+        document.getElementById('btnFinCancel').style.display = 'none';
+      }
+      localStorage.setItem('controleFinanceiro', JSON.stringify(lista));
+      listarFinanceiro();
+      document.getElementById('nomeFinanceiro').value = '';
+      document.getElementById('valorFinanceiro').value = '';
+    }
+    function editarFinanceiro(idx) {
+      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
+      document.getElementById('nomeFinanceiro').value = lista[idx].nome;
+      document.getElementById('valorFinanceiro').value = lista[idx].valor;
+      document.getElementById('statusFinanceiro').value = lista[idx].status;
+      finEditIdx = idx;
+      document.getElementById('btnFinAdd').style.display = 'none';
+      document.getElementById('btnFinEdit').style.display = '';
+      document.getElementById('btnFinCancel').style.display = '';
+    }
+    function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
+    function cancelarEdicaoFinanceiro() {
+      finEditIdx = null;
+      document.getElementById('nomeFinanceiro').value = '';
+      document.getElementById('valorFinanceiro').value = '';
+      document.getElementById('statusFinanceiro').value = 'Pago';
+      document.getElementById('btnFinAdd').style.display = '';
+      document.getElementById('btnFinEdit').style.display = 'none';
+      document.getElementById('btnFinCancel').style.display = 'none';
+    }
+    function limparFinanceiro() {
+      if (confirm("Limpar todos os dados financeiros?")) {
+        localStorage.removeItem('controleFinanceiro');
+        listarFinanceiro();
+      }
+    }
+    function removerFinanceiro(idx) {
+      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
+      lista.splice(idx,1);
+      localStorage.setItem('controleFinanceiro', JSON.stringify(lista));
+      listarFinanceiro();
+    }
+    function listarFinanceiro() {
+      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
+      let tbody = document.getElementById('tabelaFinanceiro').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+      lista.forEach((f, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${f.nome}</td>
+            <td>R$ ${f.valor}</td>
+            <td>${f.status}</td>
+            <td class="table-actions">
+              <button onclick="editarFinanceiro(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerFinanceiro(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>`;
+      });
+      cancelarEdicaoFinanceiro();
+    }
+    listarFinanceiro();
+    // EXPORTAÇÃO / IMPORTAÇÃO
+    function exportarDados() {
+      const dados = {
+        blocoNotas: localStorage.getItem('blocoNotas') || '',
+        diarioClasse: localStorage.getItem('diarioClasse') || '',
+        alunosAnyDesk: localStorage.getItem('alunosAnyDesk') || '[]',
+        tarefasPendentes: localStorage.getItem('tarefasPendentes') || '[]',
+        anotacoesRapidas: localStorage.getItem('anotacoesRapidas') || '[]',
+        controleFinanceiro: localStorage.getItem('controleFinanceiro') || '[]'
+      };
+      const blob = new Blob([JSON.stringify(dados, null, 2)], {type: "application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "dashboard_rs_tech_backup.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+    function importarDados(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
         try {
-            const dados = JSON.parse(dadosSalvos);
-            aulasPorDia = (Array.isArray(dados.aulasPorDia) && dados.aulasPorDia.length === semanaNomes.length) ?
-                dados.aulasPorDia.map(dia => dia.map(aula => ({...aula, dataObj: new Date(aula.dataObj)}))) : aulasPorDia = semanaNomes.map(() => []);
-
-            alunosAnydesk = Array.isArray(dados.alunosAnydesk) ? dados.alunosAnydesk : [];
-
-            document.getElementById('listaTarefas').innerHTML = '';
-            if(Array.isArray(dados.tarefas)) dados.tarefas.forEach(t => {
-                const item = document.createElement('li');
-                if(t.concluida) item.classList.add('concluida');
-                const id = 'tarefa-' + Date.now() + Math.random().toString(36).substr(2, 9);
-                item.innerHTML = `<span><input type="checkbox" id="${id}" ${t.concluida ? 'checked' : ''} onchange="toggleConcluidaTarefa(this)"> <label for="${id}">${t.texto}</label></span><button class="btn-del" title="Excluir Tarefa" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
-                document.getElementById('listaTarefas').appendChild(item);
-            });
-
-            document.getElementById('listaLinks').innerHTML = '';
-            if(Array.isArray(dados.links)) dados.links.forEach(l => {
-                const item = document.createElement('li');
-                item.innerHTML = `<span><a href="${l.url}" target="_blank"><i class="fas fa-external-link-alt"></i> ${l.nome}</a></span><button class="btn-del" title="Excluir Link" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
-                document.getElementById('listaLinks').appendChild(item);
-            });
-
-            document.getElementById('listaMateriais').innerHTML = '';
-            if(Array.isArray(dados.materiais)) dados.materiais.forEach(m => {
-                const item = document.createElement('li');
-                item.innerHTML = `<span><a href="${m.url}" target="_blank" style="color:var(--neon-pink);"><i class="fas fa-atlas"></i> ${m.nome}</a></span><button class="btn-del" title="Excluir Material" onclick="this.closest('li').remove(); salvarDadosLocalmente();"><i class="fas fa-trash"></i></button>`;
-                document.getElementById('listaMateriais').appendChild(item);
-            });
-
-            anotacoes = Array.isArray(dados.anotacoes) ? dados.anotacoes : [];
-            financas = Array.isArray(dados.financas) ? dados.financas : [];
-
-            renderAgendaTabs(); renderAulas();
-            renderTabelaAlunosAnydesk();
-            renderAnotacoes();
-            renderFinancas();
-
-        } catch (err) {
-            console.error("Falha ao carregar dados do localStorage:", err);
-            aulasPorDia = semanaNomes.map(() => []);
+          const dados = JSON.parse(e.target.result);
+          if (typeof dados !== "object") throw new Error("Formato inválido!");
+          if ("blocoNotas" in dados) localStorage.setItem('blocoNotas', dados.blocoNotas);
+          if ("diarioClasse" in dados) localStorage.setItem('diarioClasse', dados.diarioClasse);
+          if ("alunosAnyDesk" in dados) localStorage.setItem('alunosAnyDesk', dados.alunosAnyDesk);
+          if ("tarefasPendentes" in dados) localStorage.setItem('tarefasPendentes', dados.tarefasPendentes);
+          if ("anotacoesRapidas" in dados) localStorage.setItem('anotacoesRapidas', dados.anotacoesRapidas);
+          if ("controleFinanceiro" in dados) localStorage.setItem('controleFinanceiro', dados.controleFinanceiro);
+          document.getElementById('blocoNotas').value = localStorage.getItem('blocoNotas') || '';
+          document.getElementById('diarioClasse').value = localStorage.getItem('diarioClasse') || '';
+          listarAlunos(); listarTarefas(); listarAnotacoes(); listarFinanceiro();
+          alert("Dados importados com sucesso!");
+        } catch(e) {
+          alert("Falha na importação: " + e.message);
         }
-    } else {
-        renderAgendaTabs(); renderAulas();
+      };
+      reader.readAsText(file);
+      event.target.value = "";
     }
-}
-
-function exportarDados() {
-    salvarDadosLocalmente();
-    const dadosParaExportar = localStorage.getItem(localStorageKey);
-    if (!dadosParaExportar || dadosParaExportar === "{}") { alert("Nenhum dado para exportar."); return; }
-    const blob = new Blob([dadosParaExportar], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `dashboard_professor_backup_${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(a); a.click();
-    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); alert("Dados exportados!"); }, 300);
-}
-
-function importarDados(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const dadosImportados = e.target.result;
-            JSON.parse(dadosImportados);
-            localStorage.setItem(localStorageKey, dadosImportados);
-            carregarDadosLocalmente();
-            alert("Dados importados com sucesso!");
-        } catch (err) { alert("Falha ao importar: arquivo inválido ou corrompido.\n" + err.message); }
-        finally { event.target.value = null; }
-    };
-    reader.readAsText(file);
-}
-
-// --------------------- Inicialização ---------------------
-document.addEventListener('DOMContentLoaded', () => {
-    carregarDadosLocalmente();
-    diaSelecionadoVisualmente = new Date().getDay();
-    renderAgendaTabs();
-    renderAulas();
-    renderFinancas();
-
-    const statusPagamentoEl = document.getElementById('statusPagamento');
-    const dataPagamentoEl = document.getElementById('dataPagamento');
-    if (statusPagamentoEl && dataPagamentoEl) {
-        dataPagamentoEl.disabled = statusPagamentoEl.value !== 'Pago';
-    }
-
-    const formAnydesk = document.getElementById('formAnydesk');
-    const nomeAlunoAnydeskInput = document.getElementById('nomeAlunoAnydesk');
-    const codigoAnydeskInput = document.getElementById('codigoAnydesk');
-
-    if (formAnydesk && nomeAlunoAnydeskInput && codigoAnydeskInput) {
-        [nomeAlunoAnydeskInput, codigoAnydeskInput].forEach(input => {
-            input.addEventListener('keydown', function(event) {
-                if (event.key === "Escape") {
-                    if (document.getElementById('alunoEditIdAnydesk').value) {
-                        event.preventDefault();
-                        cancelarEdicaoAlunoAnydesk();
-                    }
-                }
-            });
-        });
-
-        formAnydesk.addEventListener('reset', () => {
-            setTimeout(() => {
-                 if (!document.getElementById('alunoEditIdAnydesk').value) {
-                    document.getElementById('btnSubmitAnydesk').innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar Aluno';
-                 }
-            }, 0);
-        });
-    }
-});
-window.addEventListener('beforeunload', salvarDadosLocalmente);
-
-</script>
+  </script>
 </body>
 </html>
