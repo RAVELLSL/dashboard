@@ -62,8 +62,8 @@
       border-right: 2px solid var(--c-green);
       scrollbar-width: thin;
       scrollbar-color: var(--c-green) #153826;
-      touch-action: pan-y; /* para tablets/smartphones */
-      -webkit-overflow-scrolling: touch; /* para rolagem suave no iOS */
+      touch-action: none;
+      -webkit-overflow-scrolling: touch;
     }
     .atalhos-lateral .ataho-link {
       width: 44px; height: 44px;
@@ -452,7 +452,7 @@
 </head>
 <body>
   <!-- Barra lateral fixa vertical com todos os atalhos -->
-  <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
+  <nav class="atalhos-lateral" aria-label="Atalhos Rápidos" id="sidebarMenu">
     <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
     <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
     <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
@@ -471,14 +471,7 @@
     RS TECH
   </header>
   <main class="dashboard-grid">
-    <!-- Bloco de Notas -->
-    <div class="card bloco-notas">
-      <h2>Bloco de Notas</h2>
-      <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
-      <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
-      <div class="bloco-notas-lista" id="blocoNotasLista"></div>
-    </div>
-    <!-- Diário de Classe -->
+    <!-- 1. Diário de Classe -->
     <div class="card diario-classe">
       <h2>Diário de Classe</h2>
       <form id="formDiarioClasse" onsubmit="event.preventDefault(); salvarDiarioClasse();">
@@ -489,22 +482,7 @@
       </form>
       <button class="btn" style="margin-top:0.4rem" onclick="abrirModalDiario()">Visualizar Diário</button>
     </div>
-    <!-- Anotações Rápidas -->
-    <div class="card anotacoes-rapidas">
-      <h2>Anotações Rápidas</h2>
-      <form onsubmit="event.preventDefault(); adicionarAnotacao();">
-        <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
-        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
-        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
-      </form>
-      <table id="tabelaAnotacoes">
-        <thead>
-          <tr><th>Anotação</th><th style="width:70px;">Ações</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <!-- Cadastro de Alunos -->
+    <!-- 2. Cadastro de Alunos -->
     <div class="card cadastro-alunos">
       <h2>Cadastro de Alunos (AnyDesk)</h2>
       <form onsubmit="event.preventDefault(); adicionarAluno();">
@@ -522,24 +500,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <!-- Tarefas Pendentes -->
-    <div class="card tarefas-pendentes">
-      <h2>Tarefas Pendentes</h2>
-      <form onsubmit="event.preventDefault(); adicionarTarefa();">
-        <input id="tarefaInput" placeholder="Adicionar nova tarefa" autocomplete="off" oninput="mostrarBotoesTarefa()">
-        <button class="btn" type="submit" id="btnTarefaAdd" style="display:none;">Adicionar</button>
-        <button class="btn" type="button" id="btnTarefaEdit" style="display:none;" onclick="confirmarEdicaoTarefa()">Salvar Edição</button>
-        <button class="btn" type="button" id="btnTarefaCancel" style="display:none;" onclick="cancelarEdicaoTarefa()">Cancelar</button>
-        <button class="btn" type="button" id="btnTarefaLimpar" style="display:none;" onclick="limparTarefaCampos()">Limpar Tudo</button>
-      </form>
-      <table id="tabelaTarefas">
-        <thead>
-          <tr><th>Tarefa</th><th>Status</th><th style="width:90px;">Ações</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <!-- Controle Financeiro -->
+    <!-- 3. Controle Financeiro -->
     <div class="card controle-financeiro">
       <h2>Controle Financeiro</h2>
       <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
@@ -559,6 +520,45 @@
         <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
       </form>
       <button class="btn" style="margin-bottom:0.9rem" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
+    </div>
+    <!-- 4. Bloco de Notas -->
+    <div class="card bloco-notas">
+      <h2>Bloco de Notas</h2>
+      <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
+      <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
+      <div class="bloco-notas-lista" id="blocoNotasLista"></div>
+    </div>
+    <!-- 5. Anotações Rápidas -->
+    <div class="card anotacoes-rapidas">
+      <h2>Anotações Rápidas</h2>
+      <form onsubmit="event.preventDefault(); adicionarAnotacao();">
+        <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
+        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
+        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
+      </form>
+      <table id="tabelaAnotacoes">
+        <thead>
+          <tr><th>Anotação</th><th style="width:70px;">Ações</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- 6. Tarefas Pendentes -->
+    <div class="card tarefas-pendentes">
+      <h2>Tarefas Pendentes</h2>
+      <form onsubmit="event.preventDefault(); adicionarTarefa();">
+        <input id="tarefaInput" placeholder="Adicionar nova tarefa" autocomplete="off" oninput="mostrarBotoesTarefa()">
+        <button class="btn" type="submit" id="btnTarefaAdd" style="display:none;">Adicionar</button>
+        <button class="btn" type="button" id="btnTarefaEdit" style="display:none;" onclick="confirmarEdicaoTarefa()">Salvar Edição</button>
+        <button class="btn" type="button" id="btnTarefaCancel" style="display:none;" onclick="cancelarEdicaoTarefa()">Cancelar</button>
+        <button class="btn" type="button" id="btnTarefaLimpar" style="display:none;" onclick="limparTarefaCampos()">Limpar Tudo</button>
+      </form>
+      <table id="tabelaTarefas">
+        <thead>
+          <tr><th>Tarefa</th><th>Status</th><th style="width:90px;">Ações</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </main>
   <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
@@ -597,27 +597,27 @@
     2025
   </footer>
   <script>
-    // Rolagem independente para barra lateral no touch/tablet
-    document.querySelector('.atalhos-lateral').addEventListener('touchmove', function(e) {
-      const el = this;
-      const scrollTop = el.scrollTop;
-      const scrollHeight = el.scrollHeight;
-      const offsetHeight = el.offsetHeight;
-
-      // Permite rolar para cima/baixo sem propagar para o body
-      if (
-        (scrollTop > 0 && e.touches[0].clientY > 0) ||
-        (scrollTop + offsetHeight < scrollHeight && e.touches[0].clientY < window.innerHeight)
-      ) {
+    // --- Corrigir o scroll da sidebar para ser independente (TOUCH E DESKTOP)
+    (function() {
+      const sidebar = document.getElementById('sidebarMenu');
+      let startY, startScroll;
+      sidebar.addEventListener('touchstart', function(e) {
+        if (e.touches.length !== 1) return;
+        startY = e.touches[0].clientY;
+        startScroll = sidebar.scrollTop;
+      });
+      sidebar.addEventListener('touchmove', function(e) {
+        if (e.touches.length !== 1) return;
+        let deltaY = e.touches[0].clientY - startY;
+        sidebar.scrollTop = startScroll - deltaY;
         e.stopPropagation();
-      }
-    }, { passive: false });
-
-    // Utilitários de armazenamento
-    function salvarLocal(key, value) { localStorage.setItem(key, value); }
-    function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
+        e.preventDefault();
+      }, { passive: false });
+    })();
 
     // ---------------- BLOCO DE NOTAS ----------------
+    function salvarLocal(key, value) { localStorage.setItem(key, value); }
+    function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
     function salvarBlocoNotas() {
       let texto = document.getElementById('blocoNotas').value.trim();
       if (!texto) return;
@@ -638,7 +638,7 @@
     }
     listarBlocoNotas();
 
-    // ---------------- DIÁRIO DE CLASSE ATUALIZADO ----------------
+    // ---------------- DIÁRIO DE CLASSE ----------------
     function salvarDiarioClasse() {
       const aluno = document.getElementById('diarioAluno').value.trim();
       const data = document.getElementById('diarioData').value;
