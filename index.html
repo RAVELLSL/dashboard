@@ -178,11 +178,43 @@
       outline: none;
       word-break: break-all;
     }
-    .diario-classe form { display: flex; flex-direction: column; align-items: center; }
-    textarea { resize: vertical; min-height: 74px; max-height: 220px; overflow-y: auto; }
-    input:focus, textarea:focus, select:focus { border: 1.5px solid var(--c-yellow); }
-    .card form .btn { margin-right: 0.6rem; margin-bottom: 0.4rem; margin-top: 0.2rem; }
-    .card form .btn:last-child { margin-right: 0; }
+    .diario-classe form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cadastro-alunos form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      align-items: stretch;
+    }
+    .cadastro-alunos .alunos-btns {
+      display: flex;
+      justify-content: center;
+      gap: 0.7rem;
+      margin: 0.4rem 0 0.4rem 0;
+    }
+    .cadastro-alunos .btn {
+      min-width: 120px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 74px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    input:focus, textarea:focus, select:focus {
+      border: 1.5px solid var(--c-yellow);
+    }
+    .card form .btn {
+      margin-right: 0.6rem;
+      margin-bottom: 0.4rem;
+      margin-top: 0.2rem;
+    }
+    .card form .btn:last-child {
+      margin-right: 0;
+    }
     .table-actions button {
       background: none;
       border: none;
@@ -289,6 +321,7 @@
       .dashboard-grid { padding: 0.6rem 0.1rem; }
       .main-controls { padding-bottom: 6rem; }
     }
+    /* Modal Diário de Classe, Controle Financeiro, Cadastro de Alunos */
     .modal-bg {
       display: none;
       position: fixed;
@@ -335,68 +368,27 @@
       cursor: pointer;
       font-family: var(--tit);
     }
-    .modal-diario-table,
-    .modal-alunos-table {
+    .modal-alunos-table table {
       width: 100%;
-      background: #163221;
+      background: #133829;
       border-radius: 1rem;
       box-shadow: 0 1px 8px #19fff744;
-      font-size: 1.01rem;
-      max-height: 50vh;
-      overflow-y: auto;
-      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
     }
-    .modal-diario-table table,
-    .modal-alunos-table table { width: 100%; border-radius: 1rem; }
-    .modal-diario-table th, .modal-diario-table td,
     .modal-alunos-table th, .modal-alunos-table td {
-      padding: 0.6rem 0.5rem;
+      padding: 0.7rem 0.4rem;
       border-bottom: 1px solid #263b2b;
+      text-align: center !important;
+      vertical-align: middle !important;
     }
-    .modal-diario-table th,
     .modal-alunos-table th {
       color: var(--c-green);
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
-      text-align: left;
     }
-    .modal-diario-table tr:last-child td,
     .modal-alunos-table tr:last-child td { border-bottom: none; }
-    .modal-diario-table td,
-    .modal-alunos-table td { color: #def2e1; word-break: break-word; }
-    .modal-financeiro table {
-      background: #163221;
-      border-radius: 1rem;
-      box-shadow: 0 1px 8px #19fff744;
-      width: 100%;
-      max-width: 700px;
-      margin: 0 auto 0 0;
-      font-size: 1.01rem;
-    }
-    .modal-financeiro th,
-    .modal-financeiro td {
-      padding: 0.6rem 0.4rem;
-      border-bottom: 1px solid #263b2b;
-    }
-    .modal-financeiro th {
-      color: var(--c-green);
-      font-family: var(--tit);
-      border-bottom: 2px solid var(--c-cyan);
-    }
-    .modal-financeiro tr:last-child td { border-bottom: none; }
-    .bloco-notas-lista {
-      background: #17352e;
-      border-radius: 1rem;
-      box-shadow: 0 1px 8px #19fff733;
-      padding: 1.2rem 1rem;
-      margin-top: 1.2rem;
-      font-size: 1.04rem;
-      min-height: 34px;
-      max-height: 170px;
-      overflow-y: auto;
-    }
-    .bloco-notas-lista ul { list-style: disc inside; margin: 0; padding-left: 1.1em; }
-    .bloco-notas-lista li { margin-bottom: 0.35em; word-break: break-all; color: #afffbb; }
+    /* Outras modais */
     .modal-diario-filtro {
       display: flex;
       flex-wrap: wrap;
@@ -428,12 +420,76 @@
     .modal-diario-filtro input[type="date"]:focus {
       border-color: var(--c-cyan);
     }
+    .bloco-notas-lista {
+      background: #17352e;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff733;
+      padding: 1.2rem 1rem;
+      margin-top: 1.2rem;
+      font-size: 1.04rem;
+      min-height: 34px;
+      max-height: 170px;
+      overflow-y: auto;
+    }
+    .bloco-notas-lista ul {
+      list-style: disc inside;
+      margin: 0;
+      padding-left: 1.1em;
+    }
+    .bloco-notas-lista li {
+      margin-bottom: 0.35em;
+      word-break: break-all;
+      color: #afffbb;
+    }
+    .modal-diario-table {
+      width: 100%;
+      background: #163221;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff744;
+      font-size: 1.01rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      margin-bottom: 0.5rem;
+    }
+    .modal-diario-table table { width: 100%; border-radius: 1rem; }
+    .modal-diario-table th, .modal-diario-table td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid #263b2b;
+    }
+    .modal-diario-table th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+      text-align: left;
+    }
+    .modal-diario-table tr:last-child td { border-bottom: none; }
+    .modal-diario-table td { color: #def2e1; word-break: break-word; }
+    .modal-financeiro table {
+      background: #163221;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff744;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 0 0;
+      font-size: 1.01rem;
+    }
+    .modal-financeiro th,
+    .modal-financeiro td {
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid #263b2b;
+      text-align: center !important;
+      vertical-align: middle !important;
+    }
+    .modal-financeiro th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+    }
+    .modal-financeiro tr:last-child td { border-bottom: none; }
   </style>
 </head>
 <body>
-  <!-- Barra lateral fixa vertical com todos os atalhos -->
   <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
-    <!-- ... todos os atalhos ... -->
     <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
     <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
     <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
@@ -448,9 +504,11 @@
     <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
     <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
   </nav>
-  <header>RS TECH</header>
+  <header>
+    RS TECH
+  </header>
   <main class="dashboard-grid">
-    <!-- Diário de Classe -->
+    <!-- 1. Diário de Classe -->
     <div class="card diario-classe">
       <h2>Diário de Classe</h2>
       <form id="formDiarioClasse" onsubmit="event.preventDefault(); salvarDiarioClasse();">
@@ -461,20 +519,22 @@
       </form>
       <button class="btn" style="margin-top:0.4rem" onclick="abrirModalDiario()">Visualizar Diário</button>
     </div>
-    <!-- Cadastro de Alunos -->
+    <!-- 2. Cadastro de Alunos (AnyDesk) -->
     <div class="card cadastro-alunos">
       <h2>Cadastro de Alunos (AnyDesk)</h2>
       <form onsubmit="event.preventDefault(); adicionarAluno();">
         <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
         <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-        <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
+        <div class="alunos-btns">
+          <button class="btn" type="submit" id="btnAlunoAdd">Cadastrar</button>
+          <button class="btn" type="button" id="btnAlunoLimpar" onclick="limparAlunoCampos()">Limpar Tudo</button>
+        </div>
         <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
         <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
-        <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
       </form>
-      <button class="btn" style="margin-top:0.5rem" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+      <button class="btn" style="margin-top:0.6rem" onclick="abrirModalAlunos()">Visualizar Alunos</button>
     </div>
-    <!-- Controle Financeiro -->
+    <!-- 3. Controle Financeiro -->
     <div class="card controle-financeiro">
       <h2>Controle Financeiro</h2>
       <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
@@ -495,14 +555,14 @@
       </form>
       <button class="btn" style="margin-bottom:0.9rem" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
     </div>
-    <!-- Bloco de Notas -->
+    <!-- 4. Bloco de Notas -->
     <div class="card bloco-notas">
       <h2>Bloco de Notas</h2>
       <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
       <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
       <div class="bloco-notas-lista" id="blocoNotasLista"></div>
     </div>
-    <!-- Anotações Rápidas -->
+    <!-- 5. Anotações Rápidas -->
     <div class="card anotacoes-rapidas">
       <h2>Anotações Rápidas</h2>
       <form onsubmit="event.preventDefault(); adicionarAnotacao();">
@@ -517,7 +577,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <!-- Tarefas Pendentes -->
+    <!-- 6. Tarefas Pendentes -->
     <div class="card tarefas-pendentes">
       <h2>Tarefas Pendentes</h2>
       <form onsubmit="event.preventDefault(); adicionarTarefa();">
@@ -545,7 +605,7 @@
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
     </label>
   </div>
-  <!-- Modal Diário de Classe -->
+  <!-- MODAL DIÁRIO DE CLASSE -->
   <div class="modal-bg" id="modalDiario">
     <div class="modal-diario">
       <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
@@ -559,7 +619,7 @@
       <div class="modal-diario-table" id="conteudoModalDiario"></div>
     </div>
   </div>
-  <!-- Modal Controle Financeiro -->
+  <!-- MODAL CONTROLE FINANCEIRO -->
   <div class="modal-bg" id="modalFinanceiro">
     <div class="modal-financeiro">
       <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
@@ -567,15 +627,17 @@
       <div id="conteudoModalFinanceiro"></div>
     </div>
   </div>
-  <!-- Modal Alunos AnyDesk -->
+  <!-- MODAL ALUNOS -->
   <div class="modal-bg" id="modalAlunos">
     <div class="modal-alunos">
       <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
-      <h3>Alunos (AnyDesk) - Registros</h3>
+      <h3>Alunos Cadastrados</h3>
       <div class="modal-alunos-table" id="conteudoModalAlunos"></div>
     </div>
   </div>
-  <footer>2025</footer>
+  <footer>
+    2025
+  </footer>
   <script>
     // Utilitários de armazenamento
     function salvarLocal(key, value) { localStorage.setItem(key, value); }
@@ -602,7 +664,7 @@
     }
     listarBlocoNotas();
 
-    // ---------------- DIÁRIO DE CLASSE ----------------
+    // ---------------- DIÁRIO DE CLASSE ATUALIZADO ----------------
     function salvarDiarioClasse() {
       const aluno = document.getElementById('diarioAluno').value.trim();
       const data = document.getElementById('diarioData').value;
@@ -706,7 +768,9 @@
       document.getElementById('tipoFinanceiro').value = 'Mensalidade';
       mostrarBotoesFinanceiro();
     }
-    function listarFinanceiro() { cancelarEdicaoFinanceiro(); }
+    function listarFinanceiro() {
+      cancelarEdicaoFinanceiro();
+    }
     listarFinanceiro();
     function abrirModalFinanceiro() {
       let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
@@ -744,14 +808,14 @@
       if(e.key === "Escape") fecharModalFinanceiro();
     });
 
-    // -- Cadastro de Alunos (com modal)
+    // -- Cadastro de Alunos (com edição e modal)
     let alunoEditIdx = null;
     function mostrarBotoesAluno() {
       const nome = document.getElementById('nomeAluno').value.trim();
       const anydesk = document.getElementById('anydeskAluno').value.trim();
-      const show = nome || anydesk;
-      document.getElementById('btnAlunoAdd').style.display = show ? '' : 'none';
-      document.getElementById('btnAlunoLimpar').style.display = show ? '' : 'none';
+      // Cadastrar e Limpar Tudo sempre visíveis
+      document.getElementById('btnAlunoAdd').style.display = '';
+      document.getElementById('btnAlunoLimpar').style.display = '';
     }
     function adicionarAluno() {
       const nome = document.getElementById('nomeAluno').value.trim();
@@ -805,11 +869,25 @@
       mostrarBotoesAluno();
     }
     function listarAlunos() {
-      // Removida a tabela da tela principal
-      cancelarEdicaoAluno();
+      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      let tbody = document.getElementById('tabelaAlunos') ? document.getElementById('tabelaAlunos').getElementsByTagName('tbody')[0] : null;
+      if(tbody) {
+        tbody.innerHTML = '';
+        lista.forEach((a, idx) => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${a.nome}</td>
+              <td>${a.anydesk}</td>
+              <td class="table-actions">
+                <button onclick="editarAluno(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
+                <button onclick="removerAluno(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>`;
+        });
+        cancelarEdicaoAluno();
+      }
     }
     listarAlunos();
-
     function abrirModalAlunos() {
       let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
       let html = `<table>
@@ -824,8 +902,8 @@
       if(lista.length){
         lista.forEach(a=>{
           html += `<tr>
-            <td>${a.nome}</td>
-            <td>${a.anydesk}</td>
+            <td style="text-align:center;">${a.nome}</td>
+            <td style="text-align:center;">${a.anydesk}</td>
           </tr>`;
         });
       } else {
