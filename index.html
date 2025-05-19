@@ -249,7 +249,7 @@
       font-size: 1.13rem;
       cursor: pointer;
       transition: color 0.14s;
-      padding: 0.2rem 0.3rem; /* Pequeno padding para facilitar o clique */
+      padding: 0.2rem 0.3rem;
     }
     .table-actions button:hover { color: var(--c-yellow); }
     table {
@@ -332,7 +332,7 @@
       letter-spacing: 0.2em;
       background: #133829ea;
       padding: 0.85rem 0;
-      position: fixed;
+      position: relative
       left: 0;
       bottom: 0;
       z-index: 100;
@@ -364,9 +364,10 @@
       left: 0; top: 0; width: 100vw; height: 100vh;
       background: rgba(0,32,32,0.72);
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* MODIFICADO AQUI */
       padding: 1rem;
       box-sizing: border-box;
+      overflow-y: auto; /* Adicionado para o caso do próprio .modal-bg precisar rolar */
     }
     .modal-bg.active { display: flex; }
     .modal-diario, .modal-financeiro, .modal-alunos {
@@ -377,7 +378,7 @@
       padding: 1.5rem;
       width: 100%;
       max-width: 800px;
-      max-height: calc(100vh - 2rem);
+      max-height: calc(100vh - 2rem); /* Considera o padding de 1rem top/bottom do .modal-bg */
       font-family: var(--bod);
       font-size: 1.13rem;
       display: flex;
@@ -385,6 +386,7 @@
       gap: 1rem;
       position: relative;
       box-sizing: border-box;
+      /* margin-top: 1rem;  Se não quiser que o padding do modal-bg dite o espaçamento superior, mas sim o modal diretamente */
     }
     .modal-diario h3,
     .modal-financeiro h3,
@@ -941,7 +943,7 @@
     }
 
     // -- Anotações Rápidas --
-    let anotacaoEditIdx = null; // Índice da anotação sendo editada (baseado na lista original)
+    let anotacaoEditIdx = null; 
 
     function mostrarBotoesAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
@@ -958,13 +960,13 @@
       if (!val) return;
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
 
-      if (anotacaoEditIdx !== null) { // Editando
+      if (anotacaoEditIdx !== null) { 
         if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
           anotacoes[anotacaoEditIdx] = val;
         } else {
           console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
         }
-      } else { // Adicionando nova
+      } else { 
         anotacoes.push(val);
       }
       salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
@@ -974,7 +976,7 @@
 
     function editarAnotacao(idxExibicao) {
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
-      let originalIndex = anotacoes.length - 1 - idxExibicao; // Converter índice de exibição para original
+      let originalIndex = anotacoes.length - 1 - idxExibicao; 
 
       if (originalIndex >= 0 && originalIndex < anotacoes.length) {
         document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
@@ -983,12 +985,12 @@
         document.getElementById('anotacaoInput').focus();
       } else {
         console.error("Índice de exibição inválido para editar anotação:", idxExibicao);
-         limparAnotacaoCampos(); // Reseta estado se o índice for ruim
+         limparAnotacaoCampos(); 
       }
     }
     
     function cancelarEdicaoAnotacao() {
-      limparAnotacaoCampos(); // limparAnotacaoCampos já reseta o estado de edição
+      limparAnotacaoCampos(); 
     }
 
     function removerAnotacao(idxExibicao) {
@@ -997,16 +999,14 @@
 
       if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
         if (anotacaoEditIdx === originalIndexToRemove) {
-            limparAnotacaoCampos(); // Cancela a edição se o item editado for removido
+            limparAnotacaoCampos(); 
         }
         anotacoes.splice(originalIndexToRemove, 1);
         salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
         listarAnotacoes();
         
-        // Ajustar anotacaoEditIdx se um item anterior ao editado for removido
         if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
             anotacaoEditIdx--;
-            // Não precisa chamar mostrarBotoesAnotacao() aqui, pois limparAnotacaoCampos ou a próxima edição o farão
         }
       } else {
          console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
@@ -1042,7 +1042,7 @@
         if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
         if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
         if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
-        if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao(); // Cancela edição de anotação com ESC
+        if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao(); 
       }
     });
 
@@ -1081,14 +1081,13 @@
           document.getElementById('formDiarioClasse').reset();
           limparAlunoCampos();
           limparFinanceiroCampos();
-          limparAnotacaoCampos(); // Isso agora também reseta o estado de edição das anotações
+          limparAnotacaoCampos(); 
           alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
         } catch(e) {
           alert("Falha na importação: " + e.message);
         } finally {
             mostrarBotoesAluno();
             mostrarBotoesFinanceiro();
-            // mostrarBotoesAnotacao(); // limparAnotacaoCampos já chama isso
             listarAnotacoes();
         }
       };
@@ -1100,7 +1099,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         mostrarBotoesAluno();
         mostrarBotoesFinanceiro();
-        limparAnotacaoCampos(); // Garante estado inicial correto para anotações e botões
+        limparAnotacaoCampos(); 
         listarAnotacoes();
     });
   </script>
