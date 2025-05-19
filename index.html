@@ -24,7 +24,7 @@
       color: var(--txt);
       font-family: var(--bod);
       margin: 0;
-      padding: 0 0 0 70px;
+      padding: 0 0 0 70px; /* Espaço para o menu lateral */
       min-height: 100vh;
       box-sizing: border-box;
       position: relative;
@@ -53,23 +53,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem; /* Espaçamento padrão para telas maiores */
-      z-index: 99;
+      gap: 0.6rem;
+      z-index: 101; /* ALTERADO: Maior que o z-index do footer */
       box-shadow: 2px 0 14px #19fff733;
-      padding-top: 1.2rem; /* Mantém um padding no topo */
-      padding-bottom: 1.2rem; /* Adiciona um padding na base para respiro se houver scroll */
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
       overflow-y: auto;
       overflow-x: hidden;
       border-right: 2px solid var(--c-green);
       scrollbar-width: thin;
       scrollbar-color: var(--c-green) #153826;
       overscroll-behavior-y: contain;
-      /* touch-action: pan-y; */
-      /* -webkit-overflow-scrolling: touch; */
     }
     .atalhos-lateral .ataho-link {
       width: 44px; height: 44px;
-      margin: 0.16rem 0; /* Margem padrão para telas maiores */
+      margin: 0.16rem 0;
       background: #143a22;
       color: var(--c-cyan);
       display: flex; align-items: center; justify-content: center;
@@ -77,7 +75,7 @@
       border: 1.5px solid transparent;
       transition: border .2s, color .2s, box-shadow .2s, transform .2s;
       outline: none;
-      flex-shrink: 0; /* Para evitar que os ícones encolham */
+      flex-shrink: 0;
     }
     .atalhos-lateral .ataho-link:focus {
       outline: 2px solid var(--c-yellow);
@@ -87,7 +85,7 @@
       color: var(--c-yellow);
       border: 1.5px solid var(--c-yellow);
       box-shadow: 0 0 10px var(--c-yellow);
-      transform: scale(1.1); /* Efeito de leve zoom ao interagir */
+      transform: scale(1.1);
     }
     .atalhos-lateral .ataho-link.active {
       color: var(--c-green);
@@ -106,32 +104,32 @@
     @media (max-width: 800px) {
       .atalhos-lateral {
         width: 54px;
-        gap: 0.3rem; /* Reduzindo o espaçamento entre os ícones */
-        padding-top: 0.8rem; /* Ajustando padding no topo para telas menores */
-        padding-bottom: 0.8rem; /* Ajustando padding na base para telas menores */
+        gap: 0.3rem;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
       }
       body { padding-left: 54px; }
       .atalhos-lateral .ataho-link {
         width: 36px;
         height: 36px;
-        margin: 0.1rem 0; /* Reduzindo a margem vertical dos ícones */
-        font-size: 1.1rem; /* Opcional: reduzir um pouco o tamanho do ícone */
+        margin: 0.1rem 0;
+        font-size: 1.1rem;
       }
     }
 
     @media (max-width: 600px) {
       .atalhos-lateral {
         width: 50px;
-        gap: 0.2rem; /* Reduzindo ainda mais o espaçamento */
-        padding-top: 0.6rem; /* Ajustando padding no topo */
-        padding-bottom: 0.6rem; /* Ajustando padding na base */
+        gap: 0.2rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
       }
       body { padding-left: 50px; }
       .atalhos-lateral .ataho-link {
         width: 30px;
         height: 30px;
-        margin: 0.05rem 0; /* Reduzindo ainda mais a margem vertical */
-        font-size: 1rem; /* Opcional: reduzir mais o tamanho do ícone */
+        margin: 0.05rem 0;
+        font-size: 1rem;
       }
     }
     .dashboard-grid {
@@ -146,10 +144,10 @@
     @media (max-width: 1100px) {
       .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     }
-    @media (max-width: 800px) { /* Alterado de 800px para 799px para não colidir com a media query anterior se houver sobreposição */
+    @media (max-width: 799px) { /* Ajustado para não sobrepor 800px */
       .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
     }
-    @media (max-width: 599px) { /* Alterado de 600px para 599px */
+    @media (max-width: 599px) { /* Ajustado para não sobrepor 600px */
       .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
     }
     .card {
@@ -257,7 +255,7 @@
       margin-bottom: 1rem;
       font-size: 0.97rem;
       box-shadow: 0 1px 6px #19fff722;
-      overflow: hidden; /* Garante que o border-radius da tabela seja respeitado pelos filhos */
+      overflow: hidden;
       box-sizing: border-box;
     }
     th, td {
@@ -296,9 +294,13 @@
       align-items: center;
       gap: 2.1rem;
       margin: 2.5rem auto 0 auto;
-      padding-bottom: calc(3.7rem + 40px); /* Aumentado para acomodar o footer mais alto */
+      /* O padding-bottom aqui deve ser suficiente para o footer não cobrir estes botões */
+      /* Altura aproximada do footer: 1.1rem (font) + 0.85rem*2 (padding) ~= 2.8rem */
+      /* Adicionar uma margem extra */
+      padding-bottom: calc(2.8rem + 1.5rem); /* (altura_footer + margem_seguranca) */
       max-width: 700px;
       width: 100%;
+      box-sizing: border-box;
     }
     .btn-export, .btn-import, .btn {
       background: transparent;
@@ -319,32 +321,40 @@
       background: #1d342a;
     }
     footer {
-      width: 100vw; /* Usa 100vw para cobrir a largura da viewport */
+      width: 100vw;
       text-align: center;
       color: #5beebb;
-      font-size: 1.1rem;
+      font-size: 1.1rem; /* Altura da fonte base */
       font-family: var(--tit);
       letter-spacing: 0.2em;
       background: #133829ea;
-      padding: 0.85rem 0; /* Removido padding-bottom específico, já é 0.85rem geral */
+      padding: 0.85rem 0; /* Padding vertical */
       position: fixed;
       left: 0;
       bottom: 0;
-      z-index: 100;
+      z-index: 100; /* MANTIDO: Abaixo do menu lateral agora */
       opacity: 0.85;
       user-select: none;
       box-shadow: 0 -2px 8px #16271d77;
-      box-sizing: border-box; /* Inclui padding na largura total */
+      box-sizing: border-box;
     }
     @media (max-width: 600px) {
-      .main-controls { flex-direction: column; gap: 1.2rem; padding-bottom: calc(4.7rem + 35px); } /* Ajuste para footer */
+      .main-controls {
+        flex-direction: column;
+        gap: 1.2rem;
+        /* Footer: 0.99rem (font) + 0.65rem*2 (padding) ~= 2.29rem */
+        padding-bottom: calc(2.29rem + 1rem);
+      }
       .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem;}
       footer { font-size: 0.99rem; padding: 0.65rem 0; }
     }
     @media (max-width: 480px) {
       .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; }
       .dashboard-grid { padding: 0.6rem 0.1rem; }
-      .main-controls { padding-bottom: calc(6rem + 35px); } /* Ajuste para footer */
+      .main-controls {
+         /* Footer (mesma altura da media query de 600px se não houver mudança) */
+        padding-bottom: calc(2.29rem + 2rem); /* Maior margem de segurança */
+      }
     }
     /* Modal Diário de Classe, Controle Financeiro, Cadastro de Alunos */
     .modal-bg {
@@ -355,7 +365,7 @@
       background: rgba(0,32,32,0.72);
       justify-content: center;
       align-items: center;
-      padding: 1rem; /* Adiciona um respiro para a modal não colar nas bordas */
+      padding: 1rem;
       box-sizing: border-box;
     }
     .modal-bg.active { display: flex; }
@@ -366,9 +376,9 @@
       box-shadow: 0 8px 34px #1beeea66;
       padding: 2.3rem 2rem 1.7rem 2rem;
       min-width: 300px; 
-      width: 100%; /* Ocupa a largura disponível dentro do padding do modal-bg */
-      max-width: 800px; /* Limita a largura máxima da modal */
-      max-height: calc(100vh - 2rem); /* Ajusta a altura máxima considerando o padding do modal-bg */
+      width: 100%;
+      max-width: 800px;
+      max-height: calc(100vh - 2rem);
       font-family: var(--bod);
       font-size: 1.13rem;
       display: flex;
@@ -398,37 +408,77 @@
       cursor: pointer;
       font-family: var(--tit);
     }
-    .modal-alunos-table table, 
-    .modal-financeiro .table-container table /* Adicionado seletor para tabela financeira se usar container */ {
+    /* Estilos unificados para containers de tabela em modais */
+    .table-container-modal {
+        overflow-y: auto;
+        max-height: 70vh; /* Ou altura desejada */
+        overscroll-behavior-y: contain;
+        border-radius: 1rem;
+        background: #133829; /* Fundo padrão para tabelas em modais */
+        box-shadow: 0 1px 8px #19fff744;
+        margin-bottom: 1rem; /* Espaçamento inferior */
+    }
+    .table-container-modal table {
+        width: 100%;
+        font-size: 1.05rem; /* Tamanho de fonte base para tabelas em modais */
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    .table-container-modal th, 
+    .table-container-modal td {
+        padding: 0.7rem 0.4rem;
+        border-bottom: 1px solid #263b2b;
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+    .table-container-modal th {
+        color: var(--c-green);
+        font-family: var(--tit);
+        border-bottom: 2px solid var(--c-cyan);
+        position: sticky; 
+        top: -1px; 
+        background: #122921; /* Fundo da modal para o cabeçalho fixo */
+        z-index: 1; 
+    }
+    .table-container-modal tr:last-child td { border-bottom: none; }
+
+    /* Aplica a classe genérica aos containers de tabela das modais */
+    #conteudoModalAlunos, #conteudoModalFinanceiro {
+        /* Herda de .table-container-modal se a classe for adicionada no HTML/JS */
+    }
+    .modal-diario-table { /* Já tem estilos próprios, mas pode ser unificado se desejado */
       width: 100%;
-      background: #133829;
-      border-radius: 1rem;
+      max-height: 50vh; 
+      overflow-y: auto; 
+      overscroll-behavior-y: contain; 
+      margin-bottom: 0.5rem;
+      border-radius: 1rem; 
+      background: #163221; 
       box-shadow: 0 1px 8px #19fff744;
-      font-size: 1.05rem;
-      margin-bottom: 1rem;
-      border-collapse: separate; /* Para border-radius funcionar com sticky headers */
-      border-spacing: 0;
     }
-     .modal-alunos-table th, .modal-alunos-table td,
-     .modal-financeiro .table-container th, .modal-financeiro .table-container td {
-      padding: 0.7rem 0.4rem;
+    .modal-diario-table table { 
+        width: 100%; 
+        font-size: 1.01rem;
+        border-collapse: separate; 
+        border-spacing: 0;
+    }
+    .modal-diario-table th, .modal-diario-table td {
+      padding: 0.6rem 0.5rem;
       border-bottom: 1px solid #263b2b;
-      text-align: center !important;
-      vertical-align: middle !important;
     }
-     .modal-alunos-table th,
-     .modal-financeiro .table-container th {
+    .modal-diario-table th {
       color: var(--c-green);
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
+      text-align: left;
       position: sticky; 
-      top: -1px; /* Pequeno ajuste para garantir que a borda inferior não sobreponha */
-      background: #122921; 
-      z-index: 1; /* Para garantir que o header da tabela fique sobre o conteúdo ao rolar */
+      top: -1px;
+      background: #163221; 
+      z-index: 1;
     }
-    .modal-alunos-table tr:last-child td,
-    .modal-financeiro .table-container tr:last-child td { border-bottom: none; }
-
+    .modal-diario-table tr:last-child td { border-bottom: none; }
+    .modal-diario-table td { color: #def2e1; word-break: break-word; }
+    
     .modal-diario-filtro {
       display: flex;
       flex-wrap: wrap;
@@ -482,51 +532,6 @@
       word-break: break-all;
       color: #afffbb;
     }
-    .modal-diario-table { /* Container para a tabela do diário */
-      width: 100%;
-      max-height: 50vh; 
-      overflow-y: auto; 
-      overscroll-behavior-y: contain; 
-      margin-bottom: 0.5rem;
-      border-radius: 1rem; /* Aplicar o radius aqui */
-      background: #163221; 
-      box-shadow: 0 1px 8px #19fff744;
-    }
-    .modal-diario-table table { 
-        width: 100%; 
-        font-size: 1.01rem;
-        border-collapse: separate; /* Para sticky header e radius na div pai */
-        border-spacing: 0;
-    }
-    .modal-diario-table th, .modal-diario-table td {
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px solid #263b2b;
-    }
-    .modal-diario-table th {
-      color: var(--c-green);
-      font-family: var(--tit);
-      border-bottom: 2px solid var(--c-cyan);
-      text-align: left;
-      position: sticky; 
-      top: -1px;
-      background: #163221; 
-      z-index: 1;
-    }
-    .modal-diario-table tr:first-child th:first-child { border-top-left-radius: 1rem; } /* Cantos arredondados para o header fixo */
-    .modal-diario-table tr:first-child th:last-child { border-top-right-radius: 1rem; }
-    .modal-diario-table tr:last-child td { border-bottom: none; }
-    .modal-diario-table tr:last-child td:first-child { border-bottom-left-radius: 1rem; }
-    .modal-diario-table tr:last-child td:last-child { border-bottom-right-radius: 1rem; }
-    .modal-diario-table td { color: #def2e1; word-break: break-word; }
-    
-    /* Container para a tabela financeira para melhor controle de scroll e sticky header */
-    #conteudoModalFinanceiro.table-container {
-        overflow-y: auto;
-        max-height: 70vh; /* Ou a altura que desejar */
-        overscroll-behavior-y: contain;
-        border-radius: 1rem;
-        background: #133829; /* Fundo para o container da tabela */
-    }
   </style>
 </head>
 <body>
@@ -537,13 +542,14 @@
     <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs"><i class="far fa-file-alt"></i></a>
     <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas"><i class="fas fa-table"></i></a>
     <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda" tabindex="6" aria-label="Google Agenda"><i class="far fa-calendar-alt"></i></a>
+    <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
     <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-laptop"></i></a>
     <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio" tabindex="9" aria-label="Convertio"><i class="fas fa-globe"></i></a>
     <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links" tabindex="10" aria-label="Dev Links"><i class="fas fa-code"></i></a>
+    <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA" tabindex="11" aria-label="Agentes de IA"><i class="fas fa-robot"></i></a>
+    <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
     <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
-    <a href="" target="_blank" class="ataho-link" title="" tabindex="" aria-label=""><i class=""></i></a>
-    <a href="" target="_blank" class="ataho-link" title="" tabindex="" aria-label=""><i class=""></i></a>
-</nav>
+  </nav>
   <header>
     RS TECH
   </header>
@@ -656,7 +662,7 @@
     <div class="modal-financeiro">
       <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
       <h3>Controle Financeiro - Lançamentos</h3>
-      <div id="conteudoModalFinanceiro" class="table-container">
+      <div id="conteudoModalFinanceiro" class="table-container-modal">
           </div>
     </div>
   </div>
@@ -664,7 +670,8 @@
     <div class="modal-alunos">
       <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
       <h3>Alunos Cadastrados</h3>
-      <div class="modal-alunos-table" id="conteudoModalAlunos"> </div>
+      <div id="conteudoModalAlunos" class="table-container-modal">
+          </div>
     </div>
   </div>
   <footer>
@@ -688,14 +695,13 @@
     function listarBlocoNotas() {
       let lista = JSON.parse(recuperarLocal('blocoNotasLista', '[]'));
       let html = "<ul>";
-      lista.slice().reverse().forEach((item, idx) => { // .slice() para não modificar original com reverse
+      lista.slice().reverse().forEach((item) => {
         html += `<li>${item}</li>`;
       });
       html += "</ul>";
       document.getElementById('blocoNotasLista').innerHTML = lista.length ? html : "<span style='color:#9fc;'>Nenhuma anotação salva ainda.</span>";
     }
     
-
     // ---------------- DIÁRIO DE CLASSE ATUALIZADO ----------------
     function salvarDiarioClasse() {
       const aluno = document.getElementById('diarioAluno').value.trim();
@@ -738,7 +744,7 @@
           </tr>
         </thead><tbody>`;
       if(filtrados.length){
-        filtrados.slice().reverse().forEach(reg=>{ // .slice() para criar cópia antes de reverter
+        filtrados.slice().reverse().forEach(reg=>{
           html += `<tr>
             <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
             <td>${reg.aluno}</td>
@@ -849,12 +855,7 @@
         html += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento registrado.</td></tr>`;
       }
       html += `</tbody></table>`;
-      // Adiciona a classe table-container dinamicamente se ainda não tiver
-      const container = document.getElementById('conteudoModalFinanceiro');
-      if (!container.classList.contains('table-container')) {
-          container.classList.add('table-container');
-      }
-      container.innerHTML = html;
+      document.getElementById('conteudoModalFinanceiro').innerHTML = html;
       document.getElementById('modalFinanceiro').classList.add('active');
     }
     function fecharModalFinanceiro() {
@@ -946,7 +947,7 @@
         html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
       }
       html += `</tbody></table>`;
-      document.getElementById('conteudoModalAlunos').innerHTML = html; // A div já tem a classe modal-alunos-table
+      document.getElementById('conteudoModalAlunos').innerHTML = html; 
       document.getElementById('modalAlunos').classList.add('active');
     }
     function fecharModalAlunos() {
