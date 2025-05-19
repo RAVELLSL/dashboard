@@ -62,8 +62,6 @@
       border-right: 2px solid var(--c-green);
       scrollbar-width: thin;
       scrollbar-color: var(--c-green) #153826;
-      touch-action: none;
-      -webkit-overflow-scrolling: touch;
     }
     .atalhos-lateral .ataho-link {
       width: 44px; height: 44px;
@@ -180,28 +178,11 @@
       outline: none;
       word-break: break-all;
     }
-    .diario-classe form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 74px;
-      max-height: 220px;
-      overflow-y: auto;
-    }
-    input:focus, textarea:focus, select:focus {
-      border: 1.5px solid var(--c-yellow);
-    }
-    .card form .btn {
-      margin-right: 0.6rem;
-      margin-bottom: 0.4rem;
-      margin-top: 0.2rem;
-    }
-    .card form .btn:last-child {
-      margin-right: 0;
-    }
+    .diario-classe form { display: flex; flex-direction: column; align-items: center; }
+    textarea { resize: vertical; min-height: 74px; max-height: 220px; overflow-y: auto; }
+    input:focus, textarea:focus, select:focus { border: 1.5px solid var(--c-yellow); }
+    .card form .btn { margin-right: 0.6rem; margin-bottom: 0.4rem; margin-top: 0.2rem; }
+    .card form .btn:last-child { margin-right: 0; }
     .table-actions button {
       background: none;
       border: none;
@@ -308,7 +289,6 @@
       .dashboard-grid { padding: 0.6rem 0.1rem; }
       .main-controls { padding-bottom: 6rem; }
     }
-    /* Modal Diário de Classe e Controle Financeiro */
     .modal-bg {
       display: none;
       position: fixed;
@@ -319,7 +299,7 @@
       align-items: center;
     }
     .modal-bg.active { display: flex; }
-    .modal-diario, .modal-financeiro {
+    .modal-diario, .modal-financeiro, .modal-alunos {
       background: #122921;
       color: var(--txt);
       border-radius: 1.1rem;
@@ -336,14 +316,16 @@
       overflow-y: auto;
     }
     .modal-diario h3,
-    .modal-financeiro h3 {
+    .modal-financeiro h3,
+    .modal-alunos h3 {
       margin: 0 0 1.3rem 0;
       text-align: center;
       font-family: var(--tit);
       color: var(--c-cyan);
     }
     .modal-diario .fechar-modal,
-    .modal-financeiro .fechar-modal {
+    .modal-financeiro .fechar-modal,
+    .modal-alunos .fechar-modal {
       position: absolute;
       right: 18px; top: 12px;
       background: none;
@@ -353,6 +335,55 @@
       cursor: pointer;
       font-family: var(--tit);
     }
+    .modal-diario-table,
+    .modal-alunos-table {
+      width: 100%;
+      background: #163221;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff744;
+      font-size: 1.01rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      margin-bottom: 0.5rem;
+    }
+    .modal-diario-table table,
+    .modal-alunos-table table { width: 100%; border-radius: 1rem; }
+    .modal-diario-table th, .modal-diario-table td,
+    .modal-alunos-table th, .modal-alunos-table td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid #263b2b;
+    }
+    .modal-diario-table th,
+    .modal-alunos-table th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+      text-align: left;
+    }
+    .modal-diario-table tr:last-child td,
+    .modal-alunos-table tr:last-child td { border-bottom: none; }
+    .modal-diario-table td,
+    .modal-alunos-table td { color: #def2e1; word-break: break-word; }
+    .modal-financeiro table {
+      background: #163221;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff744;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 0 0;
+      font-size: 1.01rem;
+    }
+    .modal-financeiro th,
+    .modal-financeiro td {
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid #263b2b;
+    }
+    .modal-financeiro th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+    }
+    .modal-financeiro tr:last-child td { border-bottom: none; }
     .bloco-notas-lista {
       background: #17352e;
       border-radius: 1rem;
@@ -364,16 +395,8 @@
       max-height: 170px;
       overflow-y: auto;
     }
-    .bloco-notas-lista ul {
-      list-style: disc inside;
-      margin: 0;
-      padding-left: 1.1em;
-    }
-    .bloco-notas-lista li {
-      margin-bottom: 0.35em;
-      word-break: break-all;
-      color: #afffbb;
-    }
+    .bloco-notas-lista ul { list-style: disc inside; margin: 0; padding-left: 1.1em; }
+    .bloco-notas-lista li { margin-bottom: 0.35em; word-break: break-all; color: #afffbb; }
     .modal-diario-filtro {
       display: flex;
       flex-wrap: wrap;
@@ -405,54 +428,12 @@
     .modal-diario-filtro input[type="date"]:focus {
       border-color: var(--c-cyan);
     }
-    .modal-diario-table {
-      width: 100%;
-      background: #163221;
-      border-radius: 1rem;
-      box-shadow: 0 1px 8px #19fff744;
-      font-size: 1.01rem;
-      max-height: 50vh;
-      overflow-y: auto;
-      margin-bottom: 0.5rem;
-    }
-    .modal-diario-table table { width: 100%; border-radius: 1rem; }
-    .modal-diario-table th, .modal-diario-table td {
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px solid #263b2b;
-    }
-    .modal-diario-table th {
-      color: var(--c-green);
-      font-family: var(--tit);
-      border-bottom: 2px solid var(--c-cyan);
-      text-align: left;
-    }
-    .modal-diario-table tr:last-child td { border-bottom: none; }
-    .modal-diario-table td { color: #def2e1; word-break: break-word; }
-    .modal-financeiro table {
-      background: #163221;
-      border-radius: 1rem;
-      box-shadow: 0 1px 8px #19fff744;
-      width: 100%;
-      max-width: 700px;
-      margin: 0 auto 0 0;
-      font-size: 1.01rem;
-    }
-    .modal-financeiro th,
-    .modal-financeiro td {
-      padding: 0.6rem 0.4rem;
-      border-bottom: 1px solid #263b2b;
-    }
-    .modal-financeiro th {
-      color: var(--c-green);
-      font-family: var(--tit);
-      border-bottom: 2px solid var(--c-cyan);
-    }
-    .modal-financeiro tr:last-child td { border-bottom: none; }
   </style>
 </head>
 <body>
   <!-- Barra lateral fixa vertical com todos os atalhos -->
-  <nav class="atalhos-lateral" aria-label="Atalhos Rápidos" id="sidebarMenu">
+  <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
+    <!-- ... todos os atalhos ... -->
     <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
     <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
     <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
@@ -467,11 +448,9 @@
     <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
     <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
   </nav>
-  <header>
-    RS TECH
-  </header>
+  <header>RS TECH</header>
   <main class="dashboard-grid">
-    <!-- 1. Diário de Classe -->
+    <!-- Diário de Classe -->
     <div class="card diario-classe">
       <h2>Diário de Classe</h2>
       <form id="formDiarioClasse" onsubmit="event.preventDefault(); salvarDiarioClasse();">
@@ -482,7 +461,7 @@
       </form>
       <button class="btn" style="margin-top:0.4rem" onclick="abrirModalDiario()">Visualizar Diário</button>
     </div>
-    <!-- 2. Cadastro de Alunos -->
+    <!-- Cadastro de Alunos -->
     <div class="card cadastro-alunos">
       <h2>Cadastro de Alunos (AnyDesk)</h2>
       <form onsubmit="event.preventDefault(); adicionarAluno();">
@@ -493,14 +472,9 @@
         <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
         <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
       </form>
-      <table id="tabelaAlunos">
-        <thead>
-          <tr><th>Nome</th><th>AnyDesk</th><th style="width:110px;">Ações</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <button class="btn" style="margin-top:0.5rem" onclick="abrirModalAlunos()">Visualizar Alunos</button>
     </div>
-    <!-- 3. Controle Financeiro -->
+    <!-- Controle Financeiro -->
     <div class="card controle-financeiro">
       <h2>Controle Financeiro</h2>
       <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
@@ -521,14 +495,14 @@
       </form>
       <button class="btn" style="margin-bottom:0.9rem" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
     </div>
-    <!-- 4. Bloco de Notas -->
+    <!-- Bloco de Notas -->
     <div class="card bloco-notas">
       <h2>Bloco de Notas</h2>
       <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
       <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
       <div class="bloco-notas-lista" id="blocoNotasLista"></div>
     </div>
-    <!-- 5. Anotações Rápidas -->
+    <!-- Anotações Rápidas -->
     <div class="card anotacoes-rapidas">
       <h2>Anotações Rápidas</h2>
       <form onsubmit="event.preventDefault(); adicionarAnotacao();">
@@ -543,7 +517,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <!-- 6. Tarefas Pendentes -->
+    <!-- Tarefas Pendentes -->
     <div class="card tarefas-pendentes">
       <h2>Tarefas Pendentes</h2>
       <form onsubmit="event.preventDefault(); adicionarTarefa();">
@@ -571,7 +545,7 @@
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
     </label>
   </div>
-  <!-- Modal Diário de Classe atualizado -->
+  <!-- Modal Diário de Classe -->
   <div class="modal-bg" id="modalDiario">
     <div class="modal-diario">
       <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
@@ -593,31 +567,21 @@
       <div id="conteudoModalFinanceiro"></div>
     </div>
   </div>
-  <footer>
-    2025
-  </footer>
+  <!-- Modal Alunos AnyDesk -->
+  <div class="modal-bg" id="modalAlunos">
+    <div class="modal-alunos">
+      <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
+      <h3>Alunos (AnyDesk) - Registros</h3>
+      <div class="modal-alunos-table" id="conteudoModalAlunos"></div>
+    </div>
+  </div>
+  <footer>2025</footer>
   <script>
-    // --- Corrigir o scroll da sidebar para ser independente (TOUCH E DESKTOP)
-    (function() {
-      const sidebar = document.getElementById('sidebarMenu');
-      let startY, startScroll;
-      sidebar.addEventListener('touchstart', function(e) {
-        if (e.touches.length !== 1) return;
-        startY = e.touches[0].clientY;
-        startScroll = sidebar.scrollTop;
-      });
-      sidebar.addEventListener('touchmove', function(e) {
-        if (e.touches.length !== 1) return;
-        let deltaY = e.touches[0].clientY - startY;
-        sidebar.scrollTop = startScroll - deltaY;
-        e.stopPropagation();
-        e.preventDefault();
-      }, { passive: false });
-    })();
-
-    // ---------------- BLOCO DE NOTAS ----------------
+    // Utilitários de armazenamento
     function salvarLocal(key, value) { localStorage.setItem(key, value); }
     function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
+
+    // ---------------- BLOCO DE NOTAS ----------------
     function salvarBlocoNotas() {
       let texto = document.getElementById('blocoNotas').value.trim();
       if (!texto) return;
@@ -742,9 +706,7 @@
       document.getElementById('tipoFinanceiro').value = 'Mensalidade';
       mostrarBotoesFinanceiro();
     }
-    function listarFinanceiro() {
-      cancelarEdicaoFinanceiro();
-    }
+    function listarFinanceiro() { cancelarEdicaoFinanceiro(); }
     listarFinanceiro();
     function abrirModalFinanceiro() {
       let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
@@ -782,7 +744,7 @@
       if(e.key === "Escape") fecharModalFinanceiro();
     });
 
-    // -- Cadastro de Alunos (com edição)
+    // -- Cadastro de Alunos (com modal)
     let alunoEditIdx = null;
     function mostrarBotoesAluno() {
       const nome = document.getElementById('nomeAluno').value.trim();
@@ -843,23 +805,42 @@
       mostrarBotoesAluno();
     }
     function listarAlunos() {
-      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
-      let tbody = document.getElementById('tabelaAlunos').getElementsByTagName('tbody')[0];
-      tbody.innerHTML = '';
-      lista.forEach((a, idx) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${a.nome}</td>
-            <td>${a.anydesk}</td>
-            <td class="table-actions">
-              <button onclick="editarAluno(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
-              <button onclick="removerAluno(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-      });
+      // Removida a tabela da tela principal
       cancelarEdicaoAluno();
     }
     listarAlunos();
+
+    function abrirModalAlunos() {
+      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      let html = `<table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>AnyDesk</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      if(lista.length){
+        lista.forEach(a=>{
+          html += `<tr>
+            <td>${a.nome}</td>
+            <td>${a.anydesk}</td>
+          </tr>`;
+        });
+      } else {
+        html += `<tr><td colspan="2" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
+      }
+      html += `</tbody></table>`;
+      document.getElementById('conteudoModalAlunos').innerHTML = html;
+      document.getElementById('modalAlunos').classList.add('active');
+    }
+    function fecharModalAlunos() {
+      document.getElementById('modalAlunos').classList.remove('active');
+    }
+    document.addEventListener('keydown', function(e){
+      if(document.getElementById('modalAlunos').classList.contains('active') && e.key === "Escape") fecharModalAlunos();
+    });
 
     // -- Anotações Rápidas
     let anotacaoEditIdx = null;
