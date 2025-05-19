@@ -247,7 +247,7 @@
       transition: color 0.14s;
     }
     .table-actions button:hover { color: var(--c-yellow); }
-    table { /* Estilo base para tabelas nos cards */
+    table { 
       width: 100%;
       border-collapse: collapse;
       background: #133829;
@@ -259,12 +259,12 @@
       overflow: hidden;
       box-sizing: border-box;
     }
-    table th, table td { /* Estilo base para células de tabelas nos cards */
+    table th, table td { 
       padding: 0.6rem 0.4rem;
       text-align: left;
       border-bottom: 1px solid #263b2b;
     }
-    table th { /* Estilo base para cabeçalhos de tabelas nos cards */
+    table th { 
       color: var(--c-green);
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
@@ -360,7 +360,7 @@
       background: rgba(0,32,32,0.72);
       justify-content: center;
       align-items: center;
-      padding: 1rem; /* Espaçamento geral para o fundo da modal */
+      padding: 1rem; 
       box-sizing: border-box;
     }
     .modal-bg.active { display: flex; }
@@ -370,28 +370,27 @@
       color: var(--txt);
       border-radius: 1.1rem;
       box-shadow: 0 8px 34px #1beeea66;
-      padding: 1.5rem; /* Padding interno da modal */
-      width: 100%; /* Ocupa largura do .modal-bg (considerando o padding de 1rem do .modal-bg) */
-      max-width: 800px; /* Largura máxima da modal */
-      max-height: calc(100vh - 2rem); /* Altura máxima da modal, considerando o padding do .modal-bg */
+      padding: 1.5rem; 
+      width: 100%; 
+      max-width: 800px; 
+      max-height: calc(100vh - 2rem); /* Altura máxima considerando padding do modal-bg */
       font-family: var(--bod);
       font-size: 1.13rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem; /* Espaçamento entre título e conteúdo da tabela */
+      gap: 1rem; 
       position: relative;
-      /* overflow-y: auto;  Removido daqui, cada parte interna controlará seu scroll se necessário */
-      /* overscroll-behavior-y: contain; */
+      box-sizing: border-box; /* Adicionado */
     }
 
     .modal-diario h3,
     .modal-financeiro h3,
     .modal-alunos h3 {
-      margin: 0 0 0.5rem 0; /* Reduzida margem inferior do título */
+      margin: 0 0 0.5rem 0; 
       text-align: center;
       font-family: var(--tit);
       color: var(--c-cyan);
-      flex-shrink: 0; /* Impede que o título encolha */
+      flex-shrink: 0; 
     }
     .modal-diario .fechar-modal,
     .modal-financeiro .fechar-modal,
@@ -404,33 +403,34 @@
       font-size: 1.3rem;
       cursor: pointer;
       font-family: var(--tit);
-      z-index: 10; /* Para garantir que fique sobre o conteúdo da modal */
+      z-index: 10; 
     }
 
-    /* Container genérico para tabelas dentro de modais, para aplicar flex-grow e scroll */
     .table-container-modal {
-        flex-grow: 1; /* Ocupa o espaço vertical restante */
-        min-height: 0; /* Necessário para o flex-grow funcionar corretamente com overflow */
-        overflow-y: auto; /* Scroll para o conteúdo da tabela */
-        overscroll-behavior-y: contain; /* Isola o scroll */
-        border-radius: 0.8rem; /* Raio menor para o container interno */
+        flex-grow: 1; 
+        min-height: 0; 
+        overflow-y: auto; 
+        overscroll-behavior-y: contain; 
+        border-radius: 0.8rem; 
         background: #133829; 
-        box-shadow: inset 0 0 5px rgba(0,0,0,0.2); /* Sombra interna sutil */
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        padding: 0.2rem; /* Pequeno padding interno */
+        box-sizing: border-box; /* Inclui padding no cálculo */
     }
     .table-container-modal table {
         width: 100%;
-        font-size: 1.0rem; /* Ajustado para melhor leitura em modais */
+        font-size: 1.0rem; 
         border-collapse: separate;
         border-spacing: 0;
     }
     .table-container-modal th, 
     .table-container-modal td {
-        padding: 0.6rem 0.5rem; /* Padding ajustado */
+        padding: 0.6rem 0.5rem; 
         border-bottom: 1px solid #263b2b;
         text-align: center;
         vertical-align: middle;
     }
-    .table-container-modal td:first-child, /* Alinhar primeira coluna (nomes) à esquerda */
+    .table-container-modal td:first-child, 
     .table-container-modal th:first-child {
         text-align: left;
         padding-left: 1rem;
@@ -440,24 +440,27 @@
         font-family: var(--tit);
         border-bottom: 2px solid var(--c-cyan);
         position: sticky; 
-        top: -1px; /* Ajuste para não cobrir borda superior da tabela */
-        background: #133829; /* Mesmo fundo do container para o sticky header */
+        top: -1px; 
+        background: #133829; /* Mesmo fundo do container */
         z-index: 1; 
     }
-    .table-container-modal tr:last-child td { border-bottom: none; }
+    .table-container-modal tr:last-child td { 
+      border-bottom: none; 
+      padding-bottom: 0.8rem !important; /* Padding extra na última linha para garantir visibilidade */
+    }
     
-    /* Especificidades para Modal Diário (se a estrutura for diferente) */
     .modal-diario-table { 
       width: 100%;
-      max-height: 60vh; /* Pode precisar de ajuste específico */
+      max-height: 60vh; 
       overflow-y: auto; 
       overscroll-behavior-y: contain; 
       margin-bottom: 0.5rem;
       border-radius: 1rem; 
       background: #163221; 
       box-shadow: 0 1px 8px #19fff744;
-      flex-grow: 1; /* Para ocupar espaço se for o principal elemento flexível */
-      min-height: 0; /* Para flex-grow */
+      flex-grow: 1; 
+      min-height: 0; 
+      box-sizing: border-box;
     }
     .modal-diario-table table { 
         width: 100%; 
@@ -479,7 +482,10 @@
       background: #163221; 
       z-index: 1;
     }
-    .modal-diario-table tr:last-child td { border-bottom: none; }
+    .modal-diario-table tr:last-child td { 
+        border-bottom: none; 
+        padding-bottom: 0.8rem !important; /* Padding extra */
+    }
     .modal-diario-table td { color: #def2e1; word-break: break-word; }
     
     .modal-diario-filtro {
@@ -487,9 +493,9 @@
       flex-wrap: wrap;
       gap: 0.7rem;
       justify-content: flex-start;
-      margin-bottom: 0.5rem; /* Reduzido */
+      margin-bottom: 0.5rem; 
       align-items: flex-end;
-      flex-shrink: 0; /* Impede que o filtro encolha */
+      flex-shrink: 0; 
     }
     .modal-diario-filtro label {
       font-size: 1.02rem;
@@ -650,7 +656,8 @@
     </label>
   </div>
   <div class="modal-bg" id="modalDiario">
-    <div class="modal-diario"> <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
+    <div class="modal-diario"> 
+      <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
       <h3>Diário de Classe - Registros</h3>
       <div class="modal-diario-filtro">
         <label for="filtroNome">Aluno:</label>
@@ -658,19 +665,23 @@
         <label for="filtroData">Data:</label>
         <input type="date" id="filtroData">
       </div>
-      <div class="modal-diario-table" id="conteudoModalDiario"></div> </div>
+      <div class="modal-diario-table" id="conteudoModalDiario"></div> 
+    </div>
   </div>
   <div class="modal-bg" id="modalFinanceiro">
-    <div class="modal-financeiro"> <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
+    <div class="modal-financeiro"> 
+      <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
       <h3>Controle Financeiro - Lançamentos</h3>
-      <div id="conteudoModalFinanceiro" class="table-container-modal"> </div>
+      <div id="conteudoModalFinanceiro" class="table-container-modal"> 
+      </div>
     </div>
   </div>
   <div class="modal-bg" id="modalAlunos">
-    <div class="modal-alunos"> <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
+    <div class="modal-alunos"> 
+      <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
       <h3>Alunos Cadastrados</h3>
       <div id="conteudoModalAlunos" class="table-container-modal"> 
-          </div>
+      </div>
     </div>
   </div>
   <footer>
@@ -695,7 +706,8 @@
       let lista = JSON.parse(recuperarLocal('blocoNotasLista', '[]'));
       let html = "<ul>";
       lista.slice().reverse().forEach((item) => {
-        html += `<li>${item}</li>`;
+        const itemHtml = String(item || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        html += `<li>${itemHtml}</li>`;
       });
       html += "</ul>";
       document.getElementById('blocoNotasLista').innerHTML = lista.length ? html : "<span style='color:#9fc;'>Nenhuma anotação salva ainda.</span>";
@@ -732,7 +744,7 @@
       const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
       const filtroData = document.getElementById('filtroData').value;
       let filtrados = lista.filter(reg =>
-        (!filtroNome || reg.aluno.toLowerCase().includes(filtroNome)) &&
+        (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) &&
         (!filtroData || reg.data === filtroData)
       );
       let html = `<table><thead>
@@ -744,10 +756,12 @@
         </thead><tbody>`;
       if(filtrados.length){
         filtrados.slice().reverse().forEach(reg=>{
+          const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
           html += `<tr>
             <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
-            <td>${reg.aluno}</td>
-            <td>${reg.conteudo}</td>
+            <td>${alunoHtml}</td>
+            <td>${conteudoHtml}</td>
           </tr>`;
         });
       } else {
@@ -795,7 +809,7 @@
          abrirModalFinanceiro(); 
       }
     }
-    function editarFinanceiro(idx) { // idx é o originalIndex
+    function editarFinanceiro(idx) { 
         let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
         if (idx < 0 || idx >= lista.length) {
             console.error("Índice inválido para editar financeiro:", idx);
@@ -809,7 +823,7 @@
         mostrarBotoesFinanceiro();
         fecharModalFinanceiro(); 
     }
-    function removerFinanceiro(idx) { // idx é o originalIndex
+    function removerFinanceiro(idx) { 
       let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
       if (idx < 0 || idx >= lista.length) {
             console.error("Índice inválido para remover financeiro:", idx);
@@ -839,9 +853,7 @@
     function abrirModalFinanceiro() {
       let listaOriginal = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
       const listaComIndices = listaOriginal.map((item, index) => ({...item, originalIndex: index}));
-      // Poderia ordenar aqui se desejado, ex: por nome ou data implícita
-      // listaComIndices.sort((a,b) => String(a.nome || '').localeCompare(String(b.nome || '')));
-
+      
       let html = `<table>
         <thead>
           <tr>
@@ -855,14 +867,16 @@
         <tbody>
       `;
       if(listaComIndices.length){
-        // Se não for ordenar, pode reverter para mostrar os mais recentes primeiro
         listaComIndices.slice().reverse().forEach(item => { 
-          const nomeEscapado = String(item.nome || '').replace(/'/g, "\\'");
+          const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const valorHtml = parseFloat(item.valor || 0).toFixed(2);
+          const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
           html += `<tr>
-            <td style="text-align:left; padding-left:10px;">${item.nome}</td>
-            <td style="text-align:center;">R$ ${parseFloat(item.valor).toFixed(2)}</td>
-            <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${item.status}</td>
-            <td style="text-align:center;">${item.tipo || ''}</td>
+            <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
+            <td style="text-align:center;">R$ ${valorHtml}</td>
+            <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
+            <td style="text-align:center;">${tipoHtml}</td>
             <td class="table-actions">
               <button onclick="editarFinanceiro(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerFinanceiro(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
@@ -881,7 +895,7 @@
     }
     
     // -- Cadastro de Alunos (com edição e modal)
-    let alunoEditIdx = null; // Este será o índice da lista original do localStorage
+    let alunoEditIdx = null; 
     function mostrarBotoesAluno() {
         const nome = document.getElementById('nomeAluno').value.trim();
         const anydesk = document.getElementById('anydeskAluno').value.trim();
@@ -918,7 +932,7 @@
          abrirModalAlunos(); 
       }
     }
-    function editarAluno(idx) { // idx é o originalIndex da lista do localStorage
+    function editarAluno(idx) { 
       let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
       if (idx < 0 || idx >= lista.length) {
         console.error("Índice inválido para edição:", idx);
@@ -934,7 +948,7 @@
     function cancelarEdicaoAluno() {
       limparAlunoCampos();
     }
-    function removerAluno(idx) { // idx é o originalIndex da lista do localStorage
+    function removerAluno(idx) { 
       let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
       if (idx < 0 || idx >= lista.length) {
         console.error("Índice inválido para remoção:", idx);
@@ -966,7 +980,6 @@
         const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         if (nomeA < nomeB) return -1;
         if (nomeA > nomeB) return 1;
-        // Se os nomes forem iguais, pode ordenar pelo AnyDesk como critério secundário (opcional)
         const anydeskA = String(a.anydesk || '').toLowerCase();
         const anydeskB = String(b.anydesk || '').toLowerCase();
         if (anydeskA < anydeskB) return -1;
@@ -1024,16 +1037,21 @@
       document.getElementById('anotacaoInput').value = '';
       mostrarBotoesAnotacao();
     }
-    function removerAnotacao(idx) { // idx aqui é da lista invertida da exibição
+    function removerAnotacao(idx) { 
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
-      // Precisa encontrar o índice correto na lista não invertida se a ordem for crucial
-      // Para simplicidade, vamos assumir que a ordem de remoção bate com a lista original
-      // se o usuário não adicionar/remover muito rapidamente.
-      // Para ser mais robusto, passaria o texto da anotação ou um ID.
-      // No entanto, a lista é re-renderizada a cada ação, então o idx da lista invertida deve funcionar.
       let reversedList = anotacoes.slice().reverse();
+      if (idx < 0 || idx >= reversedList.length) {
+            console.error("Índice de exibição inválido para remover anotação:", idx);
+            return;
+      }
       let itemToRemove = reversedList[idx];
-      let originalIndexToRemove = anotacoes.indexOf(itemToRemove); // Encontra a primeira ocorrência
+      let originalIndexToRemove = -1;
+      for(let i = 0; i < anotacoes.length; i++) {
+          if(anotacoes[i] === itemToRemove) {
+              originalIndexToRemove = i;
+              break; 
+          }
+      }
       if (originalIndexToRemove !== -1) {
           anotacoes.splice(originalIndexToRemove,1);
           salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
@@ -1048,7 +1066,7 @@
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
-      anotacoes.slice().reverse().forEach((a, idx) => { // idx aqui é da lista invertida
+      anotacoes.slice().reverse().forEach((a, idx) => { 
         const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
           <tr>
@@ -1061,7 +1079,7 @@
     }
     
     // -- Tarefas Pendentes
-    let tarefaEditIdx = null; // Índice da lista original do localStorage
+    let tarefaEditIdx = null; 
     function mostrarBotoesTarefa() {
       const val = document.getElementById('tarefaInput').value.trim();
       const showAdd = val && tarefaEditIdx === null;
@@ -1091,7 +1109,7 @@
       salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
       limparTarefaCampos(); 
     }
-    function editarTarefa(idx) { // idx é da lista invertida da exibição. Precisa converter para original.
+    function editarTarefa(idx) { 
         let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
         let reversedList = tarefas.slice().reverse();
         if (idx < 0 || idx >= reversedList.length) {
@@ -1099,7 +1117,13 @@
             return;
         }
         let itemToEdit = reversedList[idx];
-        let originalIndex = tarefas.findIndex(t => t.tarefa === itemToEdit.tarefa && t.done === itemToEdit.done); // Encontra por conteúdo
+        let originalIndex = -1;
+        for(let i=0; i<tarefas.length; i++){
+            if(tarefas[i].tarefa === itemToEdit.tarefa && tarefas[i].done === itemToEdit.done){
+                originalIndex = i;
+                break;
+            }
+        }
 
         if (originalIndex !== -1) {
             document.getElementById('tarefaInput').value = tarefas[originalIndex].tarefa;
@@ -1112,7 +1136,7 @@
     function confirmarEdicaoTarefa() {
         adicionarTarefa();
     }
-    function removerTarefa(idx) { // idx é da lista invertida da exibição
+    function removerTarefa(idx) { 
       let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
       let reversedList = tarefas.slice().reverse();
        if (idx < 0 || idx >= reversedList.length) {
@@ -1121,7 +1145,7 @@
         }
       let itemToRemove = reversedList[idx];
       let originalIndexToRemove = -1;
-      for(let i=0; i < tarefas.length; i++){ // Encontra por conteúdo, mais seguro para objetos
+      for(let i=0; i < tarefas.length; i++){ 
           if(tarefas[i].tarefa === itemToRemove.tarefa && tarefas[i].done === itemToRemove.done){
               originalIndexToRemove = i;
               break;
@@ -1134,7 +1158,7 @@
       }
       listarTarefas();
     }
-    function concluirTarefa(idx) { // idx é da lista invertida da exibição
+    function concluirTarefa(idx) { 
       let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
       let reversedList = tarefas.slice().reverse();
        if (idx < 0 || idx >= reversedList.length) {
@@ -1169,7 +1193,7 @@
       let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
       let tbody = document.getElementById('tabelaTarefas').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
-      tarefas.slice().reverse().forEach((t, idx) => { // idx aqui é da lista invertida
+      tarefas.slice().reverse().forEach((t, idx) => { 
         const tarefaHtml = String(t.tarefa || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
           <tr${t.done ? ' style="text-decoration:line-through;opacity:.6;"' : ''}>
