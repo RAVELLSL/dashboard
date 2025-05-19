@@ -24,7 +24,7 @@
       color: var(--txt);
       font-family: var(--bod);
       margin: 0;
-      padding: 0 0 0 70px; 
+      padding: 0 0 0 70px;
       min-height: 100vh;
       box-sizing: border-box;
       position: relative;
@@ -48,27 +48,27 @@
       position: fixed;
       top: 0; left: 0;
       width: 70px;
-      height: 100svh; 
+      height: 100svh;
       background: #153826;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.4rem; 
-      z-index: 101; 
+      gap: 0.4rem;
+      z-index: 101;
       box-shadow: 2px 0 14px #19fff733;
-      padding-top: 0.4rem; 
-      padding-bottom: 0;   
+      padding-top: 0.4rem;
+      padding-bottom: 0;
       overflow-y: auto;
       overflow-x: hidden;
       border-right: 2px solid var(--c-green);
       scrollbar-width: thin;
       scrollbar-color: var(--c-green) #153826;
       overscroll-behavior-y: contain;
-      box-sizing: border-box; 
+      box-sizing: border-box;
     }
     .atalhos-lateral .ataho-link {
       width: 44px; height: 44px;
-      margin: 0.1rem 0; 
+      margin: 0.1rem 0;
       background: #143a22;
       color: var(--c-cyan);
       display: flex; align-items: center; justify-content: center;
@@ -101,35 +101,33 @@
       background: var(--c-green);
       border-radius: 4px;
     }
-
-    @media (max-width: 800px) { 
+    @media (max-width: 800px) {
       .atalhos-lateral {
         width: 54px;
-        gap: 0.2rem;         
-        padding-top: 0.2rem; 
-        padding-bottom: 0;   
+        gap: 0.2rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0;
       }
       body { padding-left: 54px; }
       .atalhos-lateral .ataho-link {
         width: 36px;
         height: 36px;
-        margin: 0.05rem 0; 
+        margin: 0.05rem 0;
         font-size: 1.1rem;
       }
     }
-
-    @media (max-width: 600px) { 
+    @media (max-width: 600px) {
       .atalhos-lateral {
         width: 50px;
-        gap: 0.1rem;          
-        padding-top: 0.1rem;  
-        padding-bottom: 0;    
+        gap: 0.1rem;
+        padding-top: 0.1rem;
+        padding-bottom: 0;
       }
       body { padding-left: 50px; }
       .atalhos-lateral .ataho-link {
         width: 30px;
         height: 30px;
-        margin: 0; 
+        margin: 0;
         font-size: 1rem;
       }
     }
@@ -145,10 +143,12 @@
     @media (max-width: 1100px) {
       .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     }
-    @media (max-width: 799px) { 
+    @media (max-width: 799px) {
       .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+      /* Quando em uma coluna, o anotacoes-rapidas não precisa de span especial */
+      .card.anotacoes-rapidas { grid-column: auto; }
     }
-    @media (max-width: 599px) { 
+    @media (max-width: 599px) {
       .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
     }
     .card {
@@ -167,6 +167,14 @@
       overflow: visible;
       box-sizing: border-box;
     }
+    .card.anotacoes-rapidas {
+        grid-column: 1 / -1; /* Faz o card ocupar todas as colunas da linha atual */
+    }
+    @media (min-width: 800px) and (max-width: 1099px) {
+        /* Em layout de 2 colunas, anotacoes-rapidas pode ocupar 2 colunas */
+        .card.anotacoes-rapidas { grid-column: span 2; }
+    }
+
     .card h2 {
       font-family: var(--tit);
       font-size: 1.14rem;
@@ -247,7 +255,7 @@
       transition: color 0.14s;
     }
     .table-actions button:hover { color: var(--c-yellow); }
-    table { 
+    table {
       width: 100%;
       border-collapse: collapse;
       background: #133829;
@@ -259,12 +267,12 @@
       overflow: hidden;
       box-sizing: border-box;
     }
-    table th, table td { 
+    table th, table td {
       padding: 0.6rem 0.4rem;
       text-align: left;
       border-bottom: 1px solid #263b2b;
     }
-    table th { 
+    table th {
       color: var(--c-green);
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
@@ -295,7 +303,7 @@
       align-items: center;
       gap: 2.1rem;
       margin: 2.5rem auto 0 auto;
-      padding-bottom: calc(2.8rem + 1.5rem); 
+      padding-bottom: calc(2.8rem + 1.5rem);
       max-width: 700px;
       width: 100%;
       box-sizing: border-box;
@@ -322,15 +330,15 @@
       width: 100vw;
       text-align: center;
       color: #5beebb;
-      font-size: 1.1rem; 
+      font-size: 1.1rem;
       font-family: var(--tit);
       letter-spacing: 0.2em;
       background: #133829ea;
-      padding: 0.85rem 0; 
+      padding: 0.85rem 0;
       position: fixed;
       left: 0;
       bottom: 0;
-      z-index: 100; 
+      z-index: 100;
       opacity: 0.85;
       user-select: none;
       box-shadow: 0 -2px 8px #16271d77;
@@ -349,7 +357,7 @@
       .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; }
       .dashboard-grid { padding: 0.6rem 0.1rem; }
       .main-controls {
-        padding-bottom: calc(2.29rem + 2rem); 
+        padding-bottom: calc(2.29rem + 2rem);
       }
     }
     .modal-bg {
@@ -360,37 +368,35 @@
       background: rgba(0,32,32,0.72);
       justify-content: center;
       align-items: center;
-      padding: 1rem; 
+      padding: 1rem;
       box-sizing: border-box;
     }
     .modal-bg.active { display: flex; }
-    
     .modal-diario, .modal-financeiro, .modal-alunos {
       background: #122921;
       color: var(--txt);
       border-radius: 1.1rem;
       box-shadow: 0 8px 34px #1beeea66;
-      padding: 1.5rem; 
-      width: 100%; 
-      max-width: 800px; 
-      max-height: calc(100vh - 2rem); 
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 800px;
+      max-height: calc(100vh - 2rem);
       font-family: var(--bod);
       font-size: 1.13rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem; 
+      gap: 1rem;
       position: relative;
-      box-sizing: border-box; 
+      box-sizing: border-box;
     }
-
     .modal-diario h3,
     .modal-financeiro h3,
     .modal-alunos h3 {
-      margin: 0 0 0.5rem 0; 
+      margin: 0 0 0.5rem 0;
       text-align: center;
       font-family: var(--tit);
       color: var(--c-cyan);
-      flex-shrink: 0; 
+      flex-shrink: 0;
     }
     .modal-diario .fechar-modal,
     .modal-financeiro .fechar-modal,
@@ -403,37 +409,36 @@
       font-size: 1.3rem;
       cursor: pointer;
       font-family: var(--tit);
-      z-index: 10; 
+      z-index: 10;
     }
-
     .table-container-modal {
-        flex-grow: 1; 
-        min-height: 0; 
-        overflow-y: auto; 
-        overscroll-behavior-y: contain; 
-        border-radius: 0.8rem; 
-        background: #133829; 
+        flex-grow: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+        border-radius: 0.8rem;
+        background: #133829;
         box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        padding-top: 0.2rem;    
-        padding-left: 0.2rem;   
-        padding-right: 0.2rem;  
+        padding-top: 0.2rem;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
         padding-bottom: 2rem;   /* AUMENTADO SIGNIFICATIVAMENTE */
-        box-sizing: border-box; 
+        box-sizing: border-box;
     }
     .table-container-modal table {
         width: 100%;
-        font-size: 1.0rem; 
+        font-size: 1.0rem;
         border-collapse: separate;
         border-spacing: 0;
     }
-    .table-container-modal th, 
+    .table-container-modal th,
     .table-container-modal td {
         padding: 0.5rem; /* Ajustado para consistência */
         border-bottom: 1px solid #263b2b;
         text-align: center;
         vertical-align: middle;
     }
-    .table-container-modal td:first-child, 
+    .table-container-modal td:first-child,
     .table-container-modal th:first-child {
         text-align: left;
         padding-left: 1rem; /* Mantido para nomes */
@@ -442,34 +447,33 @@
         color: var(--c-green);
         font-family: var(--tit);
         border-bottom: 2px solid var(--c-cyan);
-        position: sticky; 
-        top: -1px; 
-        background: #133829; 
-        z-index: 1; 
+        position: sticky;
+        top: -1px;
+        background: #133829;
+        z-index: 1;
     }
-    .table-container-modal tr:last-child td { 
-      border-bottom: none; 
-      /* padding-bottom: 0.8rem !important; */ /* REMOVIDO - o padding do container cuida disso */
+    .table-container-modal tr:last-child td {
+       border-bottom: none;
+       /* padding-bottom: 0.8rem !important; */ /* REMOVIDO - o padding do container cuida disso */
     }
-    
-    .modal-diario-table { 
+    .modal-diario-table {
       width: 100%;
       /* max-height: 60vh;  Pode ser gerenciado por flex-grow se for o único elemento flexível */
-      overflow-y: auto; 
-      overscroll-behavior-y: contain; 
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
       /* margin-bottom: 0.5rem; */ /* Zerado se flex gerencia espaço */
-      border-radius: 1rem; 
-      background: #163221; 
+      border-radius: 1rem;
+      background: #163221;
       box-shadow: 0 1px 8px #19fff744;
-      flex-grow: 1; 
-      min-height: 0; 
+      flex-grow: 1;
+      min-height: 0;
       box-sizing: border-box;
       padding-bottom: 2rem; /* Adicionado padding inferior aqui também, se necessário */
     }
-    .modal-diario-table table { 
-        width: 100%; 
+    .modal-diario-table table {
+        width: 100%;
         font-size: 1.01rem;
-        border-collapse: separate; 
+        border-collapse: separate;
         border-spacing: 0;
     }
     .modal-diario-table th, .modal-diario-table td {
@@ -481,24 +485,23 @@
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
       text-align: left;
-      position: sticky; 
+      position: sticky;
       top: -1px;
-      background: #163221; 
+      background: #163221;
       z-index: 1;
     }
-    .modal-diario-table tr:last-child td { 
-        border-bottom: none; 
+    .modal-diario-table tr:last-child td {
+        border-bottom: none;
     }
     .modal-diario-table td { color: #def2e1; word-break: break-word; }
-    
     .modal-diario-filtro {
       display: flex;
       flex-wrap: wrap;
       gap: 0.7rem;
       justify-content: flex-start;
-      margin-bottom: 0.5rem; 
+      margin-bottom: 0.5rem;
       align-items: flex-end;
-      flex-shrink: 0; 
+      flex-shrink: 0;
     }
     .modal-diario-filtro label {
       font-size: 1.02rem;
@@ -523,28 +526,7 @@
     .modal-diario-filtro input[type="date"]:focus {
       border-color: var(--c-cyan);
     }
-    .bloco-notas-lista {
-      background: #17352e;
-      border-radius: 1rem;
-      box-shadow: 0 1px 8px #19fff733;
-      padding: 1.2rem 1rem;
-      margin-top: 1.2rem;
-      font-size: 1.04rem;
-      min-height: 34px;
-      max-height: 170px;
-      overflow-y: auto;
-      overscroll-behavior-y: contain; 
-    }
-    .bloco-notas-lista ul {
-      list-style: disc inside;
-      margin: 0;
-      padding-left: 1.1em;
-    }
-    .bloco-notas-lista li {
-      margin-bottom: 0.35em;
-      word-break: break-all;
-      color: #afffbb;
-    }
+    /* Removido .bloco-notas-lista e estilos associados */
   </style>
 </head>
 <body>
@@ -611,12 +593,6 @@
       </form>
       <button class="btn" style="margin-bottom:0.9rem" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
     </div>
-    <div class="card bloco-notas">
-      <h2>Bloco de Notas</h2>
-      <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
-      <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
-      <div class="bloco-notas-lista" id="blocoNotasLista"></div>
-    </div>
     <div class="card anotacoes-rapidas">
       <h2>Anotações Rápidas</h2>
       <form onsubmit="event.preventDefault(); adicionarAnotacao();">
@@ -631,23 +607,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <div class="card tarefas-pendentes">
-      <h2>Tarefas Pendentes</h2>
-      <form onsubmit="event.preventDefault(); adicionarTarefa();">
-        <input id="tarefaInput" placeholder="Adicionar nova tarefa" autocomplete="off" oninput="mostrarBotoesTarefa()">
-        <button class="btn" type="submit" id="btnTarefaAdd" style="display:none;">Adicionar</button>
-        <button class="btn" type="button" id="btnTarefaEdit" style="display:none;" onclick="confirmarEdicaoTarefa()">Salvar Edição</button>
-        <button class="btn" type="button" id="btnTarefaCancel" style="display:none;" onclick="cancelarEdicaoTarefa()">Cancelar</button>
-        <button class="btn" type="button" id="btnTarefaLimpar" style="display:none;" onclick="limparTarefaCampos()">Limpar Tudo</button>
-      </form>
-      <table id="tabelaTarefas">
-        <thead>
-          <tr><th>Tarefa</th><th>Status</th><th style="width:90px;">Ações</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </main>
+    </main>
   <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
     <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
   </a>
@@ -659,7 +619,7 @@
     </label>
   </div>
   <div class="modal-bg" id="modalDiario">
-    <div class="modal-diario"> 
+    <div class="modal-diario">
       <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
       <h3>Diário de Classe - Registros</h3>
       <div class="modal-diario-filtro">
@@ -668,22 +628,22 @@
         <label for="filtroData">Data:</label>
         <input type="date" id="filtroData">
       </div>
-      <div class="modal-diario-table" id="conteudoModalDiario"></div> 
+      <div class="modal-diario-table" id="conteudoModalDiario"></div>
     </div>
   </div>
   <div class="modal-bg" id="modalFinanceiro">
-    <div class="modal-financeiro"> 
+    <div class="modal-financeiro">
       <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
       <h3>Controle Financeiro - Lançamentos</h3>
-      <div id="conteudoModalFinanceiro" class="table-container-modal"> 
+      <div id="conteudoModalFinanceiro" class="table-container-modal">
       </div>
     </div>
   </div>
   <div class="modal-bg" id="modalAlunos">
-    <div class="modal-alunos"> 
+    <div class="modal-alunos">
       <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
       <h3>Alunos Cadastrados</h3>
-      <div id="conteudoModalAlunos" class="table-container-modal"> 
+      <div id="conteudoModalAlunos" class="table-container-modal">
       </div>
     </div>
   </div>
@@ -695,27 +655,6 @@
     function salvarLocal(key, value) { localStorage.setItem(key, value); }
     function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
 
-    // ---------------- BLOCO DE NOTAS ----------------
-    function salvarBlocoNotas() {
-      let texto = document.getElementById('blocoNotas').value.trim();
-      if (!texto) return;
-      let lista = JSON.parse(recuperarLocal('blocoNotasLista', '[]'));
-      lista.push(texto);
-      salvarLocal('blocoNotasLista', JSON.stringify(lista));
-      document.getElementById('blocoNotas').value = '';
-      listarBlocoNotas();
-    }
-    function listarBlocoNotas() {
-      let lista = JSON.parse(recuperarLocal('blocoNotasLista', '[]'));
-      let html = "<ul>";
-      lista.slice().reverse().forEach((item) => {
-        const itemHtml = String(item || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        html += `<li>${itemHtml}</li>`;
-      });
-      html += "</ul>";
-      document.getElementById('blocoNotasLista').innerHTML = lista.length ? html : "<span style='color:#9fc;'>Nenhuma anotação salva ainda.</span>";
-    }
-    
     // ---------------- DIÁRIO DE CLASSE ATUALIZADO ----------------
     function salvarDiarioClasse() {
       const aluno = document.getElementById('diarioAluno').value.trim();
@@ -773,20 +712,20 @@
       html += `</tbody></table>`;
       document.getElementById('conteudoModalDiario').innerHTML = html;
     }
-    
+
     // ---------------- CONTROLE FINANCEIRO ----------------
     let finEditIdx = null;
     function mostrarBotoesFinanceiro() {
       const nome = document.getElementById('nomeFinanceiro').value.trim();
       const valor = document.getElementById('valorFinanceiro').value.trim();
-      const showAdd = nome && valor && finEditIdx === null; 
-      const showEdit = nome && valor && finEditIdx !== null; 
-      const showAnyButton = nome || valor; 
-      
+      const showAdd = nome && valor && finEditIdx === null;
+      const showEdit = nome && valor && finEditIdx !== null;
+      const showAnyButton = nome || valor;
+
       document.getElementById('btnFinAdd').style.display = showAdd ? '' : 'none';
       document.getElementById('btnFinEdit').style.display = showEdit ? '' : 'none';
-      document.getElementById('btnFinCancel').style.display = finEditIdx !== null ? '' : 'none'; 
-      document.getElementById('btnFinLimpar').style.display = showAnyButton && finEditIdx === null ? '' : 'none'; 
+      document.getElementById('btnFinCancel').style.display = finEditIdx !== null ? '' : 'none';
+      document.getElementById('btnFinLimpar').style.display = showAnyButton && finEditIdx === null ? '' : 'none';
     }
     function adicionarFinanceiro() {
       const nome = document.getElementById('nomeFinanceiro').value.trim();
@@ -807,12 +746,12 @@
         }
       }
       salvarLocal('controleFinanceiro', JSON.stringify(lista));
-      limparFinanceiroCampos(); 
+      limparFinanceiroCampos();
       if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-         abrirModalFinanceiro(); 
+        abrirModalFinanceiro();
       }
     }
-    function editarFinanceiro(idx) { 
+    function editarFinanceiro(idx) {
         let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
         if (idx < 0 || idx >= lista.length) {
             console.error("Índice inválido para editar financeiro:", idx);
@@ -824,9 +763,9 @@
         document.getElementById('tipoFinanceiro').value = lista[idx].tipo;
         finEditIdx = idx;
         mostrarBotoesFinanceiro();
-        fecharModalFinanceiro(); 
+        fecharModalFinanceiro();
     }
-    function removerFinanceiro(idx) { 
+    function removerFinanceiro(idx) {
       let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
       if (idx < 0 || idx >= lista.length) {
             console.error("Índice inválido para remover financeiro:", idx);
@@ -835,28 +774,27 @@
       lista.splice(idx,1);
       salvarLocal('controleFinanceiro', JSON.stringify(lista));
       if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-         abrirModalFinanceiro(); 
+        abrirModalFinanceiro();
       }
     }
     function confirmarEdicaoFinanceiro() {
-        adicionarFinanceiro(); 
+        adicionarFinanceiro();
     }
     function limparFinanceiroCampos() {
       document.getElementById('nomeFinanceiro').value = '';
       document.getElementById('valorFinanceiro').value = '';
       document.getElementById('statusFinanceiro').value = 'Pago';
       document.getElementById('tipoFinanceiro').value = 'Mensalidade';
-      finEditIdx = null; 
+      finEditIdx = null;
       mostrarBotoesFinanceiro();
     }
     function cancelarEdicaoFinanceiro() {
-      limparFinanceiroCampos(); 
+      limparFinanceiroCampos();
     }
-    
     function abrirModalFinanceiro() {
       let listaOriginal = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
       const listaComIndices = listaOriginal.map((item, index) => ({...item, originalIndex: index}));
-      
+
       let html = `<table>
         <thead>
           <tr>
@@ -870,7 +808,7 @@
         <tbody>
       `;
       if(listaComIndices.length){
-        listaComIndices.slice().reverse().forEach(item => { 
+        listaComIndices.slice().reverse().forEach(item => {
           const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
           const valorHtml = parseFloat(item.valor || 0).toFixed(2);
           const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -896,9 +834,9 @@
     function fecharModalFinanceiro() {
       document.getElementById('modalFinanceiro').classList.remove('active');
     }
-    
+
     // -- Cadastro de Alunos (com edição e modal)
-    let alunoEditIdx = null; 
+    let alunoEditIdx = null;
     function mostrarBotoesAluno() {
         const nome = document.getElementById('nomeAluno').value.trim();
         const anydesk = document.getElementById('anydeskAluno').value.trim();
@@ -915,27 +853,25 @@
       const nome = document.getElementById('nomeAluno').value.trim();
       const anydesk = document.getElementById('anydeskAluno').value.trim();
       if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
-      
       let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
-      
-      if (alunoEditIdx === null) { 
+      if (alunoEditIdx === null) {
         lista.push({nome, anydesk});
-      } else { 
+      } else {
         if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
           lista[alunoEditIdx] = {nome, anydesk};
         } else {
           console.error("Índice de edição inválido:", alunoEditIdx);
-          limparAlunoCampos(); 
+          limparAlunoCampos();
           return;
         }
       }
       salvarLocal('alunosAnyDesk', JSON.stringify(lista));
-      limparAlunoCampos(); 
+      limparAlunoCampos();
       if (document.getElementById('modalAlunos').classList.contains('active')) {
-         abrirModalAlunos(); 
+        abrirModalAlunos();
       }
     }
-    function editarAluno(idx) { 
+    function editarAluno(idx) {
       let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
       if (idx < 0 || idx >= lista.length) {
         console.error("Índice inválido para edição:", idx);
@@ -943,15 +879,15 @@
       }
       document.getElementById('nomeAluno').value = lista[idx].nome;
       document.getElementById('anydeskAluno').value = lista[idx].anydesk;
-      alunoEditIdx = idx; 
+      alunoEditIdx = idx;
       mostrarBotoesAluno();
-      fecharModalAlunos(); 
+      fecharModalAlunos();
     }
     function confirmarEdicaoAluno() { adicionarAluno(); }
     function cancelarEdicaoAluno() {
       limparAlunoCampos();
     }
-    function removerAluno(idx) { 
+    function removerAluno(idx) {
       let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
       if (idx < 0 || idx >= lista.length) {
         console.error("Índice inválido para remoção:", idx);
@@ -960,7 +896,7 @@
       lista.splice(idx,1);
       salvarLocal('alunosAnyDesk', JSON.stringify(lista));
       if (document.getElementById('modalAlunos').classList.contains('active')) {
-         abrirModalAlunos(); 
+        abrirModalAlunos();
       }
     }
     function limparAlunoCampos() {
@@ -969,7 +905,6 @@
       alunoEditIdx = null;
       mostrarBotoesAluno();
     }
-    
     function abrirModalAlunos() {
       let listaOriginal = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
 
@@ -1017,7 +952,7 @@
         html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
       }
       html += `</tbody></table>`;
-      document.getElementById('conteudoModalAlunos').innerHTML = html; 
+      document.getElementById('conteudoModalAlunos').innerHTML = html;
       document.getElementById('modalAlunos').classList.add('active');
     }
     function fecharModalAlunos() {
@@ -1040,7 +975,7 @@
       document.getElementById('anotacaoInput').value = '';
       mostrarBotoesAnotacao();
     }
-    function removerAnotacao(idx) { 
+    function removerAnotacao(idx) {
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       let reversedList = anotacoes.slice().reverse();
       if (idx < 0 || idx >= reversedList.length) {
@@ -1052,7 +987,7 @@
       for(let i = 0; i < anotacoes.length; i++) {
           if(anotacoes[i] === itemToRemove) {
               originalIndexToRemove = i;
-              break; 
+              break;
           }
       }
       if (originalIndexToRemove !== -1) {
@@ -1069,7 +1004,7 @@
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
-      anotacoes.slice().reverse().forEach((a, idx) => { 
+      anotacoes.slice().reverse().forEach((a, idx) => {
         const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
           <tr>
@@ -1080,140 +1015,7 @@
           </tr>`;
       });
     }
-    
-    // -- Tarefas Pendentes
-    let tarefaEditIdx = null; 
-    function mostrarBotoesTarefa() {
-      const val = document.getElementById('tarefaInput').value.trim();
-      const showAdd = val && tarefaEditIdx === null;
-      const showEdit = val && tarefaEditIdx !== null;
-      const showAnyButton = val;
 
-      document.getElementById('btnTarefaAdd').style.display = showAdd ? '' : 'none';
-      document.getElementById('btnTarefaEdit').style.display = showEdit ? '' : 'none';
-      document.getElementById('btnTarefaCancel').style.display = tarefaEditIdx !== null ? '' : 'none';
-      document.getElementById('btnTarefaLimpar').style.display = showAnyButton && tarefaEditIdx === null ? '' : 'none';
-    }
-    function adicionarTarefa() {
-      const val = document.getElementById('tarefaInput').value.trim();
-      if (!val) return;
-      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
-      if (tarefaEditIdx === null) {
-        tarefas.push({tarefa: val, done: false});
-      } else {
-        if (tarefaEditIdx >=0 && tarefaEditIdx < tarefas.length) {
-            tarefas[tarefaEditIdx].tarefa = val; 
-        } else {
-            console.error("Índice de edição inválido para tarefas:", tarefaEditIdx);
-            limparTarefaCampos();
-            return;
-        }
-      }
-      salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
-      limparTarefaCampos(); 
-    }
-    function editarTarefa(idx) { 
-        let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
-        let reversedList = tarefas.slice().reverse();
-        if (idx < 0 || idx >= reversedList.length) {
-            console.error("Índice de exibição inválido para editar tarefa:", idx);
-            return;
-        }
-        let itemToEdit = reversedList[idx];
-        let originalIndex = -1;
-        for(let i=0; i<tarefas.length; i++){
-            if(tarefas[i].tarefa === itemToEdit.tarefa && tarefas[i].done === itemToEdit.done){
-                originalIndex = i;
-                break;
-            }
-        }
-
-        if (originalIndex !== -1) {
-            document.getElementById('tarefaInput').value = tarefas[originalIndex].tarefa;
-            tarefaEditIdx = originalIndex;
-            mostrarBotoesTarefa();
-        } else {
-            console.error("Não foi possível encontrar a tarefa original para edição.");
-        }
-    }
-    function confirmarEdicaoTarefa() {
-        adicionarTarefa();
-    }
-    function removerTarefa(idx) { 
-      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
-      let reversedList = tarefas.slice().reverse();
-       if (idx < 0 || idx >= reversedList.length) {
-            console.error("Índice de exibição inválido para remover tarefa:", idx);
-            return;
-        }
-      let itemToRemove = reversedList[idx];
-      let originalIndexToRemove = -1;
-      for(let i=0; i < tarefas.length; i++){ 
-          if(tarefas[i].tarefa === itemToRemove.tarefa && tarefas[i].done === itemToRemove.done){
-              originalIndexToRemove = i;
-              break;
-          }
-      }
-
-      if (originalIndexToRemove !== -1) {
-          tarefas.splice(originalIndexToRemove, 1);
-          salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
-      }
-      listarTarefas();
-    }
-    function concluirTarefa(idx) { 
-      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
-      let reversedList = tarefas.slice().reverse();
-       if (idx < 0 || idx >= reversedList.length) {
-            console.error("Índice de exibição inválido para concluir tarefa:", idx);
-            return;
-        }
-      let itemToToggle = reversedList[idx];
-      let originalIndexToToggle = -1;
-       for(let i=0; i < tarefas.length; i++){
-          if(tarefas[i].tarefa === itemToToggle.tarefa && tarefas[i].done === itemToToggle.done){
-              originalIndexToToggle = i;
-              break;
-          }
-      }
-
-      if (originalIndexToToggle !== -1) {
-          tarefas[originalIndexToToggle].done = !tarefas[originalIndexToToggle].done;
-          salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
-      }
-      listarTarefas();
-    }
-    function limparTarefaCampos() {
-      document.getElementById('tarefaInput').value = '';
-      tarefaEditIdx = null;
-      mostrarBotoesTarefa();
-      listarTarefas(); 
-    }
-    function cancelarEdicaoTarefa() {
-      limparTarefaCampos();
-    }
-    function listarTarefas() {
-      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
-      let tbody = document.getElementById('tabelaTarefas').getElementsByTagName('tbody')[0];
-      tbody.innerHTML = '';
-      tarefas.slice().reverse().forEach((t, idx) => { 
-        const tarefaHtml = String(t.tarefa || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        tbody.innerHTML += `
-          <tr${t.done ? ' style="text-decoration:line-through;opacity:.6;"' : ''}>
-            <td>${tarefaHtml}</td>
-            <td>
-              <button onclick="concluirTarefa(${idx})" title="${t.done ? 'Desfazer' : 'Concluir'}" style="color:var(--c-green);background:none;border:none;font-size:1.1rem; cursor:pointer;">
-                <i class="fas fa-${t.done ? 'undo' : 'check'}"></i>
-              </button>
-            </td>
-            <td class="table-actions">
-              <button onclick="editarTarefa(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
-              <button onclick="removerTarefa(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-      });
-    }
-    
     // Event listener para fechar modais com ESC
     document.addEventListener('keydown', function(e){
       if(e.key === "Escape") {
@@ -1226,10 +1028,8 @@
     // EXPORTAÇÃO / IMPORTAÇÃO
     function exportarDados() {
       const dados = {
-        blocoNotasLista: recuperarLocal('blocoNotasLista','[]'),
         diarioClasseLista: recuperarLocal('diarioClasseLista','[]'),
         alunosAnyDesk: recuperarLocal('alunosAnyDesk','[]'),
-        tarefasPendentes: recuperarLocal('tarefasPendentes','[]'),
         anotacoesRapidas: recuperarLocal('anotacoesRapidas','[]'),
         controleFinanceiro: recuperarLocal('controleFinanceiro','[]')
       };
@@ -1252,39 +1052,37 @@
         try {
           const dados = JSON.parse(e.target.result);
           if (typeof dados !== "object") throw new Error("Formato inválido!");
-          if ("blocoNotasLista" in dados) salvarLocal('blocoNotasLista', dados.blocoNotasLista);
           if ("diarioClasseLista" in dados) salvarLocal('diarioClasseLista', dados.diarioClasseLista);
           if ("alunosAnyDesk" in dados) salvarLocal('alunosAnyDesk', dados.alunosAnyDesk);
-          if ("tarefasPendentes" in dados) salvarLocal('tarefasPendentes', dados.tarefasPendentes);
           if ("anotacoesRapidas" in dados) salvarLocal('anotacoesRapidas', dados.anotacoesRapidas);
           if ("controleFinanceiro" in dados) salvarLocal('controleFinanceiro', dados.controleFinanceiro);
-          
+
           document.getElementById('formDiarioClasse').reset();
-          limparAlunoCampos(); 
-          limparFinanceiroCampos(); 
-          limparAnotacaoCampos(); 
-          limparTarefaCampos(); 
-          listarBlocoNotas();
+          limparAlunoCampos();
+          limparFinanceiroCampos();
+          limparAnotacaoCampos();
           alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
         } catch(e) {
           alert("Falha na importação: " + e.message);
+        } finally {
+            // Sempre recarregar as listagens e estados dos botões após a tentativa de importação
+            mostrarBotoesAluno();
+            mostrarBotoesFinanceiro();
+            mostrarBotoesAnotacao();
+            listarAnotacoes();
         }
       };
       reader.readAsText(file);
-      event.target.value = ""; 
+      event.target.value = "";
     }
 
     // Inicializar todas as listagens e estados de botões ao carregar a página
     document.addEventListener('DOMContentLoaded', () => {
-        listarBlocoNotas();
         mostrarBotoesAluno();
         mostrarBotoesFinanceiro();
         mostrarBotoesAnotacao();
-        listarAnotacoes(); 
-        mostrarBotoesTarefa();
-        listarTarefas(); 
+        listarAnotacoes();
     });
-
   </script>
 </body>
 </html>
