@@ -142,10 +142,10 @@
     }
     @media (max-width: 1100px) {
       .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+       .card.anotacoes-rapidas { grid-column: 1 / -1; }
     }
     @media (max-width: 799px) {
       .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
-      /* Quando em uma coluna, o anotacoes-rapidas não precisa de span especial */
       .card.anotacoes-rapidas { grid-column: auto; }
     }
     @media (max-width: 599px) {
@@ -168,11 +168,7 @@
       box-sizing: border-box;
     }
     .card.anotacoes-rapidas {
-        grid-column: 1 / -1; /* Faz o card ocupar todas as colunas da linha atual */
-    }
-    @media (min-width: 800px) and (max-width: 1099px) {
-        /* Em layout de 2 colunas, anotacoes-rapidas pode ocupar 2 colunas */
-        .card.anotacoes-rapidas { grid-column: span 2; }
+        grid-column: 1 / -1;
     }
 
     .card h2 {
@@ -253,6 +249,7 @@
       font-size: 1.13rem;
       cursor: pointer;
       transition: color 0.14s;
+      padding: 0.2rem 0.3rem; /* Pequeno padding para facilitar o clique */
     }
     .table-actions button:hover { color: var(--c-yellow); }
     table {
@@ -422,7 +419,7 @@
         padding-top: 0.2rem;
         padding-left: 0.2rem;
         padding-right: 0.2rem;
-        padding-bottom: 2rem;   /* AUMENTADO SIGNIFICATIVAMENTE */
+        padding-bottom: 2rem;
         box-sizing: border-box;
     }
     .table-container-modal table {
@@ -433,7 +430,7 @@
     }
     .table-container-modal th,
     .table-container-modal td {
-        padding: 0.5rem; /* Ajustado para consistência */
+        padding: 0.5rem;
         border-bottom: 1px solid #263b2b;
         text-align: center;
         vertical-align: middle;
@@ -441,7 +438,7 @@
     .table-container-modal td:first-child,
     .table-container-modal th:first-child {
         text-align: left;
-        padding-left: 1rem; /* Mantido para nomes */
+        padding-left: 1rem;
     }
     .table-container-modal th {
         color: var(--c-green);
@@ -454,21 +451,18 @@
     }
     .table-container-modal tr:last-child td {
        border-bottom: none;
-       /* padding-bottom: 0.8rem !important; */ /* REMOVIDO - o padding do container cuida disso */
     }
     .modal-diario-table {
       width: 100%;
-      /* max-height: 60vh;  Pode ser gerenciado por flex-grow se for o único elemento flexível */
       overflow-y: auto;
       overscroll-behavior-y: contain;
-      /* margin-bottom: 0.5rem; */ /* Zerado se flex gerencia espaço */
       border-radius: 1rem;
       background: #163221;
       box-shadow: 0 1px 8px #19fff744;
       flex-grow: 1;
       min-height: 0;
       box-sizing: border-box;
-      padding-bottom: 2rem; /* Adicionado padding inferior aqui também, se necessário */
+      padding-bottom: 2rem;
     }
     .modal-diario-table table {
         width: 100%;
@@ -477,7 +471,7 @@
         border-spacing: 0;
     }
     .modal-diario-table th, .modal-diario-table td {
-      padding: 0.5rem; /* Ajustado */
+      padding: 0.5rem;
       border-bottom: 1px solid #263b2b;
     }
     .modal-diario-table th {
@@ -526,7 +520,6 @@
     .modal-diario-filtro input[type="date"]:focus {
       border-color: var(--c-cyan);
     }
-    /* Removido .bloco-notas-lista e estilos associados */
   </style>
 </head>
 <body>
@@ -595,19 +588,21 @@
     </div>
     <div class="card anotacoes-rapidas">
       <h2>Anotações Rápidas</h2>
-      <form onsubmit="event.preventDefault(); adicionarAnotacao();">
+      <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
         <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
         <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
+        <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
+        <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
         <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
       </form>
       <table id="tabelaAnotacoes">
         <thead>
-          <tr><th>Anotação</th><th style="width:70px;">Ações</th></tr>
+          <tr><th>Anotação</th><th style="width:100px;">Ações</th></tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
-    </main>
+  </main>
   <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
     <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
   </a>
@@ -907,12 +902,7 @@
     }
     function abrirModalAlunos() {
       let listaOriginal = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
-
-      const listaComIndices = listaOriginal.map((aluno, index) => ({
-        ...aluno,
-        originalIndex: index
-      }));
-
+      const listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
       listaComIndices.sort((a, b) => {
         const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -925,16 +915,7 @@
         return 0;
       });
 
-      let html = `<table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>AnyDesk</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-      `;
+      let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead><tbody>`;
       if(listaComIndices.length){
         listaComIndices.forEach(item => {
           const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -959,58 +940,97 @@
       document.getElementById('modalAlunos').classList.remove('active');
     }
 
-    // -- Anotações Rápidas
+    // -- Anotações Rápidas --
+    let anotacaoEditIdx = null; // Índice da anotação sendo editada (baseado na lista original)
+
     function mostrarBotoesAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
-      document.getElementById('btnAddAnotacao').style.display = val ? '' : 'none';
-      document.getElementById('btnLimparAnotacao').style.display = val ? '' : 'none';
+      const isEditing = anotacaoEditIdx !== null;
+
+      document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none';
+      document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none';
+      document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none';
+      document.getElementById('btnLimparAnotacao').style.display = val && !isEditing ? '' : 'none';
     }
-    function adicionarAnotacao() {
+
+    function salvarOuAtualizarAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
       if (!val) return;
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
-      anotacoes.push(val);
+
+      if (anotacaoEditIdx !== null) { // Editando
+        if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
+          anotacoes[anotacaoEditIdx] = val;
+        } else {
+          console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
+        }
+      } else { // Adicionando nova
+        anotacoes.push(val);
+      }
       salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
+      limparAnotacaoCampos(); 
       listarAnotacoes();
-      document.getElementById('anotacaoInput').value = '';
-      mostrarBotoesAnotacao();
     }
-    function removerAnotacao(idx) {
+
+    function editarAnotacao(idxExibicao) {
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
-      let reversedList = anotacoes.slice().reverse();
-      if (idx < 0 || idx >= reversedList.length) {
-            console.error("Índice de exibição inválido para remover anotação:", idx);
-            return;
+      let originalIndex = anotacoes.length - 1 - idxExibicao; // Converter índice de exibição para original
+
+      if (originalIndex >= 0 && originalIndex < anotacoes.length) {
+        document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
+        anotacaoEditIdx = originalIndex;
+        mostrarBotoesAnotacao();
+        document.getElementById('anotacaoInput').focus();
+      } else {
+        console.error("Índice de exibição inválido para editar anotação:", idxExibicao);
+         limparAnotacaoCampos(); // Reseta estado se o índice for ruim
       }
-      let itemToRemove = reversedList[idx];
-      let originalIndexToRemove = -1;
-      for(let i = 0; i < anotacoes.length; i++) {
-          if(anotacoes[i] === itemToRemove) {
-              originalIndexToRemove = i;
-              break;
-          }
-      }
-      if (originalIndexToRemove !== -1) {
-          anotacoes.splice(originalIndexToRemove,1);
-          salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
-      }
-      listarAnotacoes();
     }
+    
+    function cancelarEdicaoAnotacao() {
+      limparAnotacaoCampos(); // limparAnotacaoCampos já reseta o estado de edição
+    }
+
+    function removerAnotacao(idxExibicao) {
+      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
+      let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
+
+      if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
+        if (anotacaoEditIdx === originalIndexToRemove) {
+            limparAnotacaoCampos(); // Cancela a edição se o item editado for removido
+        }
+        anotacoes.splice(originalIndexToRemove, 1);
+        salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
+        listarAnotacoes();
+        
+        // Ajustar anotacaoEditIdx se um item anterior ao editado for removido
+        if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
+            anotacaoEditIdx--;
+            // Não precisa chamar mostrarBotoesAnotacao() aqui, pois limparAnotacaoCampos ou a próxima edição o farão
+        }
+      } else {
+         console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
+      }
+    }
+
     function limparAnotacaoCampos() {
       document.getElementById('anotacaoInput').value = '';
+      anotacaoEditIdx = null;
       mostrarBotoesAnotacao();
     }
+
     function listarAnotacoes() {
       let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
-      anotacoes.slice().reverse().forEach((a, idx) => {
+      anotacoes.slice().reverse().forEach((a, idxExibicao) => {
         const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
           <tr>
             <td>${anotacaoHtml}</td>
             <td class="table-actions">
-              <button onclick="removerAnotacao(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+              <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
           </tr>`;
       });
@@ -1022,6 +1042,7 @@
         if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
         if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
         if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
+        if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao(); // Cancela edição de anotação com ESC
       }
     });
 
@@ -1060,15 +1081,14 @@
           document.getElementById('formDiarioClasse').reset();
           limparAlunoCampos();
           limparFinanceiroCampos();
-          limparAnotacaoCampos();
+          limparAnotacaoCampos(); // Isso agora também reseta o estado de edição das anotações
           alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
         } catch(e) {
           alert("Falha na importação: " + e.message);
         } finally {
-            // Sempre recarregar as listagens e estados dos botões após a tentativa de importação
             mostrarBotoesAluno();
             mostrarBotoesFinanceiro();
-            mostrarBotoesAnotacao();
+            // mostrarBotoesAnotacao(); // limparAnotacaoCampos já chama isso
             listarAnotacoes();
         }
       };
@@ -1080,7 +1100,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         mostrarBotoesAluno();
         mostrarBotoesFinanceiro();
-        mostrarBotoesAnotacao();
+        limparAnotacaoCampos(); // Garante estado inicial correto para anotações e botões
         listarAnotacoes();
     });
   </script>
