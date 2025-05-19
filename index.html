@@ -7,280 +7,465 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
   <style>
-:root {
-  --c-cyan:   #19fff7;
-  --c-green:  #46ff86;
-  --c-yellow: #ffe066;
-  --c-blue:   #02a6ff;
-  --c-purple: #977cff;
-  --c-bg-dark:#16271d;
-  --c-bg-card:#193c2c;
-  --txt: #eaffea;
-  --tit: 'Orbitron', Arial, sans-serif;
-  --bod: 'Share Tech Mono', monospace;
-}
+    :root {
+      --c-cyan:   #19fff7;
+      --c-green:  #46ff86;
+      --c-yellow: #ffe066;
+      --c-blue:   #02a6ff;
+      --c-purple: #977cff;
+      --c-bg-dark:#16271d;
+      --c-bg-card:#193c2c;
+      --txt: #eaffea;
+      --tit: 'Orbitron', Arial, sans-serif;
+      --bod: 'Share Tech Mono', monospace;
+    }
+    body {
+      background: linear-gradient(120deg, #16271d 0%, #1b3440 100%);
+      color: var(--txt);
+      font-family: var(--bod);
+      margin: 0;
+      padding: 0 0 0 70px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      position: relative;
+      overflow-x: hidden;
+    }
+    header {
+      background: transparent;
+      color: var(--c-green);
+      text-align: center;
+      padding: 2.2rem 1rem 1.2rem 1rem;
+      font-family: var(--tit);
+      font-size: 2.2rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px var(--c-cyan);
+      border-bottom: 3px solid var(--c-cyan);
+      z-index: 10;
+      position: relative;
+    }
+    .atalhos-lateral {
+      position: fixed;
+      top: 0; left: 0;
+      width: 70px;
+      height: 100vh;
+      background: #153826;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 99;
+      box-shadow: 2px 0 14px #19fff733;
+      padding-top: 1.2rem;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-right: 2px solid var(--c-green);
+      scrollbar-width: thin;
+      scrollbar-color: var(--c-green) #153826;
+    }
+    .atalhos-lateral .ataho-link {
+      width: 44px; height: 44px;
+      margin: 0.16rem 0;
+      background: #143a22;
+      color: var(--c-cyan);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; font-size: 1.22rem;
+      border: 1.5px solid transparent;
+      transition: border .2s, color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .atalhos-lateral .ataho-link:focus {
+      outline: 2px solid var(--c-yellow);
+      outline-offset: 2px;
+    }
+    .atalhos-lateral .ataho-link:hover, .atalhos-lateral .ataho-link:focus {
+      color: var(--c-yellow);
+      border: 1.5px solid var(--c-yellow);
+      box-shadow: 0 0 10px var(--c-yellow);
+    }
+    .atalhos-lateral .ataho-link.active {
+      color: var(--c-green);
+      border: 1.5px solid var(--c-green);
+      box-shadow: 0 0 14px var(--c-green);
+    }
+    .atalhos-lateral::-webkit-scrollbar {
+      width: 8px;
+      background: #153826;
+    }
+    .atalhos-lateral::-webkit-scrollbar-thumb {
+      background: var(--c-green);
+      border-radius: 4px;
+    }
+    .atalhos-lateral {
+      scrollbar-width: thin;
+      scrollbar-color: var(--c-green) #153826;
+    }
+    @media (max-width: 800px) {
+      .atalhos-lateral { width: 54px; }
+      body { padding-left: 54px; }
+      .atalhos-lateral .ataho-link { width: 36px; height: 36px;}
+    }
+    @media (max-width: 600px) {
+      .atalhos-lateral { width: 50px; }
+      body { padding-left: 50px; }
+      .atalhos-lateral .ataho-link { width: 30px; height: 30px; }
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 2rem 2vw 1rem 2vw;
+      max-width: 1440px;
+      margin: auto;
+      box-sizing: border-box;
+    }
+    @media (max-width: 1100px) {
+      .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    }
+    @media (max-width: 800px) {
+      .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+    }
+    @media (max-width: 600px) {
+      .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
+    }
+    .card {
+      background: var(--c-bg-card);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 18px #19fff733;
+      padding: 1.4rem 1.1rem 1.1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      min-width: 220px;
+      max-width: 100%;
+      min-height: 340px;
+      margin-bottom: 0.5rem;
+      border: 2px solid var(--c-green);
+      transition: border .16s, box-shadow .14s;
+      overflow: visible;
+      box-sizing: border-box;
+    }
+    .card h2 {
+      font-family: var(--tit);
+      font-size: 1.14rem;
+      color: var(--c-cyan);
+      letter-spacing: 1px;
+      margin: 0 0 1rem 0;
+      text-align: center;
+      border-bottom: 1.5px solid var(--c-yellow);
+      padding-bottom: 0.5rem;
+    }
+    .card form,
+    .card textarea,
+    .card input,
+    .card select {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    input, textarea, select {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      display: block;
+      border-radius: 0.7rem;
+      background: #163221;
+      color: var(--txt);
+      border: 1.5px solid var(--c-green);
+      padding: 0.8rem 1rem;
+      margin: 0.2rem 0 0.6rem 0;
+      font-size: 1.06rem;
+      font-family: var(--bod);
+      transition: border 0.13s;
+      outline: none;
+      word-break: break-all;
+    }
 
-body {
-  background: linear-gradient(120deg, #16271d 0%, #1b3440 100%);
-  color: var(--txt);
-  font-family: var(--bod);
-  margin: 0;
-  padding: 0 0 0 70px;
-  min-height: 100vh;
-}
-
-header {
-  background: transparent;
-  color: var(--c-green);
-  text-align: center;
-  padding: 2.2rem 1rem 1.2rem 1rem;
-  font-family: var(--tit);
-  font-size: 2.2rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 12px var(--c-cyan);
-  border-bottom: 3px solid var(--c-cyan);
-}
-
-/* Barra lateral fixa e com rolagem sempre disponível */
-.atalhos-lateral {
-  position: fixed;
-  top: 0; left: 0;
-  width: 70px;
-  height: 100dvh;
-  height: 100vh; /* fallback para navegadores sem suporte a 100dvh */
-  background: #153826;
+    .diario-classe form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  z-index: 99;
-  box-shadow: 2px 0 14px #19fff733;
-  padding-top: 1.2rem;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  border-right: 2px solid var(--c-green);
-  scrollbar-width: thin;
-  scrollbar-color: var(--c-green) #153826;
 }
 
-/* Barra de rolagem customizada para navegadores Webkit */
-.atalhos-lateral::-webkit-scrollbar {
-  width: 8px;
-  background: #153826;
-}
-.atalhos-lateral::-webkit-scrollbar-thumb {
-  background: var(--c-green);
-  border-radius: 4px;
-}
-
-.atalhos-lateral .ataho-link {
-  width: 44px; height: 44px;
-  margin: 0.16rem 0;
-  background: #143a22;
-  color: var(--c-cyan);
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 10px; font-size: 1.22rem;
-  border: 1.5px solid transparent;
-  transition: border .2s, color .2s, box-shadow .2s;
-}
-.atalhos-lateral .ataho-link:hover, .atalhos-lateral .ataho-link:focus {
-  color: var(--c-yellow);
-  border: 1.5px solid var(--c-yellow);
-  box-shadow: 0 0 10px var(--c-yellow);
-}
-.atalhos-lateral .ataho-link.active {
-  color: var(--c-green);
-  border: 1.5px solid var(--c-green);
-  box-shadow: 0 0 14px var(--c-green);
-}
-
-@media (max-width: 800px) {
-  .atalhos-lateral { width: 54px; }
-  body { padding-left: 54px; }
-  .atalhos-lateral .ataho-link { width: 36px; height: 36px;}
-}
-@media (max-width: 600px) {
-  .atalhos-lateral { width: 50px; }
-  body { padding-left: 50px; }
-  .atalhos-lateral .ataho-link { width: 30px; height: 30px; }
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  padding: 2rem 2vw 1rem 2vw;
-  max-width: 1440px;
-  margin: auto;
-}
-@media (max-width: 1100px) {
-  .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-}
-@media (max-width: 800px) {
-  .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
-}
-@media (max-width: 600px) {
-  .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
-}
-
-.card {
-  background: var(--c-bg-card);
-  border-radius: 1.5rem;
-  box-shadow: 0 2px 18px #19fff733;
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  min-width: 250px;
-  max-width: 100%;
-  min-height: 340px;
-  margin-bottom: 0.5rem;
-  border: 2px solid var(--c-green);
-  transition: border .16s, box-shadow .14s;
-  overflow: hidden;
-}
-.card:hover {
-  border: 2px solid var(--c-yellow);
-  box-shadow: 0 6px 18px #ffe06633;
-}
-.card h2 {
-  font-family: var(--tit);
-  font-size: 1.14rem;
-  color: var(--c-cyan);
-  letter-spacing: 1px;
-  margin: 0 0 1rem 0;
-  text-align: center;
-  border-bottom: 1.5px solid var(--c-yellow);
-  padding-bottom: 0.5rem;
-}
-input, textarea, select {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  display: block;
-  border-radius: 0.7rem;
-  background: #163221;
-  color: var(--txt);
-  border: 1.5px solid var(--c-green);
-  padding: 0.7rem 1rem;
-  margin: 0.2rem 0 0.6rem 0;
-  font-size: 1rem;
-  font-family: var(--bod);
-  transition: border 0.13s;
-  outline: none;
-}
-input:focus, textarea:focus, select:focus {
-  border: 1.5px solid var(--c-yellow);
-}
-
-.table-actions button {
-  background: none;
-  border: none;
-  color: var(--c-green);
-  font-size: 1.13rem;
-  cursor: pointer;
-  transition: color 0.14s;
-}
-.table-actions button:hover { color: var(--c-yellow); }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #133829;
-  color: var(--txt);
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.97rem;
-  box-shadow: 0 1px 6px #19fff722;
-  overflow: hidden;
-}
-th, td {
-  padding: 0.6rem 0.4rem;
-  text-align: left;
-  border-bottom: 1px solid #263b2b;
-}
-th {
-  color: var(--c-green);
-  font-family: var(--tit);
-  border-bottom: 2px solid var(--c-cyan);
-}
-
-.portal-acesso {
-  background: transparent;
-  color: var(--c-green);
-  border-radius: 1.2rem;
-  border: 2px solid var(--c-cyan);
-  font-family: var(--tit);
-  text-align: center;
-  font-size: 1.08rem;
-  font-weight: bold;
-  box-shadow: 0 2px 12px #19fff733;
-  padding: 2rem 1rem;
-  margin: 2rem auto 1.5rem auto;
-  max-width: 700px;
-  transition: border .19s, color .19s;
-  cursor: pointer;
-  text-decoration: none;
-  letter-spacing: 1.15px;
-  display: block;
-}
-.portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow);}
-.main-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin: 0 0 2.5rem 0;
-}
-.btn-export, .btn-import, .btn {
-  background: transparent;
-  color: var(--c-cyan);
-  font-family: var(--tit);
-  border: 1.5px solid var(--c-cyan);
-  border-radius: 1.1rem;
-  padding: 0.7rem 1.6rem;
-  font-size: 1.06rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: border .14s, color .14s, background .14s;
-  margin-top: 0.2rem;
-}
-.btn-export:hover, .btn-import:hover, .btn:hover {
-  color: var(--c-green);
-  border: 1.5px solid var(--c-green);
-  background: #1d342a;
-}
-
-footer {
-  width: 100%;
-  text-align: center;
-  color: #5beebb;
-  font-size: 1rem;
-  font-family: var(--tit);
-  letter-spacing: 0.2em;
-  margin-top: 2.4rem;
-  margin-bottom: 1.2rem;
-  opacity: 0.7;
-  user-select: none;
-}
+    textarea {
+      resize: vertical;
+      min-height: 74px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    input:focus, textarea:focus, select:focus {
+      border: 1.5px solid var(--c-yellow);
+    }
+    .card form .btn {
+      margin-right: 0.6rem;
+      margin-bottom: 0.4rem;
+      margin-top: 0.2rem;
+    }
+    .card form .btn:last-child {
+      margin-right: 0;
+    }
+    .table-actions button {
+      background: none;
+      border: none;
+      color: var(--c-green);
+      font-size: 1.13rem;
+      cursor: pointer;
+      transition: color 0.14s;
+    }
+    .table-actions button:hover { color: var(--c-yellow); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #133829;
+      color: var(--txt);
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.97rem;
+      box-shadow: 0 1px 6px #19fff722;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    th, td {
+      padding: 0.6rem 0.4rem;
+      text-align: left;
+      border-bottom: 1px solid #263b2b;
+    }
+    th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+    }
+    .portal-acesso {
+      background: transparent;
+      color: var(--c-green);
+      border-radius: 1.2rem;
+      border: 2px solid var(--c-cyan);
+      font-family: var(--tit);
+      text-align: center;
+      font-size: 1.08rem;
+      font-weight: bold;
+      box-shadow: 0 2px 12px #19fff733;
+      padding: 2rem 1rem;
+      margin: 2rem auto 1.5rem auto;
+      max-width: 700px;
+      transition: border .19s, color .19s;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 1.15px;
+      display: block;
+    }
+    .portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow);}
+    .main-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.1rem;
+      margin: 2.5rem auto 0 auto;
+      padding-bottom: 3.7rem;
+      max-width: 700px;
+      width: 100%;
+    }
+    .btn-export, .btn-import, .btn {
+      background: transparent;
+      color: var(--c-cyan);
+      font-family: var(--tit);
+      border: 1.5px solid var(--c-cyan);
+      border-radius: 1.1rem;
+      padding: 0.7rem 1.6rem;
+      font-size: 1.06rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: border .14s, color .14s, background .14s;
+      margin-top: 0.2rem;
+    }
+    .btn-export:hover, .btn-import:hover, .btn:hover {
+      color: var(--c-green);
+      border: 1.5px solid var(--c-green);
+      background: #1d342a;
+    }
+    footer {
+      width: 100vw;
+      text-align: center;
+      color: #5beebb;
+      font-size: 1.1rem;
+      font-family: var(--tit);
+      letter-spacing: 0.2em;
+      background: #133829ea;
+      padding: 0.85rem 0 0.8rem 0;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      opacity: 0.85;
+      user-select: none;
+      box-shadow: 0 -2px 8px #16271d77;
+    }
+    @media (max-width: 600px) {
+      .main-controls { flex-direction: column; gap: 1.2rem; padding-bottom: 4.7rem;}
+      .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem;}
+      footer { font-size: 0.99rem; padding: 0.65rem 0 0.6rem 0; }
+    }
+    @media (max-width: 480px) {
+      .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; }
+      .dashboard-grid { padding: 0.6rem 0.1rem; }
+      .main-controls { padding-bottom: 6rem; }
+    }
+    /* Modal Diário de Classe e Controle Financeiro */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      z-index: 1010;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,32,32,0.72);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-bg.active { display: flex; }
+    .modal-diario, .modal-financeiro {
+      background: #122921;
+      color: var(--txt);
+      border-radius: 1.1rem;
+      box-shadow: 0 8px 34px #1beeea66;
+      padding: 2.3rem 2rem 1.7rem 2rem;
+      min-width: 300px; max-width: 96vw;
+      max-height: 85vh;
+      font-family: var(--bod);
+      font-size: 1.13rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      position: relative;
+      overflow-y: auto;
+    }
+    .modal-diario h3,
+    .modal-financeiro h3 {
+      margin: 0 0 1.3rem 0;
+      text-align: center;
+      font-family: var(--tit);
+      color: var(--c-cyan);
+    }
+    .modal-diario .fechar-modal,
+    .modal-financeiro .fechar-modal {
+      position: absolute;
+      right: 18px; top: 12px;
+      background: none;
+      border: none;
+      color: var(--c-yellow);
+      font-size: 1.3rem;
+      cursor: pointer;
+      font-family: var(--tit);
+    }
+    .bloco-notas-lista {
+      background: #17352e;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff733;
+      padding: 1.2rem 1rem;
+      margin-top: 1.2rem;
+      font-size: 1.04rem;
+      min-height: 34px;
+      max-height: 170px;
+      overflow-y: auto;
+    }
+    .bloco-notas-lista ul {
+      list-style: disc inside;
+      margin: 0;
+      padding-left: 1.1em;
+    }
+    .bloco-notas-lista li {
+      margin-bottom: 0.35em;
+      word-break: break-all;
+      color: #afffbb;
+    }
+    .modal-diario-filtro {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: flex-start;
+      margin-bottom: 1.2rem;
+      align-items: flex-end;
+    }
+    .modal-diario-filtro label {
+      font-size: 1.02rem;
+      color: #9cf7ee;
+      font-family: var(--bod);
+      margin-bottom: 0.1rem;
+      margin-right: 0.4rem;
+    }
+    .modal-diario-filtro input[type="text"],
+    .modal-diario-filtro input[type="date"] {
+      background: #193c2c;
+      border: 1.2px solid var(--c-green);
+      color: #d3fff3;
+      padding: 0.5rem 0.7rem;
+      border-radius: 0.7rem;
+      font-size: 0.98rem;
+      font-family: var(--bod);
+      outline: none;
+      margin-right: 1rem;
+    }
+    .modal-diario-filtro input[type="text"]:focus,
+    .modal-diario-filtro input[type="date"]:focus {
+      border-color: var(--c-cyan);
+    }
+    .modal-diario-table {
+      width: 100%;
+      background: #163221;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff744;
+      font-size: 1.01rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      margin-bottom: 0.5rem;
+    }
+    .modal-diario-table table { width: 100%; border-radius: 1rem; }
+    .modal-diario-table th, .modal-diario-table td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid #263b2b;
+    }
+    .modal-diario-table th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+      text-align: left;
+    }
+    .modal-diario-table tr:last-child td { border-bottom: none; }
+    .modal-diario-table td { color: #def2e1; word-break: break-word; }
+    .modal-financeiro table {
+      background: #163221;
+      border-radius: 1rem;
+      box-shadow: 0 1px 8px #19fff744;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 0 0;
+      font-size: 1.01rem;
+    }
+    .modal-financeiro th,
+    .modal-financeiro td {
+      padding: 0.6rem 0.4rem;
+      border-bottom: 1px solid #263b2b;
+    }
+    .modal-financeiro th {
+      color: var(--c-green);
+      font-family: var(--tit);
+      border-bottom: 2px solid var(--c-cyan);
+    }
+    .modal-financeiro tr:last-child td { border-bottom: none; }
   </style>
 </head>
 <body>
   <!-- Barra lateral fixa vertical com todos os atalhos -->
   <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
-    <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom"><i class="fab fa-google"></i></a>
-    <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet"><i class="fas fa-video"></i></a>
-    <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive"><i class="fab fa-google-drive"></i></a>
-    <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs"><i class="far fa-file-alt"></i></a>
-    <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas"><i class="fas fa-table"></i></a>
-    <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda"><i class="far fa-calendar-alt"></i></a>
-    <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
-    <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)"><i class="fas fa-laptop"></i></a>
-    <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio"><i class="fas fa-globe"></i></a>
-    <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links"><i class="fas fa-code"></i></a>
-    <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA"><i class="fas fa-robot"></i></a>
-    <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
-    <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias"><i class="fas fa-newspaper"></i></a>
+    <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
+    <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
+    <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
+    <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs"><i class="far fa-file-alt"></i></a>
+    <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas"><i class="fas fa-table"></i></a>
+    <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda" tabindex="6" aria-label="Google Agenda"><i class="far fa-calendar-alt"></i></a>
+    <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
+    <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-laptop"></i></a>
+    <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio" tabindex="9" aria-label="Convertio"><i class="fas fa-globe"></i></a>
+    <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links" tabindex="10" aria-label="Dev Links"><i class="fas fa-code"></i></a>
+    <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA" tabindex="11" aria-label="Agentes de IA"><i class="fas fa-robot"></i></a>
+    <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
+    <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
   </nav>
   <header>
     RS TECH
@@ -291,12 +476,18 @@ footer {
       <h2>Bloco de Notas</h2>
       <textarea id="blocoNotas" rows="5" placeholder="Digite suas anotações livres..."></textarea>
       <button class="btn" onclick="salvarBlocoNotas()">Salvar</button>
+      <div class="bloco-notas-lista" id="blocoNotasLista"></div>
     </div>
     <!-- Diário de Classe -->
     <div class="card diario-classe">
       <h2>Diário de Classe</h2>
-      <textarea id="diarioClasse" rows="5" placeholder="Descreva o que foi realizado em aula..."></textarea>
-      <button class="btn" onclick="salvarDiarioClasse()">Salvar</button>
+      <form id="formDiarioClasse" onsubmit="event.preventDefault(); salvarDiarioClasse();">
+        <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required>
+        <input id="diarioData" type="date" required>
+        <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required></textarea>
+        <button class="btn" type="submit">Salvar</button>
+      </form>
+      <button class="btn" style="margin-top:0.4rem" onclick="abrirModalDiario()">Visualizar Diário</button>
     </div>
     <!-- Anotações Rápidas -->
     <div class="card anotacoes-rapidas">
@@ -326,7 +517,7 @@ footer {
       </form>
       <table id="tabelaAlunos">
         <thead>
-          <tr><th>Nome</th><th>AnyDesk</th><th style="width:80px;">Ações</th></tr>
+          <tr><th>Nome</th><th>AnyDesk</th><th style="width:110px;">Ações</th></tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -350,7 +541,7 @@ footer {
     </div>
     <!-- Controle Financeiro -->
     <div class="card controle-financeiro">
-      <h2>Controle Financeiro de Mensalidades</h2>
+      <h2>Controle Financeiro</h2>
       <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
         <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
         <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
@@ -358,23 +549,21 @@ footer {
           <option value="Pago">Pago</option>
           <option value="Pendente">Pendente</option>
         </select>
+        <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
+          <option value="Mensalidade">Mensalidade</option>
+          <option value="Serviço Extra">Serviço Extra</option>
+        </select>
         <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
         <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
         <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
         <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
       </form>
-      <table id="tabelaFinanceiro">
-        <thead>
-          <tr><th>Nome</th><th>Valor</th><th>Status</th><th style="width:90px;">Ações</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <button class="btn" style="margin-bottom:0.9rem" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
     </div>
   </main>
   <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
     <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
   </a>
-  <!-- Botões principais após portal -->
   <div class="main-controls">
     <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
     <label class="btn-import" style="display:inline-block;cursor:pointer;">
@@ -382,39 +571,116 @@ footer {
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
     </label>
   </div>
+  <!-- Modal Diário de Classe atualizado -->
+  <div class="modal-bg" id="modalDiario">
+    <div class="modal-diario">
+      <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
+      <h3>Diário de Classe - Registros</h3>
+      <div class="modal-diario-filtro">
+        <label for="filtroNome">Aluno:</label>
+        <input type="text" id="filtroNome" placeholder="Filtrar por nome">
+        <label for="filtroData">Data:</label>
+        <input type="date" id="filtroData">
+      </div>
+      <div class="modal-diario-table" id="conteudoModalDiario"></div>
+    </div>
+  </div>
+  <!-- Modal Controle Financeiro -->
+  <div class="modal-bg" id="modalFinanceiro">
+    <div class="modal-financeiro">
+      <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
+      <h3>Controle Financeiro - Lançamentos</h3>
+      <div id="conteudoModalFinanceiro"></div>
+    </div>
+  </div>
   <footer>
     2025
   </footer>
   <script>
-    // BLOCO DE NOTAS E DIÁRIO DE CLASSE
-    function salvarBlocoNotas() {
-      localStorage.setItem('blocoNotas', document.getElementById('blocoNotas').value);
-      alert('Bloco de Notas salvo com sucesso.');
-    }
-    document.getElementById('blocoNotas').value = localStorage.getItem('blocoNotas') || '';
-    function salvarDiarioClasse() {
-      localStorage.setItem('diarioClasse', document.getElementById('diarioClasse').value);
-      alert('Diário de Classe salvo.');
-    }
-    document.getElementById('diarioClasse').value = localStorage.getItem('diarioClasse') || '';
+    // Utilitários de armazenamento
+    function salvarLocal(key, value) { localStorage.setItem(key, value); }
+    function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
 
-    function mostrarBotoesAnotacao() {
-      const val = document.getElementById('anotacaoInput').value.trim();
-      document.getElementById('btnAddAnotacao').style.display = val ? '' : 'none';
-      document.getElementById('btnLimparAnotacao').style.display = val ? '' : 'none';
+    // ---------------- BLOCO DE NOTAS ----------------
+    function salvarBlocoNotas() {
+      let texto = document.getElementById('blocoNotas').value.trim();
+      if (!texto) return;
+      let lista = JSON.parse(recuperarLocal('blocoNotasLista', '[]'));
+      lista.push(texto);
+      salvarLocal('blocoNotasLista', JSON.stringify(lista));
+      document.getElementById('blocoNotas').value = '';
+      listarBlocoNotas();
     }
-    function mostrarBotoesAluno() {
-      const nome = document.getElementById('nomeAluno').value.trim();
-      const anydesk = document.getElementById('anydeskAluno').value.trim();
-      const show = nome || anydesk;
-      document.getElementById('btnAlunoAdd').style.display = show ? '' : 'none';
-      document.getElementById('btnAlunoLimpar').style.display = show ? '' : 'none';
+    function listarBlocoNotas() {
+      let lista = JSON.parse(recuperarLocal('blocoNotasLista', '[]'));
+      let html = "<ul>";
+      lista.slice().reverse().forEach((item, idx) => {
+        html += `<li>${item}</li>`;
+      });
+      html += "</ul>";
+      document.getElementById('blocoNotasLista').innerHTML = lista.length ? html : "<span style='color:#9fc;'>Nenhuma anotação salva ainda.</span>";
     }
-    function mostrarBotoesTarefa() {
-      const val = document.getElementById('tarefaInput').value.trim();
-      document.getElementById('btnTarefaAdd').style.display = val ? '' : 'none';
-      document.getElementById('btnTarefaLimpar').style.display = val ? '' : 'none';
+    listarBlocoNotas();
+
+    // ---------------- DIÁRIO DE CLASSE ATUALIZADO ----------------
+    function salvarDiarioClasse() {
+      const aluno = document.getElementById('diarioAluno').value.trim();
+      const data = document.getElementById('diarioData').value;
+      const conteudo = document.getElementById('diarioConteudo').value.trim();
+      if (!aluno || !data || !conteudo) { alert('Preencha todos os campos.'); return; }
+      let lista = JSON.parse(recuperarLocal('diarioClasseLista', '[]'));
+      lista.push({ aluno, data, conteudo });
+      salvarLocal('diarioClasseLista', JSON.stringify(lista));
+      document.getElementById('formDiarioClasse').reset();
+      alert('Registro salvo no Diário de Classe.');
     }
+    function abrirModalDiario() {
+      document.getElementById('modalDiario').classList.add('active');
+      document.getElementById('filtroNome').value = '';
+      document.getElementById('filtroData').value = '';
+      filtrarModalDiario();
+    }
+    function fecharModalDiario() {
+      document.getElementById('modalDiario').classList.remove('active');
+    }
+    document.addEventListener('input', function(e){
+      if(e.target.id==='filtroNome' || e.target.id==='filtroData') filtrarModalDiario();
+    });
+    function filtrarModalDiario() {
+      let lista = JSON.parse(recuperarLocal('diarioClasseLista','[]'));
+      const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
+      const filtroData = document.getElementById('filtroData').value;
+      let filtrados = lista.filter(reg =>
+        (!filtroNome || reg.aluno.toLowerCase().includes(filtroNome)) &&
+        (!filtroData || reg.data === filtroData)
+      );
+      let html = `<table><thead>
+          <tr>
+            <th>Data</th>
+            <th>Aluno</th>
+            <th>Conteúdo Ministrado</th>
+          </tr>
+        </thead><tbody>`;
+      if(filtrados.length){
+        filtrados.reverse().forEach(reg=>{
+          html += `<tr>
+            <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
+            <td>${reg.aluno}</td>
+            <td>${reg.conteudo}</td>
+          </tr>`;
+        });
+      } else {
+        html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
+      }
+      html += `</tbody></table>`;
+      document.getElementById('conteudoModalDiario').innerHTML = html;
+    }
+    document.addEventListener('keydown', function(e){
+      if(document.getElementById('modalDiario').classList.contains('active') && e.key === "Escape") fecharModalDiario();
+    });
+
+    // ---------------- CONTROLE FINANCEIRO ----------------
+    let finEditIdx = null;
     function mostrarBotoesFinanceiro() {
       const nome = document.getElementById('nomeFinanceiro').value.trim();
       const valor = document.getElementById('valorFinanceiro').value.trim();
@@ -422,42 +688,194 @@ footer {
       document.getElementById('btnFinAdd').style.display = show ? '' : 'none';
       document.getElementById('btnFinLimpar').style.display = show ? '' : 'none';
     }
-    // --- ANOTAÇÕES RÁPIDAS ---
+    function adicionarFinanceiro() {
+      const nome = document.getElementById('nomeFinanceiro').value.trim();
+      const valor = document.getElementById('valorFinanceiro').value.trim();
+      const status = document.getElementById('statusFinanceiro').value;
+      const tipo = document.getElementById('tipoFinanceiro').value;
+      if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
+      let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+      if (finEditIdx === null) {
+        lista.push({nome, valor, status, tipo});
+      } else {
+        lista[finEditIdx] = {nome, valor, status, tipo};
+        finEditIdx = null;
+      }
+      salvarLocal('controleFinanceiro', JSON.stringify(lista));
+      listarFinanceiro();
+      document.getElementById('nomeFinanceiro').value = '';
+      document.getElementById('valorFinanceiro').value = '';
+      mostrarBotoesFinanceiro();
+    }
+    function removerFinanceiro(idx) {
+      let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+      lista.splice(idx,1);
+      salvarLocal('controleFinanceiro', JSON.stringify(lista));
+      listarFinanceiro();
+    }
+    function limparFinanceiroCampos() {
+      document.getElementById('nomeFinanceiro').value = '';
+      document.getElementById('valorFinanceiro').value = '';
+      mostrarBotoesFinanceiro();
+    }
+    function cancelarEdicaoFinanceiro() {
+      finEditIdx = null;
+      document.getElementById('nomeFinanceiro').value = '';
+      document.getElementById('valorFinanceiro').value = '';
+      document.getElementById('statusFinanceiro').value = 'Pago';
+      document.getElementById('tipoFinanceiro').value = 'Mensalidade';
+      mostrarBotoesFinanceiro();
+    }
+    function listarFinanceiro() {
+      cancelarEdicaoFinanceiro();
+    }
+    listarFinanceiro();
+    function abrirModalFinanceiro() {
+      let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+      let html = `<table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      if(lista.length){
+        lista.forEach(f=>{
+          html += `<tr>
+            <td>${f.nome}</td>
+            <td>R$ ${f.valor}</td>
+            <td>${f.status}</td>
+            <td>${f.tipo || ''}</td>
+          </tr>`;
+        });
+      } else {
+        html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum lançamento registrado.</td></tr>`;
+      }
+      html += `</tbody></table>`;
+      document.getElementById('conteudoModalFinanceiro').innerHTML = html;
+      document.getElementById('modalFinanceiro').classList.add('active');
+    }
+    function fecharModalFinanceiro() {
+      document.getElementById('modalFinanceiro').classList.remove('active');
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key === "Escape") fecharModalFinanceiro();
+    });
+
+    // -- Cadastro de Alunos (com edição)
+    let alunoEditIdx = null;
+    function mostrarBotoesAluno() {
+      const nome = document.getElementById('nomeAluno').value.trim();
+      const anydesk = document.getElementById('anydeskAluno').value.trim();
+      const show = nome || anydesk;
+      document.getElementById('btnAlunoAdd').style.display = show ? '' : 'none';
+      document.getElementById('btnAlunoLimpar').style.display = show ? '' : 'none';
+    }
+    function adicionarAluno() {
+      const nome = document.getElementById('nomeAluno').value.trim();
+      const anydesk = document.getElementById('anydeskAluno').value.trim();
+      if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
+      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      if (alunoEditIdx === null) {
+        lista.push({nome, anydesk});
+      } else {
+        lista[alunoEditIdx] = {nome, anydesk};
+        alunoEditIdx = null;
+        document.getElementById('btnAlunoAdd').style.display = '';
+        document.getElementById('btnAlunoEdit').style.display = 'none';
+        document.getElementById('btnAlunoCancel').style.display = 'none';
+      }
+      salvarLocal('alunosAnyDesk', JSON.stringify(lista));
+      listarAlunos();
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('anydeskAluno').value = '';
+      mostrarBotoesAluno();
+    }
+    function editarAluno(idx) {
+      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      document.getElementById('nomeAluno').value = lista[idx].nome;
+      document.getElementById('anydeskAluno').value = lista[idx].anydesk;
+      alunoEditIdx = idx;
+      document.getElementById('btnAlunoAdd').style.display = 'none';
+      document.getElementById('btnAlunoEdit').style.display = '';
+      document.getElementById('btnAlunoCancel').style.display = '';
+      document.getElementById('btnAlunoLimpar').style.display = 'none';
+    }
+    function confirmarEdicaoAluno() { adicionarAluno(); }
+    function cancelarEdicaoAluno() {
+      alunoEditIdx = null;
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('anydeskAluno').value = '';
+      document.getElementById('btnAlunoAdd').style.display = '';
+      document.getElementById('btnAlunoEdit').style.display = 'none';
+      document.getElementById('btnAlunoCancel').style.display = 'none';
+      mostrarBotoesAluno();
+    }
+    function removerAluno(idx) {
+      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      lista.splice(idx,1);
+      salvarLocal('alunosAnyDesk', JSON.stringify(lista));
+      listarAlunos();
+    }
+    function limparAlunoCampos() {
+      document.getElementById('nomeAluno').value = '';
+      document.getElementById('anydeskAluno').value = '';
+      mostrarBotoesAluno();
+    }
+    function listarAlunos() {
+      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      let tbody = document.getElementById('tabelaAlunos').getElementsByTagName('tbody')[0];
+      tbody.innerHTML = '';
+      lista.forEach((a, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${a.nome}</td>
+            <td>${a.anydesk}</td>
+            <td class="table-actions">
+              <button onclick="editarAluno(${idx})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerAluno(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>`;
+      });
+      cancelarEdicaoAluno();
+    }
+    listarAlunos();
+
+    // -- Anotações Rápidas
     let anotacaoEditIdx = null;
+    function mostrarBotoesAnotacao() {
+      const val = document.getElementById('anotacaoInput').value.trim();
+      document.getElementById('btnAddAnotacao').style.display = val ? '' : 'none';
+      document.getElementById('btnLimparAnotacao').style.display = val ? '' : 'none';
+    }
     function adicionarAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
       if (!val) return;
-      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       if (anotacaoEditIdx === null) {
         anotacoes.push(val);
       } else {
         anotacoes[anotacaoEditIdx] = val;
         anotacaoEditIdx = null;
-        document.getElementById('btnTarefaAdd').style.display = 'none';
-        document.getElementById('btnTarefaEdit').style.display = 'none';
-        document.getElementById('btnTarefaCancel').style.display = 'none';
       }
-      localStorage.setItem('anotacoesRapidas', JSON.stringify(anotacoes));
+      salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
       listarAnotacoes();
-      document.getElementById('anotacaoInput').value = '';
-      mostrarBotoesAnotacao();
-    }
-    function editarAnotacao(idx) {
-      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
-      document.getElementById('anotacaoInput').value = anotacoes[idx];
-      anotacaoEditIdx = idx;
-      document.getElementById('btnAddAnotacao').style.display = 'none';
-      document.getElementById('btnLimparAnotacao').style.display = 'none';
-    }
-    function limparAnotacaoCampos() {
       document.getElementById('anotacaoInput').value = '';
       mostrarBotoesAnotacao();
     }
     function removerAnotacao(idx) {
-      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       anotacoes.splice(idx,1);
-      localStorage.setItem('anotacoesRapidas', JSON.stringify(anotacoes));
+      salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
       listarAnotacoes();
+    }
+    function limparAnotacaoCampos() {
+      document.getElementById('anotacaoInput').value = '';
+      mostrarBotoesAnotacao();
     }
     function cancelarEdicaoAnotacao() {
       anotacaoEditIdx = null;
@@ -465,7 +883,7 @@ footer {
       mostrarBotoesAnotacao();
     }
     function listarAnotacoes() {
-      let anotacoes = JSON.parse(localStorage.getItem('anotacoesRapidas') || '[]');
+      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
       anotacoes.forEach((a, idx) => {
@@ -480,132 +898,52 @@ footer {
       cancelarEdicaoAnotacao();
     }
     listarAnotacoes();
-    // --- CADASTRO DE ALUNOS ---
-    let alunoEditIdx = null;
-    function adicionarAluno() {
-      const nome = document.getElementById('nomeAluno').value.trim();
-      const anydesk = document.getElementById('anydeskAluno').value.trim();
-      if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
-      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
-      if (alunoEditIdx === null) {
-        lista.push({nome, anydesk});
-      } else {
-        lista[alunoEditIdx] = {nome, anydesk};
-        alunoEditIdx = null;
-        document.getElementById('btnAlunoAdd').style.display = 'none';
-        document.getElementById('btnAlunoEdit').style.display = 'none';
-        document.getElementById('btnAlunoCancel').style.display = 'none';
-      }
-      localStorage.setItem('alunosAnyDesk', JSON.stringify(lista));
-      listarAlunos();
-      document.getElementById('nomeAluno').value = '';
-      document.getElementById('anydeskAluno').value = '';
-      mostrarBotoesAluno();
-    }
-    function editarAluno(idx) {
-      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
-      document.getElementById('nomeAluno').value = lista[idx].nome;
-      document.getElementById('anydeskAluno').value = lista[idx].anydesk;
-      alunoEditIdx = idx;
-      document.getElementById('btnAlunoAdd').style.display = 'none';
-      document.getElementById('btnAlunoEdit').style.display = '';
-      document.getElementById('btnAlunoCancel').style.display = '';
-      document.getElementById('btnAlunoLimpar').style.display = 'none';
-    }
-    function confirmarEdicaoAluno() { adicionarAluno(); }
-    function cancelarEdicaoAluno() {
-      alunoEditIdx = null;
-      document.getElementById('nomeAluno').value = '';
-      document.getElementById('anydeskAluno').value = '';
-      document.getElementById('btnAlunoAdd').style.display = 'none';
-      document.getElementById('btnAlunoEdit').style.display = 'none';
-      document.getElementById('btnAlunoCancel').style.display = 'none';
-      mostrarBotoesAluno();
-    }
-    function limparAlunoCampos() {
-      document.getElementById('nomeAluno').value = '';
-      document.getElementById('anydeskAluno').value = '';
-      mostrarBotoesAluno();
-    }
-    function removerAluno(idx) {
-      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
-      lista.splice(idx,1);
-      localStorage.setItem('alunosAnyDesk', JSON.stringify(lista));
-      listarAlunos();
-    }
-    function listarAlunos() {
-      let lista = JSON.parse(localStorage.getItem('alunosAnyDesk') || '[]');
-      let tbody = document.getElementById('tabelaAlunos').getElementsByTagName('tbody')[0];
-      tbody.innerHTML = '';
-      lista.forEach((a, idx) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${a.nome}</td>
-            <td>${a.anydesk}</td>
-            <td class="table-actions">
-              <button onclick="removerAluno(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-      });
-      cancelarEdicaoAluno();
-    }
-    listarAlunos();
-    // --- TAREFAS PENDENTES ---
+
+    // -- Tarefas Pendentes
     let tarefaEditIdx = null;
+    function mostrarBotoesTarefa() {
+      const val = document.getElementById('tarefaInput').value.trim();
+      document.getElementById('btnTarefaAdd').style.display = val ? '' : 'none';
+      document.getElementById('btnTarefaLimpar').style.display = val ? '' : 'none';
+    }
     function adicionarTarefa() {
       const val = document.getElementById('tarefaInput').value.trim();
       if (!val) return;
-      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
       if (tarefaEditIdx === null) {
         tarefas.push({tarefa: val, done: false});
       } else {
         tarefas[tarefaEditIdx].tarefa = val;
         tarefaEditIdx = null;
-        document.getElementById('btnTarefaAdd').style.display = 'none';
-        document.getElementById('btnTarefaEdit').style.display = 'none';
-        document.getElementById('btnTarefaCancel').style.display = 'none';
       }
-      localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
+      salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
       listarTarefas();
       document.getElementById('tarefaInput').value = '';
       mostrarBotoesTarefa();
     }
-    function editarTarefa(idx) {
-      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
-      document.getElementById('tarefaInput').value = tarefas[idx].tarefa;
-      tarefaEditIdx = idx;
-      document.getElementById('btnTarefaAdd').style.display = 'none';
-      document.getElementById('btnTarefaEdit').style.display = '';
-      document.getElementById('btnTarefaCancel').style.display = '';
-      document.getElementById('btnTarefaLimpar').style.display = 'none';
+    function removerTarefa(idx) {
+      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
+      tarefas.splice(idx, 1);
+      salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
+      listarTarefas();
     }
-    function confirmarEdicaoTarefa() { adicionarTarefa(); }
-    function cancelarEdicaoTarefa() {
-      tarefaEditIdx = null;
-      document.getElementById('tarefaInput').value = '';
-      document.getElementById('btnTarefaAdd').style.display = 'none';
-      document.getElementById('btnTarefaEdit').style.display = 'none';
-      document.getElementById('btnTarefaCancel').style.display = 'none';
-      mostrarBotoesTarefa();
+    function concluirTarefa(idx) {
+      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
+      tarefas[idx].done = !tarefas[idx].done;
+      salvarLocal('tarefasPendentes', JSON.stringify(tarefas));
+      listarTarefas();
     }
     function limparTarefaCampos() {
       document.getElementById('tarefaInput').value = '';
       mostrarBotoesTarefa();
     }
-    function removerTarefa(idx) {
-      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
-      tarefas.splice(idx, 1);
-      localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
-      listarTarefas();
-    }
-    function concluirTarefa(idx) {
-      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
-      tarefas[idx].done = !tarefas[idx].done;
-      localStorage.setItem('tarefasPendentes', JSON.stringify(tarefas));
-      listarTarefas();
+    function cancelarEdicaoTarefa() {
+      tarefaEditIdx = null;
+      document.getElementById('tarefaInput').value = '';
+      mostrarBotoesTarefa();
     }
     function listarTarefas() {
-      let tarefas = JSON.parse(localStorage.getItem('tarefasPendentes') || '[]');
+      let tarefas = JSON.parse(recuperarLocal('tarefasPendentes','[]'));
       let tbody = document.getElementById('tabelaTarefas').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
       tarefas.forEach((t, idx) => {
@@ -625,89 +963,16 @@ footer {
       cancelarEdicaoTarefa();
     }
     listarTarefas();
-    // --- CONTROLE FINANCEIRO ---
-    let finEditIdx = null;
-    function adicionarFinanceiro() {
-      const nome = document.getElementById('nomeFinanceiro').value.trim();
-      const valor = document.getElementById('valorFinanceiro').value.trim();
-      const status = document.getElementById('statusFinanceiro').value;
-      if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
-      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
-      if (finEditIdx === null) {
-        lista.push({nome, valor, status});
-      } else {
-        lista[finEditIdx] = {nome, valor, status};
-        finEditIdx = null;
-        document.getElementById('btnFinAdd').style.display = 'none';
-        document.getElementById('btnFinEdit').style.display = 'none';
-        document.getElementById('btnFinCancel').style.display = 'none';
-      }
-      localStorage.setItem('controleFinanceiro', JSON.stringify(lista));
-      listarFinanceiro();
-      document.getElementById('nomeFinanceiro').value = '';
-      document.getElementById('valorFinanceiro').value = '';
-      mostrarBotoesFinanceiro();
-    }
-    function editarFinanceiro(idx) {
-      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
-      document.getElementById('nomeFinanceiro').value = lista[idx].nome;
-      document.getElementById('valorFinanceiro').value = lista[idx].valor;
-      document.getElementById('statusFinanceiro').value = lista[idx].status;
-      finEditIdx = idx;
-      document.getElementById('btnFinAdd').style.display = 'none';
-      document.getElementById('btnFinEdit').style.display = '';
-      document.getElementById('btnFinCancel').style.display = '';
-      document.getElementById('btnFinLimpar').style.display = 'none';
-    }
-    function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
-    function cancelarEdicaoFinanceiro() {
-      finEditIdx = null;
-      document.getElementById('nomeFinanceiro').value = '';
-      document.getElementById('valorFinanceiro').value = '';
-      document.getElementById('statusFinanceiro').value = 'Pago';
-      document.getElementById('btnFinAdd').style.display = 'none';
-      document.getElementById('btnFinEdit').style.display = 'none';
-      document.getElementById('btnFinCancel').style.display = 'none';
-      mostrarBotoesFinanceiro();
-    }
-    function limparFinanceiroCampos() {
-      document.getElementById('nomeFinanceiro').value = '';
-      document.getElementById('valorFinanceiro').value = '';
-      mostrarBotoesFinanceiro();
-    }
-    function removerFinanceiro(idx) {
-      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
-      lista.splice(idx,1);
-      localStorage.setItem('controleFinanceiro', JSON.stringify(lista));
-      listarFinanceiro();
-    }
-    function listarFinanceiro() {
-      let lista = JSON.parse(localStorage.getItem('controleFinanceiro') || '[]');
-      let tbody = document.getElementById('tabelaFinanceiro').getElementsByTagName('tbody')[0];
-      tbody.innerHTML = '';
-      lista.forEach((f, idx) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${f.nome}</td>
-            <td>R$ ${f.valor}</td>
-            <td>${f.status}</td>
-            <td class="table-actions">
-              <button onclick="removerFinanceiro(${idx})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-      });
-      cancelarEdicaoFinanceiro();
-    }
-    listarFinanceiro();
+
     // EXPORTAÇÃO / IMPORTAÇÃO
     function exportarDados() {
       const dados = {
-        blocoNotas: localStorage.getItem('blocoNotas') || '',
-        diarioClasse: localStorage.getItem('diarioClasse') || '',
-        alunosAnyDesk: localStorage.getItem('alunosAnyDesk') || '[]',
-        tarefasPendentes: localStorage.getItem('tarefasPendentes') || '[]',
-        anotacoesRapidas: localStorage.getItem('anotacoesRapidas') || '[]',
-        controleFinanceiro: localStorage.getItem('controleFinanceiro') || '[]'
+        blocoNotasLista: recuperarLocal('blocoNotasLista','[]'),
+        diarioClasseLista: recuperarLocal('diarioClasseLista','[]'),
+        alunosAnyDesk: recuperarLocal('alunosAnyDesk','[]'),
+        tarefasPendentes: recuperarLocal('tarefasPendentes','[]'),
+        anotacoesRapidas: recuperarLocal('anotacoesRapidas','[]'),
+        controleFinanceiro: recuperarLocal('controleFinanceiro','[]')
       };
       const blob = new Blob([JSON.stringify(dados, null, 2)], {type: "application/json"});
       const url = URL.createObjectURL(blob);
@@ -727,14 +992,14 @@ footer {
         try {
           const dados = JSON.parse(e.target.result);
           if (typeof dados !== "object") throw new Error("Formato inválido!");
-          if ("blocoNotas" in dados) localStorage.setItem('blocoNotas', dados.blocoNotas);
-          if ("diarioClasse" in dados) localStorage.setItem('diarioClasse', dados.diarioClasse);
-          if ("alunosAnyDesk" in dados) localStorage.setItem('alunosAnyDesk', dados.alunosAnyDesk);
-          if ("tarefasPendentes" in dados) localStorage.setItem('tarefasPendentes', dados.tarefasPendentes);
-          if ("anotacoesRapidas" in dados) localStorage.setItem('anotacoesRapidas', dados.anotacoesRapidas);
-          if ("controleFinanceiro" in dados) localStorage.setItem('controleFinanceiro', dados.controleFinanceiro);
-          document.getElementById('blocoNotas').value = localStorage.getItem('blocoNotas') || '';
-          document.getElementById('diarioClasse').value = localStorage.getItem('diarioClasse') || '';
+          if ("blocoNotasLista" in dados) salvarLocal('blocoNotasLista', dados.blocoNotasLista);
+          if ("diarioClasseLista" in dados) salvarLocal('diarioClasseLista', dados.diarioClasseLista);
+          if ("alunosAnyDesk" in dados) salvarLocal('alunosAnyDesk', dados.alunosAnyDesk);
+          if ("tarefasPendentes" in dados) salvarLocal('tarefasPendentes', dados.tarefasPendentes);
+          if ("anotacoesRapidas" in dados) salvarLocal('anotacoesRapidas', dados.anotacoesRapidas);
+          if ("controleFinanceiro" in dados) salvarLocal('controleFinanceiro', dados.controleFinanceiro);
+          listarBlocoNotas();
+          document.getElementById('formDiarioClasse').reset();
           listarAlunos(); listarTarefas(); listarAnotacoes(); listarFinanceiro();
           alert("Dados importados com sucesso!");
         } catch(e) {
