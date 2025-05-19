@@ -54,16 +54,17 @@
       flex-direction: column;
       align-items: center;
       gap: 0.6rem;
-      z-index: 101; /* ALTERADO: Maior que o z-index do footer */
+      z-index: 101; 
       box-shadow: 2px 0 14px #19fff733;
       padding-top: 1.2rem;
-      padding-bottom: 1.2rem;
+      padding-bottom: 0.6rem; /* AJUSTADO: Igual ao gap padrão */
       overflow-y: auto;
       overflow-x: hidden;
       border-right: 2px solid var(--c-green);
       scrollbar-width: thin;
       scrollbar-color: var(--c-green) #153826;
       overscroll-behavior-y: contain;
+      box-sizing: border-box; /* ADICIONADO */
     }
     .atalhos-lateral .ataho-link {
       width: 44px; height: 44px;
@@ -105,8 +106,8 @@
       .atalhos-lateral {
         width: 54px;
         gap: 0.3rem;
-        padding-top: 0.8rem;
-        padding-bottom: 0.8rem;
+        padding-top: 0.8rem; 
+        padding-bottom: 0.3rem; /* AJUSTADO: Igual ao gap para esta media query */
       }
       body { padding-left: 54px; }
       .atalhos-lateral .ataho-link {
@@ -122,7 +123,7 @@
         width: 50px;
         gap: 0.2rem;
         padding-top: 0.6rem;
-        padding-bottom: 0.6rem;
+        padding-bottom: 0.2rem; /* AJUSTADO: Igual ao gap para esta media query */
       }
       body { padding-left: 50px; }
       .atalhos-lateral .ataho-link {
@@ -144,10 +145,10 @@
     @media (max-width: 1100px) {
       .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     }
-    @media (max-width: 799px) { /* Ajustado para não sobrepor 800px */
+    @media (max-width: 799px) { 
       .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
     }
-    @media (max-width: 599px) { /* Ajustado para não sobrepor 600px */
+    @media (max-width: 599px) { 
       .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
     }
     .card {
@@ -294,10 +295,7 @@
       align-items: center;
       gap: 2.1rem;
       margin: 2.5rem auto 0 auto;
-      /* O padding-bottom aqui deve ser suficiente para o footer não cobrir estes botões */
-      /* Altura aproximada do footer: 1.1rem (font) + 0.85rem*2 (padding) ~= 2.8rem */
-      /* Adicionar uma margem extra */
-      padding-bottom: calc(2.8rem + 1.5rem); /* (altura_footer + margem_seguranca) */
+      padding-bottom: calc(2.8rem + 1.5rem); 
       max-width: 700px;
       width: 100%;
       box-sizing: border-box;
@@ -324,15 +322,15 @@
       width: 100vw;
       text-align: center;
       color: #5beebb;
-      font-size: 1.1rem; /* Altura da fonte base */
+      font-size: 1.1rem; 
       font-family: var(--tit);
       letter-spacing: 0.2em;
       background: #133829ea;
-      padding: 0.85rem 0; /* Padding vertical */
+      padding: 0.85rem 0; 
       position: fixed;
       left: 0;
       bottom: 0;
-      z-index: 100; /* MANTIDO: Abaixo do menu lateral agora */
+      z-index: 100; 
       opacity: 0.85;
       user-select: none;
       box-shadow: 0 -2px 8px #16271d77;
@@ -342,7 +340,6 @@
       .main-controls {
         flex-direction: column;
         gap: 1.2rem;
-        /* Footer: 0.99rem (font) + 0.65rem*2 (padding) ~= 2.29rem */
         padding-bottom: calc(2.29rem + 1rem);
       }
       .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem;}
@@ -352,11 +349,9 @@
       .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; }
       .dashboard-grid { padding: 0.6rem 0.1rem; }
       .main-controls {
-         /* Footer (mesma altura da media query de 600px se não houver mudança) */
-        padding-bottom: calc(2.29rem + 2rem); /* Maior margem de segurança */
+        padding-bottom: calc(2.29rem + 2rem); 
       }
     }
-    /* Modal Diário de Classe, Controle Financeiro, Cadastro de Alunos */
     .modal-bg {
       display: none;
       position: fixed;
@@ -408,19 +403,18 @@
       cursor: pointer;
       font-family: var(--tit);
     }
-    /* Estilos unificados para containers de tabela em modais */
     .table-container-modal {
         overflow-y: auto;
-        max-height: 70vh; /* Ou altura desejada */
+        max-height: 70vh;
         overscroll-behavior-y: contain;
         border-radius: 1rem;
-        background: #133829; /* Fundo padrão para tabelas em modais */
+        background: #133829; 
         box-shadow: 0 1px 8px #19fff744;
-        margin-bottom: 1rem; /* Espaçamento inferior */
+        margin-bottom: 1rem; 
     }
     .table-container-modal table {
         width: 100%;
-        font-size: 1.05rem; /* Tamanho de fonte base para tabelas em modais */
+        font-size: 1.05rem; 
         border-collapse: separate;
         border-spacing: 0;
     }
@@ -437,16 +431,12 @@
         border-bottom: 2px solid var(--c-cyan);
         position: sticky; 
         top: -1px; 
-        background: #122921; /* Fundo da modal para o cabeçalho fixo */
+        background: #122921; 
         z-index: 1; 
     }
     .table-container-modal tr:last-child td { border-bottom: none; }
 
-    /* Aplica a classe genérica aos containers de tabela das modais */
-    #conteudoModalAlunos, #conteudoModalFinanceiro {
-        /* Herda de .table-container-modal se a classe for adicionada no HTML/JS */
-    }
-    .modal-diario-table { /* Já tem estilos próprios, mas pode ser unificado se desejado */
+    .modal-diario-table { 
       width: 100%;
       max-height: 50vh; 
       overflow-y: auto; 
