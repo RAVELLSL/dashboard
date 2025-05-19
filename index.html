@@ -62,6 +62,8 @@
       border-right: 2px solid var(--c-green);
       scrollbar-width: thin;
       scrollbar-color: var(--c-green) #153826;
+      touch-action: pan-y; /* para tablets/smartphones */
+      -webkit-overflow-scrolling: touch; /* para rolagem suave no iOS */
     }
     .atalhos-lateral .ataho-link {
       width: 44px; height: 44px;
@@ -178,13 +180,11 @@
       outline: none;
       word-break: break-all;
     }
-
     .diario-classe form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     textarea {
       resize: vertical;
       min-height: 74px;
@@ -597,6 +597,22 @@
     2025
   </footer>
   <script>
+    // Rolagem independente para barra lateral no touch/tablet
+    document.querySelector('.atalhos-lateral').addEventListener('touchmove', function(e) {
+      const el = this;
+      const scrollTop = el.scrollTop;
+      const scrollHeight = el.scrollHeight;
+      const offsetHeight = el.offsetHeight;
+
+      // Permite rolar para cima/baixo sem propagar para o body
+      if (
+        (scrollTop > 0 && e.touches[0].clientY > 0) ||
+        (scrollTop + offsetHeight < scrollHeight && e.touches[0].clientY < window.innerHeight)
+      ) {
+        e.stopPropagation();
+      }
+    }, { passive: false });
+
     // Utilitários de armazenamento
     function salvarLocal(key, value) { localStorage.setItem(key, value); }
     function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
