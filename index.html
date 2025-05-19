@@ -162,7 +162,7 @@
       margin-bottom: 0.5rem;
       border: 2px solid var(--c-green);
       transition: border .16s, box-shadow .14s;
-      overflow: visible;
+      overflow: visible; /* Mudado de hidden para visible por causa de box-shadow de elementos focados */
       box-sizing: border-box;
     }
     .card.anotacoes-rapidas {
@@ -177,9 +177,16 @@
       text-align: center;
       border-bottom: 1.5px solid var(--c-yellow);
       padding-bottom: 0.5rem;
+      flex-shrink: 0; /* Para o H2 não encolher */
     }
-    .card form,
-    .card textarea,
+    .card form { /* Form dentro do card */
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Faz o formulário ocupar o espaço vertical disponível no seu wrapper */
+    }
+    .card textarea, /* Movido para um seletor mais geral */
     .card input,
     .card select {
       width: 100%;
@@ -202,47 +209,42 @@
       outline: none;
       word-break: break-all;
     }
-    .diario-classe form { /* Mantido para consistência, mas botões agora em .diario-btns */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .diario-btns { /* Novo estilo para centralizar botões do diário */
+    .diario-btns, /* Wrapper para botões de ação do formulário Diário */
+    .aluno-form-actions-wrapper, /* Wrapper para botões de ação do formulário Aluno */
+    .financeiro-form-actions-wrapper, /* Wrapper para botões de ação do formulário Financeiro */
+    .anotacoes-form-actions-wrapper { /* Wrapper para botões de ação do formulário Anotações */
         display: flex;
         justify-content: center;
         gap: 0.7rem;
-        margin-top: 0.5rem;
-        flex-wrap: wrap; /* Para caso os botões não caibam na mesma linha */
+        flex-wrap: wrap;
+        margin-top: auto; /* Empurra este bloco de botões para o final do espaço do formulário */
+        padding-top: 0.5rem; /* Adiciona um pouco de espaço acima dos botões */
+        flex-shrink: 0; /* Para não encolher */
     }
-    .cadastro-alunos form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      align-items: stretch;
-    }
-    .cadastro-alunos .alunos-btns {
+    .alunos-btns { /* Sub-wrapper dentro do form de alunos */
       display: flex;
       justify-content: center;
       gap: 0.7rem;
-      margin: 0.4rem 0 0.4rem 0;
     }
-    .cadastro-alunos .btn {
+    .cadastro-alunos .btn { /* Para botões específicos do cadastro de alunos, se necessário */
       min-width: 120px;
     }
     textarea {
       resize: vertical;
       min-height: 74px;
-      max-height: 220px;
+      max-height: 220px; /* Pode ser ajustado ou removido se o flex-grow do form for suficiente */
       overflow-y: auto;
+      flex-shrink: 0; /* Para a textarea não encolher demais */
     }
     input:focus, textarea:focus, select:focus {
       border: 1.5px solid var(--c-yellow);
     }
-    .card form .btn { /* Estilo geral para botões dentro de forms nos cards */
-      margin-right: 0.3rem; /* Ajustado para .diario-btns ter gap */
-      margin-left: 0.3rem;  /* Ajustado para .diario-btns ter gap */
+    /* Estilo geral para botões de ação DENTRO dos formulários */
+    .card form .btn {
+      margin-right: 0.3rem;
+      margin-left: 0.3rem;
       margin-bottom: 0.4rem;
-      margin-top: 0.2rem;
+      /* margin-top: 0.2rem;  Removido pois o wrapper de botões controla o espaçamento superior */
     }
     .card form .btn:first-child { margin-left: 0;}
     .card form .btn:last-child { margin-right: 0; }
@@ -266,7 +268,7 @@
       margin-bottom: 1rem;
       font-size: 0.97rem;
       box-shadow: 0 1px 6px #19fff722;
-      overflow: hidden; /* Ajuda com border-radius em Safari */
+      overflow: hidden;
       box-sizing: border-box;
     }
     table th, table td {
@@ -305,12 +307,13 @@
       align-items: center;
       gap: 2.1rem;
       margin: 2.5rem auto 0 auto;
-      padding-bottom: calc(2.8rem + 1.5rem); /* Espaço para o footer */
+      padding-bottom: calc(2.8rem + 1.5rem);
       max-width: 700px;
       width: 100%;
       box-sizing: border-box;
     }
-    .btn-export, .btn-import, .btn {
+    /* Estilo geral para botões (btn, btn-export, btn-import) */
+    .btn, .btn-export, .btn-import {
       background: transparent;
       color: var(--c-cyan);
       font-family: var(--tit);
@@ -321,17 +324,17 @@
       font-weight: bold;
       cursor: pointer;
       transition: border .14s, color .14s, background .14s;
-      margin-top: 0.2rem;
-      min-width: 100px; /* Para botões menores não ficarem muito pequenos */
+      margin-top: 0.2rem; /* Mantido para botões .btn que não estão em wrappers de form */
+      min-width: 100px;
       text-align: center;
     }
-    .btn-export:hover, .btn-import:hover, .btn:hover {
+    .btn:hover, .btn-export:hover, .btn-import:hover {
       color: var(--c-green);
       border: 1.5px solid var(--c-green);
       background: #1d342a;
     }
     footer {
-      width: 100%; /* Alterado de 100vw para 100% para evitar problemas com scrollbar */
+      width: 100%;
       text-align: center;
       color: #5beebb;
       font-size: 1.1rem;
@@ -339,8 +342,7 @@
       letter-spacing: 0.2em;
       background: #133829ea;
       padding: 0.85rem 0;
-      position: relative; /* Se o body não for relative, e sim o main, ajustar */
-      /* left: 0;  Não é necessário se width: 100% e padding-left do body for zero */
+      position: relative;
       bottom: 0;
       z-index: 100;
       opacity: 0.85;
@@ -419,9 +421,9 @@
       font-family: var(--tit);
       z-index: 10;
     }
-    .table-container-modal { /* Usado por Financeiro e Alunos */
+    .table-container-modal {
         flex-grow: 1;
-        min-height: 0; /* Para permitir encolhimento dentro do flex container */
+        min-height: 0;
         overflow-y: auto;
         overscroll-behavior-y: contain;
         border-radius: 0.8rem;
@@ -430,13 +432,13 @@
         padding-top: 0.2rem;
         padding-left: 0.2rem;
         padding-right: 0.2rem;
-        padding-bottom: 2rem; /* Espaço para scrollbar não cobrir última linha */
+        padding-bottom: 2rem;
         box-sizing: border-box;
     }
     .table-container-modal table {
         width: 100%;
         font-size: 1.0rem;
-        border-collapse: separate; /* Para border-spacing funcionar */
+        border-collapse: separate;
         border-spacing: 0;
     }
     .table-container-modal th,
@@ -446,38 +448,36 @@
         text-align: center;
         vertical-align: middle;
     }
-    .table-container-modal td:first-child, /* Nome do aluno/financeiro alinhado à esquerda */
+    .table-container-modal td:first-child,
     .table-container-modal th:first-child {
         text-align: left;
         padding-left: 1rem;
     }
-    .table-container-modal th { /* Cabeçalho da tabela no modal */
+    .table-container-modal th {
         color: var(--c-green);
         font-family: var(--tit);
         border-bottom: 2px solid var(--c-cyan);
         position: sticky;
-        top: -1px; /* Pequeno ajuste para não sobrepor a borda do container */
-        background: #133829; /* Mesmo fundo do container para th fixo */
+        top: -1px;
+        background: #133829;
         z-index: 1;
     }
     .table-container-modal tr:last-child td {
-       border-bottom: none; /* Remove borda da última linha */
+       border-bottom: none;
     }
-
-    /* Estilo específico para a tabela do modal do Diário de Classe */
     .modal-diario-table {
       width: 100%;
       overflow-y: auto;
       overscroll-behavior-y: contain;
       border-radius: 1rem;
-      background: #163221; /* Fundo um pouco diferente para o wrapper da tabela do diário */
+      background: #163221;
       box-shadow: 0 1px 8px #19fff744;
       flex-grow: 1;
       min-height: 0;
       box-sizing: border-box;
-      padding-bottom: 2rem; /* Espaço para scrollbar */
+      padding-bottom: 2rem;
     }
-    .modal-diario-table table { /* Tabela dentro do .modal-diario-table */
+    .modal-diario-table table {
         width: 100%;
         font-size: 1.01rem;
         border-collapse: separate;
@@ -486,26 +486,25 @@
     .modal-diario-table th, .modal-diario-table td {
       padding: 0.5rem;
       border-bottom: 1px solid #263b2b;
-      text-align: left; /* Conteúdo do diário geralmente é melhor alinhado à esquerda */
+      text-align: left;
       vertical-align: middle;
     }
-    .modal-diario-table th { /* Cabeçalho da tabela do diário */
+    .modal-diario-table th {
       color: var(--c-green);
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
       position: sticky;
       top: -1px;
-      background: #163221; /* Fundo do th fixo */
+      background: #163221;
       z-index: 1;
     }
-    .modal-diario-table td.table-actions { /* Centraliza botões de ação na tabela do diário */
+    .modal-diario-table td.table-actions {
         text-align: center;
     }
     .modal-diario-table tr:last-child td {
         border-bottom: none;
     }
     .modal-diario-table td { color: #def2e1; word-break: break-word; }
-
     .modal-diario-filtro {
       display: flex;
       flex-wrap: wrap;
@@ -532,7 +531,7 @@
       font-size: 0.98rem;
       font-family: var(--bod);
       outline: none;
-      margin-right: 1rem; /* Espaço após cada input do filtro */
+      margin-right: 1rem;
     }
     .modal-diario-filtro input[type="text"]:focus,
     .modal-diario-filtro input[type="date"]:focus {
@@ -563,76 +562,77 @@
 
   <main class="dashboard-grid">
     <div class="card diario-classe">
-      <h2>Diário de Classe</h2>
-      <form id="formDiarioClasse" onsubmit="event.preventDefault(); /* Ação dos botões abaixo */">
-        <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
-        <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
-        <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
-        <div class="diario-btns">
-            <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
+      <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Diário de Classe</h2>
+        <form id="formDiarioClasse" onsubmit="event.preventDefault();">
+          <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
+          <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
+          <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
+          <div class="diario-btns"> <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
             <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>
             <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>
             <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>
-        </div>
-      </form>
-      <button class="btn" style="margin-top:0.8rem; width:100%;" onclick="abrirModalDiario()">Visualizar Diário</button>
+          </div>
+        </form>
+      </div>
+      <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalDiario()">Visualizar Diário</button>
     </div>
 
     <div class="card cadastro-alunos">
-      <h2>Cadastro de Alunos (AnyDesk)</h2>
-      <form onsubmit="event.preventDefault(); adicionarAluno();">
-        <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-        <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-        <div class="alunos-btns">
-          <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
-          <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
-        </div>
-        <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
-        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
-      </form>
-      <button class="btn" style="margin-top:0.6rem; width:100%;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+      <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Cadastro de Alunos (AnyDesk)</h2>
+        <form onsubmit="event.preventDefault(); adicionarAluno();">
+          <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+          <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+          <div class="aluno-form-actions-wrapper"> <div class="alunos-btns">
+              <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
+              <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
+            </div>
+            <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
+            <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+      <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
     </div>
 
     <div class="card controle-financeiro">
-      <h2>Controle Financeiro</h2>
-      <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
-        <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
-        <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
-        <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
-          <option value="Pago">Pago</option>
-          <option value="Pendente">Pendente</option>
-        </select>
-        <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
-          <option value="Mensalidade">Mensalidade</option>
-          <option value="Serviço Extra">Serviço Extra</option>
-        </select>
-        <div style="display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap;">
-            <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
+      <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Controle Financeiro</h2>
+        <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
+          <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+          <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+          <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
+            <option value="Pago">Pago</option>
+            <option value="Pendente">Pendente</option>
+          </select>
+          <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
+            <option value="Mensalidade">Mensalidade</option>
+            <option value="Serviço Extra">Serviço Extra</option>
+          </select>
+          <div class="financeiro-form-actions-wrapper"> <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
             <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
             <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
             <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
-        </div>
-      </form>
-      <button class="btn" style="margin-top:0.9rem; width:100%;" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
+          </div>
+        </form>
+      </div>
+      <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
     </div>
 
     <div class="card anotacoes-rapidas">
-      <h2>Anotações Rápidas</h2>
-      <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
-        <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
-         <div style="display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap; margin-top:0.2rem;">
+       <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Anotações Rápidas</h2>
+        <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();"> <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
+          <div class="anotacoes-form-actions-wrapper">
             <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
             <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
             <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
             <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
-        </div>
-      </form>
-      <table id="tabelaAnotacoes" style="margin-top:1rem;">
-        <thead>
-          <tr><th>Anotação</th><th style="width:100px; text-align:center;">Ações</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+          </div>
+        </form>
+        <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto;"> <thead>
+            <tr><th>Anotação</th><th style="width:100px; text-align:center;">Ações</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
     </div>
   </main>
 
@@ -686,10 +686,18 @@
 
   <script>
     // Utilitários de armazenamento
-    function salvarLocal(key, value) { localStorage.setItem(key, JSON.stringify(value)); } // Salvar como JSON
+    function salvarLocal(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
     function recuperarLocal(key, fallback) {
         const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : fallback; // Parse JSON ao recuperar
+        try {
+            return item ? JSON.parse(item) : fallback;
+        } catch (e) {
+            console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
+            // Se houver um erro de parsing (ex: dados antigos não-JSON), remove o item problemático
+            // ou retorna o fallback para evitar que a aplicação quebre.
+            // localStorage.removeItem(key); // Opção mais drástica
+            return fallback;
+        }
     }
 
     let diarioEditIdx = null;
@@ -1145,12 +1153,11 @@
 
     function editarAnotacao(idxExibicao) {
       let anotacoes = recuperarLocal('anotacoesRapidas', []);
-      // O idxExibicao é baseado na lista invertida. Precisamos do índice original.
       let originalIndex = anotacoes.length - 1 - idxExibicao;
 
       if (originalIndex >= 0 && originalIndex < anotacoes.length) {
         document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
-        anotacaoEditIdx = originalIndex; // Armazena o índice original
+        anotacaoEditIdx = originalIndex;
         mostrarBotoesAnotacao();
         document.getElementById('anotacaoInput').focus();
       } else {
@@ -1169,14 +1176,13 @@
         let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
 
         if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
-            if (anotacaoEditIdx === originalIndexToRemove) { // Se estiver editando a anotação que será removida
+            if (anotacaoEditIdx === originalIndexToRemove) {
                 limparAnotacaoCampos();
             }
             anotacoes.splice(originalIndexToRemove, 1);
             salvarLocal('anotacoesRapidas', anotacoes);
-            listarAnotacoes(); // Atualiza a lista na tela
+            listarAnotacoes();
 
-            // Ajustar anotacaoEditIdx se um item anterior ao editado foi removido
             if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
                 anotacaoEditIdx--;
             }
@@ -1195,7 +1201,6 @@
       let anotacoes = recuperarLocal('anotacoesRapidas', []);
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
-      // Exibe as anotações em ordem inversa (mais recentes primeiro)
       anotacoes.slice().reverse().forEach((a, idxExibicao) => {
         const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
@@ -1209,7 +1214,6 @@
       });
     }
 
-    // Event listener para fechar modais com ESC e cancelar edições
     document.addEventListener('keydown', function(e){
       if(e.key === "Escape") {
         if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
@@ -1223,7 +1227,6 @@
        }
     });
 
-    // EXPORTAÇÃO / IMPORTAÇÃO
     function exportarDados() {
       const dados = {
         diarioClasseLista: recuperarLocal('diarioClasseLista', []),
@@ -1252,44 +1255,47 @@
           const dadosImportados = JSON.parse(e.target.result);
           if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
 
-          // Validar e salvar cada parte dos dados
           if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
+          else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []); // Evita erro se for null/undefined mas existir a chave
+
           if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
+          else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
+
           if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
+          else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
+
           if (Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
+          else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', []);
+
 
           limparCamposDiario();
           limparAlunoCampos();
           limparFinanceiroCampos();
-          limparAnotacaoCampos(); // Isso também chama mostrarBotoesAnotacao
-          listarAnotacoes(); // Atualiza a tabela de anotações
+          limparAnotacaoCampos();
+          listarAnotacoes();
 
           alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
-        } catch(err) { // Corrigido para 'err'
+        } catch(err) {
           alert("Falha na importação: " + err.message);
         } finally {
-            // Atualizar visualizações se os modais estiverem abertos
             if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
             if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
             if (document.getElementById('modalFinanceiro').classList.contains('active')) abrirModalFinanceiro();
-            // Garante que os botões dos formulários principais estejam no estado correto
             mostrarBotoesDiario();
             mostrarBotoesAluno();
             mostrarBotoesFinanceiro();
-            mostrarBotoesAnotacao(); // Chamado por limparAnotacaoCampos, mas pode ser redundante aqui
+            mostrarBotoesAnotacao();
         }
       };
       reader.readAsText(file);
-      event.target.value = ""; // Limpa o input de arquivo para permitir re-importação do mesmo arquivo
+      event.target.value = "";
     }
 
-    // Inicializar todas as listagens e estados de botões ao carregar a página
     document.addEventListener('DOMContentLoaded', () => {
         limparCamposDiario();
         limparAlunoCampos();
         limparFinanceiroCampos();
         limparAnotacaoCampos(); // Isso já chama mostrarBotoesAnotacao() e listarAnotacoes()
-        // listarAnotacoes(); // Chamado por limparAnotacaoCampos, não precisa duplicar
     });
   </script>
 </body>
