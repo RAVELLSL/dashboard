@@ -48,7 +48,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 70px;
-      height: 100svh; /* Alterado para svh para melhor compatibilidade em mobile */
+      height: 100svh;
       background: #153826;
       display: flex;
       flex-direction: column;
@@ -162,7 +162,7 @@
       margin-bottom: 0.5rem;
       border: 2px solid var(--c-green);
       transition: border .16s, box-shadow .14s;
-      overflow: visible; /* Mudado de hidden para visible por causa de box-shadow de elementos focados */
+      overflow: visible;
       box-sizing: border-box;
     }
     .card.anotacoes-rapidas {
@@ -177,16 +177,16 @@
       text-align: center;
       border-bottom: 1.5px solid var(--c-yellow);
       padding-bottom: 0.5rem;
-      flex-shrink: 0; /* Para o H2 não encolher */
+      flex-shrink: 0;
     }
-    .card form { /* Form dentro do card */
+    .card form {
       width: 100%;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      flex-grow: 1; /* Faz o formulário ocupar o espaço vertical disponível no seu wrapper */
+      flex-grow: 1;
     }
-    .card textarea, /* Movido para um seletor mais geral */
+    .card textarea,
     .card input,
     .card select {
       width: 100%;
@@ -209,42 +209,40 @@
       outline: none;
       word-break: break-all;
     }
-    .diario-btns, /* Wrapper para botões de ação do formulário Diário */
-    .aluno-form-actions-wrapper, /* Wrapper para botões de ação do formulário Aluno */
-    .financeiro-form-actions-wrapper, /* Wrapper para botões de ação do formulário Financeiro */
-    .anotacoes-form-actions-wrapper { /* Wrapper para botões de ação do formulário Anotações */
+    .diario-btns,
+    .aluno-form-actions-wrapper,
+    .financeiro-form-actions-wrapper,
+    .anotacoes-form-actions-wrapper {
         display: flex;
         justify-content: center;
         gap: 0.7rem;
         flex-wrap: wrap;
-        margin-top: auto; /* Empurra este bloco de botões para o final do espaço do formulário */
-        padding-top: 0.5rem; /* Adiciona um pouco de espaço acima dos botões */
-        flex-shrink: 0; /* Para não encolher */
+        margin-top: auto;
+        padding-top: 0.5rem;
+        flex-shrink: 0;
     }
-    .alunos-btns { /* Sub-wrapper dentro do form de alunos */
+    .alunos-btns {
       display: flex;
       justify-content: center;
       gap: 0.7rem;
     }
-    .cadastro-alunos .btn { /* Para botões específicos do cadastro de alunos, se necessário */
+    .cadastro-alunos .btn {
       min-width: 120px;
     }
     textarea {
       resize: vertical;
       min-height: 74px;
-      max-height: 220px; /* Pode ser ajustado ou removido se o flex-grow do form for suficiente */
+      max-height: 220px;
       overflow-y: auto;
-      flex-shrink: 0; /* Para a textarea não encolher demais */
+      flex-shrink: 0;
     }
     input:focus, textarea:focus, select:focus {
       border: 1.5px solid var(--c-yellow);
     }
-    /* Estilo geral para botões de ação DENTRO dos formulários */
     .card form .btn {
       margin-right: 0.3rem;
       margin-left: 0.3rem;
       margin-bottom: 0.4rem;
-      /* margin-top: 0.2rem;  Removido pois o wrapper de botões controla o espaçamento superior */
     }
     .card form .btn:first-child { margin-left: 0;}
     .card form .btn:last-child { margin-right: 0; }
@@ -312,7 +310,6 @@
       width: 100%;
       box-sizing: border-box;
     }
-    /* Estilo geral para botões (btn, btn-export, btn-import) */
     .btn, .btn-export, .btn-import {
       background: transparent;
       color: var(--c-cyan);
@@ -324,7 +321,7 @@
       font-weight: bold;
       cursor: pointer;
       transition: border .14s, color .14s, background .14s;
-      margin-top: 0.2rem; /* Mantido para botões .btn que não estão em wrappers de form */
+      margin-top: 0.2rem;
       min-width: 100px;
       text-align: center;
     }
@@ -349,7 +346,7 @@
       user-select: none;
       box-shadow: 0 -2px 8px #16271d77;
       box-sizing: border-box;
-      margin-left: -70px; /* Compensa o padding-left do body */
+      margin-left: -70px;
     }
      @media (max-width: 800px) { footer { margin-left: -54px; } }
      @media (max-width: 600px) { footer { margin-left: -50px; } }
@@ -562,12 +559,14 @@
 
   <main class="dashboard-grid">
     <div class="card diario-classe">
-      <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Diário de Classe</h2>
+      <div style="display: flex; flex-direction: column; flex-grow: 1;">
+        <h2>Diário de Classe</h2>
         <form id="formDiarioClasse" onsubmit="event.preventDefault();">
           <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
           <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
           <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
-          <div class="diario-btns"> <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
+          <div class="diario-btns">
+            <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
             <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>
             <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>
             <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>
@@ -578,11 +577,13 @@
     </div>
 
     <div class="card cadastro-alunos">
-      <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Cadastro de Alunos (AnyDesk)</h2>
+      <div style="display: flex; flex-direction: column; flex-grow: 1;">
+        <h2>Cadastro de Alunos (AnyDesk)</h2>
         <form onsubmit="event.preventDefault(); adicionarAluno();">
           <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
           <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-          <div class="aluno-form-actions-wrapper"> <div class="alunos-btns">
+          <div class="aluno-form-actions-wrapper">
+            <div class="alunos-btns">
               <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
               <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
             </div>
@@ -595,7 +596,8 @@
     </div>
 
     <div class="card controle-financeiro">
-      <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Controle Financeiro</h2>
+      <div style="display: flex; flex-direction: column; flex-grow: 1;">
+        <h2>Controle Financeiro</h2>
         <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
           <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
           <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
@@ -607,7 +609,8 @@
             <option value="Mensalidade">Mensalidade</option>
             <option value="Serviço Extra">Serviço Extra</option>
           </select>
-          <div class="financeiro-form-actions-wrapper"> <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
+          <div class="financeiro-form-actions-wrapper">
+            <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
             <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
             <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
             <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
@@ -618,8 +621,10 @@
     </div>
 
     <div class="card anotacoes-rapidas">
-       <div style="display: flex; flex-direction: column; flex-grow: 1;"> <h2>Anotações Rápidas</h2>
-        <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();"> <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
+       <div style="display: flex; flex-direction: column; flex-grow: 1;">
+        <h2>Anotações Rápidas</h2>
+        <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
+          <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
           <div class="anotacoes-form-actions-wrapper">
             <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
             <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
@@ -627,7 +632,7 @@
             <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
           </div>
         </form>
-        <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto;"> <thead>
+        <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto; display: block;"> <thead>
             <tr><th>Anotação</th><th style="width:100px; text-align:center;">Ações</th></tr>
             </thead>
             <tbody></tbody>
@@ -693,9 +698,6 @@
             return item ? JSON.parse(item) : fallback;
         } catch (e) {
             console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
-            // Se houver um erro de parsing (ex: dados antigos não-JSON), remove o item problemático
-            // ou retorna o fallback para evitar que a aplicação quebre.
-            // localStorage.removeItem(key); // Opção mais drástica
             return fallback;
         }
     }
@@ -757,7 +759,9 @@
         } else if (diarioEditIdx !== null && idx < diarioEditIdx) {
             diarioEditIdx--;
         }
-        filtrarModalDiario();
+        if (document.getElementById('modalDiario').classList.contains('active')) {
+             filtrarModalDiario();
+        }
     }
 
     function confirmarEdicaoDiarioClasse() {
@@ -1201,17 +1205,21 @@
       let anotacoes = recuperarLocal('anotacoesRapidas', []);
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
-      anotacoes.slice().reverse().forEach((a, idxExibicao) => {
-        const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        tbody.innerHTML += `
-          <tr>
-            <td>${anotacaoHtml}</td>
-            <td class="table-actions" style="text-align:center;">
-              <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
-              <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-      });
+      if (Array.isArray(anotacoes)) {
+        anotacoes.slice().reverse().forEach((a, idxExibicao) => {
+          const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          tbody.innerHTML += `
+            <tr>
+              <td>${anotacaoHtml}</td>
+              <td class="table-actions" style="text-align:center;">
+                <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
+                <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>`;
+        });
+      } else {
+         console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
+      }
     }
 
     document.addEventListener('keydown', function(e){
@@ -1256,7 +1264,7 @@
           if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
 
           if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
-          else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []); // Evita erro se for null/undefined mas existir a chave
+          else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
 
           if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
           else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
@@ -1295,7 +1303,8 @@
         limparCamposDiario();
         limparAlunoCampos();
         limparFinanceiroCampos();
-        limparAnotacaoCampos(); // Isso já chama mostrarBotoesAnotacao() e listarAnotacoes()
+        limparAnotacaoCampos();
+        listarAnotacoes(); // ADICIONADO: Garante que as anotações sejam listadas no carregamento da página.
     });
   </script>
 </body>
