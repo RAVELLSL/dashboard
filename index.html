@@ -48,7 +48,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 70px;
-      height: 100svh;
+      height: 100svh; /* Alterado para svh para melhor compatibilidade em mobile */
       background: #153826;
       display: flex;
       flex-direction: column;
@@ -106,7 +106,6 @@
         width: 54px;
         gap: 0.2rem;
         padding-top: 0.2rem;
-        padding-bottom: 0;
       }
       body { padding-left: 54px; }
       .atalhos-lateral .ataho-link {
@@ -121,7 +120,6 @@
         width: 50px;
         gap: 0.1rem;
         padding-top: 0.1rem;
-        padding-bottom: 0;
       }
       body { padding-left: 50px; }
       .atalhos-lateral .ataho-link {
@@ -142,7 +140,7 @@
     }
     @media (max-width: 1100px) {
       .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-       .card.anotacoes-rapidas { grid-column: 1 / -1; }
+      .card.anotacoes-rapidas { grid-column: 1 / -1; }
     }
     @media (max-width: 799px) {
       .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
@@ -170,7 +168,6 @@
     .card.anotacoes-rapidas {
         grid-column: 1 / -1;
     }
-
     .card h2 {
       font-family: var(--tit);
       font-size: 1.14rem;
@@ -205,10 +202,17 @@
       outline: none;
       word-break: break-all;
     }
-    .diario-classe form {
+    .diario-classe form { /* Mantido para consistência, mas botões agora em .diario-btns */
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+    .diario-btns { /* Novo estilo para centralizar botões do diário */
+        display: flex;
+        justify-content: center;
+        gap: 0.7rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap; /* Para caso os botões não caibam na mesma linha */
     }
     .cadastro-alunos form {
       display: flex;
@@ -234,14 +238,15 @@
     input:focus, textarea:focus, select:focus {
       border: 1.5px solid var(--c-yellow);
     }
-    .card form .btn {
-      margin-right: 0.6rem;
+    .card form .btn { /* Estilo geral para botões dentro de forms nos cards */
+      margin-right: 0.3rem; /* Ajustado para .diario-btns ter gap */
+      margin-left: 0.3rem;  /* Ajustado para .diario-btns ter gap */
       margin-bottom: 0.4rem;
       margin-top: 0.2rem;
     }
-    .card form .btn:last-child {
-      margin-right: 0;
-    }
+    .card form .btn:first-child { margin-left: 0;}
+    .card form .btn:last-child { margin-right: 0; }
+
     .table-actions button {
       background: none;
       border: none;
@@ -261,7 +266,7 @@
       margin-bottom: 1rem;
       font-size: 0.97rem;
       box-shadow: 0 1px 6px #19fff722;
-      overflow: hidden;
+      overflow: hidden; /* Ajuda com border-radius em Safari */
       box-sizing: border-box;
     }
     table th, table td {
@@ -300,7 +305,7 @@
       align-items: center;
       gap: 2.1rem;
       margin: 2.5rem auto 0 auto;
-      padding-bottom: calc(2.8rem + 1.5rem);
+      padding-bottom: calc(2.8rem + 1.5rem); /* Espaço para o footer */
       max-width: 700px;
       width: 100%;
       box-sizing: border-box;
@@ -317,6 +322,8 @@
       cursor: pointer;
       transition: border .14s, color .14s, background .14s;
       margin-top: 0.2rem;
+      min-width: 100px; /* Para botões menores não ficarem muito pequenos */
+      text-align: center;
     }
     .btn-export:hover, .btn-import:hover, .btn:hover {
       color: var(--c-green);
@@ -324,7 +331,7 @@
       background: #1d342a;
     }
     footer {
-      width: 100vw;
+      width: 100%; /* Alterado de 100vw para 100% para evitar problemas com scrollbar */
       text-align: center;
       color: #5beebb;
       font-size: 1.1rem;
@@ -332,16 +339,19 @@
       letter-spacing: 0.2em;
       background: #133829ea;
       padding: 0.85rem 0;
-      position: relative
-      left: 0;
+      position: relative; /* Se o body não for relative, e sim o main, ajustar */
+      /* left: 0;  Não é necessário se width: 100% e padding-left do body for zero */
       bottom: 0;
       z-index: 100;
       opacity: 0.85;
       user-select: none;
       box-shadow: 0 -2px 8px #16271d77;
       box-sizing: border-box;
+      margin-left: -70px; /* Compensa o padding-left do body */
     }
-    @media (max-width: 600px) {
+     @media (max-width: 800px) { footer { margin-left: -54px; } }
+     @media (max-width: 600px) { footer { margin-left: -50px; } }
+     @media (max-width: 600px) {
       .main-controls {
         flex-direction: column;
         gap: 1.2rem;
@@ -364,10 +374,10 @@
       left: 0; top: 0; width: 100vw; height: 100vh;
       background: rgba(0,32,32,0.72);
       justify-content: center;
-      align-items: flex-start; /* MODIFICADO AQUI */
+      align-items: flex-start;
       padding: 1rem;
       box-sizing: border-box;
-      overflow-y: auto; /* Adicionado para o caso do próprio .modal-bg precisar rolar */
+      overflow-y: auto;
     }
     .modal-bg.active { display: flex; }
     .modal-diario, .modal-financeiro, .modal-alunos {
@@ -378,7 +388,7 @@
       padding: 1.5rem;
       width: 100%;
       max-width: 800px;
-      max-height: calc(100vh - 2rem); /* Considera o padding de 1rem top/bottom do .modal-bg */
+      max-height: calc(100vh - 2rem);
       font-family: var(--bod);
       font-size: 1.13rem;
       display: flex;
@@ -386,7 +396,6 @@
       gap: 1rem;
       position: relative;
       box-sizing: border-box;
-      /* margin-top: 1rem;  Se não quiser que o padding do modal-bg dite o espaçamento superior, mas sim o modal diretamente */
     }
     .modal-diario h3,
     .modal-financeiro h3,
@@ -410,9 +419,9 @@
       font-family: var(--tit);
       z-index: 10;
     }
-    .table-container-modal {
+    .table-container-modal { /* Usado por Financeiro e Alunos */
         flex-grow: 1;
-        min-height: 0;
+        min-height: 0; /* Para permitir encolhimento dentro do flex container */
         overflow-y: auto;
         overscroll-behavior-y: contain;
         border-radius: 0.8rem;
@@ -421,13 +430,13 @@
         padding-top: 0.2rem;
         padding-left: 0.2rem;
         padding-right: 0.2rem;
-        padding-bottom: 2rem;
+        padding-bottom: 2rem; /* Espaço para scrollbar não cobrir última linha */
         box-sizing: border-box;
     }
     .table-container-modal table {
         width: 100%;
         font-size: 1.0rem;
-        border-collapse: separate;
+        border-collapse: separate; /* Para border-spacing funcionar */
         border-spacing: 0;
     }
     .table-container-modal th,
@@ -437,36 +446,38 @@
         text-align: center;
         vertical-align: middle;
     }
-    .table-container-modal td:first-child,
+    .table-container-modal td:first-child, /* Nome do aluno/financeiro alinhado à esquerda */
     .table-container-modal th:first-child {
         text-align: left;
         padding-left: 1rem;
     }
-    .table-container-modal th {
+    .table-container-modal th { /* Cabeçalho da tabela no modal */
         color: var(--c-green);
         font-family: var(--tit);
         border-bottom: 2px solid var(--c-cyan);
         position: sticky;
-        top: -1px;
-        background: #133829;
+        top: -1px; /* Pequeno ajuste para não sobrepor a borda do container */
+        background: #133829; /* Mesmo fundo do container para th fixo */
         z-index: 1;
     }
     .table-container-modal tr:last-child td {
-       border-bottom: none;
+       border-bottom: none; /* Remove borda da última linha */
     }
+
+    /* Estilo específico para a tabela do modal do Diário de Classe */
     .modal-diario-table {
       width: 100%;
       overflow-y: auto;
       overscroll-behavior-y: contain;
       border-radius: 1rem;
-      background: #163221;
+      background: #163221; /* Fundo um pouco diferente para o wrapper da tabela do diário */
       box-shadow: 0 1px 8px #19fff744;
       flex-grow: 1;
       min-height: 0;
       box-sizing: border-box;
-      padding-bottom: 2rem;
+      padding-bottom: 2rem; /* Espaço para scrollbar */
     }
-    .modal-diario-table table {
+    .modal-diario-table table { /* Tabela dentro do .modal-diario-table */
         width: 100%;
         font-size: 1.01rem;
         border-collapse: separate;
@@ -475,21 +486,26 @@
     .modal-diario-table th, .modal-diario-table td {
       padding: 0.5rem;
       border-bottom: 1px solid #263b2b;
+      text-align: left; /* Conteúdo do diário geralmente é melhor alinhado à esquerda */
+      vertical-align: middle;
     }
-    .modal-diario-table th {
+    .modal-diario-table th { /* Cabeçalho da tabela do diário */
       color: var(--c-green);
       font-family: var(--tit);
       border-bottom: 2px solid var(--c-cyan);
-      text-align: left;
       position: sticky;
       top: -1px;
-      background: #163221;
+      background: #163221; /* Fundo do th fixo */
       z-index: 1;
+    }
+    .modal-diario-table td.table-actions { /* Centraliza botões de ação na tabela do diário */
+        text-align: center;
     }
     .modal-diario-table tr:last-child td {
         border-bottom: none;
     }
     .modal-diario-table td { color: #def2e1; word-break: break-word; }
+
     .modal-diario-filtro {
       display: flex;
       flex-wrap: wrap;
@@ -516,7 +532,7 @@
       font-size: 0.98rem;
       font-family: var(--bod);
       outline: none;
-      margin-right: 1rem;
+      margin-right: 1rem; /* Espaço após cada input do filtro */
     }
     .modal-diario-filtro input[type="text"]:focus,
     .modal-diario-filtro input[type="date"]:focus {
@@ -540,34 +556,43 @@
     <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
     <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
   </nav>
+
   <header>
     RS TECH
   </header>
+
   <main class="dashboard-grid">
     <div class="card diario-classe">
       <h2>Diário de Classe</h2>
-      <form id="formDiarioClasse" onsubmit="event.preventDefault(); salvarDiarioClasse();">
-        <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required>
-        <input id="diarioData" type="date" required>
-        <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required></textarea>
-        <button class="btn" type="submit">Salvar</button>
+      <form id="formDiarioClasse" onsubmit="event.preventDefault(); /* Ação dos botões abaixo */">
+        <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
+        <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
+        <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
+        <div class="diario-btns">
+            <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
+            <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>
+            <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>
+            <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>
+        </div>
       </form>
-      <button class="btn" style="margin-top:0.4rem" onclick="abrirModalDiario()">Visualizar Diário</button>
+      <button class="btn" style="margin-top:0.8rem; width:100%;" onclick="abrirModalDiario()">Visualizar Diário</button>
     </div>
+
     <div class="card cadastro-alunos">
       <h2>Cadastro de Alunos (AnyDesk)</h2>
       <form onsubmit="event.preventDefault(); adicionarAluno();">
         <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
         <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
         <div class="alunos-btns">
-          <button class="btn" type="submit" id="btnAlunoAdd">Cadastrar</button>
-          <button class="btn" type="button" id="btnAlunoLimpar" onclick="limparAlunoCampos()">Limpar Tudo</button>
+          <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
+          <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
         </div>
         <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
         <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
       </form>
-      <button class="btn" style="margin-top:0.6rem" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+      <button class="btn" style="margin-top:0.6rem; width:100%;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
     </div>
+
     <div class="card controle-financeiro">
       <h2>Controle Financeiro</h2>
       <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
@@ -581,33 +606,40 @@
           <option value="Mensalidade">Mensalidade</option>
           <option value="Serviço Extra">Serviço Extra</option>
         </select>
-        <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
-        <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
-        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
-        <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
+        <div style="display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap;">
+            <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
+            <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
+            <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
+            <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
+        </div>
       </form>
-      <button class="btn" style="margin-bottom:0.9rem" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
+      <button class="btn" style="margin-top:0.9rem; width:100%;" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
     </div>
+
     <div class="card anotacoes-rapidas">
       <h2>Anotações Rápidas</h2>
       <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
         <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
-        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
-        <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
-        <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
-        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
+         <div style="display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap; margin-top:0.2rem;">
+            <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
+            <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
+            <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
+            <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
+        </div>
       </form>
-      <table id="tabelaAnotacoes">
+      <table id="tabelaAnotacoes" style="margin-top:1rem;">
         <thead>
-          <tr><th>Anotação</th><th style="width:100px;">Ações</th></tr>
+          <tr><th>Anotação</th><th style="width:100px; text-align:center;">Ações</th></tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
   </main>
+
   <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
     <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
   </a>
+
   <div class="main-controls">
     <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
     <label class="btn-import" style="display:inline-block;cursor:pointer;">
@@ -615,6 +647,7 @@
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
     </label>
   </div>
+
   <div class="modal-bg" id="modalDiario">
     <div class="modal-diario">
       <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
@@ -628,6 +661,7 @@
       <div class="modal-diario-table" id="conteudoModalDiario"></div>
     </div>
   </div>
+
   <div class="modal-bg" id="modalFinanceiro">
     <div class="modal-financeiro">
       <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
@@ -636,6 +670,7 @@
       </div>
     </div>
   </div>
+
   <div class="modal-bg" id="modalAlunos">
     <div class="modal-alunos">
       <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
@@ -644,74 +679,182 @@
       </div>
     </div>
   </div>
+
   <footer>
     2025
   </footer>
+
   <script>
     // Utilitários de armazenamento
-    function salvarLocal(key, value) { localStorage.setItem(key, value); }
-    function recuperarLocal(key, fallback) { return localStorage.getItem(key) || fallback; }
+    function salvarLocal(key, value) { localStorage.setItem(key, JSON.stringify(value)); } // Salvar como JSON
+    function recuperarLocal(key, fallback) {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : fallback; // Parse JSON ao recuperar
+    }
 
-    // ---------------- DIÁRIO DE CLASSE ATUALIZADO ----------------
+    let diarioEditIdx = null;
+    let finEditIdx = null;
+    let alunoEditIdx = null;
+    let anotacaoEditIdx = null;
+
+    // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
+    function mostrarBotoesDiario() {
+        const aluno = document.getElementById('diarioAluno').value.trim();
+        const data = document.getElementById('diarioData').value;
+        const conteudo = document.getElementById('diarioConteudo').value.trim();
+
+        const camposPreenchidos = aluno && data && conteudo;
+        const algumCampoPreenchido = aluno || data || conteudo;
+
+        document.getElementById('btnDiarioAdd').style.display = camposPreenchidos && diarioEditIdx === null ? '' : 'none';
+        document.getElementById('btnDiarioEdit').style.display = camposPreenchidos && diarioEditIdx !== null ? '' : 'none';
+        document.getElementById('btnDiarioCancel').style.display = diarioEditIdx !== null ? '' : 'none';
+        document.getElementById('btnDiarioLimpar').style.display = algumCampoPreenchido && diarioEditIdx === null ? '' : 'none';
+    }
+
+    function limparCamposDiario() {
+        document.getElementById('formDiarioClasse').reset();
+        diarioEditIdx = null;
+        mostrarBotoesDiario();
+    }
+
+    function editarDiarioClasse(idx) {
+        let lista = recuperarLocal('diarioClasseLista', []);
+        if (idx < 0 || idx >= lista.length) {
+            console.error("Índice inválido para editar registro do diário:", idx);
+            return;
+        }
+        const registro = lista[idx];
+        document.getElementById('diarioAluno').value = registro.aluno;
+        document.getElementById('diarioData').value = registro.data;
+        document.getElementById('diarioConteudo').value = registro.conteudo;
+        diarioEditIdx = idx;
+        mostrarBotoesDiario();
+        fecharModalDiario();
+        document.getElementById('diarioAluno').focus();
+    }
+
+    function removerDiarioClasse(idx) {
+        if (!confirm('Tem certeza que deseja excluir este registro do diário?')) return;
+        let lista = recuperarLocal('diarioClasseLista', []);
+        if (idx < 0 || idx >= lista.length) {
+            console.error("Índice inválido para remover registro do diário:", idx);
+            return;
+        }
+        lista.splice(idx, 1);
+        salvarLocal('diarioClasseLista', lista);
+
+        if (diarioEditIdx === idx) {
+            limparCamposDiario();
+        } else if (diarioEditIdx !== null && idx < diarioEditIdx) {
+            diarioEditIdx--;
+        }
+        filtrarModalDiario();
+    }
+
+    function confirmarEdicaoDiarioClasse() {
+        salvarDiarioClasse();
+    }
+
+    function cancelarEdicaoDiarioClasse() {
+        limparCamposDiario();
+    }
+
+    // ---------------- DIÁRIO DE CLASSE (Salvar, Abrir/Fechar Modal, Filtrar) ----------------
     function salvarDiarioClasse() {
       const aluno = document.getElementById('diarioAluno').value.trim();
       const data = document.getElementById('diarioData').value;
       const conteudo = document.getElementById('diarioConteudo').value.trim();
-      if (!aluno || !data || !conteudo) { alert('Preencha todos os campos.'); return; }
-      let lista = JSON.parse(recuperarLocal('diarioClasseLista', '[]'));
-      lista.push({ aluno, data, conteudo });
-      salvarLocal('diarioClasseLista', JSON.stringify(lista));
-      document.getElementById('formDiarioClasse').reset();
-      alert('Registro salvo no Diário de Classe.');
+
+      if (!aluno || !data || !conteudo) {
+        alert('Preencha todos os campos do diário.');
+        return;
+      }
+
+      let lista = recuperarLocal('diarioClasseLista', []);
+
+      if (diarioEditIdx !== null) {
+        if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
+          lista[diarioEditIdx] = { aluno, data, conteudo };
+          alert('Registro do diário atualizado com sucesso.');
+        } else {
+          console.error("Índice de edição inválido para diário:", diarioEditIdx);
+          limparCamposDiario();
+          return;
+        }
+      } else {
+        lista.push({ aluno, data, conteudo });
+        alert('Registro salvo no Diário de Classe.');
+      }
+
+      salvarLocal('diarioClasseLista', lista);
+      limparCamposDiario();
+
+      if (document.getElementById('modalDiario').classList.contains('active')) {
+        filtrarModalDiario();
+      }
     }
+
     function abrirModalDiario() {
       document.getElementById('modalDiario').classList.add('active');
       document.getElementById('filtroNome').value = '';
       document.getElementById('filtroData').value = '';
       filtrarModalDiario();
     }
+
     function fecharModalDiario() {
       document.getElementById('modalDiario').classList.remove('active');
     }
+
     document.addEventListener('input', function(e){
-      if( (e.target.id==='filtroNome' || e.target.id==='filtroData') && document.getElementById('modalDiario').classList.contains('active') ) {
+      if( (e.target.id ==='filtroNome' || e.target.id ==='filtroData') && document.getElementById('modalDiario').classList.contains('active') ) {
         filtrarModalDiario();
       }
     });
+
     function filtrarModalDiario() {
-      let lista = JSON.parse(recuperarLocal('diarioClasseLista','[]'));
+      let listaOriginal = recuperarLocal('diarioClasseLista', []);
+      const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
+
       const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
       const filtroData = document.getElementById('filtroData').value;
-      let filtrados = lista.filter(reg =>
+
+      let filtrados = listaComIndices.filter(reg =>
         (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) &&
         (!filtroData || reg.data === filtroData)
       );
+
       let html = `<table><thead>
           <tr>
             <th>Data</th>
             <th>Aluno</th>
             <th>Conteúdo Ministrado</th>
+            <th>Ações</th>
           </tr>
         </thead><tbody>`;
+
       if(filtrados.length){
-        filtrados.slice().reverse().forEach(reg=>{
+        filtrados.slice().reverse().forEach(reg => {
           const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
           const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
           html += `<tr>
             <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
             <td>${alunoHtml}</td>
             <td>${conteudoHtml}</td>
+            <td class="table-actions">
+              <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+              <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+            </td>
           </tr>`;
         });
       } else {
-        html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
+        html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
       }
       html += `</tbody></table>`;
       document.getElementById('conteudoModalDiario').innerHTML = html;
     }
 
     // ---------------- CONTROLE FINANCEIRO ----------------
-    let finEditIdx = null;
     function mostrarBotoesFinanceiro() {
       const nome = document.getElementById('nomeFinanceiro').value.trim();
       const valor = document.getElementById('valorFinanceiro').value.trim();
@@ -724,13 +867,14 @@
       document.getElementById('btnFinCancel').style.display = finEditIdx !== null ? '' : 'none';
       document.getElementById('btnFinLimpar').style.display = showAnyButton && finEditIdx === null ? '' : 'none';
     }
+
     function adicionarFinanceiro() {
       const nome = document.getElementById('nomeFinanceiro').value.trim();
       const valor = document.getElementById('valorFinanceiro').value.trim();
       const status = document.getElementById('statusFinanceiro').value;
       const tipo = document.getElementById('tipoFinanceiro').value;
       if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
-      let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+      let lista = recuperarLocal('controleFinanceiro', []);
       if (finEditIdx === null) {
         lista.push({nome, valor, status, tipo});
       } else {
@@ -742,14 +886,15 @@
             return;
         }
       }
-      salvarLocal('controleFinanceiro', JSON.stringify(lista));
+      salvarLocal('controleFinanceiro', lista);
       limparFinanceiroCampos();
       if (document.getElementById('modalFinanceiro').classList.contains('active')) {
         abrirModalFinanceiro();
       }
     }
+
     function editarFinanceiro(idx) {
-        let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+        let lista = recuperarLocal('controleFinanceiro', []);
         if (idx < 0 || idx >= lista.length) {
             console.error("Índice inválido para editar financeiro:", idx);
             return;
@@ -761,22 +906,32 @@
         finEditIdx = idx;
         mostrarBotoesFinanceiro();
         fecharModalFinanceiro();
+        document.getElementById('nomeFinanceiro').focus();
     }
+
     function removerFinanceiro(idx) {
-      let lista = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+      if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
+      let lista = recuperarLocal('controleFinanceiro', []);
       if (idx < 0 || idx >= lista.length) {
             console.error("Índice inválido para remover financeiro:", idx);
             return;
         }
       lista.splice(idx,1);
-      salvarLocal('controleFinanceiro', JSON.stringify(lista));
+      salvarLocal('controleFinanceiro', lista);
+       if (finEditIdx === idx) {
+            limparFinanceiroCampos();
+        } else if (finEditIdx !== null && idx < finEditIdx) {
+            finEditIdx--;
+        }
       if (document.getElementById('modalFinanceiro').classList.contains('active')) {
         abrirModalFinanceiro();
       }
     }
+
     function confirmarEdicaoFinanceiro() {
         adicionarFinanceiro();
     }
+
     function limparFinanceiroCampos() {
       document.getElementById('nomeFinanceiro').value = '';
       document.getElementById('valorFinanceiro').value = '';
@@ -785,11 +940,13 @@
       finEditIdx = null;
       mostrarBotoesFinanceiro();
     }
+
     function cancelarEdicaoFinanceiro() {
       limparFinanceiroCampos();
     }
+
     function abrirModalFinanceiro() {
-      let listaOriginal = JSON.parse(recuperarLocal('controleFinanceiro','[]'));
+      let listaOriginal = recuperarLocal('controleFinanceiro', []);
       const listaComIndices = listaOriginal.map((item, index) => ({...item, originalIndex: index}));
 
       let html = `<table>
@@ -802,8 +959,7 @@
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
-      `;
+        <tbody>`;
       if(listaComIndices.length){
         listaComIndices.slice().reverse().forEach(item => {
           const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -828,12 +984,12 @@
       document.getElementById('conteudoModalFinanceiro').innerHTML = html;
       document.getElementById('modalFinanceiro').classList.add('active');
     }
+
     function fecharModalFinanceiro() {
       document.getElementById('modalFinanceiro').classList.remove('active');
     }
 
     // -- Cadastro de Alunos (com edição e modal)
-    let alunoEditIdx = null;
     function mostrarBotoesAluno() {
         const nome = document.getElementById('nomeAluno').value.trim();
         const anydesk = document.getElementById('anydeskAluno').value.trim();
@@ -846,11 +1002,12 @@
         document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none';
         document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none';
     }
+
     function adicionarAluno() {
       const nome = document.getElementById('nomeAluno').value.trim();
       const anydesk = document.getElementById('anydeskAluno').value.trim();
       if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
-      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      let lista = recuperarLocal('alunosAnyDesk', []);
       if (alunoEditIdx === null) {
         lista.push({nome, anydesk});
       } else {
@@ -862,14 +1019,15 @@
           return;
         }
       }
-      salvarLocal('alunosAnyDesk', JSON.stringify(lista));
+      salvarLocal('alunosAnyDesk', lista);
       limparAlunoCampos();
       if (document.getElementById('modalAlunos').classList.contains('active')) {
         abrirModalAlunos();
       }
     }
+
     function editarAluno(idx) {
-      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      let lista = recuperarLocal('alunosAnyDesk', []);
       if (idx < 0 || idx >= lista.length) {
         console.error("Índice inválido para edição:", idx);
         return;
@@ -879,31 +1037,43 @@
       alunoEditIdx = idx;
       mostrarBotoesAluno();
       fecharModalAlunos();
+      document.getElementById('nomeAluno').focus();
     }
+
     function confirmarEdicaoAluno() { adicionarAluno(); }
+
     function cancelarEdicaoAluno() {
       limparAlunoCampos();
     }
+
     function removerAluno(idx) {
-      let lista = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
+      let lista = recuperarLocal('alunosAnyDesk', []);
       if (idx < 0 || idx >= lista.length) {
         console.error("Índice inválido para remoção:", idx);
         return;
       }
       lista.splice(idx,1);
-      salvarLocal('alunosAnyDesk', JSON.stringify(lista));
+      salvarLocal('alunosAnyDesk', lista);
+      if (alunoEditIdx === idx) {
+            limparAlunoCampos();
+        } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
+            alunoEditIdx--;
+        }
       if (document.getElementById('modalAlunos').classList.contains('active')) {
         abrirModalAlunos();
       }
     }
+
     function limparAlunoCampos() {
       document.getElementById('nomeAluno').value = '';
       document.getElementById('anydeskAluno').value = '';
       alunoEditIdx = null;
       mostrarBotoesAluno();
     }
+
     function abrirModalAlunos() {
-      let listaOriginal = JSON.parse(recuperarLocal('alunosAnyDesk','[]'));
+      let listaOriginal = recuperarLocal('alunosAnyDesk', []);
       const listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
       listaComIndices.sort((a, b) => {
         const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -917,7 +1087,7 @@
         return 0;
       });
 
-      let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th>Ações</th></tr></thead><tbody>`;
+      let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
       if(listaComIndices.length){
         listaComIndices.forEach(item => {
           const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -925,7 +1095,7 @@
           html += `<tr>
             <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
             <td style="text-align:center;">${anydeskHtml}</td>
-            <td class="table-actions">
+            <td class="table-actions" style="text-align:center;">
               <button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
@@ -938,13 +1108,12 @@
       document.getElementById('conteudoModalAlunos').innerHTML = html;
       document.getElementById('modalAlunos').classList.add('active');
     }
+
     function fecharModalAlunos() {
       document.getElementById('modalAlunos').classList.remove('active');
     }
 
     // -- Anotações Rápidas --
-    let anotacaoEditIdx = null; 
-
     function mostrarBotoesAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
       const isEditing = anotacaoEditIdx !== null;
@@ -958,59 +1127,62 @@
     function salvarOuAtualizarAnotacao() {
       const val = document.getElementById('anotacaoInput').value.trim();
       if (!val) return;
-      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
+      let anotacoes = recuperarLocal('anotacoesRapidas', []);
 
-      if (anotacaoEditIdx !== null) { 
-        if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
+      if (anotacaoEditIdx !== null) {
+         if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
           anotacoes[anotacaoEditIdx] = val;
         } else {
           console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
         }
-      } else { 
-        anotacoes.push(val);
+      } else {
+         anotacoes.push(val);
       }
-      salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
-      limparAnotacaoCampos(); 
+      salvarLocal('anotacoesRapidas', anotacoes);
+      limparAnotacaoCampos();
       listarAnotacoes();
     }
 
     function editarAnotacao(idxExibicao) {
-      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
-      let originalIndex = anotacoes.length - 1 - idxExibicao; 
+      let anotacoes = recuperarLocal('anotacoesRapidas', []);
+      // O idxExibicao é baseado na lista invertida. Precisamos do índice original.
+      let originalIndex = anotacoes.length - 1 - idxExibicao;
 
       if (originalIndex >= 0 && originalIndex < anotacoes.length) {
         document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
-        anotacaoEditIdx = originalIndex;
+        anotacaoEditIdx = originalIndex; // Armazena o índice original
         mostrarBotoesAnotacao();
         document.getElementById('anotacaoInput').focus();
       } else {
-        console.error("Índice de exibição inválido para editar anotação:", idxExibicao);
-         limparAnotacaoCampos(); 
-      }
+        console.error("Índice de exibição inválido para editar anotação:", idxExibicao, "Original index:", originalIndex);
+        limparAnotacaoCampos();
+       }
     }
-    
+
     function cancelarEdicaoAnotacao() {
-      limparAnotacaoCampos(); 
-    }
+      limparAnotacaoCampos();
+     }
 
     function removerAnotacao(idxExibicao) {
-      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
-      let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
+        if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
+        let anotacoes = recuperarLocal('anotacoesRapidas', []);
+        let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
 
-      if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
-        if (anotacaoEditIdx === originalIndexToRemove) {
-            limparAnotacaoCampos(); 
+        if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
+            if (anotacaoEditIdx === originalIndexToRemove) { // Se estiver editando a anotação que será removida
+                limparAnotacaoCampos();
+            }
+            anotacoes.splice(originalIndexToRemove, 1);
+            salvarLocal('anotacoesRapidas', anotacoes);
+            listarAnotacoes(); // Atualiza a lista na tela
+
+            // Ajustar anotacaoEditIdx se um item anterior ao editado foi removido
+            if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
+                anotacaoEditIdx--;
+            }
+        } else {
+            console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
         }
-        anotacoes.splice(originalIndexToRemove, 1);
-        salvarLocal('anotacoesRapidas', JSON.stringify(anotacoes));
-        listarAnotacoes();
-        
-        if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
-            anotacaoEditIdx--;
-        }
-      } else {
-         console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
-      }
     }
 
     function limparAnotacaoCampos() {
@@ -1020,15 +1192,16 @@
     }
 
     function listarAnotacoes() {
-      let anotacoes = JSON.parse(recuperarLocal('anotacoesRapidas','[]'));
+      let anotacoes = recuperarLocal('anotacoesRapidas', []);
       let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
       tbody.innerHTML = '';
+      // Exibe as anotações em ordem inversa (mais recentes primeiro)
       anotacoes.slice().reverse().forEach((a, idxExibicao) => {
         const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
           <tr>
             <td>${anotacaoHtml}</td>
-            <td class="table-actions">
+            <td class="table-actions" style="text-align:center;">
               <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
               <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
             </td>
@@ -1036,23 +1209,27 @@
       });
     }
 
-    // Event listener para fechar modais com ESC
+    // Event listener para fechar modais com ESC e cancelar edições
     document.addEventListener('keydown', function(e){
       if(e.key === "Escape") {
         if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
         if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
         if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
-        if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao(); 
-      }
+
+        if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
+        if (alunoEditIdx !== null) cancelarEdicaoAluno();
+        if (finEditIdx !== null) cancelarEdicaoFinanceiro();
+        if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+       }
     });
 
     // EXPORTAÇÃO / IMPORTAÇÃO
     function exportarDados() {
       const dados = {
-        diarioClasseLista: recuperarLocal('diarioClasseLista','[]'),
-        alunosAnyDesk: recuperarLocal('alunosAnyDesk','[]'),
-        anotacoesRapidas: recuperarLocal('anotacoesRapidas','[]'),
-        controleFinanceiro: recuperarLocal('controleFinanceiro','[]')
+        diarioClasseLista: recuperarLocal('diarioClasseLista', []),
+        alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
+        anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
+        controleFinanceiro: recuperarLocal('controleFinanceiro', [])
       };
       const blob = new Blob([JSON.stringify(dados, null, 2)], {type: "application/json"});
       const url = URL.createObjectURL(blob);
@@ -1065,42 +1242,54 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
+
     function importarDados(event) {
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const dados = JSON.parse(e.target.result);
-          if (typeof dados !== "object") throw new Error("Formato inválido!");
-          if ("diarioClasseLista" in dados) salvarLocal('diarioClasseLista', dados.diarioClasseLista);
-          if ("alunosAnyDesk" in dados) salvarLocal('alunosAnyDesk', dados.alunosAnyDesk);
-          if ("anotacoesRapidas" in dados) salvarLocal('anotacoesRapidas', dados.anotacoesRapidas);
-          if ("controleFinanceiro" in dados) salvarLocal('controleFinanceiro', dados.controleFinanceiro);
+          const dadosImportados = JSON.parse(e.target.result);
+          if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
 
-          document.getElementById('formDiarioClasse').reset();
+          // Validar e salvar cada parte dos dados
+          if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
+          if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
+          if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
+          if (Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
+
+          limparCamposDiario();
           limparAlunoCampos();
           limparFinanceiroCampos();
-          limparAnotacaoCampos(); 
+          limparAnotacaoCampos(); // Isso também chama mostrarBotoesAnotacao
+          listarAnotacoes(); // Atualiza a tabela de anotações
+
           alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
-        } catch(e) {
-          alert("Falha na importação: " + e.message);
+        } catch(err) { // Corrigido para 'err'
+          alert("Falha na importação: " + err.message);
         } finally {
+            // Atualizar visualizações se os modais estiverem abertos
+            if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
+            if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
+            if (document.getElementById('modalFinanceiro').classList.contains('active')) abrirModalFinanceiro();
+            // Garante que os botões dos formulários principais estejam no estado correto
+            mostrarBotoesDiario();
             mostrarBotoesAluno();
             mostrarBotoesFinanceiro();
-            listarAnotacoes();
+            mostrarBotoesAnotacao(); // Chamado por limparAnotacaoCampos, mas pode ser redundante aqui
         }
       };
       reader.readAsText(file);
-      event.target.value = "";
+      event.target.value = ""; // Limpa o input de arquivo para permitir re-importação do mesmo arquivo
     }
 
     // Inicializar todas as listagens e estados de botões ao carregar a página
     document.addEventListener('DOMContentLoaded', () => {
-        mostrarBotoesAluno();
-        mostrarBotoesFinanceiro();
-        limparAnotacaoCampos(); 
-        listarAnotacoes();
+        limparCamposDiario();
+        limparAlunoCampos();
+        limparFinanceiroCampos();
+        limparAnotacaoCampos(); // Isso já chama mostrarBotoesAnotacao() e listarAnotacoes()
+        // listarAnotacoes(); // Chamado por limparAnotacaoCampos, não precisa duplicar
     });
   </script>
 </body>
