@@ -82,11 +82,12 @@
             align-items: center;
             justify-content: center;
             border-radius: 10px;
-            font-size: 1.22rem;
+            font-size: 1.22rem; /* Tamanho base para ícones FontAwesome */
             border: 1.5px solid transparent;
             transition: border .2s, color .2s, box-shadow .2s, transform .2s;
             outline: none;
             flex-shrink: 0;
+            text-decoration: none;
         }
 
         .atalhos-lateral .ataho-link:focus {
@@ -133,7 +134,7 @@
                 width: 36px;
                 height: 36px;
                 margin: 0.05rem 0;
-                font-size: 1.1rem;
+                font-size: 1.1rem; /* Ajuste para telas menores se necessário */
             }
         }
 
@@ -152,7 +153,7 @@
                 width: 30px;
                 height: 30px;
                 margin: 0;
-                font-size: 1rem;
+                font-size: 1rem; /* Ajuste para telas menores se necessário */
             }
         }
 
@@ -421,6 +422,49 @@
             padding: 0.4rem 0.8rem;
             font-size: 0.9rem;
             min-width: auto; /* Remove o min-width padrão do .btn */
+        }
+
+        /* Estilos para Sugestões de Alunos */
+        .sugestoes-container {
+            border: 1.5px solid var(--c-green);
+            border-top: none;
+            max-height: 120px;
+            overflow-y: auto;
+            background-color: var(--c-bg-dark);
+            position: relative;
+            z-index: 10;
+            border-radius: 0 0 0.7rem 0.7rem;
+            margin-top: -0.6rem; 
+            margin-bottom: 0.6rem; 
+            scrollbar-width: thin;
+            scrollbar-color: var(--c-green) var(--c-bg-dark);
+        }
+
+        .sugestoes-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sugestoes-container::-webkit-scrollbar-thumb {
+            background: var(--c-green);
+            border-radius: 3px;
+        }
+        .sugestoes-container::-webkit-scrollbar-track {
+            background: var(--c-bg-dark);
+        }
+
+        .sugestao-item {
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            color: var(--txt);
+            font-size: 0.95rem;
+        }
+
+        .sugestao-item:hover {
+            background-color: #163221;
+            color: var(--c-yellow);
+        }
+        .sugestoes-container:empty,
+        .sugestoes-container:not([style*="display: block"]) {
+             display: none !important;
         }
 
 
@@ -727,11 +771,11 @@
         <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
         <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
         <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
-        <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs"><i class="far fa-file-alt"></i></a>
-        <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas"><i class="fas fa-table"></i></a>
+        <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs" style="font-weight: bold; font-size: 1.4em;">D</a>
+        <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas" style="font-weight: bold; font-size: 1.4em;">P</a>
+        <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações" style="font-weight: bold; font-size: 1.4em;">A</a>
         <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda" tabindex="6" aria-label="Google Agenda"><i class="far fa-calendar-alt"></i></a>
-        <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
-        <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-laptop"></i></a>
+        <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-tachometer-alt"></i></a>
         <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio" tabindex="9" aria-label="Convertio"><i class="fas fa-globe"></i></a>
         <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links" tabindex="10" aria-label="Dev Links"><i class="fas fa-code"></i></a>
         <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA" tabindex="11" aria-label="Agentes de IA"><i class="fas fa-robot"></i></a>
@@ -765,8 +809,9 @@
         <div class="card cadastro-alunos">
             <div style="display: flex; flex-direction: column; flex-grow: 1;">
                 <h2>Cadastro de Alunos (AnyDesk)</h2>
-                <form onsubmit="event.preventDefault(); adicionarAluno();">
-                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+                <form id="formCadastroAluno" onsubmit="event.preventDefault(); adicionarAluno();">
+                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="handleNomeAlunoInput()">
+                    <div id="sugestoesAlunosContainer" class="sugestoes-container"></div>
                     <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
                     <div class="aluno-form-actions-wrapper">
                         <div class="alunos-btns">
@@ -778,7 +823,8 @@
                     </div>
                 </form>
             </div>
-            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+            <p id="contadorAlunos" style="align-self: center; text-align: center; margin-top: 0.8rem; margin-bottom: 0.8rem; color: var(--c-cyan); font-size: 1.7em; width: 100%;"></p>
+            <button class="btn" style="margin-top: 0; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
         </div>
 
         <div class="card controle-financeiro">
@@ -897,7 +943,6 @@
             const item = localStorage.getItem(key);
             try {
                 const parsedItem = item ? JSON.parse(item) : fallback;
-                // Para controleFinanceiro, garantir que seja um objeto
                 if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) {
                     return fallback;
                 }
@@ -909,11 +954,16 @@
         }
 
         let diarioEditIdx = null;
-        let finEditIdx = null; // Agora será um objeto: { monthKey: "AAAA-MM", index: N } ou null
+        let finEditIdx = null;
         let alunoEditIdx = null;
         let anotacaoEditIdx = null;
+        let financeiroSelecionadoMesAno = '';
 
-        let financeiroSelecionadoMesAno = ''; // Guarda o AAAA-MM selecionado no modal financeiro
+        // Elementos DOM para Cadastro de Alunos (Autocompletar)
+        const nomeAlunoInput = document.getElementById('nomeAluno');
+        const anydeskAlunoInput = document.getElementById('anydeskAluno');
+        const sugestoesAlunosContainer = document.getElementById('sugestoesAlunosContainer');
+
 
         // Função Utilitária para formatar moeda
         function formatarMoeda(valor) {
@@ -922,9 +972,9 @@
         }
 
         // Funções Utilitárias de Data para Financeiro
-        function getFormattedMonthYear(date) { // date é um objeto Date
+        function getFormattedMonthYear(date) {
             const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Meses são 0-indexados
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
             return `${year}-${month}`;
         }
 
@@ -932,19 +982,19 @@
             return getFormattedMonthYear(new Date());
         }
 
-        function parseMonthYearKey(monthYearKey) { // "AAAA-MM" -> { year: AAAA, month: MM (1-12) }
+        function parseMonthYearKey(monthYearKey) {
             const parts = monthYearKey.split('-');
             return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
         }
 
-        function monthYearKeyToDisplay(monthYearKey) { // "AAAA-MM" -> "MM/AAAA"
+        function monthYearKeyToDisplay(monthYearKey) {
              if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido";
             const parts = monthYearKey.split('-');
             return `${parts[1]}/${parts[0]}`;
         }
 
 
-        // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
+        // ---------------- DIÁRIO DE CLASSE ----------------
         function mostrarBotoesDiario() {
             const aluno = document.getElementById('diarioAluno').value.trim();
             const data = document.getElementById('diarioData').value;
@@ -1008,7 +1058,6 @@
             limparCamposDiario();
         }
 
-        // ---------------- DIÁRIO DE CLASSE (Salvar, Abrir/Fechar Modal, Filtrar) ----------------
         function salvarDiarioClasse() {
             const aluno = document.getElementById('diarioAluno').value.trim();
             const data = document.getElementById('diarioData').value;
@@ -1102,8 +1151,7 @@
             document.getElementById('conteudoModalDiario').innerHTML = html;
         }
 
-        // ---------------- CONTROLE FINANCEIRO (NOVA LÓGICA COM MESES) ----------------
-
+        // ---------------- CONTROLE FINANCEIRO ----------------
         function mostrarBotoesFinanceiro() {
             const nome = document.getElementById('nomeFinanceiro').value.trim();
             const valor = document.getElementById('valorFinanceiro').value.trim();
@@ -1131,10 +1179,9 @@
                 return;
             }
 
-
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
 
-            if (finEditIdx !== null) { // Editando um lançamento existente
+            if (finEditIdx !== null) {
                 const { monthKey, index } = finEditIdx;
                 if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) {
                     controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo };
@@ -1145,7 +1192,7 @@
                     limparFinanceiroCampos();
                     return;
                 }
-            } else { // Adicionando novo lançamento (sempre para o mês atual)
+            } else {
                 const currentMonthKey = getCurrentMonthYearKey();
                 if (!controleFinanceiroData[currentMonthKey]) {
                     controleFinanceiroData[currentMonthKey] = [];
@@ -1155,18 +1202,15 @@
             }
 
             salvarLocal('controleFinanceiro', controleFinanceiroData);
-            limparFinanceiroCampos(); // Reseta finEditIdx para null
+            limparFinanceiroCampos();
 
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                // Se estiver editando, atualiza o modal para o mês do item editado.
-                // Se adicionando novo, e o modal estiver no mês atual, ele será atualizado.
                 const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
-                financeiroSelecionadoMesAno = monthToUpdate; // Garante que o select reflita isso
-                populateMesAnoSelectFinanceiro(); // Repopula e seleciona o mês correto
+                financeiroSelecionadoMesAno = monthToUpdate;
+                populateMesAnoSelectFinanceiro();
                 renderizarConteudoModalFinanceiro(monthToUpdate);
             }
         }
-
 
         function editarFinanceiro(monthKey, itemIndex) {
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
@@ -1200,36 +1244,27 @@
             }
 
             controleFinanceiroData[monthKey].splice(itemIndex, 1);
-
-            // Opcional: remover a chave do mês se o array ficar vazio
-            // if (controleFinanceiroData[monthKey].length === 0) {
-            //     delete controleFinanceiroData[monthKey];
-            // }
-
             salvarLocal('controleFinanceiro', controleFinanceiroData);
 
-            // Se o item removido era o que estava em edição no formulário principal
             if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) {
                 limparFinanceiroCampos();
             } else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) {
-                 finEditIdx.index--; // Ajusta o índice se um item anterior no mesmo mês foi removido
+                 finEditIdx.index--;
             }
 
-
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                populateMesAnoSelectFinanceiro(); // Atualiza o select de meses (caso um mês tenha ficado vazio)
-                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); // Re-renderiza o mês atual no modal
+                populateMesAnoSelectFinanceiro();
+                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
             }
         }
 
-
         function confirmarEdicaoFinanceiro() {
-            adicionarFinanceiro(); // A lógica de edição está dentro de adicionarFinanceiro agora
+            adicionarFinanceiro();
         }
 
         function limparFinanceiroCampos() {
-            document.getElementById('formFinanceiro').reset(); // Reseta o formulário
-            finEditIdx = null; // Limpa o índice de edição
+            document.getElementById('formFinanceiro').reset();
+            finEditIdx = null;
             mostrarBotoesFinanceiro();
         }
 
@@ -1238,34 +1273,31 @@
         }
 
         function getAllMonthKeysSorted(financeiroData) {
-            // Pega todas as chaves (AAAA-MM), e as ordena da mais recente para a mais antiga
             return Object.keys(financeiroData).sort((a, b) => {
                 const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
                 const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
-                return dateB - dateA; // Mais recente primeiro
+                return dateB - dateA;
             });
         }
 
         function populateMesAnoSelectFinanceiro() {
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            selectElement.innerHTML = ''; // Limpa opções existentes
+            selectElement.innerHTML = '';
 
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             let monthKeys = getAllMonthKeysSorted(controleFinanceiroData);
             const currentMonthKey = getCurrentMonthYearKey();
 
-            // Garante que o mês atual esteja na lista, mesmo que não tenha dados
             if (!monthKeys.includes(currentMonthKey)) {
                 monthKeys.push(currentMonthKey);
-                 monthKeys = monthKeys.sort((a, b) => { // Re-ordena após adicionar o mês atual
+                 monthKeys = monthKeys.sort((a, b) => {
                     const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
                     const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
                     return dateB - dateA;
                 });
             }
 
-
-            if (monthKeys.length === 0) { // Caso raro, se não houver chaves e o mês atual não foi adicionado
+            if (monthKeys.length === 0) {
                  monthKeys.push(currentMonthKey);
             }
 
@@ -1276,20 +1308,18 @@
                 selectElement.appendChild(option);
             });
 
-            // Tenta selecionar o mês previamente selecionado ou o mais recente/atual
              if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
                 selectElement.value = financeiroSelecionadoMesAno;
             } else if (monthKeys.length > 0) {
-                selectElement.value = monthKeys[0]; // Seleciona o mais recente por padrão
+                selectElement.value = monthKeys[0];
                 financeiroSelecionadoMesAno = monthKeys[0];
             }
         }
 
-
         function renderizarConteudoModalFinanceiro(monthKey) {
-            financeiroSelecionadoMesAno = monthKey; // Atualiza a variável global
+            financeiroSelecionadoMesAno = monthKey;
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            if(selectElement.value !== monthKey) selectElement.value = monthKey; // Sincroniza o select
+            if(selectElement.value !== monthKey) selectElement.value = monthKey;
 
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             const lancamentosDoMes = controleFinanceiroData[monthKey] || [];
@@ -1325,8 +1355,6 @@
                 <tbody>`;
 
             if (lancamentosDoMes.length) {
-                // Renderiza na ordem original (mais antigo primeiro) ou invertido (mais novo primeiro).
-                // Vamos manter a ordem de inserção por enquanto, mas pode ser invertido com .slice().reverse()
                 lancamentosDoMes.forEach((item, index) => {
                     const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const valorFormatado = formatarMoeda(item.valor);
@@ -1369,20 +1397,16 @@
         function irParaMesAtualFinanceiro() {
             const currentMonthKey = getCurrentMonthYearKey();
              const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            // Verifica se o mês atual existe nas opções, se não, pode ser necessário repopular.
-            // Por segurança, repopulamos para garantir que o mês atual esteja lá.
             populateMesAnoSelectFinanceiro();
-            selectElement.value = currentMonthKey; // Tenta selecionar
-            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) { // Fallback se não encontrou
+            selectElement.value = currentMonthKey;
+            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) {
                  selectElement.value = selectElement.options[0].value;
             }
             renderizarConteudoModalFinanceiro(selectElement.value);
         }
 
-
         function abrirModalFinanceiro() {
-            populateMesAnoSelectFinanceiro(); // Popula o select com os meses disponíveis
-             // Decide qual mês mostrar: o último selecionado, ou o atual, ou o mais recente com dados
+            populateMesAnoSelectFinanceiro();
             const currentMonthKey = getCurrentMonthYearKey();
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             const allMonths = getAllMonthKeysSorted(controleFinanceiroData);
@@ -1392,9 +1416,9 @@
             } else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) {
                 financeiroSelecionadoMesAno = currentMonthKey;
             } else if (allMonths.length > 0) {
-                financeiroSelecionadoMesAno = allMonths[0]; // Mais recente com dados
+                financeiroSelecionadoMesAno = allMonths[0];
             } else {
-                 financeiroSelecionadoMesAno = currentMonthKey; // Fallback final
+                 financeiroSelecionadoMesAno = currentMonthKey;
             }
 
             document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno;
@@ -1402,16 +1426,73 @@
             document.getElementById('modalFinanceiro').classList.add('active');
         }
 
-
         function fecharModalFinanceiro() {
             document.getElementById('modalFinanceiro').classList.remove('active');
         }
 
+        // ---------------- CADASTRO DE ALUNOS ----------------
+        function handleNomeAlunoInput() {
+            mostrarBotoesAluno();
+            sugerirAlunos();
+        }
 
-        // -- Cadastro de Alunos (com edição e modal)
+        function sugerirAlunos() {
+            const valorInput = nomeAlunoInput.value.trim().toLowerCase();
+            sugestoesAlunosContainer.innerHTML = ''; 
+
+            if (valorInput.length === 0) {
+                sugestoesAlunosContainer.style.display = 'none';
+                return;
+            }
+
+            const alunos = recuperarLocal('alunosAnyDesk', []);
+            const filtrados = alunos.filter(aluno =>
+                aluno.nome.toLowerCase().includes(valorInput)
+            );
+
+            if (filtrados.length > 0) {
+                filtrados.forEach(aluno => {
+                    const divItem = document.createElement('div');
+                    divItem.classList.add('sugestao-item');
+                    divItem.textContent = aluno.nome;
+                    divItem.onclick = () => {
+                        nomeAlunoInput.value = aluno.nome;
+                        anydeskAlunoInput.value = aluno.anydesk;
+                        sugestoesAlunosContainer.innerHTML = '';
+                        sugestoesAlunosContainer.style.display = 'none';
+                        mostrarBotoesAluno();
+                        anydeskAlunoInput.focus();
+                    };
+                    sugestoesAlunosContainer.appendChild(divItem);
+                });
+                sugestoesAlunosContainer.style.display = 'block';
+            } else {
+                sugestoesAlunosContainer.style.display = 'none';
+            }
+        }
+        
+        nomeAlunoInput.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!sugestoesAlunosContainer.matches(':hover')) { 
+                     sugestoesAlunosContainer.innerHTML = '';
+                     sugestoesAlunosContainer.style.display = 'none';
+                }
+            }, 150);
+        });
+        
+        sugestoesAlunosContainer.addEventListener('mouseleave', function() {
+             if (document.activeElement !== nomeAlunoInput) {
+                setTimeout(() => { 
+                    sugestoesAlunosContainer.innerHTML = '';
+                    sugestoesAlunosContainer.style.display = 'none';
+                }, 150);
+             }
+        });
+
+
         function mostrarBotoesAluno() {
-            const nome = document.getElementById('nomeAluno').value.trim();
-            const anydesk = document.getElementById('anydeskAluno').value.trim();
+            const nome = nomeAlunoInput.value.trim();
+            const anydesk = anydeskAlunoInput.value.trim();
             const showAdd = nome && anydesk && alunoEditIdx === null;
             const showEdit = nome && anydesk && alunoEditIdx !== null;
             const showAnyButton = nome || anydesk;
@@ -1423,8 +1504,8 @@
         }
 
         function adicionarAluno() {
-            const nome = document.getElementById('nomeAluno').value.trim();
-            const anydesk = document.getElementById('anydeskAluno').value.trim();
+            const nome = nomeAlunoInput.value.trim();
+            const anydesk = anydeskAlunoInput.value.trim();
             if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
             let lista = recuperarLocal('alunosAnyDesk', []);
             if (alunoEditIdx === null) {
@@ -1440,6 +1521,7 @@
             }
             salvarLocal('alunosAnyDesk', lista);
             limparAlunoCampos();
+            atualizarContadorAlunos();
             if (document.getElementById('modalAlunos').classList.contains('active')) {
                 abrirModalAlunos();
             }
@@ -1451,12 +1533,12 @@
                 console.error("Índice inválido para edição:", idx);
                 return;
             }
-            document.getElementById('nomeAluno').value = lista[idx].nome;
-            document.getElementById('anydeskAluno').value = lista[idx].anydesk;
+            nomeAlunoInput.value = lista[idx].nome;
+            anydeskAlunoInput.value = lista[idx].anydesk;
             alunoEditIdx = idx;
             mostrarBotoesAluno();
             fecharModalAlunos();
-            document.getElementById('nomeAluno').focus();
+            nomeAlunoInput.focus();
         }
 
         function confirmarEdicaoAluno() { adicionarAluno(); }
@@ -1479,15 +1561,22 @@
             } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
                 alunoEditIdx--;
             }
+            atualizarContadorAlunos();
             if (document.getElementById('modalAlunos').classList.contains('active')) {
                 abrirModalAlunos();
             }
         }
 
         function limparAlunoCampos() {
-            document.getElementById('nomeAluno').value = '';
-            document.getElementById('anydeskAluno').value = '';
+            if (document.getElementById('formCadastroAluno')) {
+                 document.getElementById('formCadastroAluno').reset();
+            } else { // Fallback se o ID do formulário não for encontrado (embora deva ser)
+                nomeAlunoInput.value = '';
+                anydeskAlunoInput.value = '';
+            }
             alunoEditIdx = null;
+            sugestoesAlunosContainer.innerHTML = '';
+            sugestoesAlunosContainer.style.display = 'none';
             mostrarBotoesAluno();
         }
 
@@ -1532,6 +1621,13 @@
             document.getElementById('modalAlunos').classList.remove('active');
         }
 
+        function atualizarContadorAlunos() {
+            const contadorElemento = document.getElementById('contadorAlunos');
+            const alunos = recuperarLocal('alunosAnyDesk', []);
+            const totalAlunos = alunos.length;
+            contadorElemento.textContent = `Total de Alunos Cadastrados: ${totalAlunos}`;
+        }
+
         // -- Anotações Rápidas --
         function mostrarBotoesAnotacao() {
             const val = document.getElementById('anotacaoInput').value.trim();
@@ -1564,7 +1660,7 @@
 
         function editarAnotacao(idxExibicao) {
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndex = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
+            let originalIndex = anotacoes.length - 1 - idxExibicao;
 
             if (originalIndex >= 0 && originalIndex < anotacoes.length) {
                 document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
@@ -1584,10 +1680,10 @@
         function removerAnotacao(idxExibicao) {
             if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
+            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
 
             if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
-                if (anotacaoEditIdx === originalIndexToRemove) { // Se estiver editando a anotação que será removida
+                if (anotacaoEditIdx === originalIndexToRemove) {
                     limparAnotacaoCampos();
                 }
                 anotacoes.splice(originalIndexToRemove, 1);
@@ -1626,7 +1722,7 @@
                 });
             } else {
                 console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
-                salvarLocal('anotacoesRapidas', []); // Corrige para um array vazio se não for
+                salvarLocal('anotacoesRapidas', []);
             }
         }
 
@@ -1636,19 +1732,35 @@
                 if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
                 if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
 
-                if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
-                if (alunoEditIdx !== null) cancelarEdicaoAluno();
-                if (finEditIdx !== null) cancelarEdicaoFinanceiro();
-                if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+                if (sugestoesAlunosContainer.style.display === 'block') {
+                    sugestoesAlunosContainer.innerHTML = '';
+                    sugestoesAlunosContainer.style.display = 'none';
+                } else {
+                    if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
+                    if (alunoEditIdx !== null) cancelarEdicaoAluno();
+                    if (finEditIdx !== null) cancelarEdicaoFinanceiro();
+                    if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+                }
             }
         });
+        
+        document.addEventListener('click', function(event) {
+            const isClickInsideNomeAluno = nomeAlunoInput.contains(event.target);
+            const isClickInsideSugestoes = sugestoesAlunosContainer.contains(event.target);
+
+            if (!isClickInsideNomeAluno && !isClickInsideSugestoes) {
+                sugestoesAlunosContainer.innerHTML = '';
+                sugestoesAlunosContainer.style.display = 'none';
+            }
+        });
+
 
         function exportarDados() {
             const dados = {
                 diarioClasseLista: recuperarLocal('diarioClasseLista', []),
                 alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
                 anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
-                controleFinanceiro: recuperarLocal('controleFinanceiro', {}) // Exporta como objeto
+                controleFinanceiro: recuperarLocal('controleFinanceiro', {})
             };
             const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
@@ -1671,33 +1783,29 @@
                     const dadosImportados = JSON.parse(e.target.result);
                     if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato de arquivo inválido!");
 
-                    // Importação para diarioClasseLista (array)
                     if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
                     else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
 
-                    // Importação para alunosAnyDesk (array)
                     if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
                     else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
 
-                    // Importação para anotacoesRapidas (array)
                     if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
                     else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
 
-                    // Importação para controleFinanceiro (objeto)
                     if (typeof dadosImportados.controleFinanceiro === "object" &&
                         dadosImportados.controleFinanceiro !== null &&
                         !Array.isArray(dadosImportados.controleFinanceiro)) {
                         salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
-                    } else if ("controleFinanceiro" in dadosImportados) { // Se a chave existe mas não é objeto válido
-                        salvarLocal('controleFinanceiro', {}); // Salva um objeto vazio
+                    } else if ("controleFinanceiro" in dadosImportados) {
+                        salvarLocal('controleFinanceiro', {});
                     }
-
 
                     limparCamposDiario();
                     limparAlunoCampos();
                     limparFinanceiroCampos();
                     limparAnotacaoCampos();
                     listarAnotacoes();
+                    atualizarContadorAlunos();
 
                     alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
                 } catch (err) {
@@ -1706,8 +1814,7 @@
                     if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
                     if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
                     if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                        // Ao importar, o modal financeiro precisa ser reinicializado para o mês mais recente ou atual
-                        financeiroSelecionadoMesAno = ''; // Força a reavaliação do mês
+                        financeiroSelecionadoMesAno = '';
                         abrirModalFinanceiro();
                     }
                     mostrarBotoesDiario();
@@ -1726,8 +1833,8 @@
             limparFinanceiroCampos();
             limparAnotacaoCampos();
             listarAnotacoes();
+            atualizarContadorAlunos();
 
-            // Inicializa o mês selecionado para o financeiro para o mês atual ou o mais recente
             const currentFinMonth = getCurrentMonthYearKey();
             const finData = recuperarLocal('controleFinanceiro', {});
             const sortedFinMonths = getAllMonthKeysSorted(finData);
