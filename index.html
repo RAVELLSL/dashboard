@@ -1,1311 +1,1496 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RS TECH</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
-  <style>
-    :root {
-      --c-cyan:   #19fff7;
-      --c-green:  #46ff86;
-      --c-yellow: #ffe066;
-      --c-blue:   #02a6ff;
-      --c-purple: #977cff;
-      --c-bg-dark:#16271d;
-      --c-bg-card:#193c2c;
-      --txt: #eaffea;
-      --tit: 'Orbitron', Arial, sans-serif;
-      --bod: 'Share Tech Mono', monospace;
-    }
-    body {
-      background: linear-gradient(120deg, #16271d 0%, #1b3440 100%);
-      color: var(--txt);
-      font-family: var(--bod);
-      margin: 0;
-      padding: 0 0 0 70px;
-      min-height: 100vh;
-      box-sizing: border-box;
-      position: relative;
-      overflow-x: hidden;
-    }
-    header {
-      background: transparent;
-      color: var(--c-green);
-      text-align: center;
-      padding: 2.2rem 1rem 1.2rem 1rem;
-      font-family: var(--tit);
-      font-size: 2.2rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 12px var(--c-cyan);
-      border-bottom: 3px solid var(--c-cyan);
-      z-index: 10;
-      position: relative;
-    }
-    .atalhos-lateral {
-      position: fixed;
-      top: 0; left: 0;
-      width: 70px;
-      height: 100svh;
-      background: #153826;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      z-index: 101;
-      box-shadow: 2px 0 14px #19fff733;
-      padding-top: 0.4rem;
-      padding-bottom: 0;
-      overflow-y: auto;
-      overflow-x: hidden;
-      border-right: 2px solid var(--c-green);
-      scrollbar-width: thin;
-      scrollbar-color: var(--c-green) #153826;
-      overscroll-behavior-y: contain;
-      box-sizing: border-box;
-    }
-    .atalhos-lateral .ataho-link {
-      width: 44px; height: 44px;
-      margin: 0.1rem 0;
-      background: #143a22;
-      color: var(--c-cyan);
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 10px; font-size: 1.22rem;
-      border: 1.5px solid transparent;
-      transition: border .2s, color .2s, box-shadow .2s, transform .2s;
-      outline: none;
-      flex-shrink: 0;
-    }
-    .atalhos-lateral .ataho-link:focus {
-      outline: 2px solid var(--c-yellow);
-      outline-offset: 2px;
-    }
-    .atalhos-lateral .ataho-link:hover, .atalhos-lateral .ataho-link:focus {
-      color: var(--c-yellow);
-      border: 1.5px solid var(--c-yellow);
-      box-shadow: 0 0 10px var(--c-yellow);
-      transform: scale(1.1);
-    }
-    .atalhos-lateral .ataho-link.active {
-      color: var(--c-green);
-      border: 1.5px solid var(--c-green);
-      box-shadow: 0 0 14px var(--c-green);
-    }
-    .atalhos-lateral::-webkit-scrollbar {
-      width: 8px;
-      background: #153826;
-    }
-    .atalhos-lateral::-webkit-scrollbar-thumb {
-      background: var(--c-green);
-      border-radius: 4px;
-    }
-    @media (max-width: 800px) {
-      .atalhos-lateral {
-        width: 54px;
-        gap: 0.2rem;
-        padding-top: 0.2rem;
-      }
-      body { padding-left: 54px; }
-      .atalhos-lateral .ataho-link {
-        width: 36px;
-        height: 36px;
-        margin: 0.05rem 0;
-        font-size: 1.1rem;
-      }
-    }
-    @media (max-width: 600px) {
-      .atalhos-lateral {
-        width: 50px;
-        gap: 0.1rem;
-        padding-top: 0.1rem;
-      }
-      body { padding-left: 50px; }
-      .atalhos-lateral .ataho-link {
-        width: 30px;
-        height: 30px;
-        margin: 0;
-        font-size: 1rem;
-      }
-    }
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      padding: 2rem 2vw 1rem 2vw;
-      max-width: 1440px;
-      margin: auto;
-      box-sizing: border-box;
-    }
-    @media (max-width: 1100px) {
-      .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-      .card.anotacoes-rapidas { grid-column: 1 / -1; }
-    }
-    @media (max-width: 799px) {
-      .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
-      .card.anotacoes-rapidas { grid-column: auto; }
-    }
-    @media (max-width: 599px) {
-      .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; }
-    }
-    .card {
-      background: var(--c-bg-card);
-      border-radius: 1.5rem;
-      box-shadow: 0 2px 18px #19fff733;
-      padding: 1.4rem 1.1rem 1.1rem 1.1rem;
-      display: flex;
-      flex-direction: column;
-      min-width: 220px;
-      max-width: 100%;
-      min-height: 340px;
-      margin-bottom: 0.5rem;
-      border: 2px solid var(--c-green);
-      transition: border .16s, box-shadow .14s;
-      overflow: visible;
-      box-sizing: border-box;
-    }
-    .card.anotacoes-rapidas {
-        grid-column: 1 / -1;
-    }
-    .card h2 {
-      font-family: var(--tit);
-      font-size: 1.14rem;
-      color: var(--c-cyan);
-      letter-spacing: 1px;
-      margin: 0 0 1rem 0;
-      text-align: center;
-      border-bottom: 1.5px solid var(--c-yellow);
-      padding-bottom: 0.5rem;
-      flex-shrink: 0;
-    }
-    .card form {
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-    .card textarea,
-    .card input,
-    .card select {
-      width: 100%;
-      box-sizing: border-box;
-    }
-    input, textarea, select {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      display: block;
-      border-radius: 0.7rem;
-      background: #163221;
-      color: var(--txt);
-      border: 1.5px solid var(--c-green);
-      padding: 0.8rem 1rem;
-      margin: 0.2rem 0 0.6rem 0;
-      font-size: 1.06rem;
-      font-family: var(--bod);
-      transition: border 0.13s;
-      outline: none;
-      word-break: break-all;
-    }
-    .diario-btns,
-    .aluno-form-actions-wrapper,
-    .financeiro-form-actions-wrapper,
-    .anotacoes-form-actions-wrapper {
-        display: flex;
-        justify-content: center;
-        gap: 0.7rem;
-        flex-wrap: wrap;
-        margin-top: auto;
-        padding-top: 0.5rem;
-        flex-shrink: 0;
-    }
-    .alunos-btns {
-      display: flex;
-      justify-content: center;
-      gap: 0.7rem;
-    }
-    .cadastro-alunos .btn {
-      min-width: 120px;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 74px;
-      max-height: 220px;
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-    input:focus, textarea:focus, select:focus {
-      border: 1.5px solid var(--c-yellow);
-    }
-    .card form .btn {
-      margin-right: 0.3rem;
-      margin-left: 0.3rem;
-      margin-bottom: 0.4rem;
-    }
-    .card form .btn:first-child { margin-left: 0;}
-    .card form .btn:last-child { margin-right: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <style>
+        :root {
+            --c-cyan: #19fff7;
+            --c-green: #46ff86;
+            --c-yellow: #ffe066;
+            --c-blue: #02a6ff;
+            --c-purple: #977cff;
+            --c-bg-dark: #16271d;
+            --c-bg-card: #193c2c;
+            --txt: #eaffea;
+            --tit: 'Orbitron', Arial, sans-serif;
+            --bod: 'Share Tech Mono', monospace;
+        }
 
-    .table-actions button {
-      background: none;
-      border: none;
-      color: var(--c-green);
-      font-size: 1.13rem;
-      cursor: pointer;
-      transition: color 0.14s;
-      padding: 0.2rem 0.3rem;
-    }
-    .table-actions button:hover { color: var(--c-yellow); }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #133829;
-      color: var(--txt);
-      border-radius: 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.97rem;
-      box-shadow: 0 1px 6px #19fff722;
-      overflow: hidden;
-      box-sizing: border-box;
-    }
-    table th, table td {
-      padding: 0.6rem 0.4rem;
-      text-align: left;
-      border-bottom: 1px solid #263b2b;
-    }
-    table th {
-      color: var(--c-green);
-      font-family: var(--tit);
-      border-bottom: 2px solid var(--c-cyan);
-    }
-    .portal-acesso {
-      background: transparent;
-      color: var(--c-green);
-      border-radius: 1.2rem;
-      border: 2px solid var(--c-cyan);
-      font-family: var(--tit);
-      text-align: center;
-      font-size: 1.08rem;
-      font-weight: bold;
-      box-shadow: 0 2px 12px #19fff733;
-      padding: 2rem 1rem;
-      margin: 2rem auto 1.5rem auto;
-      max-width: 700px;
-      transition: border .19s, color .19s;
-      cursor: pointer;
-      text-decoration: none;
-      letter-spacing: 1.15px;
-      display: block;
-    }
-    .portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow);}
-    .main-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2.1rem;
-      margin: 2.5rem auto 0 auto;
-      padding-bottom: calc(2.8rem + 1.5rem);
-      max-width: 700px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .btn, .btn-export, .btn-import {
-      background: transparent;
-      color: var(--c-cyan);
-      font-family: var(--tit);
-      border: 1.5px solid var(--c-cyan);
-      border-radius: 1.1rem;
-      padding: 0.7rem 1.6rem;
-      font-size: 1.06rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: border .14s, color .14s, background .14s;
-      margin-top: 0.2rem;
-      min-width: 100px;
-      text-align: center;
-    }
-    .btn:hover, .btn-export:hover, .btn-import:hover {
-      color: var(--c-green);
-      border: 1.5px solid var(--c-green);
-      background: #1d342a;
-    }
-    footer {
-      width: 100%;
-      text-align: center;
-      color: #5beebb;
-      font-size: 1.1rem;
-      font-family: var(--tit);
-      letter-spacing: 0.2em;
-      background: #133829ea;
-      padding: 0.85rem 0;
-      position: relative;
-      bottom: 0;
-      z-index: 100;
-      opacity: 0.85;
-      user-select: none;
-      box-shadow: 0 -2px 8px #16271d77;
-      box-sizing: border-box;
-      margin-left: -70px;
-    }
-     @media (max-width: 800px) { footer { margin-left: -54px; } }
-     @media (max-width: 600px) { footer { margin-left: -50px; } }
-     @media (max-width: 600px) {
-      .main-controls {
-        flex-direction: column;
-        gap: 1.2rem;
-        padding-bottom: calc(2.29rem + 1rem);
-      }
-      .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem;}
-      footer { font-size: 0.99rem; padding: 0.65rem 0; }
-    }
-    @media (max-width: 480px) {
-      .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; }
-      .dashboard-grid { padding: 0.6rem 0.1rem; }
-      .main-controls {
-        padding-bottom: calc(2.29rem + 2rem);
-      }
-    }
-    .modal-bg {
-      display: none;
-      position: fixed;
-      z-index: 1010;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(0,32,32,0.72);
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1rem;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-    .modal-bg.active { display: flex; }
-    .modal-diario, .modal-financeiro, .modal-alunos {
-      background: #122921;
-      color: var(--txt);
-      border-radius: 1.1rem;
-      box-shadow: 0 8px 34px #1beeea66;
-      padding: 1.5rem;
-      width: 100%;
-      max-width: 800px;
-      max-height: calc(100vh - 2rem);
-      font-family: var(--bod);
-      font-size: 1.13rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      position: relative;
-      box-sizing: border-box;
-    }
-    .modal-diario h3,
-    .modal-financeiro h3,
-    .modal-alunos h3 {
-      margin: 0 0 0.5rem 0;
-      text-align: center;
-      font-family: var(--tit);
-      color: var(--c-cyan);
-      flex-shrink: 0;
-    }
-    .modal-diario .fechar-modal,
-    .modal-financeiro .fechar-modal,
-    .modal-alunos .fechar-modal {
-      position: absolute;
-      right: 18px; top: 12px;
-      background: none;
-      border: none;
-      color: var(--c-yellow);
-      font-size: 1.3rem;
-      cursor: pointer;
-      font-family: var(--tit);
-      z-index: 10;
-    }
-    .table-container-modal {
-        flex-grow: 1;
-        min-height: 0;
-        overflow-y: auto;
-        overscroll-behavior-y: contain;
-        border-radius: 0.8rem;
-        background: #133829;
-        box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        padding-top: 0.2rem;
-        padding-left: 0.2rem;
-        padding-right: 0.2rem;
-        padding-bottom: 2rem;
-        box-sizing: border-box;
-    }
-    .table-container-modal table {
-        width: 100%;
-        font-size: 1.0rem;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-    .table-container-modal th,
-    .table-container-modal td {
-        padding: 0.5rem;
-        border-bottom: 1px solid #263b2b;
-        text-align: center;
-        vertical-align: middle;
-    }
-    .table-container-modal td:first-child,
-    .table-container-modal th:first-child {
-        text-align: left;
-        padding-left: 1rem;
-    }
-    .table-container-modal th {
-        color: var(--c-green);
-        font-family: var(--tit);
-        border-bottom: 2px solid var(--c-cyan);
-        position: sticky;
-        top: -1px;
-        background: #133829;
-        z-index: 1;
-    }
-    .table-container-modal tr:last-child td {
-       border-bottom: none;
-    }
-    .modal-diario-table {
-      width: 100%;
-      overflow-y: auto;
-      overscroll-behavior-y: contain;
-      border-radius: 1rem;
-      background: #163221;
-      box-shadow: 0 1px 8px #19fff744;
-      flex-grow: 1;
-      min-height: 0;
-      box-sizing: border-box;
-      padding-bottom: 2rem;
-    }
-    .modal-diario-table table {
-        width: 100%;
-        font-size: 1.01rem;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-    .modal-diario-table th, .modal-diario-table td {
-      padding: 0.5rem;
-      border-bottom: 1px solid #263b2b;
-      text-align: left;
-      vertical-align: middle;
-    }
-    .modal-diario-table th {
-      color: var(--c-green);
-      font-family: var(--tit);
-      border-bottom: 2px solid var(--c-cyan);
-      position: sticky;
-      top: -1px;
-      background: #163221;
-      z-index: 1;
-    }
-    .modal-diario-table td.table-actions {
-        text-align: center;
-    }
-    .modal-diario-table tr:last-child td {
-        border-bottom: none;
-    }
-    .modal-diario-table td { color: #def2e1; word-break: break-word; }
-    .modal-diario-filtro {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-      justify-content: flex-start;
-      margin-bottom: 0.5rem;
-      align-items: flex-end;
-      flex-shrink: 0;
-    }
-    .modal-diario-filtro label {
-      font-size: 1.02rem;
-      color: #9cf7ee;
-      font-family: var(--bod);
-      margin-bottom: 0.1rem;
-      margin-right: 0.4rem;
-    }
-    .modal-diario-filtro input[type="text"],
-    .modal-diario-filtro input[type="date"] {
-      background: #193c2c;
-      border: 1.2px solid var(--c-green);
-      color: #d3fff3;
-      padding: 0.5rem 0.7rem;
-      border-radius: 0.7rem;
-      font-size: 0.98rem;
-      font-family: var(--bod);
-      outline: none;
-      margin-right: 1rem;
-    }
-    .modal-diario-filtro input[type="text"]:focus,
-    .modal-diario-filtro input[type="date"]:focus {
-      border-color: var(--c-cyan);
-    }
-  </style>
+        body {
+            background: linear-gradient(120deg, #16271d 0%, #1b3440 100%);
+            color: var(--txt);
+            font-family: var(--bod);
+            margin: 0;
+            padding: 0 0 0 70px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: transparent;
+            color: var(--c-green);
+            text-align: center;
+            padding: 2.2rem 1rem 1.2rem 1rem;
+            font-family: var(--tit);
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px var(--c-cyan);
+            border-bottom: 3px solid var(--c-cyan);
+            z-index: 10;
+            position: relative;
+        }
+
+        .atalhos-lateral {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 70px;
+            height: 100svh;
+            background: #153826;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            z-index: 101;
+            box-shadow: 2px 0 14px #19fff733;
+            padding-top: 0.4rem;
+            padding-bottom: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-right: 2px solid var(--c-green);
+            scrollbar-width: thin;
+            scrollbar-color: var(--c-green) #153826;
+            overscroll-behavior-y: contain;
+            box-sizing: border-box;
+        }
+
+        .atalhos-lateral .ataho-link {
+            width: 44px;
+            height: 44px;
+            margin: 0.1rem 0;
+            background: #143a22;
+            color: var(--c-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.22rem;
+            border: 1.5px solid transparent;
+            transition: border .2s, color .2s, box-shadow .2s, transform .2s;
+            outline: none;
+            flex-shrink: 0;
+        }
+
+        .atalhos-lateral .ataho-link:focus {
+            outline: 2px solid var(--c-yellow);
+            outline-offset: 2px;
+        }
+
+        .atalhos-lateral .ataho-link:hover,
+        .atalhos-lateral .ataho-link:focus {
+            color: var(--c-yellow);
+            border: 1.5px solid var(--c-yellow);
+            box-shadow: 0 0 10px var(--c-yellow);
+            transform: scale(1.1);
+        }
+
+        .atalhos-lateral .ataho-link.active {
+            color: var(--c-green);
+            border: 1.5px solid var(--c-green);
+            box-shadow: 0 0 14px var(--c-green);
+        }
+
+        .atalhos-lateral::-webkit-scrollbar {
+            width: 8px;
+            background: #153826;
+        }
+
+        .atalhos-lateral::-webkit-scrollbar-thumb {
+            background: var(--c-green);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 800px) {
+            .atalhos-lateral {
+                width: 54px;
+                gap: 0.2rem;
+                padding-top: 0.2rem;
+            }
+
+            body {
+                padding-left: 54px;
+            }
+
+            .atalhos-lateral .ataho-link {
+                width: 36px;
+                height: 36px;
+                margin: 0.05rem 0;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .atalhos-lateral {
+                width: 50px;
+                gap: 0.1rem;
+                padding-top: 0.1rem;
+            }
+
+            body {
+                padding-left: 50px;
+            }
+
+            .atalhos-lateral .ataho-link {
+                width: 30px;
+                height: 30px;
+                margin: 0;
+                font-size: 1rem;
+            }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem 2vw 1rem 2vw;
+            max-width: 1440px;
+            margin: auto;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 1100px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.1rem;
+            }
+
+            .card.anotacoes-rapidas {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 799px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.1rem;
+            }
+
+            .card.anotacoes-rapidas {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .dashboard-grid {
+                gap: 0.5rem;
+                padding: 0.5rem 0.1rem;
+            }
+        }
+
+        .card {
+            background: var(--c-bg-card);
+            border-radius: 1.5rem;
+            box-shadow: 0 2px 18px #19fff733;
+            padding: 1.4rem 1.1rem 1.1rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            min-width: 220px;
+            max-width: 100%;
+            min-height: 340px;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--c-green);
+            transition: border .16s, box-shadow .14s;
+            overflow: visible;
+            box-sizing: border-box;
+        }
+
+        .card.anotacoes-rapidas {
+            grid-column: 1 / -1;
+        }
+
+        .card h2 {
+            font-family: var(--tit);
+            font-size: 1.14rem;
+            color: var(--c-cyan);
+            letter-spacing: 1px;
+            margin: 0 0 1rem 0;
+            text-align: center;
+            border-bottom: 1.5px solid var(--c-yellow);
+            padding-bottom: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .card form {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card textarea,
+        .card input,
+        .card select {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            border-radius: 0.7rem;
+            background: #163221;
+            color: var(--txt);
+            border: 1.5px solid var(--c-green);
+            padding: 0.8rem 1rem;
+            margin: 0.2rem 0 0.6rem 0;
+            font-size: 1.06rem;
+            font-family: var(--bod);
+            transition: border 0.13s;
+            outline: none;
+            word-break: break-all;
+        }
+
+        .diario-btns,
+        .aluno-form-actions-wrapper,
+        .financeiro-form-actions-wrapper,
+        .anotacoes-form-actions-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .alunos-btns {
+            display: flex;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .cadastro-alunos .btn {
+            min-width: 120px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 74px;
+            max-height: 220px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border: 1.5px solid var(--c-yellow);
+        }
+
+        .card form .btn {
+            margin-right: 0.3rem;
+            margin-left: 0.3rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .card form .btn:first-child {
+            margin-left: 0;
+        }
+
+        .card form .btn:last-child {
+            margin-right: 0;
+        }
+
+        .table-actions button {
+            background: none;
+            border: none;
+            color: var(--c-green);
+            font-size: 1.13rem;
+            cursor: pointer;
+            transition: color 0.14s;
+            padding: 0.2rem 0.3rem;
+        }
+
+        .table-actions button:hover {
+            color: var(--c-yellow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #133829;
+            color: var(--txt);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.97rem;
+            box-shadow: 0 1px 6px #19fff722;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        table th,
+        table td {
+            padding: 0.6rem 0.4rem;
+            text-align: left;
+            border-bottom: 1px solid #263b2b;
+        }
+
+        table th {
+            color: var(--c-green);
+            font-family: var(--tit);
+            border-bottom: 2px solid var(--c-cyan);
+        }
+
+        .portal-acesso {
+            background: transparent;
+            color: var(--c-green);
+            border-radius: 1.2rem;
+            border: 2px solid var(--c-cyan);
+            font-family: var(--tit);
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: bold;
+            box-shadow: 0 2px 12px #19fff733;
+            padding: 2rem 1rem;
+            margin: 2rem auto 1.5rem auto;
+            max-width: 700px;
+            transition: border .19s, color .19s;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 1.15px;
+            display: block;
+        }
+
+        .portal-acesso:hover {
+            color: var(--c-yellow);
+            border-color: var(--c-yellow);
+        }
+
+        .main-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2.1rem;
+            margin: 2.5rem auto 0 auto;
+            padding-bottom: calc(2.8rem + 1.5rem);
+            max-width: 700px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn,
+        .btn-export,
+        .btn-import {
+            background: transparent;
+            color: var(--c-cyan);
+            font-family: var(--tit);
+            border: 1.5px solid var(--c-cyan);
+            border-radius: 1.1rem;
+            padding: 0.7rem 1.6rem;
+            font-size: 1.06rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: border .14s, color .14s, background .14s;
+            margin-top: 0.2rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .btn:hover,
+        .btn-export:hover,
+        .btn-import:hover {
+            color: var(--c-green);
+            border: 1.5px solid var(--c-green);
+            background: #1d342a;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            color: #5beebb;
+            font-size: 1.1rem;
+            font-family: var(--tit);
+            letter-spacing: 0.2em;
+            background: #133829ea;
+            padding: 0.85rem 0;
+            position: relative;
+            bottom: 0;
+            z-index: 100;
+            opacity: 0.85;
+            user-select: none;
+            box-shadow: 0 -2px 8px #16271d77;
+            box-sizing: border-box;
+            margin-left: -70px;
+        }
+
+        @media (max-width: 800px) {
+            footer {
+                margin-left: -54px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            footer {
+                margin-left: -50px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-controls {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding-bottom: calc(2.29rem + 1rem);
+            }
+
+            .portal-acesso {
+                font-size: 1rem;
+                padding: 1.3rem 0.6rem;
+            }
+
+            footer {
+                font-size: 0.99rem;
+                padding: 0.65rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 1.1rem 0.2rem 0.8rem 0.2rem;
+            }
+
+            .dashboard-grid {
+                padding: 0.6rem 0.1rem;
+            }
+
+            .main-controls {
+                padding-bottom: calc(2.29rem + 2rem);
+            }
+        }
+
+        .modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 1010;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 32, 32, 0.72);
+            justify-content: center;
+            align-items: flex-start;
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .modal-bg.active {
+            display: flex;
+        }
+
+        .modal-diario,
+        .modal-financeiro,
+        .modal-alunos {
+            background: #122921;
+            color: var(--txt);
+            border-radius: 1.1rem;
+            box-shadow: 0 8px 34px #1beeea66;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 800px;
+            max-height: calc(100vh - 2rem);
+            font-family: var(--bod);
+            font-size: 1.13rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .modal-diario h3,
+        .modal-financeiro h3,
+        .modal-alunos h3 {
+            margin: 0 0 0.5rem 0;
+            text-align: center;
+            font-family: var(--tit);
+            color: var(--c-cyan);
+            flex-shrink: 0;
+        }
+
+        .modal-diario .fechar-modal,
+        .modal-financeiro .fechar-modal,
+        .modal-alunos .fechar-modal {
+            position: absolute;
+            right: 18px;
+            top: 12px;
+            background: none;
+            border: none;
+            color: var(--c-yellow);
+            font-size: 1.3rem;
+            cursor: pointer;
+            font-family: var(--tit);
+            z-index: 10;
+        }
+
+        .table-container-modal {
+            flex-grow: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior-y: contain;
+            border-radius: 0.8rem;
+            background: #133829;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            padding-top: 0.2rem;
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+            padding-bottom: 2rem;
+            box-sizing: border-box;
+        }
+
+        .table-container-modal table {
+            width: 100%;
+            font-size: 1.0rem;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table-container-modal th,
+        .table-container-modal td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #263b2b;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-container-modal td:first-child,
+        .table-container-modal th:first-child {
+            text-align: left;
+            padding-left: 1rem;
+        }
+
+        .table-container-modal th {
+            color: var(--c-green);
+            font-family: var(--tit);
+            border-bottom: 2px solid var(--c-cyan);
+            position: sticky;
+            top: -1px;
+            background: #133829;
+            z-index: 1;
+        }
+
+        .table-container-modal tr:last-child td {
+            border-bottom: none;
+        }
+
+        .modal-diario-table {
+            width: 100%;
+            overflow-y: auto;
+            overscroll-behavior-y: contain;
+            border-radius: 1rem;
+            background: #163221;
+            box-shadow: 0 1px 8px #19fff744;
+            flex-grow: 1;
+            min-height: 0;
+            box-sizing: border-box;
+            padding-bottom: 2rem;
+        }
+
+        .modal-diario-table table {
+            width: 100%;
+            font-size: 1.01rem;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .modal-diario-table th,
+        .modal-diario-table td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #263b2b;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .modal-diario-table th {
+            color: var(--c-green);
+            font-family: var(--tit);
+            border-bottom: 2px solid var(--c-cyan);
+            position: sticky;
+            top: -1px;
+            background: #163221;
+            z-index: 1;
+        }
+
+        .modal-diario-table td.table-actions {
+            text-align: center;
+        }
+
+        .modal-diario-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .modal-diario-table td {
+            color: #def2e1;
+            word-break: break-word;
+        }
+
+        .modal-diario-filtro {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            justify-content: flex-start;
+            margin-bottom: 0.5rem;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        .modal-diario-filtro label {
+            font-size: 1.02rem;
+            color: #9cf7ee;
+            font-family: var(--bod);
+            margin-bottom: 0.1rem;
+            margin-right: 0.4rem;
+        }
+
+        .modal-diario-filtro input[type="text"],
+        .modal-diario-filtro input[type="date"] {
+            background: #193c2c;
+            border: 1.2px solid var(--c-green);
+            color: #d3fff3;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.7rem;
+            font-size: 0.98rem;
+            font-family: var(--bod);
+            outline: none;
+            margin-right: 1rem;
+        }
+
+        .modal-diario-filtro input[type="text"]:focus,
+        .modal-diario-filtro input[type="date"]:focus {
+            border-color: var(--c-cyan);
+        }
+    </style>
 </head>
+
 <body>
-  <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
-    <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
-    <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
-    <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
-    <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs"><i class="far fa-file-alt"></i></a>
-    <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas"><i class="fas fa-table"></i></a>
-    <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda" tabindex="6" aria-label="Google Agenda"><i class="far fa-calendar-alt"></i></a>
-    <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
-    <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-laptop"></i></a>
-    <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio" tabindex="9" aria-label="Convertio"><i class="fas fa-globe"></i></a>
-    <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links" tabindex="10" aria-label="Dev Links"><i class="fas fa-code"></i></a>
-    <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA" tabindex="11" aria-label="Agentes de IA"><i class="fas fa-robot"></i></a>
-    <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
-    <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
-  </nav>
+    <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
+        <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
+        <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
+        <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
+        <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs"><i class="far fa-file-alt"></i></a>
+        <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas"><i class="fas fa-table"></i></a>
+        <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda" tabindex="6" aria-label="Google Agenda"><i class="far fa-calendar-alt"></i></a>
+        <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações"><i class="fas fa-chalkboard"></i></a>
+        <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-laptop"></i></a>
+        <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio" tabindex="9" aria-label="Convertio"><i class="fas fa-globe"></i></a>
+        <a href="https://ravellsl.github.io/ferramenta-dev-links/" target="_blank" class="ataho-link" title="Dev Links" tabindex="10" aria-label="Dev Links"><i class="fas fa-code"></i></a>
+        <a href="https://ravellsl.github.io/agentes-de-IA/" target="_blank" class="ataho-link" title="Agentes de IA" tabindex="11" aria-label="Agentes de IA"><i class="fas fa-robot"></i></a>
+        <a href="https://www.videosmaller.com/pt/" target="_blank" class="ataho-link" title="Compressor de Vídeo" tabindex="12" aria-label="Compressor de Vídeo"><i class="fas fa-exchange-alt"></i></a>
+        <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
+    </nav>
 
-  <header>
-    RS TECH
-  </header>
+    <header>
+        RS TECH
+    </header>
 
-  <main class="dashboard-grid">
-    <div class="card diario-classe">
-      <div style="display: flex; flex-direction: column; flex-grow: 1;">
-        <h2>Diário de Classe</h2>
-        <form id="formDiarioClasse" onsubmit="event.preventDefault();">
-          <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
-          <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
-          <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
-          <div class="diario-btns">
-            <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
-            <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>
-            <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>
-            <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>
-          </div>
-        </form>
-      </div>
-      <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalDiario()">Visualizar Diário</button>
-    </div>
-
-    <div class="card cadastro-alunos">
-      <div style="display: flex; flex-direction: column; flex-grow: 1;">
-        <h2>Cadastro de Alunos (AnyDesk)</h2>
-        <form onsubmit="event.preventDefault(); adicionarAluno();">
-          <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-          <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-          <div class="aluno-form-actions-wrapper">
-            <div class="alunos-btns">
-              <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
-              <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
+    <main class="dashboard-grid">
+        <div class="card diario-classe">
+            <div style="display: flex; flex-direction: column; flex-grow: 1;">
+                <h2>Diário de Classe</h2>
+                <form id="formDiarioClasse" onsubmit="event.preventDefault();">
+                    <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
+                    <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
+                    <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
+                    <div class="diario-btns">
+                        <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
+                        <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>
+                        <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>
+                        <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>
+                    </div>
+                </form>
             </div>
-            <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
-            <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
-          </div>
-        </form>
-      </div>
-      <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalDiario()">Visualizar Diário</button>
+        </div>
+
+        <div class="card cadastro-alunos">
+            <div style="display: flex; flex-direction: column; flex-grow: 1;">
+                <h2>Cadastro de Alunos (AnyDesk)</h2>
+                <form onsubmit="event.preventDefault(); adicionarAluno();">
+                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+                    <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+                    <div class="aluno-form-actions-wrapper">
+                        <div class="alunos-btns">
+                            <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
+                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
+                        </div>
+                        <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
+                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+        </div>
+
+        <div class="card controle-financeiro">
+            <div style="display: flex; flex-direction: column; flex-grow: 1;">
+                <h2>Controle Financeiro</h2>
+                <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
+                    <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+                    <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+                    <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
+                        <option value="Pago">Pago</option>
+                        <option value="Pendente">Pendente</option>
+                    </select>
+                    <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
+                        <option value="Mensalidade">Mensalidade</option>
+                        <option value="Serviço Extra">Serviço Extra</option>
+                    </select>
+                    <div class="financeiro-form-actions-wrapper">
+                        <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
+                        <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
+                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
+                        <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
+                    </div>
+                </form>
+            </div>
+            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Dados</button>
+        </div>
+
+        <div class="card anotacoes-rapidas">
+            <div style="display: flex; flex-direction: column; flex-grow: 1;">
+                <h2>Anotações Rápidas</h2>
+                <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
+                    <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
+                    <div class="anotacoes-form-actions-wrapper">
+                        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
+                        <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
+                        <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
+                        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
+                    </div>
+                </form>
+                <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto; display: block;">
+                    <thead>
+                        <tr>
+                            <th>Anotação</th>
+                            <th style="width:100px; text-align:center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
+        <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
+    </a>
+
+    <div class="main-controls">
+        <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
+        <label class="btn-import" style="display:inline-block;cursor:pointer;">
+            <i class="fas fa-upload"></i> Importar Dados
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
+        </label>
     </div>
 
-    <div class="card controle-financeiro">
-      <div style="display: flex; flex-direction: column; flex-grow: 1;">
-        <h2>Controle Financeiro</h2>
-        <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
-          <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
-          <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
-          <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
-            <option value="Pago">Pago</option>
-            <option value="Pendente">Pendente</option>
-          </select>
-          <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
-            <option value="Mensalidade">Mensalidade</option>
-            <option value="Serviço Extra">Serviço Extra</option>
-          </select>
-          <div class="financeiro-form-actions-wrapper">
-            <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
-            <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
-            <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
-            <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
-          </div>
-        </form>
-      </div>
-      <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Controle Financeiro</button>
+    <div class="modal-bg" id="modalDiario">
+        <div class="modal-diario">
+            <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
+            <h3>Diário de Classe - Registros</h3>
+            <div class="modal-diario-filtro">
+                <label for="filtroNome">Aluno:</label>
+                <input type="text" id="filtroNome" placeholder="Filtrar por nome">
+                <label for="filtroData">Data:</label>
+                <input type="date" id="filtroData">
+            </div>
+            <div class="modal-diario-table" id="conteudoModalDiario"></div>
+        </div>
     </div>
 
-    <div class="card anotacoes-rapidas">
-       <div style="display: flex; flex-direction: column; flex-grow: 1;">
-        <h2>Anotações Rápidas</h2>
-        <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
-          <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
-          <div class="anotacoes-form-actions-wrapper">
-            <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
-            <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
-            <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
-            <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
-          </div>
-        </form>
-        <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto; display: block;"> <thead>
-            <tr><th>Anotação</th><th style="width:100px; text-align:center;">Ações</th></tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-      </div>
+    <div class="modal-bg" id="modalFinanceiro">
+        <div class="modal-financeiro">
+            <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
+            <h3>Controle Financeiro - Lançamentos</h3>
+            <div id="conteudoModalFinanceiro" class="table-container-modal">
+            </div>
+        </div>
     </div>
-  </main>
 
-  <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
-    <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
-  </a>
-
-  <div class="main-controls">
-    <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
-    <label class="btn-import" style="display:inline-block;cursor:pointer;">
-      <i class="fas fa-upload"></i> Importar Dados
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
-    </label>
-  </div>
-
-  <div class="modal-bg" id="modalDiario">
-    <div class="modal-diario">
-      <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
-      <h3>Diário de Classe - Registros</h3>
-      <div class="modal-diario-filtro">
-        <label for="filtroNome">Aluno:</label>
-        <input type="text" id="filtroNome" placeholder="Filtrar por nome">
-        <label for="filtroData">Data:</label>
-        <input type="date" id="filtroData">
-      </div>
-      <div class="modal-diario-table" id="conteudoModalDiario"></div>
+    <div class="modal-bg" id="modalAlunos">
+        <div class="modal-alunos">
+            <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
+            <h3>Alunos Cadastrados</h3>
+            <div id="conteudoModalAlunos" class="table-container-modal">
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="modal-bg" id="modalFinanceiro">
-    <div class="modal-financeiro">
-      <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
-      <h3>Controle Financeiro - Lançamentos</h3>
-      <div id="conteudoModalFinanceiro" class="table-container-modal">
-      </div>
-    </div>
-  </div>
+    <footer>
+        2025
+    </footer>
 
-  <div class="modal-bg" id="modalAlunos">
-    <div class="modal-alunos">
-      <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
-      <h3>Alunos Cadastrados</h3>
-      <div id="conteudoModalAlunos" class="table-container-modal">
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    2025
-  </footer>
-
-  <script>
-    // Utilitários de armazenamento
-    function salvarLocal(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
-    function recuperarLocal(key, fallback) {
-        const item = localStorage.getItem(key);
-        try {
-            return item ? JSON.parse(item) : fallback;
-        } catch (e) {
-            console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
-            return fallback;
+    <script>
+        // Utilitários de armazenamento
+        function salvarLocal(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
         }
-    }
 
-    let diarioEditIdx = null;
-    let finEditIdx = null;
-    let alunoEditIdx = null;
-    let anotacaoEditIdx = null;
-
-    // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
-    function mostrarBotoesDiario() {
-        const aluno = document.getElementById('diarioAluno').value.trim();
-        const data = document.getElementById('diarioData').value;
-        const conteudo = document.getElementById('diarioConteudo').value.trim();
-
-        const camposPreenchidos = aluno && data && conteudo;
-        const algumCampoPreenchido = aluno || data || conteudo;
-
-        document.getElementById('btnDiarioAdd').style.display = camposPreenchidos && diarioEditIdx === null ? '' : 'none';
-        document.getElementById('btnDiarioEdit').style.display = camposPreenchidos && diarioEditIdx !== null ? '' : 'none';
-        document.getElementById('btnDiarioCancel').style.display = diarioEditIdx !== null ? '' : 'none';
-        document.getElementById('btnDiarioLimpar').style.display = algumCampoPreenchido && diarioEditIdx === null ? '' : 'none';
-    }
-
-    function limparCamposDiario() {
-        document.getElementById('formDiarioClasse').reset();
-        diarioEditIdx = null;
-        mostrarBotoesDiario();
-    }
-
-    function editarDiarioClasse(idx) {
-        let lista = recuperarLocal('diarioClasseLista', []);
-        if (idx < 0 || idx >= lista.length) {
-            console.error("Índice inválido para editar registro do diário:", idx);
-            return;
+        function recuperarLocal(key, fallback) {
+            const item = localStorage.getItem(key);
+            try {
+                return item ? JSON.parse(item) : fallback;
+            } catch (e) {
+                console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
+                return fallback;
+            }
         }
-        const registro = lista[idx];
-        document.getElementById('diarioAluno').value = registro.aluno;
-        document.getElementById('diarioData').value = registro.data;
-        document.getElementById('diarioConteudo').value = registro.conteudo;
-        diarioEditIdx = idx;
-        mostrarBotoesDiario();
-        fecharModalDiario();
-        document.getElementById('diarioAluno').focus();
-    }
 
-    function removerDiarioClasse(idx) {
-        if (!confirm('Tem certeza que deseja excluir este registro do diário?')) return;
-        let lista = recuperarLocal('diarioClasseLista', []);
-        if (idx < 0 || idx >= lista.length) {
-            console.error("Índice inválido para remover registro do diário:", idx);
-            return;
+        let diarioEditIdx = null;
+        let finEditIdx = null;
+        let alunoEditIdx = null;
+        let anotacaoEditIdx = null;
+
+        // Função Utilitária para formatar moeda
+        function formatarMoeda(valor) {
+            const numero = parseFloat(valor) || 0;
+            return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
-        lista.splice(idx, 1);
-        salvarLocal('diarioClasseLista', lista);
 
-        if (diarioEditIdx === idx) {
+        // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
+        function mostrarBotoesDiario() {
+            const aluno = document.getElementById('diarioAluno').value.trim();
+            const data = document.getElementById('diarioData').value;
+            const conteudo = document.getElementById('diarioConteudo').value.trim();
+            const camposPreenchidos = aluno && data && conteudo;
+            const algumCampoPreenchido = aluno || data || conteudo;
+
+            document.getElementById('btnDiarioAdd').style.display = camposPreenchidos && diarioEditIdx === null ? '' : 'none';
+            document.getElementById('btnDiarioEdit').style.display = camposPreenchidos && diarioEditIdx !== null ? '' : 'none';
+            document.getElementById('btnDiarioCancel').style.display = diarioEditIdx !== null ? '' : 'none';
+            document.getElementById('btnDiarioLimpar').style.display = algumCampoPreenchido && diarioEditIdx === null ? '' : 'none';
+        }
+
+        function limparCamposDiario() {
+            document.getElementById('formDiarioClasse').reset();
+            diarioEditIdx = null;
+            mostrarBotoesDiario();
+        }
+
+        function editarDiarioClasse(idx) {
+            let lista = recuperarLocal('diarioClasseLista', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para editar registro do diário:", idx);
+                return;
+            }
+            const registro = lista[idx];
+            document.getElementById('diarioAluno').value = registro.aluno;
+            document.getElementById('diarioData').value = registro.data;
+            document.getElementById('diarioConteudo').value = registro.conteudo;
+            diarioEditIdx = idx;
+            mostrarBotoesDiario();
+            fecharModalDiario();
+            document.getElementById('diarioAluno').focus();
+        }
+
+        function removerDiarioClasse(idx) {
+            if (!confirm('Tem certeza que deseja excluir este registro do diário?')) return;
+            let lista = recuperarLocal('diarioClasseLista', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para remover registro do diário:", idx);
+                return;
+            }
+            lista.splice(idx, 1);
+            salvarLocal('diarioClasseLista', lista);
+
+            if (diarioEditIdx === idx) {
+                limparCamposDiario();
+            } else if (diarioEditIdx !== null && idx < diarioEditIdx) {
+                diarioEditIdx--;
+            }
+            if (document.getElementById('modalDiario').classList.contains('active')) {
+                filtrarModalDiario();
+            }
+        }
+
+        function confirmarEdicaoDiarioClasse() {
+            salvarDiarioClasse();
+        }
+
+        function cancelarEdicaoDiarioClasse() {
             limparCamposDiario();
-        } else if (diarioEditIdx !== null && idx < diarioEditIdx) {
-            diarioEditIdx--;
         }
-        if (document.getElementById('modalDiario').classList.contains('active')) {
-             filtrarModalDiario();
+
+        // ---------------- DIÁRIO DE CLASSE (Salvar, Abrir/Fechar Modal, Filtrar) ----------------
+        function salvarDiarioClasse() {
+            const aluno = document.getElementById('diarioAluno').value.trim();
+            const data = document.getElementById('diarioData').value;
+            const conteudo = document.getElementById('diarioConteudo').value.trim();
+
+            if (!aluno || !data || !conteudo) {
+                alert('Preencha todos os campos do diário.');
+                return;
+            }
+
+            let lista = recuperarLocal('diarioClasseLista', []);
+
+            if (diarioEditIdx !== null) {
+                if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
+                    lista[diarioEditIdx] = { aluno, data, conteudo };
+                    alert('Registro do diário atualizado com sucesso.');
+                } else {
+                    console.error("Índice de edição inválido para diário:", diarioEditIdx);
+                    limparCamposDiario();
+                    return;
+                }
+            } else {
+                lista.push({ aluno, data, conteudo });
+                alert('Registro salvo no Diário de Classe.');
+            }
+
+            salvarLocal('diarioClasseLista', lista);
+            limparCamposDiario();
+
+            if (document.getElementById('modalDiario').classList.contains('active')) {
+                filtrarModalDiario();
+            }
         }
-    }
 
-    function confirmarEdicaoDiarioClasse() {
-        salvarDiarioClasse();
-    }
-
-    function cancelarEdicaoDiarioClasse() {
-        limparCamposDiario();
-    }
-
-    // ---------------- DIÁRIO DE CLASSE (Salvar, Abrir/Fechar Modal, Filtrar) ----------------
-    function salvarDiarioClasse() {
-      const aluno = document.getElementById('diarioAluno').value.trim();
-      const data = document.getElementById('diarioData').value;
-      const conteudo = document.getElementById('diarioConteudo').value.trim();
-
-      if (!aluno || !data || !conteudo) {
-        alert('Preencha todos os campos do diário.');
-        return;
-      }
-
-      let lista = recuperarLocal('diarioClasseLista', []);
-
-      if (diarioEditIdx !== null) {
-        if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
-          lista[diarioEditIdx] = { aluno, data, conteudo };
-          alert('Registro do diário atualizado com sucesso.');
-        } else {
-          console.error("Índice de edição inválido para diário:", diarioEditIdx);
-          limparCamposDiario();
-          return;
+        function abrirModalDiario() {
+            document.getElementById('modalDiario').classList.add('active');
+            document.getElementById('filtroNome').value = '';
+            document.getElementById('filtroData').value = '';
+            filtrarModalDiario();
         }
-      } else {
-        lista.push({ aluno, data, conteudo });
-        alert('Registro salvo no Diário de Classe.');
-      }
 
-      salvarLocal('diarioClasseLista', lista);
-      limparCamposDiario();
+        function fecharModalDiario() {
+            document.getElementById('modalDiario').classList.remove('active');
+        }
 
-      if (document.getElementById('modalDiario').classList.contains('active')) {
-        filtrarModalDiario();
-      }
-    }
-
-    function abrirModalDiario() {
-      document.getElementById('modalDiario').classList.add('active');
-      document.getElementById('filtroNome').value = '';
-      document.getElementById('filtroData').value = '';
-      filtrarModalDiario();
-    }
-
-    function fecharModalDiario() {
-      document.getElementById('modalDiario').classList.remove('active');
-    }
-
-    document.addEventListener('input', function(e){
-      if( (e.target.id ==='filtroNome' || e.target.id ==='filtroData') && document.getElementById('modalDiario').classList.contains('active') ) {
-        filtrarModalDiario();
-      }
-    });
-
-    function filtrarModalDiario() {
-      let listaOriginal = recuperarLocal('diarioClasseLista', []);
-      const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
-
-      const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
-      const filtroData = document.getElementById('filtroData').value;
-
-      let filtrados = listaComIndices.filter(reg =>
-        (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) &&
-        (!filtroData || reg.data === filtroData)
-      );
-
-      let html = `<table><thead>
-          <tr>
-            <th>Data</th>
-            <th>Aluno</th>
-            <th>Conteúdo Ministrado</th>
-            <th>Ações</th>
-          </tr>
-        </thead><tbody>`;
-
-      if(filtrados.length){
-        filtrados.slice().reverse().forEach(reg => {
-          const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          html += `<tr>
-            <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
-            <td>${alunoHtml}</td>
-            <td>${conteudoHtml}</td>
-            <td class="table-actions">
-              <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-              <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
+        document.addEventListener('input', function(e) {
+            if ((e.target.id === 'filtroNome' || e.target.id === 'filtroData') && document.getElementById('modalDiario').classList.contains('active')) {
+                filtrarModalDiario();
+            }
         });
-      } else {
-        html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
-      }
-      html += `</tbody></table>`;
-      document.getElementById('conteudoModalDiario').innerHTML = html;
-    }
 
-    // ---------------- CONTROLE FINANCEIRO ----------------
-    function mostrarBotoesFinanceiro() {
-      const nome = document.getElementById('nomeFinanceiro').value.trim();
-      const valor = document.getElementById('valorFinanceiro').value.trim();
-      const showAdd = nome && valor && finEditIdx === null;
-      const showEdit = nome && valor && finEditIdx !== null;
-      const showAnyButton = nome || valor;
+        function filtrarModalDiario() {
+            let listaOriginal = recuperarLocal('diarioClasseLista', []);
+            const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
 
-      document.getElementById('btnFinAdd').style.display = showAdd ? '' : 'none';
-      document.getElementById('btnFinEdit').style.display = showEdit ? '' : 'none';
-      document.getElementById('btnFinCancel').style.display = finEditIdx !== null ? '' : 'none';
-      document.getElementById('btnFinLimpar').style.display = showAnyButton && finEditIdx === null ? '' : 'none';
-    }
+            const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
+            const filtroData = document.getElementById('filtroData').value;
 
-    function adicionarFinanceiro() {
-      const nome = document.getElementById('nomeFinanceiro').value.trim();
-      const valor = document.getElementById('valorFinanceiro').value.trim();
-      const status = document.getElementById('statusFinanceiro').value;
-      const tipo = document.getElementById('tipoFinanceiro').value;
-      if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
-      let lista = recuperarLocal('controleFinanceiro', []);
-      if (finEditIdx === null) {
-        lista.push({nome, valor, status, tipo});
-      } else {
-        if (finEditIdx >= 0 && finEditIdx < lista.length) {
-            lista[finEditIdx] = {nome, valor, status, tipo};
-        } else {
-            console.error("Índice de edição inválido para financeiro:", finEditIdx);
+            let filtrados = listaComIndices.filter(reg =>
+                (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) &&
+                (!filtroData || reg.data === filtroData)
+            );
+
+            let html = `<table><thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Aluno</th>
+                    <th>Conteúdo Ministrado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead><tbody>`;
+
+            if (filtrados.length) {
+                filtrados.slice().reverse().forEach(reg => {
+                    const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    html += `<tr>
+                        <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
+                        <td>${alunoHtml}</td>
+                        <td>${conteudoHtml}</td>
+                        <td class="table-actions">
+                            <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('conteudoModalDiario').innerHTML = html;
+        }
+
+        // ---------------- CONTROLE FINANCEIRO ----------------
+        function mostrarBotoesFinanceiro() {
+            const nome = document.getElementById('nomeFinanceiro').value.trim();
+            const valor = document.getElementById('valorFinanceiro').value.trim();
+            const showAdd = nome && valor && finEditIdx === null;
+            const showEdit = nome && valor && finEditIdx !== null;
+            const showAnyButton = nome || valor;
+
+            document.getElementById('btnFinAdd').style.display = showAdd ? '' : 'none';
+            document.getElementById('btnFinEdit').style.display = showEdit ? '' : 'none';
+            document.getElementById('btnFinCancel').style.display = finEditIdx !== null ? '' : 'none';
+            document.getElementById('btnFinLimpar').style.display = showAnyButton && finEditIdx === null ? '' : 'none';
+        }
+
+        function adicionarFinanceiro() {
+            const nome = document.getElementById('nomeFinanceiro').value.trim();
+            const valor = document.getElementById('valorFinanceiro').value.trim();
+            const status = document.getElementById('statusFinanceiro').value;
+            const tipo = document.getElementById('tipoFinanceiro').value;
+            if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
+            let lista = recuperarLocal('controleFinanceiro', []);
+            if (finEditIdx === null) {
+                lista.push({ nome, valor, status, tipo });
+            } else {
+                if (finEditIdx >= 0 && finEditIdx < lista.length) {
+                    lista[finEditIdx] = { nome, valor, status, tipo };
+                } else {
+                    console.error("Índice de edição inválido para financeiro:", finEditIdx);
+                    limparFinanceiroCampos();
+                    return;
+                }
+            }
+            salvarLocal('controleFinanceiro', lista);
             limparFinanceiroCampos();
-            return;
+            if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                abrirModalFinanceiro(); // Atualiza o modal com os somatórios e a lista
+            }
         }
-      }
-      salvarLocal('controleFinanceiro', lista);
-      limparFinanceiroCampos();
-      if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-        abrirModalFinanceiro();
-      }
-    }
 
-    function editarFinanceiro(idx) {
-        let lista = recuperarLocal('controleFinanceiro', []);
-        if (idx < 0 || idx >= lista.length) {
-            console.error("Índice inválido para editar financeiro:", idx);
-            return;
+        function editarFinanceiro(idx) {
+            let lista = recuperarLocal('controleFinanceiro', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para editar financeiro:", idx);
+                return;
+            }
+            document.getElementById('nomeFinanceiro').value = lista[idx].nome;
+            document.getElementById('valorFinanceiro').value = lista[idx].valor;
+            document.getElementById('statusFinanceiro').value = lista[idx].status;
+            document.getElementById('tipoFinanceiro').value = lista[idx].tipo;
+            finEditIdx = idx;
+            mostrarBotoesFinanceiro();
+            fecharModalFinanceiro();
+            document.getElementById('nomeFinanceiro').focus();
         }
-        document.getElementById('nomeFinanceiro').value = lista[idx].nome;
-        document.getElementById('valorFinanceiro').value = lista[idx].valor;
-        document.getElementById('statusFinanceiro').value = lista[idx].status;
-        document.getElementById('tipoFinanceiro').value = lista[idx].tipo;
-        finEditIdx = idx;
-        mostrarBotoesFinanceiro();
-        fecharModalFinanceiro();
-        document.getElementById('nomeFinanceiro').focus();
-    }
 
-    function removerFinanceiro(idx) {
-      if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
-      let lista = recuperarLocal('controleFinanceiro', []);
-      if (idx < 0 || idx >= lista.length) {
-            console.error("Índice inválido para remover financeiro:", idx);
-            return;
+        function removerFinanceiro(idx) {
+            if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
+            let lista = recuperarLocal('controleFinanceiro', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para remover financeiro:", idx);
+                return;
+            }
+            lista.splice(idx, 1);
+            salvarLocal('controleFinanceiro', lista);
+            if (finEditIdx === idx) {
+                limparFinanceiroCampos();
+            } else if (finEditIdx !== null && idx < finEditIdx) {
+                finEditIdx--;
+            }
+            if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                abrirModalFinanceiro(); // Atualiza o modal com os somatórios e a lista
+            }
         }
-      lista.splice(idx,1);
-      salvarLocal('controleFinanceiro', lista);
-       if (finEditIdx === idx) {
+
+        function confirmarEdicaoFinanceiro() {
+            adicionarFinanceiro();
+        }
+
+        function limparFinanceiroCampos() {
+            document.getElementById('nomeFinanceiro').value = '';
+            document.getElementById('valorFinanceiro').value = '';
+            document.getElementById('statusFinanceiro').value = 'Pago';
+            document.getElementById('tipoFinanceiro').value = 'Mensalidade';
+            finEditIdx = null;
+            mostrarBotoesFinanceiro();
+        }
+
+        function cancelarEdicaoFinanceiro() {
             limparFinanceiroCampos();
-        } else if (finEditIdx !== null && idx < finEditIdx) {
-            finEditIdx--;
         }
-      if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-        abrirModalFinanceiro();
-      }
-    }
 
-    function confirmarEdicaoFinanceiro() {
-        adicionarFinanceiro();
-    }
+        function abrirModalFinanceiro() {
+            let listaOriginal = recuperarLocal('controleFinanceiro', []);
+            const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
 
-    function limparFinanceiroCampos() {
-      document.getElementById('nomeFinanceiro').value = '';
-      document.getElementById('valorFinanceiro').value = '';
-      document.getElementById('statusFinanceiro').value = 'Pago';
-      document.getElementById('tipoFinanceiro').value = 'Mensalidade';
-      finEditIdx = null;
-      mostrarBotoesFinanceiro();
-    }
+            let totalPago = 0;
+            let totalAReceber = 0;
 
-    function cancelarEdicaoFinanceiro() {
-      limparFinanceiroCampos();
-    }
+            listaOriginal.forEach(item => {
+                const valorItem = parseFloat(item.valor) || 0;
+                if (item.status === 'Pago') {
+                    totalPago += valorItem;
+                } else { // Assumindo que qualquer status diferente de "Pago" é "a receber"
+                    totalAReceber += valorItem;
+                }
+            });
 
-    function abrirModalFinanceiro() {
-      let listaOriginal = recuperarLocal('controleFinanceiro', []);
-      const listaComIndices = listaOriginal.map((item, index) => ({...item, originalIndex: index}));
+            let somatorioHtml = `
+                <div style="padding: 10px 5px; margin-bottom: 15px; background: #102b1f; border-radius: 8px; text-align: center; border: 1px solid var(--c-green);">
+                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago:</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
+                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber:</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p>
+                </div>
+            `;
 
-      let html = `<table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Valor</th>
-            <th>Status</th>
-            <th>Tipo</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>`;
-      if(listaComIndices.length){
-        listaComIndices.slice().reverse().forEach(item => {
-          const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          const valorHtml = parseFloat(item.valor || 0).toFixed(2);
-          const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          html += `<tr>
-            <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
-            <td style="text-align:center;">R$ ${valorHtml}</td>
-            <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
-            <td style="text-align:center;">${tipoHtml}</td>
-            <td class="table-actions">
-              <button onclick="editarFinanceiro(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-              <button onclick="removerFinanceiro(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-        });
-      } else {
-        html += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento registrado.</td></tr>`;
-      }
-      html += `</tbody></table>`;
-      document.getElementById('conteudoModalFinanceiro').innerHTML = html;
-      document.getElementById('modalFinanceiro').classList.add('active');
-    }
-
-    function fecharModalFinanceiro() {
-      document.getElementById('modalFinanceiro').classList.remove('active');
-    }
-
-    // -- Cadastro de Alunos (com edição e modal)
-    function mostrarBotoesAluno() {
-        const nome = document.getElementById('nomeAluno').value.trim();
-        const anydesk = document.getElementById('anydeskAluno').value.trim();
-        const showAdd = nome && anydesk && alunoEditIdx === null;
-        const showEdit = nome && anydesk && alunoEditIdx !== null;
-        const showAnyButton = nome || anydesk;
-
-        document.getElementById('btnAlunoAdd').style.display = showAdd ? '' : 'none';
-        document.getElementById('btnAlunoEdit').style.display = showEdit ? '' : 'none';
-        document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none';
-        document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none';
-    }
-
-    function adicionarAluno() {
-      const nome = document.getElementById('nomeAluno').value.trim();
-      const anydesk = document.getElementById('anydeskAluno').value.trim();
-      if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
-      let lista = recuperarLocal('alunosAnyDesk', []);
-      if (alunoEditIdx === null) {
-        lista.push({nome, anydesk});
-      } else {
-        if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
-          lista[alunoEditIdx] = {nome, anydesk};
-        } else {
-          console.error("Índice de edição inválido:", alunoEditIdx);
-          limparAlunoCampos();
-          return;
+            let tabelaHtml = `<table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Tipo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+            if (listaComIndices.length) {
+                listaComIndices.slice().reverse().forEach(item => {
+                    const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const valorFormatado = formatarMoeda(item.valor);
+                    const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    tabelaHtml += `<tr>
+                        <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
+                        <td style="text-align:center;">${valorFormatado}</td>
+                        <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
+                        <td style="text-align:center;">${tipoHtml}</td>
+                        <td class="table-actions">
+                            <button onclick="editarFinanceiro(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerFinanceiro(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                });
+            } else {
+                tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento registrado.</td></tr>`;
+            }
+            tabelaHtml += `</tbody></table>`;
+            document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml;
+            document.getElementById('modalFinanceiro').classList.add('active');
         }
-      }
-      salvarLocal('alunosAnyDesk', lista);
-      limparAlunoCampos();
-      if (document.getElementById('modalAlunos').classList.contains('active')) {
-        abrirModalAlunos();
-      }
-    }
 
-    function editarAluno(idx) {
-      let lista = recuperarLocal('alunosAnyDesk', []);
-      if (idx < 0 || idx >= lista.length) {
-        console.error("Índice inválido para edição:", idx);
-        return;
-      }
-      document.getElementById('nomeAluno').value = lista[idx].nome;
-      document.getElementById('anydeskAluno').value = lista[idx].anydesk;
-      alunoEditIdx = idx;
-      mostrarBotoesAluno();
-      fecharModalAlunos();
-      document.getElementById('nomeAluno').focus();
-    }
+        function fecharModalFinanceiro() {
+            document.getElementById('modalFinanceiro').classList.remove('active');
+        }
 
-    function confirmarEdicaoAluno() { adicionarAluno(); }
+        // -- Cadastro de Alunos (com edição e modal)
+        function mostrarBotoesAluno() {
+            const nome = document.getElementById('nomeAluno').value.trim();
+            const anydesk = document.getElementById('anydeskAluno').value.trim();
+            const showAdd = nome && anydesk && alunoEditIdx === null;
+            const showEdit = nome && anydesk && alunoEditIdx !== null;
+            const showAnyButton = nome || anydesk;
 
-    function cancelarEdicaoAluno() {
-      limparAlunoCampos();
-    }
+            document.getElementById('btnAlunoAdd').style.display = showAdd ? '' : 'none';
+            document.getElementById('btnAlunoEdit').style.display = showEdit ? '' : 'none';
+            document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none';
+            document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none';
+        }
 
-    function removerAluno(idx) {
-      if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
-      let lista = recuperarLocal('alunosAnyDesk', []);
-      if (idx < 0 || idx >= lista.length) {
-        console.error("Índice inválido para remoção:", idx);
-        return;
-      }
-      lista.splice(idx,1);
-      salvarLocal('alunosAnyDesk', lista);
-      if (alunoEditIdx === idx) {
+        function adicionarAluno() {
+            const nome = document.getElementById('nomeAluno').value.trim();
+            const anydesk = document.getElementById('anydeskAluno').value.trim();
+            if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
+            let lista = recuperarLocal('alunosAnyDesk', []);
+            if (alunoEditIdx === null) {
+                lista.push({ nome, anydesk });
+            } else {
+                if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
+                    lista[alunoEditIdx] = { nome, anydesk };
+                } else {
+                    console.error("Índice de edição inválido:", alunoEditIdx);
+                    limparAlunoCampos();
+                    return;
+                }
+            }
+            salvarLocal('alunosAnyDesk', lista);
             limparAlunoCampos();
-        } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
-            alunoEditIdx--;
+            if (document.getElementById('modalAlunos').classList.contains('active')) {
+                abrirModalAlunos();
+            }
         }
-      if (document.getElementById('modalAlunos').classList.contains('active')) {
-        abrirModalAlunos();
-      }
-    }
 
-    function limparAlunoCampos() {
-      document.getElementById('nomeAluno').value = '';
-      document.getElementById('anydeskAluno').value = '';
-      alunoEditIdx = null;
-      mostrarBotoesAluno();
-    }
-
-    function abrirModalAlunos() {
-      let listaOriginal = recuperarLocal('alunosAnyDesk', []);
-      const listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
-      listaComIndices.sort((a, b) => {
-        const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        if (nomeA < nomeB) return -1;
-        if (nomeA > nomeB) return 1;
-        const anydeskA = String(a.anydesk || '').toLowerCase();
-        const anydeskB = String(b.anydesk || '').toLowerCase();
-        if (anydeskA < anydeskB) return -1;
-        if (anydeskA > anydeskB) return 1;
-        return 0;
-      });
-
-      let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
-      if(listaComIndices.length){
-        listaComIndices.forEach(item => {
-          const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          const anydeskHtml = String(item.anydesk || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          html += `<tr>
-            <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
-            <td style="text-align:center;">${anydeskHtml}</td>
-            <td class="table-actions" style="text-align:center;">
-              <button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-              <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`;
-        });
-      } else {
-        html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
-      }
-      html += `</tbody></table>`;
-      document.getElementById('conteudoModalAlunos').innerHTML = html;
-      document.getElementById('modalAlunos').classList.add('active');
-    }
-
-    function fecharModalAlunos() {
-      document.getElementById('modalAlunos').classList.remove('active');
-    }
-
-    // -- Anotações Rápidas --
-    function mostrarBotoesAnotacao() {
-      const val = document.getElementById('anotacaoInput').value.trim();
-      const isEditing = anotacaoEditIdx !== null;
-
-      document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none';
-      document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none';
-      document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none';
-      document.getElementById('btnLimparAnotacao').style.display = val && !isEditing ? '' : 'none';
-    }
-
-    function salvarOuAtualizarAnotacao() {
-      const val = document.getElementById('anotacaoInput').value.trim();
-      if (!val) return;
-      let anotacoes = recuperarLocal('anotacoesRapidas', []);
-
-      if (anotacaoEditIdx !== null) {
-         if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
-          anotacoes[anotacaoEditIdx] = val;
-        } else {
-          console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
+        function editarAluno(idx) {
+            let lista = recuperarLocal('alunosAnyDesk', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para edição:", idx);
+                return;
+            }
+            document.getElementById('nomeAluno').value = lista[idx].nome;
+            document.getElementById('anydeskAluno').value = lista[idx].anydesk;
+            alunoEditIdx = idx;
+            mostrarBotoesAluno();
+            fecharModalAlunos();
+            document.getElementById('nomeAluno').focus();
         }
-      } else {
-         anotacoes.push(val);
-      }
-      salvarLocal('anotacoesRapidas', anotacoes);
-      limparAnotacaoCampos();
-      listarAnotacoes();
-    }
 
-    function editarAnotacao(idxExibicao) {
-      let anotacoes = recuperarLocal('anotacoesRapidas', []);
-      let originalIndex = anotacoes.length - 1 - idxExibicao;
+        function confirmarEdicaoAluno() { adicionarAluno(); }
 
-      if (originalIndex >= 0 && originalIndex < anotacoes.length) {
-        document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
-        anotacaoEditIdx = originalIndex;
-        mostrarBotoesAnotacao();
-        document.getElementById('anotacaoInput').focus();
-      } else {
-        console.error("Índice de exibição inválido para editar anotação:", idxExibicao, "Original index:", originalIndex);
-        limparAnotacaoCampos();
-       }
-    }
+        function cancelarEdicaoAluno() {
+            limparAlunoCampos();
+        }
 
-    function cancelarEdicaoAnotacao() {
-      limparAnotacaoCampos();
-     }
+        function removerAluno(idx) {
+            if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
+            let lista = recuperarLocal('alunosAnyDesk', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para remoção:", idx);
+                return;
+            }
+            lista.splice(idx, 1);
+            salvarLocal('alunosAnyDesk', lista);
+            if (alunoEditIdx === idx) {
+                limparAlunoCampos();
+            } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
+                alunoEditIdx--;
+            }
+            if (document.getElementById('modalAlunos').classList.contains('active')) {
+                abrirModalAlunos();
+            }
+        }
 
-    function removerAnotacao(idxExibicao) {
-        if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
-        let anotacoes = recuperarLocal('anotacoesRapidas', []);
-        let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
+        function limparAlunoCampos() {
+            document.getElementById('nomeAluno').value = '';
+            document.getElementById('anydeskAluno').value = '';
+            alunoEditIdx = null;
+            mostrarBotoesAluno();
+        }
 
-        if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
-            if (anotacaoEditIdx === originalIndexToRemove) {
+        function abrirModalAlunos() {
+            let listaOriginal = recuperarLocal('alunosAnyDesk', []);
+            const listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
+            listaComIndices.sort((a, b) => {
+                const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (nomeA < nomeB) return -1;
+                if (nomeA > nomeB) return 1;
+                const anydeskA = String(a.anydesk || '').toLowerCase();
+                const anydeskB = String(b.anydesk || '').toLowerCase();
+                if (anydeskA < anydeskB) return -1;
+                if (anydeskA > anydeskB) return 1;
+                return 0;
+            });
+
+            let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
+            if (listaComIndices.length) {
+                listaComIndices.forEach(item => {
+                    const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const anydeskHtml = String(item.anydesk || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    html += `<tr>
+                        <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
+                        <td style="text-align:center;">${anydeskHtml}</td>
+                        <td class="table-actions" style="text-align:center;">
+                            <button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('conteudoModalAlunos').innerHTML = html;
+            document.getElementById('modalAlunos').classList.add('active');
+        }
+
+        function fecharModalAlunos() {
+            document.getElementById('modalAlunos').classList.remove('active');
+        }
+
+        // -- Anotações Rápidas --
+        function mostrarBotoesAnotacao() {
+            const val = document.getElementById('anotacaoInput').value.trim();
+            const isEditing = anotacaoEditIdx !== null;
+
+            document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none';
+            document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none';
+            document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none';
+            document.getElementById('btnLimparAnotacao').style.display = val && !isEditing ? '' : 'none';
+        }
+
+        function salvarOuAtualizarAnotacao() {
+            const val = document.getElementById('anotacaoInput').value.trim();
+            if (!val) return;
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+
+            if (anotacaoEditIdx !== null) {
+                if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
+                    anotacoes[anotacaoEditIdx] = val;
+                } else {
+                    console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
+                }
+            } else {
+                anotacoes.push(val);
+            }
+            salvarLocal('anotacoesRapidas', anotacoes);
+            limparAnotacaoCampos();
+            listarAnotacoes();
+        }
+
+        function editarAnotacao(idxExibicao) {
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            let originalIndex = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
+
+            if (originalIndex >= 0 && originalIndex < anotacoes.length) {
+                document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
+                anotacaoEditIdx = originalIndex;
+                mostrarBotoesAnotacao();
+                document.getElementById('anotacaoInput').focus();
+            } else {
+                console.error("Índice de exibição inválido para editar anotação:", idxExibicao, "Original index:", originalIndex);
                 limparAnotacaoCampos();
             }
-            anotacoes.splice(originalIndexToRemove, 1);
-            salvarLocal('anotacoesRapidas', anotacoes);
-            listarAnotacoes();
-
-            if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
-                anotacaoEditIdx--;
-            }
-        } else {
-            console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
         }
-    }
 
-    function limparAnotacaoCampos() {
-      document.getElementById('anotacaoInput').value = '';
-      anotacaoEditIdx = null;
-      mostrarBotoesAnotacao();
-    }
+        function cancelarEdicaoAnotacao() {
+            limparAnotacaoCampos();
+        }
 
-    function listarAnotacoes() {
-      let anotacoes = recuperarLocal('anotacoesRapidas', []);
-      let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
-      tbody.innerHTML = '';
-      if (Array.isArray(anotacoes)) {
-        anotacoes.slice().reverse().forEach((a, idxExibicao) => {
-          const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          tbody.innerHTML += `
-            <tr>
-              <td>${anotacaoHtml}</td>
-              <td class="table-actions" style="text-align:center;">
-                <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
-                <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
-              </td>
-            </tr>`;
-        });
-      } else {
-         console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
-      }
-    }
+        function removerAnotacao(idxExibicao) {
+            if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
 
-    document.addEventListener('keydown', function(e){
-      if(e.key === "Escape") {
-        if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
-        if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
-        if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
+            if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
+                if (anotacaoEditIdx === originalIndexToRemove) { // Se estiver editando a anotação que será removida
+                    limparAnotacaoCampos();
+                }
+                anotacoes.splice(originalIndexToRemove, 1);
+                salvarLocal('anotacoesRapidas', anotacoes);
+                listarAnotacoes();
 
-        if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
-        if (alunoEditIdx !== null) cancelarEdicaoAluno();
-        if (finEditIdx !== null) cancelarEdicaoFinanceiro();
-        if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
-       }
-    });
+                // Ajustar o anotacaoEditIdx se um item anterior ao editado for removido
+                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
+                    anotacaoEditIdx--;
+                }
+            } else {
+                console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
+            }
+        }
 
-    function exportarDados() {
-      const dados = {
-        diarioClasseLista: recuperarLocal('diarioClasseLista', []),
-        alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
-        anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
-        controleFinanceiro: recuperarLocal('controleFinanceiro', [])
-      };
-      const blob = new Blob([JSON.stringify(dados, null, 2)], {type: "application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
-      a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function importarDados(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const dadosImportados = JSON.parse(e.target.result);
-          if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
-
-          if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
-          else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
-
-          if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
-          else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
-
-          if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
-          else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
-
-          if (Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
-          else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', []);
-
-
-          limparCamposDiario();
-          limparAlunoCampos();
-          limparFinanceiroCampos();
-          limparAnotacaoCampos();
-          listarAnotacoes();
-
-          alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
-        } catch(err) {
-          alert("Falha na importação: " + err.message);
-        } finally {
-            if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
-            if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
-            if (document.getElementById('modalFinanceiro').classList.contains('active')) abrirModalFinanceiro();
-            mostrarBotoesDiario();
-            mostrarBotoesAluno();
-            mostrarBotoesFinanceiro();
+        function limparAnotacaoCampos() {
+            document.getElementById('anotacaoInput').value = '';
+            anotacaoEditIdx = null;
             mostrarBotoesAnotacao();
         }
-      };
-      reader.readAsText(file);
-      event.target.value = "";
-    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        limparCamposDiario();
-        limparAlunoCampos();
-        limparFinanceiroCampos();
-        limparAnotacaoCampos();
-        listarAnotacoes(); // ADICIONADO: Garante que as anotações sejam listadas no carregamento da página.
-    });
-  </script>
+        function listarAnotacoes() {
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            if (Array.isArray(anotacoes)) {
+                anotacoes.slice().reverse().forEach((a, idxExibicao) => { // idxExibicao é o índice na lista invertida
+                    const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${anotacaoHtml}</td>
+                            <td class="table-actions" style="text-align:center;">
+                                <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
+                                <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>`;
+                });
+            } else {
+                console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
+                if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
+                if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
+
+                // Cancela edições em formulários se Esc for pressionado
+                if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
+                if (alunoEditIdx !== null) cancelarEdicaoAluno();
+                if (finEditIdx !== null) cancelarEdicaoFinanceiro();
+                if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+            }
+        });
+
+        function exportarDados() {
+            const dados = {
+                diarioClasseLista: recuperarLocal('diarioClasseLista', []),
+                alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
+                anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
+                controleFinanceiro: recuperarLocal('controleFinanceiro', [])
+            };
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, ""); // YYYYMMDDHHMMSS
+            a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importarDados(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dadosImportados = JSON.parse(e.target.result);
+                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
+
+                    // Verifica se as chaves existem e se são arrays antes de salvar
+                    if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
+                    else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []); // Se a chave existe mas não é array, salva array vazio
+
+                    if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
+                    else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
+
+                    if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
+                    else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
+
+                    if (Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
+                    else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', []);
+
+                    // Limpa formulários e atualiza listas
+                    limparCamposDiario();
+                    limparAlunoCampos();
+                    limparFinanceiroCampos();
+                    limparAnotacaoCampos();
+                    listarAnotacoes(); // Atualiza a tabela de anotações
+
+                    alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
+                } catch (err) {
+                    alert("Falha na importação: " + err.message);
+                } finally {
+                    // Atualiza modais se estiverem abertos e botões dos formulários
+                    if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
+                    if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
+                    if (document.getElementById('modalFinanceiro').classList.contains('active')) abrirModalFinanceiro();
+                    mostrarBotoesDiario();
+                    mostrarBotoesAluno();
+                    mostrarBotoesFinanceiro();
+                    mostrarBotoesAnotacao();
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ""; // Limpa o input de arquivo para permitir reimportação do mesmo arquivo
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Limpa os campos dos formulários e carrega as listas ao iniciar
+            limparCamposDiario();
+            limparAlunoCampos();
+            limparFinanceiroCampos();
+            limparAnotacaoCampos(); // Isso também chama mostrarBotoesAnotacao
+            listarAnotacoes(); // Garante que as anotações sejam listadas no carregamento da página.
+        });
+    </script>
 </body>
+
 </html>
