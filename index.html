@@ -416,6 +416,13 @@
             border: 1.5px solid var(--c-green);
             background: #1d342a;
         }
+        /* Estilo para botões menores no seletor de mês */
+        .financeiro-mes-selector .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            min-width: auto; /* Remove o min-width padrão do .btn */
+        }
+
 
         footer {
             width: 100%;
@@ -681,6 +688,37 @@
         .modal-diario-filtro input[type="date"]:focus {
             border-color: var(--c-cyan);
         }
+        .financeiro-mes-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .financeiro-mes-selector label {
+            font-size: 1.02rem;
+            color: #9cf7ee;
+        }
+        .financeiro-mes-selector select {
+            background: #193c2c;
+            border: 1.2px solid var(--c-green);
+            color: #d3fff3;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.7rem;
+            font-size: 0.98rem;
+            font-family: var(--bod);
+            outline: none;
+            margin-right: 5px; /* Reduzido para melhor caber com os botões */
+            flex-grow: 1; /* Para ocupar espaço disponível */
+            min-width: 120px; /* Para não ficar muito pequeno */
+        }
+         .financeiro-mes-selector .btn { /* Aplicando o estilo de .btn aos botões de navegação */
+            padding: 0.5rem 0.8rem; /* Ajuste para botões um pouco menores que os de formulário */
+            font-size: 0.95rem;
+            min-width: auto; /* Remove o min-width do .btn padrão */
+        }
+
     </style>
 </head>
 
@@ -746,9 +784,9 @@
         <div class="card controle-financeiro">
             <div style="display: flex; flex-direction: column; flex-grow: 1;">
                 <h2>Controle Financeiro</h2>
-                <form onsubmit="event.preventDefault(); adicionarFinanceiro();">
-                    <input id="nomeFinanceiro" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
-                    <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+                <form id="formFinanceiro" onsubmit="event.preventDefault(); adicionarFinanceiro();">
+                    <input id="nomeFinanceiro" placeholder="Nome do Aluno/Descrição" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+                    <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()" step="0.01">
                     <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
                         <option value="Pago">Pago</option>
                         <option value="Pendente">Pendente</option>
@@ -756,11 +794,12 @@
                     <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
                         <option value="Mensalidade">Mensalidade</option>
                         <option value="Serviço Extra">Serviço Extra</option>
+                        <option value="Outro">Outro</option>
                     </select>
                     <div class="financeiro-form-actions-wrapper">
                         <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
                         <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
+                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</option>
                         <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
                     </div>
                 </form>
@@ -823,8 +862,15 @@
         <div class="modal-financeiro">
             <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
             <h3>Controle Financeiro - Lançamentos</h3>
-            <div id="conteudoModalFinanceiro" class="table-container-modal">
+            <div class="financeiro-mes-selector">
+                <label for="mesAnoSelectFinanceiro">Mês/Ano:</label>
+                <select id="mesAnoSelectFinanceiro" onchange="atualizarModalFinanceiroComMesSelecionado()"></select>
+                <button class="btn btn-sm" onclick="navegarMesFinanceiro(-1)" title="Mês Anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-sm" onclick="navegarMesFinanceiro(1)" title="Próximo Mês"><i class="fas fa-chevron-right"></i></button>
+                <button class="btn btn-sm" onclick="irParaMesAtualFinanceiro()" title="Ir para Mês Atual">Mês Atual</button>
             </div>
+            <div id="conteudoModalFinanceiro" class="table-container-modal">
+                </div>
         </div>
     </div>
 
@@ -850,7 +896,12 @@
         function recuperarLocal(key, fallback) {
             const item = localStorage.getItem(key);
             try {
-                return item ? JSON.parse(item) : fallback;
+                const parsedItem = item ? JSON.parse(item) : fallback;
+                // Para controleFinanceiro, garantir que seja um objeto
+                if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) {
+                    return fallback;
+                }
+                return parsedItem;
             } catch (e) {
                 console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
                 return fallback;
@@ -858,15 +909,40 @@
         }
 
         let diarioEditIdx = null;
-        let finEditIdx = null;
+        let finEditIdx = null; // Agora será um objeto: { monthKey: "AAAA-MM", index: N } ou null
         let alunoEditIdx = null;
         let anotacaoEditIdx = null;
+
+        let financeiroSelecionadoMesAno = ''; // Guarda o AAAA-MM selecionado no modal financeiro
 
         // Função Utilitária para formatar moeda
         function formatarMoeda(valor) {
             const numero = parseFloat(valor) || 0;
             return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
+
+        // Funções Utilitárias de Data para Financeiro
+        function getFormattedMonthYear(date) { // date é um objeto Date
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Meses são 0-indexados
+            return `${year}-${month}`;
+        }
+
+        function getCurrentMonthYearKey() {
+            return getFormattedMonthYear(new Date());
+        }
+
+        function parseMonthYearKey(monthYearKey) { // "AAAA-MM" -> { year: AAAA, month: MM (1-12) }
+            const parts = monthYearKey.split('-');
+            return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
+        }
+
+        function monthYearKeyToDisplay(monthYearKey) { // "AAAA-MM" -> "MM/AAAA"
+             if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido";
+            const parts = monthYearKey.split('-');
+            return `${parts[1]}/${parts[0]}`;
+        }
+
 
         // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
         function mostrarBotoesDiario() {
@@ -1026,18 +1102,18 @@
             document.getElementById('conteudoModalDiario').innerHTML = html;
         }
 
-        // ---------------- CONTROLE FINANCEIRO ----------------
+        // ---------------- CONTROLE FINANCEIRO (NOVA LÓGICA COM MESES) ----------------
+
         function mostrarBotoesFinanceiro() {
             const nome = document.getElementById('nomeFinanceiro').value.trim();
             const valor = document.getElementById('valorFinanceiro').value.trim();
-            const showAdd = nome && valor && finEditIdx === null;
-            const showEdit = nome && valor && finEditIdx !== null;
-            const showAnyButton = nome || valor;
+            const camposPreenchidos = nome && valor;
+            const isEditing = finEditIdx !== null;
 
-            document.getElementById('btnFinAdd').style.display = showAdd ? '' : 'none';
-            document.getElementById('btnFinEdit').style.display = showEdit ? '' : 'none';
-            document.getElementById('btnFinCancel').style.display = finEditIdx !== null ? '' : 'none';
-            document.getElementById('btnFinLimpar').style.display = showAnyButton && finEditIdx === null ? '' : 'none';
+            document.getElementById('btnFinAdd').style.display = camposPreenchidos && !isEditing ? '' : 'none';
+            document.getElementById('btnFinEdit').style.display = camposPreenchidos && isEditing ? '' : 'none';
+            document.getElementById('btnFinCancel').style.display = isEditing ? '' : 'none';
+            document.getElementById('btnFinLimpar').style.display = (nome || valor) && !isEditing ? '' : 'none';
         }
 
         function adicionarFinanceiro() {
@@ -1045,71 +1121,115 @@
             const valor = document.getElementById('valorFinanceiro').value.trim();
             const status = document.getElementById('statusFinanceiro').value;
             const tipo = document.getElementById('tipoFinanceiro').value;
-            if (!nome || !valor) { alert('Preencha nome e valor.'); return; }
-            let lista = recuperarLocal('controleFinanceiro', []);
-            if (finEditIdx === null) {
-                lista.push({ nome, valor, status, tipo });
-            } else {
-                if (finEditIdx >= 0 && finEditIdx < lista.length) {
-                    lista[finEditIdx] = { nome, valor, status, tipo };
+
+            if (!nome || !valor) {
+                alert('Preencha nome/descrição e valor.');
+                return;
+            }
+            if (isNaN(parseFloat(valor))) {
+                alert('O valor inserido não é um número válido.');
+                return;
+            }
+
+
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+
+            if (finEditIdx !== null) { // Editando um lançamento existente
+                const { monthKey, index } = finEditIdx;
+                if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) {
+                    controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo };
+                    alert('Lançamento financeiro atualizado com sucesso.');
                 } else {
-                    console.error("Índice de edição inválido para financeiro:", finEditIdx);
+                    console.error("Erro ao encontrar lançamento para edição:", finEditIdx);
+                    alert("Erro ao atualizar. Lançamento não encontrado.");
                     limparFinanceiroCampos();
                     return;
                 }
+            } else { // Adicionando novo lançamento (sempre para o mês atual)
+                const currentMonthKey = getCurrentMonthYearKey();
+                if (!controleFinanceiroData[currentMonthKey]) {
+                    controleFinanceiroData[currentMonthKey] = [];
+                }
+                controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo });
+                alert('Novo lançamento financeiro adicionado ao mês atual.');
             }
-            salvarLocal('controleFinanceiro', lista);
-            limparFinanceiroCampos();
+
+            salvarLocal('controleFinanceiro', controleFinanceiroData);
+            limparFinanceiroCampos(); // Reseta finEditIdx para null
+
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                abrirModalFinanceiro(); // Atualiza o modal com os somatórios e a lista
+                // Se estiver editando, atualiza o modal para o mês do item editado.
+                // Se adicionando novo, e o modal estiver no mês atual, ele será atualizado.
+                const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
+                financeiroSelecionadoMesAno = monthToUpdate; // Garante que o select reflita isso
+                populateMesAnoSelectFinanceiro(); // Repopula e seleciona o mês correto
+                renderizarConteudoModalFinanceiro(monthToUpdate);
             }
         }
 
-        function editarFinanceiro(idx) {
-            let lista = recuperarLocal('controleFinanceiro', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para editar financeiro:", idx);
+
+        function editarFinanceiro(monthKey, itemIndex) {
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex];
+
+            if (!lancamento) {
+                console.error("Lançamento não encontrado para edição:", monthKey, itemIndex);
+                alert("Lançamento não encontrado.");
                 return;
             }
-            document.getElementById('nomeFinanceiro').value = lista[idx].nome;
-            document.getElementById('valorFinanceiro').value = lista[idx].valor;
-            document.getElementById('statusFinanceiro').value = lista[idx].status;
-            document.getElementById('tipoFinanceiro').value = lista[idx].tipo;
-            finEditIdx = idx;
+
+            document.getElementById('nomeFinanceiro').value = lancamento.nome;
+            document.getElementById('valorFinanceiro').value = lancamento.valor;
+            document.getElementById('statusFinanceiro').value = lancamento.status;
+            document.getElementById('tipoFinanceiro').value = lancamento.tipo;
+
+            finEditIdx = { monthKey: monthKey, index: itemIndex };
             mostrarBotoesFinanceiro();
             fecharModalFinanceiro();
             document.getElementById('nomeFinanceiro').focus();
         }
 
-        function removerFinanceiro(idx) {
+        function removerFinanceiro(monthKey, itemIndex) {
             if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
-            let lista = recuperarLocal('controleFinanceiro', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para remover financeiro:", idx);
+
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) {
+                console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex);
+                alert("Lançamento não encontrado para remoção.");
                 return;
             }
-            lista.splice(idx, 1);
-            salvarLocal('controleFinanceiro', lista);
-            if (finEditIdx === idx) {
+
+            controleFinanceiroData[monthKey].splice(itemIndex, 1);
+
+            // Opcional: remover a chave do mês se o array ficar vazio
+            // if (controleFinanceiroData[monthKey].length === 0) {
+            //     delete controleFinanceiroData[monthKey];
+            // }
+
+            salvarLocal('controleFinanceiro', controleFinanceiroData);
+
+            // Se o item removido era o que estava em edição no formulário principal
+            if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) {
                 limparFinanceiroCampos();
-            } else if (finEditIdx !== null && idx < finEditIdx) {
-                finEditIdx--;
+            } else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) {
+                 finEditIdx.index--; // Ajusta o índice se um item anterior no mesmo mês foi removido
             }
+
+
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                abrirModalFinanceiro(); // Atualiza o modal com os somatórios e a lista
+                populateMesAnoSelectFinanceiro(); // Atualiza o select de meses (caso um mês tenha ficado vazio)
+                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); // Re-renderiza o mês atual no modal
             }
         }
 
+
         function confirmarEdicaoFinanceiro() {
-            adicionarFinanceiro();
+            adicionarFinanceiro(); // A lógica de edição está dentro de adicionarFinanceiro agora
         }
 
         function limparFinanceiroCampos() {
-            document.getElementById('nomeFinanceiro').value = '';
-            document.getElementById('valorFinanceiro').value = '';
-            document.getElementById('statusFinanceiro').value = 'Pago';
-            document.getElementById('tipoFinanceiro').value = 'Mensalidade';
-            finEditIdx = null;
+            document.getElementById('formFinanceiro').reset(); // Reseta o formulário
+            finEditIdx = null; // Limpa o índice de edição
             mostrarBotoesFinanceiro();
         }
 
@@ -1117,33 +1237,85 @@
             limparFinanceiroCampos();
         }
 
-        function abrirModalFinanceiro() {
-            let listaOriginal = recuperarLocal('controleFinanceiro', []);
-            const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
+        function getAllMonthKeysSorted(financeiroData) {
+            // Pega todas as chaves (AAAA-MM), e as ordena da mais recente para a mais antiga
+            return Object.keys(financeiroData).sort((a, b) => {
+                const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
+                const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
+                return dateB - dateA; // Mais recente primeiro
+            });
+        }
+
+        function populateMesAnoSelectFinanceiro() {
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            selectElement.innerHTML = ''; // Limpa opções existentes
+
+            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            let monthKeys = getAllMonthKeysSorted(controleFinanceiroData);
+            const currentMonthKey = getCurrentMonthYearKey();
+
+            // Garante que o mês atual esteja na lista, mesmo que não tenha dados
+            if (!monthKeys.includes(currentMonthKey)) {
+                monthKeys.push(currentMonthKey);
+                 monthKeys = monthKeys.sort((a, b) => { // Re-ordena após adicionar o mês atual
+                    const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
+                    const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
+                    return dateB - dateA;
+                });
+            }
+
+
+            if (monthKeys.length === 0) { // Caso raro, se não houver chaves e o mês atual não foi adicionado
+                 monthKeys.push(currentMonthKey);
+            }
+
+            monthKeys.forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = monthYearKeyToDisplay(key);
+                selectElement.appendChild(option);
+            });
+
+            // Tenta selecionar o mês previamente selecionado ou o mais recente/atual
+             if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
+                selectElement.value = financeiroSelecionadoMesAno;
+            } else if (monthKeys.length > 0) {
+                selectElement.value = monthKeys[0]; // Seleciona o mais recente por padrão
+                financeiroSelecionadoMesAno = monthKeys[0];
+            }
+        }
+
+
+        function renderizarConteudoModalFinanceiro(monthKey) {
+            financeiroSelecionadoMesAno = monthKey; // Atualiza a variável global
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            if(selectElement.value !== monthKey) selectElement.value = monthKey; // Sincroniza o select
+
+            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            const lancamentosDoMes = controleFinanceiroData[monthKey] || [];
 
             let totalPago = 0;
             let totalAReceber = 0;
 
-            listaOriginal.forEach(item => {
+            lancamentosDoMes.forEach(item => {
                 const valorItem = parseFloat(item.valor) || 0;
                 if (item.status === 'Pago') {
                     totalPago += valorItem;
-                } else { // Assumindo que qualquer status diferente de "Pago" é "a receber"
+                } else {
                     totalAReceber += valorItem;
                 }
             });
 
             let somatorioHtml = `
                 <div style="padding: 10px 5px; margin-bottom: 15px; background: #102b1f; border-radius: 8px; text-align: center; border: 1px solid var(--c-green);">
-                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago:</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
-                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber:</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p>
-                </div>
-            `;
+                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago (Mês):</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
+                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber (Mês):</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p>
+                </div>`;
 
             let tabelaHtml = `<table>
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th>Nome/Descrição</th>
                         <th>Valor</th>
                         <th>Status</th>
                         <th>Tipo</th>
@@ -1151,8 +1323,11 @@
                     </tr>
                 </thead>
                 <tbody>`;
-            if (listaComIndices.length) {
-                listaComIndices.slice().reverse().forEach(item => {
+
+            if (lancamentosDoMes.length) {
+                // Renderiza na ordem original (mais antigo primeiro) ou invertido (mais novo primeiro).
+                // Vamos manter a ordem de inserção por enquanto, mas pode ser invertido com .slice().reverse()
+                lancamentosDoMes.forEach((item, index) => {
                     const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const valorFormatado = formatarMoeda(item.valor);
                     const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1163,22 +1338,75 @@
                         <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
                         <td style="text-align:center;">${tipoHtml}</td>
                         <td class="table-actions">
-                            <button onclick="editarFinanceiro(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="removerFinanceiro(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                            <button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>`;
                 });
             } else {
-                tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento registrado.</td></tr>`;
+                tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`;
             }
             tabelaHtml += `</tbody></table>`;
             document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml;
+        }
+
+        function atualizarModalFinanceiroComMesSelecionado() {
+            const selectedMonthKey = document.getElementById('mesAnoSelectFinanceiro').value;
+            renderizarConteudoModalFinanceiro(selectedMonthKey);
+        }
+
+        function navegarMesFinanceiro(offset) {
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            const currentIndex = selectElement.selectedIndex;
+            const newIndex = currentIndex + offset;
+
+            if (newIndex >= 0 && newIndex < selectElement.options.length) {
+                selectElement.selectedIndex = newIndex;
+                atualizarModalFinanceiroComMesSelecionado();
+            }
+        }
+
+        function irParaMesAtualFinanceiro() {
+            const currentMonthKey = getCurrentMonthYearKey();
+             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            // Verifica se o mês atual existe nas opções, se não, pode ser necessário repopular.
+            // Por segurança, repopulamos para garantir que o mês atual esteja lá.
+            populateMesAnoSelectFinanceiro();
+            selectElement.value = currentMonthKey; // Tenta selecionar
+            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) { // Fallback se não encontrou
+                 selectElement.value = selectElement.options[0].value;
+            }
+            renderizarConteudoModalFinanceiro(selectElement.value);
+        }
+
+
+        function abrirModalFinanceiro() {
+            populateMesAnoSelectFinanceiro(); // Popula o select com os meses disponíveis
+             // Decide qual mês mostrar: o último selecionado, ou o atual, ou o mais recente com dados
+            const currentMonthKey = getCurrentMonthYearKey();
+            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            const allMonths = getAllMonthKeysSorted(controleFinanceiroData);
+
+            if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {
+                // Mantém o último selecionado se ainda válido
+            } else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) {
+                financeiroSelecionadoMesAno = currentMonthKey;
+            } else if (allMonths.length > 0) {
+                financeiroSelecionadoMesAno = allMonths[0]; // Mais recente com dados
+            } else {
+                 financeiroSelecionadoMesAno = currentMonthKey; // Fallback final
+            }
+
+            document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno;
+            renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
             document.getElementById('modalFinanceiro').classList.add('active');
         }
+
 
         function fecharModalFinanceiro() {
             document.getElementById('modalFinanceiro').classList.remove('active');
         }
+
 
         // -- Cadastro de Alunos (com edição e modal)
         function mostrarBotoesAluno() {
@@ -1366,7 +1594,6 @@
                 salvarLocal('anotacoesRapidas', anotacoes);
                 listarAnotacoes();
 
-                // Ajustar o anotacaoEditIdx se um item anterior ao editado for removido
                 if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
                     anotacaoEditIdx--;
                 }
@@ -1386,7 +1613,7 @@
             let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
             tbody.innerHTML = '';
             if (Array.isArray(anotacoes)) {
-                anotacoes.slice().reverse().forEach((a, idxExibicao) => { // idxExibicao é o índice na lista invertida
+                anotacoes.slice().reverse().forEach((a, idxExibicao) => {
                     const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     tbody.innerHTML += `
                         <tr>
@@ -1399,6 +1626,7 @@
                 });
             } else {
                 console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
+                salvarLocal('anotacoesRapidas', []); // Corrige para um array vazio se não for
             }
         }
 
@@ -1408,7 +1636,6 @@
                 if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
                 if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
 
-                // Cancela edições em formulários se Esc for pressionado
                 if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
                 if (alunoEditIdx !== null) cancelarEdicaoAluno();
                 if (finEditIdx !== null) cancelarEdicaoFinanceiro();
@@ -1421,13 +1648,13 @@
                 diarioClasseLista: recuperarLocal('diarioClasseLista', []),
                 alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
                 anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
-                controleFinanceiro: recuperarLocal('controleFinanceiro', [])
+                controleFinanceiro: recuperarLocal('controleFinanceiro', {}) // Exporta como objeto
             };
             const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, ""); // YYYYMMDDHHMMSS
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
             a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
             document.body.appendChild(a);
             a.click();
@@ -1442,36 +1669,47 @@
             reader.onload = function(e) {
                 try {
                     const dadosImportados = JSON.parse(e.target.result);
-                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
+                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato de arquivo inválido!");
 
-                    // Verifica se as chaves existem e se são arrays antes de salvar
+                    // Importação para diarioClasseLista (array)
                     if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
-                    else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []); // Se a chave existe mas não é array, salva array vazio
+                    else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
 
+                    // Importação para alunosAnyDesk (array)
                     if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
                     else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
 
+                    // Importação para anotacoesRapidas (array)
                     if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
                     else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
 
-                    if (Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
-                    else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', []);
+                    // Importação para controleFinanceiro (objeto)
+                    if (typeof dadosImportados.controleFinanceiro === "object" &&
+                        dadosImportados.controleFinanceiro !== null &&
+                        !Array.isArray(dadosImportados.controleFinanceiro)) {
+                        salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
+                    } else if ("controleFinanceiro" in dadosImportados) { // Se a chave existe mas não é objeto válido
+                        salvarLocal('controleFinanceiro', {}); // Salva um objeto vazio
+                    }
 
-                    // Limpa formulários e atualiza listas
+
                     limparCamposDiario();
                     limparAlunoCampos();
                     limparFinanceiroCampos();
                     limparAnotacaoCampos();
-                    listarAnotacoes(); // Atualiza a tabela de anotações
+                    listarAnotacoes();
 
                     alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
                 } catch (err) {
                     alert("Falha na importação: " + err.message);
                 } finally {
-                    // Atualiza modais se estiverem abertos e botões dos formulários
                     if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
                     if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
-                    if (document.getElementById('modalFinanceiro').classList.contains('active')) abrirModalFinanceiro();
+                    if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                        // Ao importar, o modal financeiro precisa ser reinicializado para o mês mais recente ou atual
+                        financeiroSelecionadoMesAno = ''; // Força a reavaliação do mês
+                        abrirModalFinanceiro();
+                    }
                     mostrarBotoesDiario();
                     mostrarBotoesAluno();
                     mostrarBotoesFinanceiro();
@@ -1479,16 +1717,27 @@
                 }
             };
             reader.readAsText(file);
-            event.target.value = ""; // Limpa o input de arquivo para permitir reimportação do mesmo arquivo
+            event.target.value = "";
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Limpa os campos dos formulários e carrega as listas ao iniciar
             limparCamposDiario();
             limparAlunoCampos();
             limparFinanceiroCampos();
-            limparAnotacaoCampos(); // Isso também chama mostrarBotoesAnotacao
-            listarAnotacoes(); // Garante que as anotações sejam listadas no carregamento da página.
+            limparAnotacaoCampos();
+            listarAnotacoes();
+
+            // Inicializa o mês selecionado para o financeiro para o mês atual ou o mais recente
+            const currentFinMonth = getCurrentMonthYearKey();
+            const finData = recuperarLocal('controleFinanceiro', {});
+            const sortedFinMonths = getAllMonthKeysSorted(finData);
+            if (sortedFinMonths.includes(currentFinMonth)){
+                financeiroSelecionadoMesAno = currentFinMonth;
+            } else if (sortedFinMonths.length > 0) {
+                financeiroSelecionadoMesAno = sortedFinMonths[0];
+            } else {
+                financeiroSelecionadoMesAno = currentFinMonth;
+            }
         });
     </script>
 </body>
