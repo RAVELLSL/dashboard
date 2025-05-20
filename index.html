@@ -208,8 +208,9 @@
             margin-bottom: 0.5rem;
             border: 2px solid var(--c-green);
             transition: border .16s, box-shadow .14s;
-            overflow: visible;
+            overflow: visible; /* Changed from visible to allow absolute positioning of search results */
             box-sizing: border-box;
+            position: relative; /* For positioning search results */
         }
 
         .card.anotacoes-rapidas {
@@ -285,6 +286,41 @@
         .cadastro-alunos .btn {
             min-width: 120px;
         }
+        /* Search results for Alunos card */
+        .search-results-container {
+            position: relative; /* Container para a lista de resultados */
+        }
+        .search-results-list {
+            position: absolute;
+            width: calc(100% - 2px); /* Ajusta para a borda do input */
+            max-height: 150px;
+            overflow-y: auto;
+            background: #102b1f;
+            border: 1px solid var(--c-green);
+            border-top: none; /* Remove a borda de cima para colar no input */
+            border-radius: 0 0 0.5rem 0.5rem;
+            margin-top: -0.6rem; /* Sobrepõe a margem inferior do input */
+            z-index: 100; /* Para sobrepor elementos abaixo */
+            box-sizing: border-box;
+        }
+        .search-results-list div {
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            color: var(--txt);
+            border-bottom: 1px solid #163221;
+            font-size: 0.95rem;
+        }
+        .search-results-list div:last-child {
+            border-bottom: none;
+        }
+        .search-results-list div:hover {
+            background-color: #193c2c; /* Um pouco mais claro que o fundo da lista */
+            color: var(--c-yellow);
+        }
+        .search-results-list:empty {
+            display: none;
+        }
+
 
         textarea {
             resize: vertical;
@@ -417,10 +453,10 @@
             background: #1d342a;
         }
         /* Estilo para botões menores no seletor de mês */
-        .financeiro-mes-selector .btn-sm {
+        .financeiro-mes-selector .btn-sm { /* Renomeado para ser mais específico e evitar conflito */
             padding: 0.4rem 0.8rem;
             font-size: 0.9rem;
-            min-width: auto; /* Remove o min-width padrão do .btn */
+            min-width: auto;
         }
 
 
@@ -690,15 +726,16 @@
         }
         .financeiro-mes-selector {
             display: flex;
-            gap: 10px;
+            gap: 10px; /* Aumentado para melhor espaçamento */
             align-items: center;
             margin-bottom: 1rem;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Permite quebra de linha em telas menores */
             flex-shrink: 0;
         }
         .financeiro-mes-selector label {
             font-size: 1.02rem;
             color: #9cf7ee;
+            margin-right: 5px; /* Espaço entre label e select */
         }
         .financeiro-mes-selector select {
             background: #193c2c;
@@ -709,14 +746,15 @@
             font-size: 0.98rem;
             font-family: var(--bod);
             outline: none;
-            margin-right: 5px; /* Reduzido para melhor caber com os botões */
             flex-grow: 1; /* Para ocupar espaço disponível */
-            min-width: 120px; /* Para não ficar muito pequeno */
+            min-width: 130px; /* Para não ficar muito pequeno */
+            margin-right: 5px;
         }
-         .financeiro-mes-selector .btn { /* Aplicando o estilo de .btn aos botões de navegação */
-            padding: 0.5rem 0.8rem; /* Ajuste para botões um pouco menores que os de formulário */
+         .financeiro-mes-selector .btn {
+            padding: 0.5rem 0.8rem;
             font-size: 0.95rem;
-            min-width: auto; /* Remove o min-width do .btn padrão */
+            min-width: auto;
+            flex-shrink: 0; /* Impede que os botões encolham demais */
         }
 
     </style>
@@ -766,15 +804,18 @@
             <div style="display: flex; flex-direction: column; flex-grow: 1;">
                 <h2>Cadastro de Alunos (AnyDesk)</h2>
                 <form onsubmit="event.preventDefault(); adicionarAluno();">
-                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+                    <div class="search-results-container">
+                        <input id="nomeAluno" placeholder="Nome do Aluno (ou pesquise)" autocomplete="off" oninput="pesquisarAlunosNoCard(this.value); mostrarBotoesAluno();" onblur="setTimeout(limparResultadosPesquisaAlunos, 200);">
+                        <div id="listaResultadosPesquisaAlunos" class="search-results-list"></div>
+                    </div>
                     <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
                     <div class="aluno-form-actions-wrapper">
                         <div class="alunos-btns">
                             <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
-                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
+                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCamposComPesquisa()">Limpar Tudo</button>
                         </div>
                         <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
+                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAlunoComPesquisa()">Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -799,7 +840,7 @@
                     <div class="financeiro-form-actions-wrapper">
                         <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
                         <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</option>
+                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
                         <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
                     </div>
                 </form>
@@ -884,7 +925,7 @@
     </div>
 
     <footer>
-        2025
+        RS TECH <span id="anoAtualFooter"></span>
     </footer>
 
     <script>
@@ -897,9 +938,8 @@
             const item = localStorage.getItem(key);
             try {
                 const parsedItem = item ? JSON.parse(item) : fallback;
-                // Para controleFinanceiro, garantir que seja um objeto
                 if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) {
-                    return fallback;
+                    return fallback; // Garante que controleFinanceiro seja um objeto
                 }
                 return parsedItem;
             } catch (e) {
@@ -909,11 +949,10 @@
         }
 
         let diarioEditIdx = null;
-        let finEditIdx = null; // Agora será um objeto: { monthKey: "AAAA-MM", index: N } ou null
+        let finEditIdx = null; 
         let alunoEditIdx = null;
         let anotacaoEditIdx = null;
-
-        let financeiroSelecionadoMesAno = ''; // Guarda o AAAA-MM selecionado no modal financeiro
+        let financeiroSelecionadoMesAno = '';
 
         // Função Utilitária para formatar moeda
         function formatarMoeda(valor) {
@@ -922,9 +961,9 @@
         }
 
         // Funções Utilitárias de Data para Financeiro
-        function getFormattedMonthYear(date) { // date é um objeto Date
+        function getFormattedMonthYear(date) {
             const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Meses são 0-indexados
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
             return `${year}-${month}`;
         }
 
@@ -932,19 +971,19 @@
             return getFormattedMonthYear(new Date());
         }
 
-        function parseMonthYearKey(monthYearKey) { // "AAAA-MM" -> { year: AAAA, month: MM (1-12) }
+        function parseMonthYearKey(monthYearKey) {
             const parts = monthYearKey.split('-');
             return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
         }
 
-        function monthYearKeyToDisplay(monthYearKey) { // "AAAA-MM" -> "MM/AAAA"
+        function monthYearKeyToDisplay(monthYearKey) {
              if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido";
             const parts = monthYearKey.split('-');
             return `${parts[1]}/${parts[0]}`;
         }
 
 
-        // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
+        // ---------------- DIÁRIO DE CLASSE ----------------
         function mostrarBotoesDiario() {
             const aluno = document.getElementById('diarioAluno').value.trim();
             const data = document.getElementById('diarioData').value;
@@ -1008,7 +1047,6 @@
             limparCamposDiario();
         }
 
-        // ---------------- DIÁRIO DE CLASSE (Salvar, Abrir/Fechar Modal, Filtrar) ----------------
         function salvarDiarioClasse() {
             const aluno = document.getElementById('diarioAluno').value.trim();
             const data = document.getElementById('diarioData').value;
@@ -1018,9 +1056,7 @@
                 alert('Preencha todos os campos do diário.');
                 return;
             }
-
             let lista = recuperarLocal('diarioClasseLista', []);
-
             if (diarioEditIdx !== null) {
                 if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
                     lista[diarioEditIdx] = { aluno, data, conteudo };
@@ -1034,10 +1070,8 @@
                 lista.push({ aluno, data, conteudo });
                 alert('Registro salvo no Diário de Classe.');
             }
-
             salvarLocal('diarioClasseLista', lista);
             limparCamposDiario();
-
             if (document.getElementById('modalDiario').classList.contains('active')) {
                 filtrarModalDiario();
             }
@@ -1063,7 +1097,6 @@
         function filtrarModalDiario() {
             let listaOriginal = recuperarLocal('diarioClasseLista', []);
             const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
-
             const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
             const filtroData = document.getElementById('filtroData').value;
 
@@ -1072,15 +1105,7 @@
                 (!filtroData || reg.data === filtroData)
             );
 
-            let html = `<table><thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Aluno</th>
-                    <th>Conteúdo Ministrado</th>
-                    <th>Ações</th>
-                </tr>
-            </thead><tbody>`;
-
+            let html = `<table><thead><tr><th>Data</th><th>Aluno</th><th>Conteúdo Ministrado</th><th>Ações</th></tr></thead><tbody>`;
             if (filtrados.length) {
                 filtrados.slice().reverse().forEach(reg => {
                     const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1092,8 +1117,7 @@
                         <td class="table-actions">
                             <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
                             <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                        </td></tr>`;
                 });
             } else {
                 html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
@@ -1102,8 +1126,7 @@
             document.getElementById('conteudoModalDiario').innerHTML = html;
         }
 
-        // ---------------- CONTROLE FINANCEIRO (NOVA LÓGICA COM MESES) ----------------
-
+        // ---------------- CONTROLE FINANCEIRO ----------------
         function mostrarBotoesFinanceiro() {
             const nome = document.getElementById('nomeFinanceiro').value.trim();
             const valor = document.getElementById('valorFinanceiro').value.trim();
@@ -1122,19 +1145,11 @@
             const status = document.getElementById('statusFinanceiro').value;
             const tipo = document.getElementById('tipoFinanceiro').value;
 
-            if (!nome || !valor) {
-                alert('Preencha nome/descrição e valor.');
-                return;
-            }
-            if (isNaN(parseFloat(valor))) {
-                alert('O valor inserido não é um número válido.');
-                return;
-            }
-
+            if (!nome || !valor) { alert('Preencha nome/descrição e valor.'); return; }
+            if (isNaN(parseFloat(valor))) { alert('O valor inserido não é um número válido.'); return; }
 
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-
-            if (finEditIdx !== null) { // Editando um lançamento existente
+            if (finEditIdx !== null) {
                 const { monthKey, index } = finEditIdx;
                 if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) {
                     controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo };
@@ -1142,10 +1157,9 @@
                 } else {
                     console.error("Erro ao encontrar lançamento para edição:", finEditIdx);
                     alert("Erro ao atualizar. Lançamento não encontrado.");
-                    limparFinanceiroCampos();
-                    return;
+                    limparFinanceiroCampos(); return;
                 }
-            } else { // Adicionando novo lançamento (sempre para o mês atual)
+            } else {
                 const currentMonthKey = getCurrentMonthYearKey();
                 if (!controleFinanceiroData[currentMonthKey]) {
                     controleFinanceiroData[currentMonthKey] = [];
@@ -1153,36 +1167,26 @@
                 controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo });
                 alert('Novo lançamento financeiro adicionado ao mês atual.');
             }
-
             salvarLocal('controleFinanceiro', controleFinanceiroData);
-            limparFinanceiroCampos(); // Reseta finEditIdx para null
+            const monthToUpdateDisplay = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
+            limparFinanceiroCampos(); 
 
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                // Se estiver editando, atualiza o modal para o mês do item editado.
-                // Se adicionando novo, e o modal estiver no mês atual, ele será atualizado.
-                const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
-                financeiroSelecionadoMesAno = monthToUpdate; // Garante que o select reflita isso
-                populateMesAnoSelectFinanceiro(); // Repopula e seleciona o mês correto
-                renderizarConteudoModalFinanceiro(monthToUpdate);
+                financeiroSelecionadoMesAno = monthToUpdateDisplay; 
+                populateMesAnoSelectFinanceiro(); 
+                renderizarConteudoModalFinanceiro(monthToUpdateDisplay);
             }
         }
-
 
         function editarFinanceiro(monthKey, itemIndex) {
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex];
-
-            if (!lancamento) {
-                console.error("Lançamento não encontrado para edição:", monthKey, itemIndex);
-                alert("Lançamento não encontrado.");
-                return;
-            }
+            if (!lancamento) { console.error("Lançamento não encontrado:", monthKey, itemIndex); alert("Lançamento não encontrado."); return; }
 
             document.getElementById('nomeFinanceiro').value = lancamento.nome;
             document.getElementById('valorFinanceiro').value = lancamento.valor;
             document.getElementById('statusFinanceiro').value = lancamento.status;
             document.getElementById('tipoFinanceiro').value = lancamento.tipo;
-
             finEditIdx = { monthKey: monthKey, index: itemIndex };
             mostrarBotoesFinanceiro();
             fecharModalFinanceiro();
@@ -1191,83 +1195,58 @@
 
         function removerFinanceiro(monthKey, itemIndex) {
             if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
-
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) {
                 console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex);
-                alert("Lançamento não encontrado para remoção.");
-                return;
+                alert("Lançamento não encontrado para remoção."); return;
             }
-
             controleFinanceiroData[monthKey].splice(itemIndex, 1);
-
-            // Opcional: remover a chave do mês se o array ficar vazio
-            // if (controleFinanceiroData[monthKey].length === 0) {
-            //     delete controleFinanceiroData[monthKey];
-            // }
-
             salvarLocal('controleFinanceiro', controleFinanceiroData);
 
-            // Se o item removido era o que estava em edição no formulário principal
             if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) {
                 limparFinanceiroCampos();
             } else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) {
-                 finEditIdx.index--; // Ajusta o índice se um item anterior no mesmo mês foi removido
+                 finEditIdx.index--;
             }
-
-
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                populateMesAnoSelectFinanceiro(); // Atualiza o select de meses (caso um mês tenha ficado vazio)
-                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); // Re-renderiza o mês atual no modal
+                populateMesAnoSelectFinanceiro();
+                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
             }
         }
 
-
-        function confirmarEdicaoFinanceiro() {
-            adicionarFinanceiro(); // A lógica de edição está dentro de adicionarFinanceiro agora
-        }
-
+        function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
         function limparFinanceiroCampos() {
-            document.getElementById('formFinanceiro').reset(); // Reseta o formulário
-            finEditIdx = null; // Limpa o índice de edição
+            document.getElementById('formFinanceiro').reset();
+            finEditIdx = null;
             mostrarBotoesFinanceiro();
         }
-
-        function cancelarEdicaoFinanceiro() {
-            limparFinanceiroCampos();
-        }
+        function cancelarEdicaoFinanceiro() { limparFinanceiroCampos(); }
 
         function getAllMonthKeysSorted(financeiroData) {
-            // Pega todas as chaves (AAAA-MM), e as ordena da mais recente para a mais antiga
             return Object.keys(financeiroData).sort((a, b) => {
                 const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
                 const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
-                return dateB - dateA; // Mais recente primeiro
+                return dateB - dateA;
             });
         }
 
         function populateMesAnoSelectFinanceiro() {
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            selectElement.innerHTML = ''; // Limpa opções existentes
-
+            const currentValue = selectElement.value; // Salva o valor atual para tentar restaurar
+            selectElement.innerHTML = '';
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             let monthKeys = getAllMonthKeysSorted(controleFinanceiroData);
             const currentMonthKey = getCurrentMonthYearKey();
 
-            // Garante que o mês atual esteja na lista, mesmo que não tenha dados
             if (!monthKeys.includes(currentMonthKey)) {
                 monthKeys.push(currentMonthKey);
-                 monthKeys = monthKeys.sort((a, b) => { // Re-ordena após adicionar o mês atual
+                 monthKeys = monthKeys.sort((a, b) => {
                     const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
                     const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
                     return dateB - dateA;
                 });
             }
-
-
-            if (monthKeys.length === 0) { // Caso raro, se não houver chaves e o mês atual não foi adicionado
-                 monthKeys.push(currentMonthKey);
-            }
+            if (monthKeys.length === 0) monthKeys.push(currentMonthKey);
 
             monthKeys.forEach(key => {
                 const option = document.createElement('option');
@@ -1276,72 +1255,86 @@
                 selectElement.appendChild(option);
             });
 
-            // Tenta selecionar o mês previamente selecionado ou o mais recente/atual
-             if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
+            if (currentValue && monthKeys.includes(currentValue)) {
+                selectElement.value = currentValue;
+                financeiroSelecionadoMesAno = currentValue;
+            } else if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
                 selectElement.value = financeiroSelecionadoMesAno;
             } else if (monthKeys.length > 0) {
-                selectElement.value = monthKeys[0]; // Seleciona o mais recente por padrão
+                selectElement.value = monthKeys[0];
                 financeiroSelecionadoMesAno = monthKeys[0];
             }
         }
 
-
         function renderizarConteudoModalFinanceiro(monthKey) {
-            financeiroSelecionadoMesAno = monthKey; // Atualiza a variável global
+            financeiroSelecionadoMesAno = monthKey;
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            if(selectElement.value !== monthKey) selectElement.value = monthKey; // Sincroniza o select
+            if(selectElement.value !== monthKey) selectElement.value = monthKey;
 
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            const lancamentosDoMes = controleFinanceiroData[monthKey] || [];
-
-            let totalPago = 0;
-            let totalAReceber = 0;
-
-            lancamentosDoMes.forEach(item => {
-                const valorItem = parseFloat(item.valor) || 0;
-                if (item.status === 'Pago') {
-                    totalPago += valorItem;
-                } else {
-                    totalAReceber += valorItem;
-                }
+            const lancamentosDoMesOrig = controleFinanceiroData[monthKey] || [];
+            
+            // Ordenar lançamentos do mês por nome
+            const lancamentosDoMes = lancamentosDoMesOrig.slice().sort((a, b) => {
+                const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (nomeA < nomeB) return -1;
+                if (nomeA > nomeB) return 1;
+                return 0;
             });
 
-            let somatorioHtml = `
-                <div style="padding: 10px 5px; margin-bottom: 15px; background: #102b1f; border-radius: 8px; text-align: center; border: 1px solid var(--c-green);">
-                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago (Mês):</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
-                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber (Mês):</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p>
-                </div>`;
 
-            let tabelaHtml = `<table>
-                <thead>
-                    <tr>
-                        <th>Nome/Descrição</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Tipo</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>`;
+            let totalPago = 0, totalAReceber = 0;
+            lancamentosDoMes.forEach(item => {
+                const valorItem = parseFloat(item.valor) || 0;
+                if (item.status === 'Pago') totalPago += valorItem;
+                else totalAReceber += valorItem;
+            });
+
+            let somatorioHtml = `<div style="padding: 10px 5px; margin-bottom: 15px; background: #102b1f; border-radius: 8px; text-align: center; border: 1px solid var(--c-green);">
+                <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago (Mês):</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
+                <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber (Mês):</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p></div>`;
+            let tabelaHtml = `<table><thead><tr><th>Nome/Descrição</th><th>Valor</th><th>Status</th><th>Tipo</th><th>Ações</th></tr></thead><tbody>`;
 
             if (lancamentosDoMes.length) {
-                // Renderiza na ordem original (mais antigo primeiro) ou invertido (mais novo primeiro).
-                // Vamos manter a ordem de inserção por enquanto, mas pode ser invertido com .slice().reverse()
-                lancamentosDoMes.forEach((item, index) => {
+                lancamentosDoMes.forEach((item, index) => { // O 'index' aqui é após a ordenação. Precisamos do índice original para edição/remoção se não passarmos o objeto.
+                                                            // Melhor: ao editar/remover, passamos o monthKey e o índice DENTRO da lista daquele mês (antes da ordenação para exibição).
+                                                            // Para os botões, o 'index' será o índice na lista ordenada. Para buscar o item original, precisamos de um identificador único ou buscar pelo conteúdo.
+                                                            // Solução: A edição e remoção no modal usará o 'monthKey' e o índice do item na lista *original* daquele mês.
+                                                            // O 'index' do forEach aqui é apenas para a renderização.
+                                                            // Os botões onclick chamarão com 'monthKey' e o índice original. Para isso, a lista passada para os botões deve ser a original.
+                                                            // Vamos ajustar: os botões usarão o índice da lista *original* (antes de ordenar para exibição).
+                    const originalItemIndex = lancamentosDoMesOrig.findIndex(origItem => 
+                        origItem.nome === item.nome && 
+                        origItem.valor === item.valor &&
+                        origItem.status === item.status &&
+                        origItem.tipo === item.tipo 
+                        // Adicionar mais campos se necessário para garantir unicidade, ou melhor, dar um ID único a cada lançamento.
+                        // Por simplicidade agora, essa busca pode ter colisões se houver itens idênticos.
+                        // A melhor abordagem seria adicionar um ID único a cada lançamento ao criá-lo.
+                        // Por ora, vamos manter a lógica de passar o índice da lista original, mas cientes da limitação.
+                        // Para a função renderizar, ela já recebe os dados ordenados. Os botões precisam do índice na lista *não ordenada*.
+                        // Vamos ajustar os botões para usar o índice da lista `lancamentosDoMesOrig`
+                    );
+
+
                     const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const valorFormatado = formatarMoeda(item.valor);
                     const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    // Encontra o índice do item atual (ordenado) na lista original (não ordenada)
+                    // Esta é uma simplificação e pode falhar com itens duplicados. Um ID único por lançamento seria melhor.
+                    const idxNaListaOriginal = lancamentosDoMesOrig.indexOf(item);
+
                     tabelaHtml += `<tr>
                         <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
                         <td style="text-align:center;">${valorFormatado}</td>
                         <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
                         <td style="text-align:center;">${tipoHtml}</td>
                         <td class="table-actions">
-                            <button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                            <button onclick="editarFinanceiro('${monthKey}', ${idxNaListaOriginal})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerFinanceiro('${monthKey}', ${idxNaListaOriginal})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td></tr>`;
                 });
             } else {
                 tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`;
@@ -1359,7 +1352,6 @@
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
             const currentIndex = selectElement.selectedIndex;
             const newIndex = currentIndex + offset;
-
             if (newIndex >= 0 && newIndex < selectElement.options.length) {
                 selectElement.selectedIndex = newIndex;
                 atualizarModalFinanceiroComMesSelecionado();
@@ -1368,47 +1360,42 @@
 
         function irParaMesAtualFinanceiro() {
             const currentMonthKey = getCurrentMonthYearKey();
-             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            // Verifica se o mês atual existe nas opções, se não, pode ser necessário repopular.
-            // Por segurança, repopulamos para garantir que o mês atual esteja lá.
-            populateMesAnoSelectFinanceiro();
-            selectElement.value = currentMonthKey; // Tenta selecionar
-            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) { // Fallback se não encontrou
-                 selectElement.value = selectElement.options[0].value;
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            populateMesAnoSelectFinanceiro(); // Garante que o mês atual esteja nas opções
+            
+            // Tenta selecionar o mês atual. Se não existir (improvável após populate), seleciona o primeiro.
+            if (Array.from(selectElement.options).some(opt => opt.value === currentMonthKey)) {
+                selectElement.value = currentMonthKey;
+            } else if (selectElement.options.length > 0) {
+                selectElement.value = selectElement.options[0].value;
             }
             renderizarConteudoModalFinanceiro(selectElement.value);
         }
 
-
         function abrirModalFinanceiro() {
-            populateMesAnoSelectFinanceiro(); // Popula o select com os meses disponíveis
-             // Decide qual mês mostrar: o último selecionado, ou o atual, ou o mais recente com dados
+            populateMesAnoSelectFinanceiro();
             const currentMonthKey = getCurrentMonthYearKey();
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             const allMonths = getAllMonthKeysSorted(controleFinanceiroData);
 
-            if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {
-                // Mantém o último selecionado se ainda válido
-            } else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) {
-                financeiroSelecionadoMesAno = currentMonthKey;
-            } else if (allMonths.length > 0) {
-                financeiroSelecionadoMesAno = allMonths[0]; // Mais recente com dados
-            } else {
-                 financeiroSelecionadoMesAno = currentMonthKey; // Fallback final
+            let targetMonth = financeiroSelecionadoMesAno; // Tenta manter o último selecionado
+            if (!targetMonth || !allMonths.includes(targetMonth)) { // Se não houver último selecionado ou ele não for mais válido
+                 if (allMonths.includes(currentMonthKey)) {
+                    targetMonth = currentMonthKey;
+                 } else if (allMonths.length > 0) {
+                    targetMonth = allMonths[0]; // O mais recente com dados
+                 } else {
+                    targetMonth = currentMonthKey; // Fallback para o mês atual se não houver dados
+                 }
             }
-
+            financeiroSelecionadoMesAno = targetMonth;
             document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno;
             renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
             document.getElementById('modalFinanceiro').classList.add('active');
         }
+        function fecharModalFinanceiro() { document.getElementById('modalFinanceiro').classList.remove('active'); }
 
-
-        function fecharModalFinanceiro() {
-            document.getElementById('modalFinanceiro').classList.remove('active');
-        }
-
-
-        // -- Cadastro de Alunos (com edição e modal)
+        // -- Cadastro de Alunos (AnyDesk) --
         function mostrarBotoesAluno() {
             const nome = document.getElementById('nomeAluno').value.trim();
             const anydesk = document.getElementById('anydeskAluno').value.trim();
@@ -1425,21 +1412,36 @@
         function adicionarAluno() {
             const nome = document.getElementById('nomeAluno').value.trim();
             const anydesk = document.getElementById('anydeskAluno').value.trim();
-            if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
+            if (!nome || !anydesk) { alert('Preencha nome e AnyDesk.'); return; }
+            
             let lista = recuperarLocal('alunosAnyDesk', []);
+
+            // Verifica se já existe um aluno com o mesmo nome E AnyDesk (exceto se estiver editando o próprio)
+            const alunoExistente = lista.find((al, index) => 
+                al.nome.toLowerCase() === nome.toLowerCase() && 
+                al.anydesk === anydesk &&
+                (alunoEditIdx === null || alunoEditIdx !== index) // Permite salvar se for o mesmo aluno em edição
+            );
+
+            if (alunoEditIdx === null && alunoExistente) {
+                alert('Já existe um aluno cadastrado com este nome e AnyDesk.');
+                return;
+            }
+            
             if (alunoEditIdx === null) {
                 lista.push({ nome, anydesk });
+                alert('Aluno cadastrado com sucesso!');
             } else {
                 if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
                     lista[alunoEditIdx] = { nome, anydesk };
+                    alert('Dados do aluno atualizados!');
                 } else {
                     console.error("Índice de edição inválido:", alunoEditIdx);
-                    limparAlunoCampos();
-                    return;
+                    limparAlunoCamposComPesquisa(); return;
                 }
             }
             salvarLocal('alunosAnyDesk', lista);
-            limparAlunoCampos();
+            limparAlunoCamposComPesquisa();
             if (document.getElementById('modalAlunos').classList.contains('active')) {
                 abrirModalAlunos();
             }
@@ -1447,35 +1449,30 @@
 
         function editarAluno(idx) {
             let lista = recuperarLocal('alunosAnyDesk', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para edição:", idx);
-                return;
-            }
+            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido:", idx); return; }
             document.getElementById('nomeAluno').value = lista[idx].nome;
             document.getElementById('anydeskAluno').value = lista[idx].anydesk;
             alunoEditIdx = idx;
             mostrarBotoesAluno();
             fecharModalAlunos();
+            limparResultadosPesquisaAlunos();
             document.getElementById('nomeAluno').focus();
         }
 
         function confirmarEdicaoAluno() { adicionarAluno(); }
-
-        function cancelarEdicaoAluno() {
-            limparAlunoCampos();
+        
+        function cancelarEdicaoAlunoComPesquisa() {
+            limparAlunoCamposComPesquisa();
         }
 
         function removerAluno(idx) {
             if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
             let lista = recuperarLocal('alunosAnyDesk', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para remoção:", idx);
-                return;
-            }
-            lista.splice(idx, 1);
+            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido:", idx); return; }
+            lista.splice(idx,1);
             salvarLocal('alunosAnyDesk', lista);
             if (alunoEditIdx === idx) {
-                limparAlunoCampos();
+                limparAlunoCamposComPesquisa();
             } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
                 alunoEditIdx--;
             }
@@ -1483,13 +1480,49 @@
                 abrirModalAlunos();
             }
         }
-
-        function limparAlunoCampos() {
+        
+        function limparAlunoCamposComPesquisa() {
             document.getElementById('nomeAluno').value = '';
             document.getElementById('anydeskAluno').value = '';
             alunoEditIdx = null;
+            limparResultadosPesquisaAlunos();
             mostrarBotoesAluno();
         }
+
+        function pesquisarAlunosNoCard(termo) {
+            const listaResultadosDiv = document.getElementById('listaResultadosPesquisaAlunos');
+            if (!termo.trim()) {
+                listaResultadosDiv.innerHTML = '';
+                return;
+            }
+            const alunos = recuperarLocal('alunosAnyDesk', []);
+            const termoNormalizado = termo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            const resultadosFiltrados = alunos.filter(aluno => 
+                String(aluno.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(termoNormalizado)
+            ).sort((a,b) => String(a.nome).localeCompare(String(b.nome))); // Ordena resultados alfabeticamente
+
+            listaResultadosDiv.innerHTML = '';
+            resultadosFiltrados.slice(0, 7).forEach(aluno => { // Limita a 7 resultados para não poluir
+                const divItem = document.createElement('div');
+                divItem.textContent = aluno.nome;
+                divItem.onclick = () => selecionarAlunoPesquisado(aluno);
+                listaResultadosDiv.appendChild(divItem);
+            });
+        }
+
+        function selecionarAlunoPesquisado(aluno) {
+            document.getElementById('nomeAluno').value = aluno.nome;
+            document.getElementById('anydeskAluno').value = aluno.anydesk;
+            limparResultadosPesquisaAlunos();
+            mostrarBotoesAluno(); // Atualiza os botões com base nos campos preenchidos
+            // document.getElementById('anydeskAluno').focus(); // Opcional: focar no campo de Anydesk
+        }
+
+        function limparResultadosPesquisaAlunos() {
+            document.getElementById('listaResultadosPesquisaAlunos').innerHTML = '';
+        }
+
 
         function abrirModalAlunos() {
             let listaOriginal = recuperarLocal('alunosAnyDesk', []);
@@ -1497,17 +1530,12 @@
             listaComIndices.sort((a, b) => {
                 const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                if (nomeA < nomeB) return -1;
-                if (nomeA > nomeB) return 1;
-                const anydeskA = String(a.anydesk || '').toLowerCase();
-                const anydeskB = String(b.anydesk || '').toLowerCase();
-                if (anydeskA < anydeskB) return -1;
-                if (anydeskA > anydeskB) return 1;
-                return 0;
+                if (nomeA < nomeB) return -1; if (nomeA > nomeB) return 1;
+                return 0; // Mantém a ordem secundária se nomes forem iguais
             });
 
             let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
-            if (listaComIndices.length) {
+            if(listaComIndices.length){
                 listaComIndices.forEach(item => {
                     const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const anydeskHtml = String(item.anydesk || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1517,8 +1545,7 @@
                         <td class="table-actions" style="text-align:center;">
                             <button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
                             <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                        </td></tr>`;
                 });
             } else {
                 html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
@@ -1527,16 +1554,12 @@
             document.getElementById('conteudoModalAlunos').innerHTML = html;
             document.getElementById('modalAlunos').classList.add('active');
         }
-
-        function fecharModalAlunos() {
-            document.getElementById('modalAlunos').classList.remove('active');
-        }
+        function fecharModalAlunos() { document.getElementById('modalAlunos').classList.remove('active'); }
 
         // -- Anotações Rápidas --
         function mostrarBotoesAnotacao() {
             const val = document.getElementById('anotacaoInput').value.trim();
             const isEditing = anotacaoEditIdx !== null;
-
             document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none';
             document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none';
             document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none';
@@ -1547,67 +1570,40 @@
             const val = document.getElementById('anotacaoInput').value.trim();
             if (!val) return;
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-
             if (anotacaoEditIdx !== null) {
-                if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
-                    anotacoes[anotacaoEditIdx] = val;
-                } else {
-                    console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
-                }
-            } else {
-                anotacoes.push(val);
-            }
+                if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) anotacoes[anotacaoEditIdx] = val;
+                else console.error("Índice inválido:", anotacaoEditIdx);
+            } else { anotacoes.push(val); }
             salvarLocal('anotacoesRapidas', anotacoes);
-            limparAnotacaoCampos();
-            listarAnotacoes();
+            limparAnotacaoCampos(); listarAnotacoes();
         }
 
         function editarAnotacao(idxExibicao) {
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndex = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
-
+            let originalIndex = anotacoes.length - 1 - idxExibicao;
             if (originalIndex >= 0 && originalIndex < anotacoes.length) {
                 document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
                 anotacaoEditIdx = originalIndex;
-                mostrarBotoesAnotacao();
-                document.getElementById('anotacaoInput').focus();
-            } else {
-                console.error("Índice de exibição inválido para editar anotação:", idxExibicao, "Original index:", originalIndex);
-                limparAnotacaoCampos();
-            }
+                mostrarBotoesAnotacao(); document.getElementById('anotacaoInput').focus();
+            } else { console.error("Índice inválido:", idxExibicao, originalIndex); limparAnotacaoCampos(); }
         }
 
-        function cancelarEdicaoAnotacao() {
-            limparAnotacaoCampos();
-        }
-
+        function cancelarEdicaoAnotacao() { limparAnotacaoCampos(); }
         function removerAnotacao(idxExibicao) {
-            if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
+            if (!confirm('Excluir esta anotação?')) return;
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
-
+            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
             if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
-                if (anotacaoEditIdx === originalIndexToRemove) { // Se estiver editando a anotação que será removida
-                    limparAnotacaoCampos();
-                }
+                if (anotacaoEditIdx === originalIndexToRemove) limparAnotacaoCampos();
                 anotacoes.splice(originalIndexToRemove, 1);
-                salvarLocal('anotacoesRapidas', anotacoes);
-                listarAnotacoes();
-
-                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
-                    anotacaoEditIdx--;
-                }
-            } else {
-                console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
-            }
+                salvarLocal('anotacoesRapidas', anotacoes); listarAnotacoes();
+                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) anotacaoEditIdx--;
+            } else { console.error("Índice inválido:", idxExibicao); }
         }
-
         function limparAnotacaoCampos() {
             document.getElementById('anotacaoInput').value = '';
-            anotacaoEditIdx = null;
-            mostrarBotoesAnotacao();
+            anotacaoEditIdx = null; mostrarBotoesAnotacao();
         }
-
         function listarAnotacoes() {
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
             let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
@@ -1615,31 +1611,24 @@
             if (Array.isArray(anotacoes)) {
                 anotacoes.slice().reverse().forEach((a, idxExibicao) => {
                     const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${anotacaoHtml}</td>
-                            <td class="table-actions" style="text-align:center;">
-                                <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
-                                <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>`;
+                    tbody.innerHTML += `<tr><td>${anotacaoHtml}</td><td class="table-actions" style="text-align:center;">
+                        <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
+                        <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
-            } else {
-                console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
-                salvarLocal('anotacoesRapidas', []); // Corrige para um array vazio se não for
-            }
+            } else { console.error("Anotações não é array:", anotacoes); salvarLocal('anotacoesRapidas', []); }
         }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
+        // -- Gerais --
+        document.addEventListener('keydown', function(e){
+            if(e.key === "Escape") {
                 if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
                 if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
                 if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
-
                 if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
-                if (alunoEditIdx !== null) cancelarEdicaoAluno();
+                if (alunoEditIdx !== null) cancelarEdicaoAlunoComPesquisa();
                 if (finEditIdx !== null) cancelarEdicaoFinanceiro();
                 if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+                limparResultadosPesquisaAlunos(); // Limpa resultados da pesquisa de alunos se Esc for pressionado
             }
         });
 
@@ -1648,98 +1637,93 @@
                 diarioClasseLista: recuperarLocal('diarioClasseLista', []),
                 alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
                 anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
-                controleFinanceiro: recuperarLocal('controleFinanceiro', {}) // Exporta como objeto
+                controleFinanceiro: recuperarLocal('controleFinanceiro', {})
             };
-            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+            const blob = new Blob([JSON.stringify(dados, null, 2)], {type: "application/json"});
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
             const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
             a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
         }
 
         function importarDados(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const dadosImportados = JSON.parse(e.target.result);
-                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato de arquivo inválido!");
-
-                    // Importação para diarioClasseLista (array)
+                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato inválido!");
                     if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
                     else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
-
-                    // Importação para alunosAnyDesk (array)
                     if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
                     else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
-
-                    // Importação para anotacoesRapidas (array)
                     if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
                     else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
-
-                    // Importação para controleFinanceiro (objeto)
-                    if (typeof dadosImportados.controleFinanceiro === "object" &&
-                        dadosImportados.controleFinanceiro !== null &&
-                        !Array.isArray(dadosImportados.controleFinanceiro)) {
+                    if (typeof dadosImportados.controleFinanceiro === "object" && dadosImportados.controleFinanceiro !== null && !Array.isArray(dadosImportados.controleFinanceiro)) {
                         salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
-                    } else if ("controleFinanceiro" in dadosImportados) { // Se a chave existe mas não é objeto válido
-                        salvarLocal('controleFinanceiro', {}); // Salva um objeto vazio
-                    }
+                    } else if ("controleFinanceiro" in dadosImportados) { salvarLocal('controleFinanceiro', {}); }
 
-
-                    limparCamposDiario();
-                    limparAlunoCampos();
-                    limparFinanceiroCampos();
-                    limparAnotacaoCampos();
-                    listarAnotacoes();
-
-                    alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
-                } catch (err) {
-                    alert("Falha na importação: " + err.message);
+                    limparCamposDiario(); limparAlunoCamposComPesquisa(); limparFinanceiroCampos(); limparAnotacaoCampos(); listarAnotacoes();
+                    alert("Dados importados com sucesso!");
+                } catch (err) { alert("Falha na importação: " + err.message);
                 } finally {
                     if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
                     if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
                     if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                        // Ao importar, o modal financeiro precisa ser reinicializado para o mês mais recente ou atual
-                        financeiroSelecionadoMesAno = ''; // Força a reavaliação do mês
-                        abrirModalFinanceiro();
+                        financeiroSelecionadoMesAno = ''; abrirModalFinanceiro();
                     }
-                    mostrarBotoesDiario();
-                    mostrarBotoesAluno();
-                    mostrarBotoesFinanceiro();
-                    mostrarBotoesAnotacao();
+                    mostrarBotoesDiario(); mostrarBotoesAluno(); mostrarBotoesFinanceiro(); mostrarBotoesAnotacao();
                 }
             };
-            reader.readAsText(file);
-            event.target.value = "";
+            reader.readAsText(file); event.target.value = "";
         }
+        
+        function setAnoAtualFooter() {
+            const ano = new Date().getFullYear();
+            const footerSpan = document.getElementById('anoAtualFooter');
+            if (footerSpan) { // Se o span existir, atualiza. Caso contrário, adiciona.
+                footerSpan.textContent = ano;
+            } else {
+                 const footerElement = document.querySelector('footer');
+                 const newSpan = document.createElement('span');
+                 newSpan.id = 'anoAtualFooter';
+                 newSpan.textContent = ano;
+                 // Insere o ano antes do texto "2025" ou no início se "2025" não estiver lá.
+                 // Como o "2025" está fixo no HTML, vamos apenas adicionar ao lado.
+                 // Ou melhor, vamos substituir o "2025" fixo.
+                 footerElement.textContent = `RS TECH ${ano}`; // Substitui todo o conteúdo
+            }
+        }
+
 
         document.addEventListener('DOMContentLoaded', () => {
             limparCamposDiario();
-            limparAlunoCampos();
+            limparAlunoCamposComPesquisa(); // Usa a nova função de limpar
             limparFinanceiroCampos();
             limparAnotacaoCampos();
             listarAnotacoes();
+            setAnoAtualFooter(); // Define o ano no rodapé
 
-            // Inicializa o mês selecionado para o financeiro para o mês atual ou o mais recente
             const currentFinMonth = getCurrentMonthYearKey();
             const finData = recuperarLocal('controleFinanceiro', {});
             const sortedFinMonths = getAllMonthKeysSorted(finData);
-            if (sortedFinMonths.includes(currentFinMonth)){
-                financeiroSelecionadoMesAno = currentFinMonth;
-            } else if (sortedFinMonths.length > 0) {
-                financeiroSelecionadoMesAno = sortedFinMonths[0];
-            } else {
-                financeiroSelecionadoMesAno = currentFinMonth;
-            }
+            if (sortedFinMonths.includes(currentFinMonth)){ financeiroSelecionadoMesAno = currentFinMonth; }
+            else if (sortedFinMonths.length > 0) { financeiroSelecionadoMesAno = sortedFinMonths[0]; }
+            else { financeiroSelecionadoMesAno = currentFinMonth; }
+
+            // Adiciona um listener para fechar a lista de pesquisa de alunos ao clicar fora
+            document.addEventListener('click', function(event) {
+                const searchResultsDiv = document.getElementById('listaResultadosPesquisaAlunos');
+                const nomeAlunoInput = document.getElementById('nomeAluno');
+                if (searchResultsDiv && nomeAlunoInput) {
+                    if (!searchResultsDiv.contains(event.target) && event.target !== nomeAlunoInput) {
+                        limparResultadosPesquisaAlunos();
+                    }
+                }
+            });
         });
     </script>
 </body>
-
 </html>
