@@ -1,5 +1,14 @@
-<!DOCTYPE html><html lang="pt-br">
-<head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>RS TECH</title>    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">    <style>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <style>
         :root {
             --c-cyan: #19fff7;
             --c-green: #46ff86;
@@ -202,7 +211,6 @@
             transition: border .16s, box-shadow .14s;
             overflow: visible;
             box-sizing: border-box;
-            position: relative;
         }
 
         .card.anotacoes-rapidas {
@@ -219,7 +227,6 @@
             border-bottom: 1.5px solid var(--c-yellow);
             padding-bottom: 0.5rem;
             flex-shrink: 0;
-            width: 100%; /* Garante que o h2 ocupe a largura para text-align funcionar bem */
         }
 
         .card form {
@@ -280,45 +287,6 @@
             min-width: 120px;
         }
 
-        .search-results-container {
-            position: relative;
-        }
-
-        .search-results-list {
-            position: absolute;
-            width: calc(100% - 2px);
-            max-height: 150px;
-            overflow-y: auto;
-            background: #102b1f;
-            border: 1px solid var(--c-green);
-            border-top: none;
-            border-radius: 0 0 0.5rem 0.5rem;
-            margin-top: -0.6rem;
-            z-index: 100;
-            box-sizing: border-box;
-        }
-
-        .search-results-list div {
-            padding: 0.6rem 1rem;
-            cursor: pointer;
-            color: var(--txt);
-            border-bottom: 1px solid #163221;
-            font-size: 0.95rem;
-        }
-
-        .search-results-list div:last-child {
-            border-bottom: none;
-        }
-
-        .search-results-list div:hover {
-            background-color: #193c2c;
-            color: var(--c-yellow);
-        }
-
-        .search-results-list:empty {
-            display: none;
-        }
-
         textarea {
             resize: vertical;
             min-height: 74px;
@@ -370,30 +338,18 @@
             margin-bottom: 1rem;
             font-size: 0.97rem;
             box-shadow: 0 1px 6px #19fff722;
-            overflow: hidden; /* Ajuda com border-radius em tabelas */
+            overflow: hidden;
             box-sizing: border-box;
         }
 
         table th,
         table td {
             padding: 0.6rem 0.4rem;
-            text-align: left; /* Padrão para todas as tabelas */
+            text-align: left;
             border-bottom: 1px solid #263b2b;
         }
 
-        /* Centraliza a coluna "Anotação" na tabela de Anotações Rápidas */
-        #tabelaAnotacoes th:first-child,
-        #tabelaAnotacoes td:first-child {
-            text-align: center;
-        }
-        
-        /* A coluna "Ações" é centralizada por estilos inline na TH e pela classe .table-actions + estilo inline na TD gerada por JS */
-        /* Para consistência, poderia ser uma classe:
-        .coluna-acoes { text-align: center; width: 100px; }
-        E aplicar essa classe na th e td correspondentes.
-        */
-
-        table th { /* Estilo geral para cabeçalhos de tabela */
+        table th {
             color: var(--c-green);
             font-family: var(--tit);
             border-bottom: 2px solid var(--c-cyan);
@@ -461,12 +417,13 @@
             border: 1.5px solid var(--c-green);
             background: #1d342a;
         }
-
+        /* Estilo para botões menores no seletor de mês */
         .financeiro-mes-selector .btn-sm {
             padding: 0.4rem 0.8rem;
             font-size: 0.9rem;
-            min-width: auto;
+            min-width: auto; /* Remove o min-width padrão do .btn */
         }
+
 
         footer {
             width: 100%;
@@ -477,14 +434,14 @@
             letter-spacing: 0.2em;
             background: #133829ea;
             padding: 0.85rem 0;
-            position: relative; /* Changed from fixed/absolute for simplicity if not strictly needed at bottom of viewport always */
+            position: relative;
             bottom: 0;
             z-index: 100;
             opacity: 0.85;
             user-select: none;
             box-shadow: 0 -2px 8px #16271d77;
             box-sizing: border-box;
-            margin-left: -70px; /* Matches body padding-left */
+            margin-left: -70px;
         }
 
         @media (max-width: 800px) {
@@ -498,7 +455,6 @@
                 margin-left: -50px;
             }
         }
-
 
         @media (max-width: 600px) {
             .main-controls {
@@ -542,10 +498,10 @@
             height: 100vh;
             background: rgba(0, 32, 32, 0.72);
             justify-content: center;
-            align-items: flex-start; /* Changed to flex-start to allow scroll for tall modals */
+            align-items: flex-start;
             padding: 1rem;
             box-sizing: border-box;
-            overflow-y: auto; /* Allows scrolling of the modal background if modal is too tall */
+            overflow-y: auto;
         }
 
         .modal-bg.active {
@@ -562,7 +518,7 @@
             padding: 1.5rem;
             width: 100%;
             max-width: 800px;
-            max-height: calc(100vh - 2rem); /* Max height relative to viewport */
+            max-height: calc(100vh - 2rem);
             font-family: var(--bod);
             font-size: 1.13rem;
             display: flex;
@@ -570,8 +526,6 @@
             gap: 1rem;
             position: relative;
             box-sizing: border-box;
-            margin-top: 2rem; /* Added margin for better spacing when align-items: flex-start */
-            margin-bottom: 2rem; /* Added margin for better spacing */
         }
 
         .modal-diario h3,
@@ -601,23 +555,23 @@
 
         .table-container-modal {
             flex-grow: 1;
-            min-height: 0; /* Important for flex item with overflow */
+            min-height: 0;
             overflow-y: auto;
             overscroll-behavior-y: contain;
             border-radius: 0.8rem;
             background: #133829;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-            padding-top: 0.2rem; /* Reduced padding if sticky header is used */
+            padding-top: 0.2rem;
             padding-left: 0.2rem;
             padding-right: 0.2rem;
-            padding-bottom: 2rem; /* Space for content at the bottom */
+            padding-bottom: 2rem;
             box-sizing: border-box;
         }
 
         .table-container-modal table {
             width: 100%;
             font-size: 1.0rem;
-            border-collapse: separate; /* separate for border-spacing if needed, or stick to collapse */
+            border-collapse: separate;
             border-spacing: 0;
         }
 
@@ -628,33 +582,33 @@
             text-align: center;
             vertical-align: middle;
         }
-        .table-container-modal td:first-child, /* Alinhamento da primeira coluna do modal */
+
+        .table-container-modal td:first-child,
         .table-container-modal th:first-child {
             text-align: left;
             padding-left: 1rem;
         }
-
 
         .table-container-modal th {
             color: var(--c-green);
             font-family: var(--tit);
             border-bottom: 2px solid var(--c-cyan);
             position: sticky;
-            top: -1px; /* Adjust if padding-top on container changes */
-            background: #133829; /* Match container background */
+            top: -1px;
+            background: #133829;
             z-index: 1;
         }
+
         .table-container-modal tr:last-child td {
             border-bottom: none;
         }
 
-
-        .modal-diario-table { /* Specific for diario, if different styling is needed */
+        .modal-diario-table {
             width: 100%;
             overflow-y: auto;
             overscroll-behavior-y: contain;
             border-radius: 1rem;
-            background: #163221; /* Different background for diario modal table */
+            background: #163221;
             box-shadow: 0 1px 8px #19fff744;
             flex-grow: 1;
             min-height: 0;
@@ -673,30 +627,32 @@
         .modal-diario-table td {
             padding: 0.5rem;
             border-bottom: 1px solid #263b2b;
-            text-align: left; /* Default for diario table */
+            text-align: left;
             vertical-align: middle;
         }
-         .modal-diario-table th {
+
+        .modal-diario-table th {
             color: var(--c-green);
             font-family: var(--tit);
             border-bottom: 2px solid var(--c-cyan);
             position: sticky;
             top: -1px;
-            background: #163221; /* Match diario table background */
+            background: #163221;
             z-index: 1;
         }
-        .modal-diario-table td.table-actions { /* Actions column in diario table */
+
+        .modal-diario-table td.table-actions {
             text-align: center;
         }
 
         .modal-diario-table tr:last-child td {
             border-bottom: none;
         }
+
         .modal-diario-table td {
             color: #def2e1;
             word-break: break-word;
         }
-
 
         .modal-diario-filtro {
             display: flex;
@@ -712,7 +668,7 @@
             font-size: 1.02rem;
             color: #9cf7ee;
             font-family: var(--bod);
-            margin-bottom: 0.1rem; /* Align with input baseline */
+            margin-bottom: 0.1rem;
             margin-right: 0.4rem;
         }
 
@@ -726,26 +682,24 @@
             font-size: 0.98rem;
             font-family: var(--bod);
             outline: none;
-            margin-right: 1rem; /* spacing */
+            margin-right: 1rem;
         }
+
         .modal-diario-filtro input[type="text"]:focus,
         .modal-diario-filtro input[type="date"]:focus {
             border-color: var(--c-cyan);
         }
-
-
         .financeiro-mes-selector {
             display: flex;
-            gap: 10px; /* spacing between items */
+            gap: 10px;
             align-items: center;
             margin-bottom: 1rem;
-            flex-wrap: wrap; /* allow wrapping on small screens */
+            flex-wrap: wrap;
             flex-shrink: 0;
         }
         .financeiro-mes-selector label {
             font-size: 1.02rem;
             color: #9cf7ee;
-            margin-right: 5px; /* spacing */
         }
         .financeiro-mes-selector select {
             background: #193c2c;
@@ -756,18 +710,19 @@
             font-size: 0.98rem;
             font-family: var(--bod);
             outline: none;
-            flex-grow: 1; /* allow select to grow */
-            min-width: 130px; /* minimum width */
-            margin-right: 5px; /* spacing */
+            margin-right: 5px; /* Reduzido para melhor caber com os botões */
+            flex-grow: 1; /* Para ocupar espaço disponível */
+            min-width: 120px; /* Para não ficar muito pequeno */
         }
-         .financeiro-mes-selector .btn { /* Reuses .btn, could be .btn-sm if defined elsewhere */
-            padding: 0.5rem 0.8rem;
+         .financeiro-mes-selector .btn { /* Aplicando o estilo de .btn aos botões de navegação */
+            padding: 0.5rem 0.8rem; /* Ajuste para botões um pouco menores que os de formulário */
             font-size: 0.95rem;
-            min-width: auto; /* override .btn min-width if necessary */
-            flex-shrink: 0; /* prevent buttons from shrinking */
-         }
+            min-width: auto; /* Remove o min-width do .btn padrão */
+        }
+
     </style>
 </head>
+
 <body>
     <nav class="atalhos-lateral" aria-label="Atalhos Rápidos">
         <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
@@ -812,18 +767,15 @@
             <div style="display: flex; flex-direction: column; flex-grow: 1;">
                 <h2>Cadastro de Alunos (AnyDesk)</h2>
                 <form onsubmit="event.preventDefault(); adicionarAluno();">
-                    <div class="search-results-container">
-                        <input id="nomeAluno" placeholder="Nome do Aluno (ou pesquise)" autocomplete="off" oninput="pesquisarAlunosNoCard(this.value); mostrarBotoesAluno();" onblur="setTimeout(limparResultadosPesquisaAlunos, 200);">
-                        <div id="listaResultadosPesquisaAlunos" class="search-results-list"></div>
-                    </div>
+                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
                     <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
                     <div class="aluno-form-actions-wrapper">
                         <div class="alunos-btns">
                             <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
-                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCamposComPesquisa()">Limpar Tudo</button>
+                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
                         </div>
                         <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAlunoComPesquisa()">Cancelar</button>
+                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -848,7 +800,7 @@
                     <div class="financeiro-form-actions-wrapper">
                         <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
                         <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
+                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</option>
                         <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
                     </div>
                 </form>
@@ -857,9 +809,9 @@
         </div>
 
         <div class="card anotacoes-rapidas">
-            <div style="display: flex; flex-direction: column; flex-grow: 1; align-items: center;"> {/* Adicionado align-items: center */}
+            <div style="display: flex; flex-direction: column; flex-grow: 1;">
                 <h2>Anotações Rápidas</h2>
-                <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();" style="width: 100%;"> {/* Adicionado width: 100% */}
+                <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
                     <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
                     <div class="anotacoes-form-actions-wrapper">
                         <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
@@ -868,10 +820,10 @@
                         <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
                     </div>
                 </form>
-                <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto; display: block; width: 100%;"> {/* Adicionado width: 100% */}
+                <table id="tabelaAnotacoes" style="margin-top:1rem; flex-grow: 1; overflow-y: auto; display: block;">
                     <thead>
                         <tr>
-                            <th>Anotação</th> {/* Será centralizado por CSS #tabelaAnotacoes th:first-child */ }
+                            <th>Anotação</th>
                             <th style="width:100px; text-align:center;">Ações</th>
                         </tr>
                     </thead>
@@ -933,7 +885,7 @@
     </div>
 
     <footer>
-        RS TECH <span id="anoAtualFooter"></span>
+        2025
     </footer>
 
     <script>
@@ -946,8 +898,9 @@
             const item = localStorage.getItem(key);
             try {
                 const parsedItem = item ? JSON.parse(item) : fallback;
-                if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) { // Specific check for controleFinanceiro
-                    return fallback; 
+                // Para controleFinanceiro, garantir que seja um objeto
+                if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) {
+                    return fallback;
                 }
                 return parsedItem;
             } catch (e) {
@@ -957,38 +910,42 @@
         }
 
         let diarioEditIdx = null;
-        let finEditIdx = null; 
+        let finEditIdx = null; // Agora será um objeto: { monthKey: "AAAA-MM", index: N } ou null
         let alunoEditIdx = null;
         let anotacaoEditIdx = null;
-        let financeiroSelecionadoMesAno = ''; // Stores 'YYYY-MM'
 
+        let financeiroSelecionadoMesAno = ''; // Guarda o AAAA-MM selecionado no modal financeiro
+
+        // Função Utilitária para formatar moeda
         function formatarMoeda(valor) {
             const numero = parseFloat(valor) || 0;
             return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
-        function getFormattedMonthYear(date) {
+        // Funções Utilitárias de Data para Financeiro
+        function getFormattedMonthYear(date) { // date é um objeto Date
             const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Meses são 0-indexados
             return `${year}-${month}`;
         }
 
         function getCurrentMonthYearKey() {
             return getFormattedMonthYear(new Date());
         }
-        
-        function parseMonthYearKey(monthYearKey) { // 'YYYY-MM'
+
+        function parseMonthYearKey(monthYearKey) { // "AAAA-MM" -> { year: AAAA, month: MM (1-12) }
             const parts = monthYearKey.split('-');
             return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
         }
 
-        function monthYearKeyToDisplay(monthYearKey) { // 'YYYY-MM' to 'MM/YYYY'
+        function monthYearKeyToDisplay(monthYearKey) { // "AAAA-MM" -> "MM/AAAA"
              if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido";
             const parts = monthYearKey.split('-');
             return `${parts[1]}/${parts[0]}`;
         }
 
 
+        // ---------------- DIÁRIO DE CLASSE - Funções de Gerenciamento de Formulário e Edição ----------------
         function mostrarBotoesDiario() {
             const aluno = document.getElementById('diarioAluno').value.trim();
             const data = document.getElementById('diarioData').value;
@@ -1010,75 +967,102 @@
 
         function editarDiarioClasse(idx) {
             let lista = recuperarLocal('diarioClasseLista', []);
-            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar diário:", idx); return; }
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para editar registro do diário:", idx);
+                return;
+            }
             const registro = lista[idx];
             document.getElementById('diarioAluno').value = registro.aluno;
             document.getElementById('diarioData').value = registro.data;
             document.getElementById('diarioConteudo').value = registro.conteudo;
             diarioEditIdx = idx;
             mostrarBotoesDiario();
-            fecharModalDiario(); // Close modal to edit on main form
+            fecharModalDiario();
             document.getElementById('diarioAluno').focus();
         }
 
         function removerDiarioClasse(idx) {
-            if (!confirm('Excluir este registro do diário?')) return;
+            if (!confirm('Tem certeza que deseja excluir este registro do diário?')) return;
             let lista = recuperarLocal('diarioClasseLista', []);
-            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover do diário:", idx); return; }
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para remover registro do diário:", idx);
+                return;
+            }
             lista.splice(idx, 1);
             salvarLocal('diarioClasseLista', lista);
-            if (diarioEditIdx === idx) limparCamposDiario(); // Reset form if editing this item
-            else if (diarioEditIdx !== null && idx < diarioEditIdx) diarioEditIdx--; // Adjust edit index if an earlier item was removed
-            
-            if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); // Refresh modal if open
+
+            if (diarioEditIdx === idx) {
+                limparCamposDiario();
+            } else if (diarioEditIdx !== null && idx < diarioEditIdx) {
+                diarioEditIdx--;
+            }
+            if (document.getElementById('modalDiario').classList.contains('active')) {
+                filtrarModalDiario();
+            }
         }
 
-        function confirmarEdicaoDiarioClasse() { salvarDiarioClasse(); }
-        function cancelarEdicaoDiarioClasse() { limparCamposDiario(); }
+        function confirmarEdicaoDiarioClasse() {
+            salvarDiarioClasse();
+        }
 
+        function cancelarEdicaoDiarioClasse() {
+            limparCamposDiario();
+        }
+
+        // ---------------- DIÁRIO DE CLASSE (Salvar, Abrir/Fechar Modal, Filtrar) ----------------
         function salvarDiarioClasse() {
             const aluno = document.getElementById('diarioAluno').value.trim();
             const data = document.getElementById('diarioData').value;
             const conteudo = document.getElementById('diarioConteudo').value.trim();
 
-            if (!aluno || !data || !conteudo) { alert('Preencha todos os campos do diário.'); return; }
+            if (!aluno || !data || !conteudo) {
+                alert('Preencha todos os campos do diário.');
+                return;
+            }
 
             let lista = recuperarLocal('diarioClasseLista', []);
-            if (diarioEditIdx !== null) { // Editing existing
+
+            if (diarioEditIdx !== null) {
                 if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
                     lista[diarioEditIdx] = { aluno, data, conteudo };
-                    alert('Registro do diário atualizado com sucesso!');
+                    alert('Registro do diário atualizado com sucesso.');
                 } else {
-                    console.error("Índice de edição do diário inválido:", diarioEditIdx);
-                    limparCamposDiario(); // Reset state
+                    console.error("Índice de edição inválido para diário:", diarioEditIdx);
+                    limparCamposDiario();
                     return;
                 }
-            } else { // Adding new
+            } else {
                 lista.push({ aluno, data, conteudo });
-                alert('Registro do diário salvo com sucesso!');
+                alert('Registro salvo no Diário de Classe.');
             }
+
             salvarLocal('diarioClasseLista', lista);
             limparCamposDiario();
-            if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
+
+            if (document.getElementById('modalDiario').classList.contains('active')) {
+                filtrarModalDiario();
+            }
         }
-        
+
         function abrirModalDiario() {
             document.getElementById('modalDiario').classList.add('active');
-            document.getElementById('filtroNome').value = ''; // Clear filters
+            document.getElementById('filtroNome').value = '';
             document.getElementById('filtroData').value = '';
-            filtrarModalDiario(); // Initial population
+            filtrarModalDiario();
         }
-        function fecharModalDiario() { document.getElementById('modalDiario').classList.remove('active'); }
+
+        function fecharModalDiario() {
+            document.getElementById('modalDiario').classList.remove('active');
+        }
 
         document.addEventListener('input', function(e) {
             if ((e.target.id === 'filtroNome' || e.target.id === 'filtroData') && document.getElementById('modalDiario').classList.contains('active')) {
                 filtrarModalDiario();
             }
         });
-        
+
         function filtrarModalDiario() {
             let listaOriginal = recuperarLocal('diarioClasseLista', []);
-            // Create a map of original items to their original indices
             const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
 
             const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
@@ -1089,19 +1073,37 @@
                 (!filtroData || reg.data === filtroData)
             );
 
-            let html = `<table><thead><tr><th>Data</th><th>Aluno</th><th>Conteúdo</th><th>Ações</th></tr></thead><tbody>`;
+            let html = `<table><thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Aluno</th>
+                    <th>Conteúdo Ministrado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead><tbody>`;
+
             if (filtrados.length) {
-                filtrados.slice().reverse().forEach(reg => { // Display newest first
+                filtrados.slice().reverse().forEach(reg => {
                     const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    html += `<tr><td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td><td>${alunoHtml}</td><td>${conteudoHtml}</td>
-                        <td class="table-actions"><button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                    html += `<tr>
+                        <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
+                        <td>${alunoHtml}</td>
+                        <td>${conteudoHtml}</td>
+                        <td class="table-actions">
+                            <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
                 });
-            } else { html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`; }
+            } else {
+                html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
+            }
             html += `</tbody></table>`;
             document.getElementById('conteudoModalDiario').innerHTML = html;
         }
+
+        // ---------------- CONTROLE FINANCEIRO (NOVA LÓGICA COM MESES) ----------------
 
         function mostrarBotoesFinanceiro() {
             const nome = document.getElementById('nomeFinanceiro').value.trim();
@@ -1121,55 +1123,67 @@
             const status = document.getElementById('statusFinanceiro').value;
             const tipo = document.getElementById('tipoFinanceiro').value;
 
-            if (!nome || !valor) { alert('Preencha nome/descrição e valor.'); return; }
-            if (isNaN(parseFloat(valor))) { alert('O valor financeiro é inválido.'); return; }
+            if (!nome || !valor) {
+                alert('Preencha nome/descrição e valor.');
+                return;
+            }
+            if (isNaN(parseFloat(valor))) {
+                alert('O valor inserido não é um número válido.');
+                return;
+            }
 
-            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); // Object of months
-            let monthToUpdateDisplay;
 
-            if (finEditIdx !== null) { // Editing
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+
+            if (finEditIdx !== null) { // Editando um lançamento existente
                 const { monthKey, index } = finEditIdx;
                 if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) {
                     controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo };
-                    alert('Lançamento financeiro atualizado.');
-                    monthToUpdateDisplay = monthKey;
+                    alert('Lançamento financeiro atualizado com sucesso.');
                 } else {
                     console.error("Erro ao encontrar lançamento para edição:", finEditIdx);
-                    alert("Erro ao atualizar lançamento.");
+                    alert("Erro ao atualizar. Lançamento não encontrado.");
                     limparFinanceiroCampos();
                     return;
                 }
-            } else { // Adding new
-                const currentMonthKey = getCurrentMonthYearKey(); // YYYY-MM
-                if (!controleFinanceiroData[currentMonthKey]) controleFinanceiroData[currentMonthKey] = [];
+            } else { // Adicionando novo lançamento (sempre para o mês atual)
+                const currentMonthKey = getCurrentMonthYearKey();
+                if (!controleFinanceiroData[currentMonthKey]) {
+                    controleFinanceiroData[currentMonthKey] = [];
+                }
                 controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo });
-                alert('Novo lançamento financeiro adicionado.');
-                monthToUpdateDisplay = currentMonthKey;
+                alert('Novo lançamento financeiro adicionado ao mês atual.');
             }
 
             salvarLocal('controleFinanceiro', controleFinanceiroData);
-            limparFinanceiroCampos();
-            
+            limparFinanceiroCampos(); // Reseta finEditIdx para null
+
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                financeiroSelecionadoMesAno = monthToUpdateDisplay; // Set current month for display
-                populateMesAnoSelectFinanceiro(); // Repopulate and set selected
-                renderizarConteudoModalFinanceiro(monthToUpdateDisplay); // Render the updated month
+                // Se estiver editando, atualiza o modal para o mês do item editado.
+                // Se adicionando novo, e o modal estiver no mês atual, ele será atualizado.
+                const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
+                financeiroSelecionadoMesAno = monthToUpdate; // Garante que o select reflita isso
+                populateMesAnoSelectFinanceiro(); // Repopula e seleciona o mês correto
+                renderizarConteudoModalFinanceiro(monthToUpdate);
             }
         }
+
 
         function editarFinanceiro(monthKey, itemIndex) {
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex];
-            
+
             if (!lancamento) {
-                console.error("Lançamento financeiro não encontrado para edição:", monthKey, itemIndex);
+                console.error("Lançamento não encontrado para edição:", monthKey, itemIndex);
                 alert("Lançamento não encontrado.");
                 return;
             }
+
             document.getElementById('nomeFinanceiro').value = lancamento.nome;
             document.getElementById('valorFinanceiro').value = lancamento.valor;
             document.getElementById('statusFinanceiro').value = lancamento.status;
             document.getElementById('tipoFinanceiro').value = lancamento.tipo;
+
             finEditIdx = { monthKey: monthKey, index: itemIndex };
             mostrarBotoesFinanceiro();
             fecharModalFinanceiro();
@@ -1177,120 +1191,162 @@
         }
 
         function removerFinanceiro(monthKey, itemIndex) {
-            if (!confirm('Excluir este lançamento financeiro?')) return;
+            if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
+
             let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
             if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) {
-                console.error("Lançamento financeiro não encontrado para remoção:", monthKey, itemIndex);
-                alert("Lançamento não encontrado.");
+                console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex);
+                alert("Lançamento não encontrado para remoção.");
                 return;
             }
+
             controleFinanceiroData[monthKey].splice(itemIndex, 1);
-            // If the month array becomes empty, consider removing the monthKey or leaving it
-            // if (controleFinanceiroData[monthKey].length === 0) delete controleFinanceiroData[monthKey];
+
+            // Opcional: remover a chave do mês se o array ficar vazio
+            // if (controleFinanceiroData[monthKey].length === 0) {
+            //     delete controleFinanceiroData[monthKey];
+            // }
+
             salvarLocal('controleFinanceiro', controleFinanceiroData);
 
+            // Se o item removido era o que estava em edição no formulário principal
             if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) {
-                limparFinanceiroCampos(); // Reset form if editing this item
+                limparFinanceiroCampos();
             } else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) {
-                finEditIdx.index--; // Adjust edit index
+                 finEditIdx.index--; // Ajusta o índice se um item anterior no mesmo mês foi removido
             }
-            
+
+
             if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                populateMesAnoSelectFinanceiro(); // Month list might change if a month becomes empty
-                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); // Re-render current view
+                populateMesAnoSelectFinanceiro(); // Atualiza o select de meses (caso um mês tenha ficado vazio)
+                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); // Re-renderiza o mês atual no modal
             }
         }
-        
-        function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
-        function limparFinanceiroCampos() {
-            document.getElementById('formFinanceiro').reset();
-            finEditIdx = null; mostrarBotoesFinanceiro();
+
+
+        function confirmarEdicaoFinanceiro() {
+            adicionarFinanceiro(); // A lógica de edição está dentro de adicionarFinanceiro agora
         }
-        function cancelarEdicaoFinanceiro() { limparFinanceiroCampos(); }
+
+        function limparFinanceiroCampos() {
+            document.getElementById('formFinanceiro').reset(); // Reseta o formulário
+            finEditIdx = null; // Limpa o índice de edição
+            mostrarBotoesFinanceiro();
+        }
+
+        function cancelarEdicaoFinanceiro() {
+            limparFinanceiroCampos();
+        }
 
         function getAllMonthKeysSorted(financeiroData) {
-            return Object.keys(financeiroData).sort((a, b) => { // Sort YYYY-MM descending
+            // Pega todas as chaves (AAAA-MM), e as ordena da mais recente para a mais antiga
+            return Object.keys(financeiroData).sort((a, b) => {
                 const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
                 const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
-                return dateB - dateA;
+                return dateB - dateA; // Mais recente primeiro
             });
         }
-        
+
         function populateMesAnoSelectFinanceiro() {
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            const currentValue = selectElement.value; // Preserve current selection if still valid
-            selectElement.innerHTML = ''; // Clear existing options
+            selectElement.innerHTML = ''; // Limpa opções existentes
 
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            let monthKeys = getAllMonthKeysSorted(controleFinanceiroData); // Get sorted existing keys
-
+            let monthKeys = getAllMonthKeysSorted(controleFinanceiroData);
             const currentMonthKey = getCurrentMonthYearKey();
-            // Ensure current month is an option, even if no data exists for it yet
+
+            // Garante que o mês atual esteja na lista, mesmo que não tenha dados
             if (!monthKeys.includes(currentMonthKey)) {
                 monthKeys.push(currentMonthKey);
-                // Re-sort if currentMonthKey was added
-                 monthKeys = monthKeys.sort((a,b) => new Date(b.substring(0,4), parseInt(b.substring(5,7))-1) - new Date(a.substring(0,4), parseInt(a.substring(5,7))-1));
+                 monthKeys = monthKeys.sort((a, b) => { // Re-ordena após adicionar o mês atual
+                    const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
+                    const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
+                    return dateB - dateA;
+                });
             }
-            
-            if (monthKeys.length === 0) { // Should not happen if currentMonthKey is always added
-                 monthKeys.push(currentMonthKey); // Failsafe
+
+
+            if (monthKeys.length === 0) { // Caso raro, se não houver chaves e o mês atual não foi adicionado
+                 monthKeys.push(currentMonthKey);
             }
 
             monthKeys.forEach(key => {
                 const option = document.createElement('option');
-                option.value = key; option.textContent = monthYearKeyToDisplay(key);
+                option.value = key;
+                option.textContent = monthYearKeyToDisplay(key);
                 selectElement.appendChild(option);
             });
 
-            // Restore selection or set a default
-            if (currentValue && monthKeys.includes(currentValue)) {
-                selectElement.value = currentValue;
-            } else if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
+            // Tenta selecionar o mês previamente selecionado ou o mais recente/atual
+             if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
                 selectElement.value = financeiroSelecionadoMesAno;
-            } else if (monthKeys.length > 0) { // Default to the most recent month with data or current month
-                selectElement.value = monthKeys[0];
+            } else if (monthKeys.length > 0) {
+                selectElement.value = monthKeys[0]; // Seleciona o mais recente por padrão
+                financeiroSelecionadoMesAno = monthKeys[0];
             }
-            financeiroSelecionadoMesAno = selectElement.value; // Sync global state
         }
 
 
-        function renderizarConteudoModalFinanceiro(monthKey) { // monthKey is 'YYYY-MM'
-            financeiroSelecionadoMesAno = monthKey; // Update global state
+        function renderizarConteudoModalFinanceiro(monthKey) {
+            financeiroSelecionadoMesAno = monthKey; // Atualiza a variável global
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            if(selectElement.value !== monthKey) selectElement.value = monthKey; // Sync dropdown
+            if(selectElement.value !== monthKey) selectElement.value = monthKey; // Sincroniza o select
 
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            const lancamentosDoMesOrig = controleFinanceiroData[monthKey] || [];
-            // Sort by name for display, but preserve original index for editing/deleting
-            const lancamentosDoMes = lancamentosDoMesOrig.map((item, index) => ({...item, originalIndex: index}))
-                                      .sort((a, b) => 
-                                        String(a.nome || '').toLowerCase().localeCompare(String(b.nome || '').toLowerCase(), 'pt-BR', {sensitivity: 'base'})
-                                      );
+            const lancamentosDoMes = controleFinanceiroData[monthKey] || [];
 
-            let totalPago = 0, totalAReceber = 0;
-            lancamentosDoMesOrig.forEach(item => { // Calculate totals from original unsorted list for accuracy
+            let totalPago = 0;
+            let totalAReceber = 0;
+
+            lancamentosDoMes.forEach(item => {
                 const valorItem = parseFloat(item.valor) || 0;
-                if (item.status === 'Pago') totalPago += valorItem; else totalAReceber += valorItem;
+                if (item.status === 'Pago') {
+                    totalPago += valorItem;
+                } else {
+                    totalAReceber += valorItem;
+                }
             });
 
-            let somatorioHtml = `<div style="padding:10px 5px;margin-bottom:15px;background:#102b1f;border-radius:8px;text-align:center;border:1px solid var(--c-green);"><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total Pago (Mês):</strong> <span style="color:var(--c-green);font-weight:bold;">${formatarMoeda(totalPago)}</span></p><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total a Receber (Mês):</strong> <span style="color:var(--c-yellow);font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p></div>`;
-            
-            let tabelaHtml = `<table><thead><tr><th>Nome/Descrição</th><th>Valor</th><th>Status</th><th>Tipo</th><th>Ações</th></tr></thead><tbody>`;
+            let somatorioHtml = `
+                <div style="padding: 10px 5px; margin-bottom: 15px; background: #102b1f; border-radius: 8px; text-align: center; border: 1px solid var(--c-green);">
+                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago (Mês):</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
+                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber (Mês):</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p>
+                </div>`;
+
+            let tabelaHtml = `<table>
+                <thead>
+                    <tr>
+                        <th>Nome/Descrição</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Tipo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
             if (lancamentosDoMes.length) {
-                lancamentosDoMes.forEach(item => {
-                    // const idxNaListaOriginal = lancamentosDoMesOrig.findIndex(orig => orig === item); // Not needed if using item.originalIndex from map
+                // Renderiza na ordem original (mais antigo primeiro) ou invertido (mais novo primeiro).
+                // Vamos manter a ordem de inserção por enquanto, mas pode ser invertido com .slice().reverse()
+                lancamentosDoMes.forEach((item, index) => {
                     const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const valorFormatado = formatarMoeda(item.valor);
                     const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-                    tabelaHtml += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${valorFormatado}</td>
-                        <td style="text-align:center;color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
-                        <td style="text-align:center;">${tipoHtml}</td><td class="table-actions">
-                        <button onclick="editarFinanceiro('${monthKey}', ${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button onclick="removerFinanceiro('${monthKey}', ${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                    tabelaHtml += `<tr>
+                        <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
+                        <td style="text-align:center;">${valorFormatado}</td>
+                        <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
+                        <td style="text-align:center;">${tipoHtml}</td>
+                        <td class="table-actions">
+                            <button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
                 });
-            } else { tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`; }
+            } else {
+                tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`;
+            }
             tabelaHtml += `</tbody></table>`;
             document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml;
         }
@@ -1304,49 +1360,56 @@
             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
             const currentIndex = selectElement.selectedIndex;
             const newIndex = currentIndex + offset;
+
             if (newIndex >= 0 && newIndex < selectElement.options.length) {
                 selectElement.selectedIndex = newIndex;
                 atualizarModalFinanceiroComMesSelecionado();
             }
         }
-        
+
         function irParaMesAtualFinanceiro() {
             const currentMonthKey = getCurrentMonthYearKey();
-            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            // Repopulate to ensure current month is an option and sorted correctly
-            populateMesAnoSelectFinanceiro(); 
-            
-            if (Array.from(selectElement.options).some(opt => opt.value === currentMonthKey)) {
-                selectElement.value = currentMonthKey;
-            } else if (selectElement.options.length > 0) { // Fallback if current month somehow isn't there
-                selectElement.value = selectElement.options[0].value; 
+             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            // Verifica se o mês atual existe nas opções, se não, pode ser necessário repopular.
+            // Por segurança, repopulamos para garantir que o mês atual esteja lá.
+            populateMesAnoSelectFinanceiro();
+            selectElement.value = currentMonthKey; // Tenta selecionar
+            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) { // Fallback se não encontrou
+                 selectElement.value = selectElement.options[0].value;
             }
             renderizarConteudoModalFinanceiro(selectElement.value);
         }
 
-        function abrirModalFinanceiro() {
-            populateMesAnoSelectFinanceiro(); // Ensure dropdown is up-to-date
 
+        function abrirModalFinanceiro() {
+            populateMesAnoSelectFinanceiro(); // Popula o select com os meses disponíveis
+             // Decide qual mês mostrar: o último selecionado, ou o atual, ou o mais recente com dados
             const currentMonthKey = getCurrentMonthYearKey();
             const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            const allMonthsWithData = getAllMonthKeysSorted(controleFinanceiroData);
+            const allMonths = getAllMonthKeysSorted(controleFinanceiroData);
 
-            let targetMonth = financeiroSelecionadoMesAno; // Try to stick to previously selected month
-
-            if (!targetMonth || (!allMonthsWithData.includes(targetMonth) && targetMonth !== currentMonthKey) ) { // If not valid or not current
-                if (allMonthsWithData.includes(currentMonthKey)) targetMonth = currentMonthKey; // Prefer current month if it has data
-                else if (allMonthsWithData.length > 0) targetMonth = allMonthsWithData[0]; // Most recent month with data
-                else targetMonth = currentMonthKey; // Default to current month (even if no data)
+            if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {
+                // Mantém o último selecionado se ainda válido
+            } else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) {
+                financeiroSelecionadoMesAno = currentMonthKey;
+            } else if (allMonths.length > 0) {
+                financeiroSelecionadoMesAno = allMonths[0]; // Mais recente com dados
+            } else {
+                 financeiroSelecionadoMesAno = currentMonthKey; // Fallback final
             }
-            
-            financeiroSelecionadoMesAno = targetMonth; // Set the global state
-            document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno; // Set dropdown
+
+            document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno;
             renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
             document.getElementById('modalFinanceiro').classList.add('active');
         }
-        function fecharModalFinanceiro() { document.getElementById('modalFinanceiro').classList.remove('active'); }
 
 
+        function fecharModalFinanceiro() {
+            document.getElementById('modalFinanceiro').classList.remove('active');
+        }
+
+
+        // -- Cadastro de Alunos (com edição e modal)
         function mostrarBotoesAluno() {
             const nome = document.getElementById('nomeAluno').value.trim();
             const anydesk = document.getElementById('anydeskAluno').value.trim();
@@ -1359,122 +1422,122 @@
             document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none';
             document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none';
         }
-        
+
         function adicionarAluno() {
             const nome = document.getElementById('nomeAluno').value.trim();
             const anydesk = document.getElementById('anydeskAluno').value.trim();
-            if (!nome || !anydesk) { alert('Preencha nome e AnyDesk do aluno.'); return; }
-
+            if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
             let lista = recuperarLocal('alunosAnyDesk', []);
-            // Check for duplicates only if adding new, or if editing and the new combination already exists for a *different* student
-            const alunoExistente = lista.find((al, index) => 
-                al.nome.toLowerCase() === nome.toLowerCase() && 
-                al.anydesk === anydesk &&
-                (alunoEditIdx === null || alunoEditIdx !== index) // If editing, ignore the current student being edited
-            );
-
-            if (alunoExistente) {
-                 alert('Um aluno já está cadastrado com este nome e AnyDesk.');
-                 return;
-            }
-
-            if (alunoEditIdx === null) { // Adding new
-                lista.push({ nome, anydesk }); alert('Aluno cadastrado com sucesso!');
-            } else { // Editing existing
+            if (alunoEditIdx === null) {
+                lista.push({ nome, anydesk });
+            } else {
                 if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
-                    lista[alunoEditIdx] = { nome, anydesk }; alert('Dados do aluno atualizados com sucesso!');
+                    lista[alunoEditIdx] = { nome, anydesk };
                 } else {
-                    console.error("Índice de edição de aluno inválido:", alunoEditIdx);
-                    limparAlunoCamposComPesquisa(); return;
+                    console.error("Índice de edição inválido:", alunoEditIdx);
+                    limparAlunoCampos();
+                    return;
                 }
             }
             salvarLocal('alunosAnyDesk', lista);
-            limparAlunoCamposComPesquisa();
-            if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos(); // Refresh modal
+            limparAlunoCampos();
+            if (document.getElementById('modalAlunos').classList.contains('active')) {
+                abrirModalAlunos();
+            }
         }
 
         function editarAluno(idx) {
             let lista = recuperarLocal('alunosAnyDesk', []);
-            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar aluno:", idx); return; }
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para edição:", idx);
+                return;
+            }
             document.getElementById('nomeAluno').value = lista[idx].nome;
             document.getElementById('anydeskAluno').value = lista[idx].anydesk;
-            alunoEditIdx = idx; mostrarBotoesAluno(); fecharModalAlunos();
-            limparResultadosPesquisaAlunos(); document.getElementById('nomeAluno').focus();
+            alunoEditIdx = idx;
+            mostrarBotoesAluno();
+            fecharModalAlunos();
+            document.getElementById('nomeAluno').focus();
         }
+
         function confirmarEdicaoAluno() { adicionarAluno(); }
-        function cancelarEdicaoAlunoComPesquisa() { limparAlunoCamposComPesquisa(); }
+
+        function cancelarEdicaoAluno() {
+            limparAlunoCampos();
+        }
 
         function removerAluno(idx) {
-            if (!confirm('Excluir este aluno?')) return;
+            if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
             let lista = recuperarLocal('alunosAnyDesk', []);
-            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover aluno:", idx); return; }
-            lista.splice(idx,1); salvarLocal('alunosAnyDesk', lista);
-            if (alunoEditIdx === idx) limparAlunoCamposComPesquisa();
-            else if (alunoEditIdx !== null && idx < alunoEditIdx) alunoEditIdx--;
-            if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para remoção:", idx);
+                return;
+            }
+            lista.splice(idx, 1);
+            salvarLocal('alunosAnyDesk', lista);
+            if (alunoEditIdx === idx) {
+                limparAlunoCampos();
+            } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
+                alunoEditIdx--;
+            }
+            if (document.getElementById('modalAlunos').classList.contains('active')) {
+                abrirModalAlunos();
+            }
         }
-                
-        function limparAlunoCamposComPesquisa() {
+
+        function limparAlunoCampos() {
             document.getElementById('nomeAluno').value = '';
             document.getElementById('anydeskAluno').value = '';
-            alunoEditIdx = null; limparResultadosPesquisaAlunos(); mostrarBotoesAluno();
-        }
-        
-        function pesquisarAlunosNoCard(termo) {
-            const listaResultadosDiv = document.getElementById('listaResultadosPesquisaAlunos');
-            if (!termo.trim()) { listaResultadosDiv.innerHTML = ''; return; }
-            const alunos = recuperarLocal('alunosAnyDesk', []);
-            const termoNormalizado = termo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Normalize for search
-            
-            const resultadosFiltrados = alunos.filter(aluno => 
-                String(aluno.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(termoNormalizado)
-            ).sort((a,b) => String(a.nome).localeCompare(String(b.nome), 'pt-BR', {sensitivity: 'base'})); // Sort results
-
-            listaResultadosDiv.innerHTML = '';
-            resultadosFiltrados.slice(0, 7).forEach(aluno => { // Limit results shown
-                const divItem = document.createElement('div');
-                divItem.textContent = aluno.nome;
-                divItem.onclick = () => selecionarAlunoPesquisado(aluno);
-                listaResultadosDiv.appendChild(divItem);
-            });
-        }
-
-        function selecionarAlunoPesquisado(aluno) {
-            document.getElementById('nomeAluno').value = aluno.nome;
-            document.getElementById('anydeskAluno').value = aluno.anydesk;
-            limparResultadosPesquisaAlunos(); mostrarBotoesAluno();
-        }
-
-        function limparResultadosPesquisaAlunos() {
-            document.getElementById('listaResultadosPesquisaAlunos').innerHTML = '';
+            alunoEditIdx = null;
+            mostrarBotoesAluno();
         }
 
         function abrirModalAlunos() {
             let listaOriginal = recuperarLocal('alunosAnyDesk', []);
-            // Map to include originalIndex before sorting for display
             const listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
-            listaComIndices.sort((a,b) => String(a.nome||'').localeCompare(String(b.nome||''), 'pt-BR', {sensitivity:'base'})); // Sort for display
+            listaComIndices.sort((a, b) => {
+                const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (nomeA < nomeB) return -1;
+                if (nomeA > nomeB) return 1;
+                const anydeskA = String(a.anydesk || '').toLowerCase();
+                const anydeskB = String(b.anydesk || '').toLowerCase();
+                if (anydeskA < anydeskB) return -1;
+                if (anydeskA > anydeskB) return 1;
+                return 0;
+            });
 
             let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
-            if(listaComIndices.length){
+            if (listaComIndices.length) {
                 listaComIndices.forEach(item => {
                     const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     const anydeskHtml = String(item.anydesk || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    html += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${anydeskHtml}</td>
-                        <td class="table-actions" style="text-align:center;"><button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                    html += `<tr>
+                        <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
+                        <td style="text-align:center;">${anydeskHtml}</td>
+                        <td class="table-actions" style="text-align:center;">
+                            <button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
                 });
-            } else { html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`; }
+            } else {
+                html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
+            }
             html += `</tbody></table>`;
             document.getElementById('conteudoModalAlunos').innerHTML = html;
             document.getElementById('modalAlunos').classList.add('active');
         }
-        function fecharModalAlunos() { document.getElementById('modalAlunos').classList.remove('active'); }
 
+        function fecharModalAlunos() {
+            document.getElementById('modalAlunos').classList.remove('active');
+        }
 
+        // -- Anotações Rápidas --
         function mostrarBotoesAnotacao() {
             const val = document.getElementById('anotacaoInput').value.trim();
             const isEditing = anotacaoEditIdx !== null;
+
             document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none';
             document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none';
             document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none';
@@ -1482,75 +1545,102 @@
         }
 
         function salvarOuAtualizarAnotacao() {
-            const val = document.getElementById('anotacaoInput').value.trim(); if (!val) return;
+            const val = document.getElementById('anotacaoInput').value.trim();
+            if (!val) return;
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            if (anotacaoEditIdx !== null) { // Editing
-                if (anotacaoEditIdx>=0 && anotacaoEditIdx<anotacoes.length) anotacoes[anotacaoEditIdx]=val;
-                else console.error("Índice de edição de anotação inválido:", anotacaoEditIdx);
-            } else { // Adding new
-                anotacoes.push(val); 
+
+            if (anotacaoEditIdx !== null) {
+                if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
+                    anotacoes[anotacaoEditIdx] = val;
+                } else {
+                    console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
+                }
+            } else {
+                anotacoes.push(val);
             }
-            salvarLocal('anotacoesRapidas', anotacoes); limparAnotacaoCampos(); listarAnotacoes();
+            salvarLocal('anotacoesRapidas', anotacoes);
+            limparAnotacaoCampos();
+            listarAnotacoes();
         }
 
-        function editarAnotacao(idxExibicao) { // idxExibicao is based on reversed list
+        function editarAnotacao(idxExibicao) {
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            // Convert display index (from reversed list) to original array index
-            let originalIndex = anotacoes.length - 1 - idxExibicao; 
+            let originalIndex = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
 
-            if (originalIndex>=0 && originalIndex<anotacoes.length) {
+            if (originalIndex >= 0 && originalIndex < anotacoes.length) {
                 document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
-                anotacaoEditIdx = originalIndex; mostrarBotoesAnotacao(); document.getElementById('anotacaoInput').focus();
-            } else { console.error("Índice inválido para editar anotação:", idxExibicao, originalIndex); limparAnotacaoCampos(); }
+                anotacaoEditIdx = originalIndex;
+                mostrarBotoesAnotacao();
+                document.getElementById('anotacaoInput').focus();
+            } else {
+                console.error("Índice de exibição inválido para editar anotação:", idxExibicao, "Original index:", originalIndex);
+                limparAnotacaoCampos();
+            }
         }
-        
-        function cancelarEdicaoAnotacao() { limparAnotacaoCampos(); }
-        
-        function removerAnotacao(idxExibicao) { // idxExibicao is based on reversed list
-            if (!confirm('Excluir anotação?')) return;
-            let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
 
-            if (originalIndexToRemove>=0 && originalIndexToRemove<anotacoes.length) {
-                if (anotacaoEditIdx === originalIndexToRemove) limparAnotacaoCampos(); // Clear form if editing this item
-                anotacoes.splice(originalIndexToRemove, 1); salvarLocal('anotacoesRapidas', anotacoes); listarAnotacoes();
-                // Adjust edit index if an earlier item (in original array order) was removed
-                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) anotacaoEditIdx--;
-            } else { console.error("Índice inválido para remover anotação:", idxExibicao); }
+        function cancelarEdicaoAnotacao() {
+            limparAnotacaoCampos();
         }
+
+        function removerAnotacao(idxExibicao) {
+            if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao; // Convertendo índice de exibição para índice do array
+
+            if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
+                if (anotacaoEditIdx === originalIndexToRemove) { // Se estiver editando a anotação que será removida
+                    limparAnotacaoCampos();
+                }
+                anotacoes.splice(originalIndexToRemove, 1);
+                salvarLocal('anotacoesRapidas', anotacoes);
+                listarAnotacoes();
+
+                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
+                    anotacaoEditIdx--;
+                }
+            } else {
+                console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
+            }
+        }
+
         function limparAnotacaoCampos() {
             document.getElementById('anotacaoInput').value = '';
-            anotacaoEditIdx = null; mostrarBotoesAnotacao();
+            anotacaoEditIdx = null;
+            mostrarBotoesAnotacao();
         }
+
         function listarAnotacoes() {
             let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0]; tbody.innerHTML = '';
+            let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
             if (Array.isArray(anotacoes)) {
-                anotacoes.slice().reverse().forEach((a, idxExibicao) => { // Iterate reversed for display (newest first)
+                anotacoes.slice().reverse().forEach((a, idxExibicao) => {
                     const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    // idxExibicao is now the index in the reversed list, pass this to edit/remove functions
-                    tbody.innerHTML += `<tr><td>${anotacaoHtml}</td><td class="table-actions" style="text-align:center;">
-                        <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${anotacaoHtml}</td>
+                            <td class="table-actions" style="text-align:center;">
+                                <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
+                                <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>`;
                 });
-            } else { 
-                console.error("Dados de anotações inválidos. Resetando para array vazio.", anotacoes); 
-                salvarLocal('anotacoesRapidas', []); 
+            } else {
+                console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
+                salvarLocal('anotacoesRapidas', []); // Corrige para um array vazio se não for
             }
         }
 
-        document.addEventListener('keydown', function(e){
-            if(e.key === "Escape") {
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
                 if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
                 if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
                 if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
-                
+
                 if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
-                if (alunoEditIdx !== null) cancelarEdicaoAlunoComPesquisa();
+                if (alunoEditIdx !== null) cancelarEdicaoAluno();
                 if (finEditIdx !== null) cancelarEdicaoFinanceiro();
                 if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
-                
-                limparResultadosPesquisaAlunos(); // Clear any open search results
             }
         });
 
@@ -1559,97 +1649,98 @@
                 diarioClasseLista: recuperarLocal('diarioClasseLista', []),
                 alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
                 anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
-                controleFinanceiro: recuperarLocal('controleFinanceiro', {}) // Ensure it's an object
+                controleFinanceiro: recuperarLocal('controleFinanceiro', {}) // Exporta como objeto
             };
-            const blob = new Blob([JSON.stringify(dados, null, 2)], {type: "application/json"});
-            const url = URL.createObjectURL(blob); const a = document.createElement("a");
-            a.href = url; const timestamp = new Date().toISOString().slice(0,19).replace(/[-:T]/g,"");
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
             a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-            alert('Dados exportados com sucesso!');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function importarDados(event) {
-            const file = event.target.files[0]; if (!file) return;
+            const file = event.target.files[0];
+            if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const dadosImportados = JSON.parse(e.target.result);
                     if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato de arquivo inválido!");
 
-                    // Validate and save each data piece
+                    // Importação para diarioClasseLista (array)
                     if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
-                    else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []); // Key exists but not array, save empty
+                    else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
 
+                    // Importação para alunosAnyDesk (array)
                     if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
                     else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
-                    
+
+                    // Importação para anotacoesRapidas (array)
                     if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
                     else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
 
-                    // controleFinanceiro should be an object, not an array
-                    if (typeof dadosImportados.controleFinanceiro==="object" && dadosImportados.controleFinanceiro!==null && !Array.isArray(dadosImportados.controleFinanceiro))
+                    // Importação para controleFinanceiro (objeto)
+                    if (typeof dadosImportados.controleFinanceiro === "object" &&
+                        dadosImportados.controleFinanceiro !== null &&
+                        !Array.isArray(dadosImportados.controleFinanceiro)) {
                         salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
-                    else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', {}); // Key exists but invalid type
-                    
-                    // Reset forms and refresh views
-                    limparCamposDiario(); limparAlunoCamposComPesquisa(); limparFinanceiroCampos(); limparAnotacaoCampos();
-                    listarAnotacoes(); // This updates the quick notes table
-                    
-                    alert("Dados importados com sucesso!");
-                } catch (err) { alert("Falha na importação: " + err.message);
+                    } else if ("controleFinanceiro" in dadosImportados) { // Se a chave existe mas não é objeto válido
+                        salvarLocal('controleFinanceiro', {}); // Salva um objeto vazio
+                    }
+
+
+                    limparCamposDiario();
+                    limparAlunoCampos();
+                    limparFinanceiroCampos();
+                    limparAnotacaoCampos();
+                    listarAnotacoes();
+
+                    alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
+                } catch (err) {
+                    alert("Falha na importação: " + err.message);
                 } finally {
-                    // Refresh any open modals or necessary UI parts
                     if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
                     if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
                     if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                        financeiroSelecionadoMesAno = ''; // Reset selected month to allow re-evaluation
-                        abrirModalFinanceiro(); 
+                        // Ao importar, o modal financeiro precisa ser reinicializado para o mês mais recente ou atual
+                        financeiroSelecionadoMesAno = ''; // Força a reavaliação do mês
+                        abrirModalFinanceiro();
                     }
-                    // Ensure button states are correct after potential data changes
-                    mostrarBotoesDiario(); mostrarBotoesAluno(); mostrarBotoesFinanceiro(); mostrarBotoesAnotacao();
+                    mostrarBotoesDiario();
+                    mostrarBotoesAluno();
+                    mostrarBotoesFinanceiro();
+                    mostrarBotoesAnotacao();
                 }
             };
-            reader.readAsText(file); event.target.value = ""; // Reset file input
-        }
-                
-        function setAnoAtualFooter() {
-            const ano = new Date().getFullYear();
-            const footerSpan = document.getElementById('anoAtualFooter'); // Target the span
-            if (footerSpan) { 
-                 footerSpan.textContent = ano; // Set only the year in the span
-            } else { // Fallback if span is not there for some reason
-                const footerElement = document.querySelector('footer');
-                if (footerElement) footerElement.textContent = `RS TECH ${ano}`;
-            }
+            reader.readAsText(file);
+            event.target.value = "";
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            limparCamposDiario(); limparAlunoCamposComPesquisa(); limparFinanceiroCampos(); limparAnotacaoCampos();
-            listarAnotacoes(); 
-            setAnoAtualFooter();
+            limparCamposDiario();
+            limparAlunoCampos();
+            limparFinanceiroCampos();
+            limparAnotacaoCampos();
+            listarAnotacoes();
 
-            // Initialize financeiroSelecionadoMesAno correctly on load
+            // Inicializa o mês selecionado para o financeiro para o mês atual ou o mais recente
             const currentFinMonth = getCurrentMonthYearKey();
             const finData = recuperarLocal('controleFinanceiro', {});
             const sortedFinMonths = getAllMonthKeysSorted(finData);
-
-            if (sortedFinMonths.includes(currentFinMonth)) financeiroSelecionadoMesAno = currentFinMonth;
-            else if (sortedFinMonths.length > 0) financeiroSelecionadoMesAno = sortedFinMonths[0]; // Most recent with data
-            else financeiroSelecionadoMesAno = currentFinMonth; // Default to current month
-
-            // Global click listener to close student search results
-            document.addEventListener('click', function(event) {
-                const searchResultsDiv = document.getElementById('listaResultadosPesquisaAlunos');
-                const nomeAlunoInput = document.getElementById('nomeAluno');
-                // If click is outside the search results and not on the input itself
-                if (searchResultsDiv && nomeAlunoInput && 
-                    !searchResultsDiv.contains(event.target) && 
-                    event.target !== nomeAlunoInput) {
-                    limparResultadosPesquisaAlunos();
-                }
-            });
+            if (sortedFinMonths.includes(currentFinMonth)){
+                financeiroSelecionadoMesAno = currentFinMonth;
+            } else if (sortedFinMonths.length > 0) {
+                financeiroSelecionadoMesAno = sortedFinMonths[0];
+            } else {
+                financeiroSelecionadoMesAno = currentFinMonth;
+            }
         });
     </script>
 </body>
+
 </html>
