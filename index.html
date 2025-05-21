@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RS TECH</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet"> {/* Font for Prompt Library */}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
     <style>
-        /* RS TECH Base Styles (Original - completo) */
+        /* RS TECH Base Styles */
         :root {
             --c-cyan: #19fff7;
             --c-green: #46ff86;
@@ -30,7 +29,7 @@
             min-height: 100vh;
             box-sizing: border-box;
             position: relative;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Idealmente, resolver a causa do overflow em vez de esconder */
         }
         header {
             background: transparent;
@@ -46,6 +45,13 @@
             z-index: 10;
             position: relative;
         }
+
+        /* Classe utilitária para esconder elementos */
+        .hidden {
+            display: none !important; /* !important para garantir prioridade, usar com cautela */
+        }
+
+        /* Sidebar */
         .atalhos-lateral {
             position: fixed;
             top: 0;
@@ -57,7 +63,7 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
-            z-index: 101; /* Original z-index */
+            z-index: 101;
             box-shadow: 2px 0 14px #19fff733;
             padding-top: 0.4rem;
             padding-bottom: 0;
@@ -86,6 +92,10 @@
             flex-shrink: 0;
             text-decoration: none;
         }
+        .atalhos-lateral .ataho-link.icon-text-custom { /* Classe para ícones de texto */
+            font-weight: bold;
+            font-size: 1.3em;
+        }
         .atalhos-lateral .ataho-link:focus {
             outline: 2px solid var(--c-yellow);
             outline-offset: 2px;
@@ -102,48 +112,23 @@
             border: 1.5px solid var(--c-green);
             box-shadow: 0 0 14px var(--c-green);
         }
-        .atalhos-lateral::-webkit-scrollbar {
-            width: 8px;
-            background: #153826;
-        }
-        .atalhos-lateral::-webkit-scrollbar-thumb {
-            background: var(--c-green);
-            border-radius: 4px;
-        }
-        /* Ajustes para telas menores da barra lateral */
+        .atalhos-lateral::-webkit-scrollbar { width: 8px; background: #153826; }
+        .atalhos-lateral::-webkit-scrollbar-thumb { background: var(--c-green); border-radius: 4px; }
+
         @media (max-width: 800px) {
-            .atalhos-lateral {
-                width: 54px;
-                gap: 0.2rem;
-                padding-top: 0.2rem;
-            }
-            body {
-                padding-left: 54px;
-            }
-            .atalhos-lateral .ataho-link {
-                width: 36px;
-                height: 36px;
-                margin: 0.05rem 0;
-                font-size: 1.1rem;
-            }
+            .atalhos-lateral { width: 54px; gap: 0.2rem; padding-top: 0.2rem; }
+            body { padding-left: 54px; }
+            .atalhos-lateral .ataho-link { width: 36px; height: 36px; margin: 0.05rem 0; font-size: 1.1rem; }
+            .atalhos-lateral .ataho-link.icon-text-custom { font-size: 1.2em; }
         }
         @media (max-width: 600px) {
-            .atalhos-lateral {
-                width: 50px;
-                gap: 0.1rem;
-                padding-top: 0.1rem;
-            }
-            body {
-                padding-left: 50px;
-            }
-            .atalhos-lateral .ataho-link {
-                width: 30px;
-                height: 30px;
-                margin: 0;
-                font-size: 1rem;
-            }
+            .atalhos-lateral { width: 50px; gap: 0.1rem; padding-top: 0.1rem; }
+            body { padding-left: 50px; }
+            .atalhos-lateral .ataho-link { width: 30px; height: 30px; margin: 0; font-size: 1rem; }
+            .atalhos-lateral .ataho-link.icon-text-custom { font-size: 1.1em; }
         }
-        /* Layout do Dashboard Grid */
+
+        /* Dashboard Grid & Cards */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -153,38 +138,18 @@
             margin: auto;
             box-sizing: border-box;
         }
-        .card.anotacoes-rapidas {
-            grid-column: span 2;
-        }
+        .card.anotacoes-rapidas { grid-column: span 2; }
         @media (max-width: 1100px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1.1rem;
-            }
-            .card.avaliacao-humor-aluno,
-            .card.anotacoes-rapidas {
-                grid-column: 1 / -1;
-            }
+            .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+            .card.avaliacao-humor-aluno, .card.anotacoes-rapidas { grid-column: 1 / -1; }
         }
         @media (max-width: 799px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-                gap: 1.1rem;
-            }
-            .card.avaliacao-humor-aluno,
-            .card.anotacoes-rapidas {
-                grid-column: auto;
-            }
-            .card {
-                min-height: 300px;
-            }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+            .card.avaliacao-humor-aluno, .card.anotacoes-rapidas { grid-column: auto; }
+            .card { min-height: 300px; }
         }
-        @media (max-width: 599px) {
-            .dashboard-grid {
-                gap: 0.5rem;
-                padding: 0.5rem 0.1rem;
-            }
-        }
+        @media (max-width: 599px) { .dashboard-grid { gap: 0.5rem; padding: 0.5rem 0.1rem; } }
+
         .card {
             background: var(--c-bg-card);
             border-radius: 1.5rem;
@@ -212,141 +177,97 @@
             padding-bottom: 0.5rem;
             flex-shrink: 0;
         }
-        .card form {
+        .card form { /* Este form agora controla o crescimento e direção dos seus filhos */
             width: 100%;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
-        .card textarea,
-        .card input,
-        .card select {
-            width: 100%;
-            box-sizing: border-box;
+        .card textarea, .card input, .card select { width: 100%; box-sizing: border-box; }
+        input, textarea, select {
+            width: 100%; max-width: 100%; box-sizing: border-box; display: block;
+            border-radius: 0.7rem; background: #163221; color: var(--txt);
+            border: 1.5px solid var(--c-green); padding: 0.8rem 1rem;
+            margin: 0.2rem 0 0.6rem 0; font-size: 1.06rem; font-family: var(--bod);
+            transition: border 0.13s; outline: none; word-break: break-all;
         }
-        input,
-        textarea,
-        select {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            display: block;
-            border-radius: 0.7rem;
-            background: #163221;
-            color: var(--txt);
-            border: 1.5px solid var(--c-green);
-            padding: 0.8rem 1rem;
-            margin: 0.2rem 0 0.6rem 0;
-            font-size: 1.06rem;
-            font-family: var(--bod);
-            transition: border 0.13s;
-            outline: none;
-            word-break: break-all;
-        }
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border: 1.5px solid var(--c-yellow);
-        }
-        textarea {
-            resize: vertical;
-            min-height: 74px;
-            max-height: 220px;
-            overflow-y: auto;
-            flex-shrink: 0;
-        }
-        .avaliacao-humor-aluno form {
-            justify-content: space-around;
-            padding-top: 0.5rem;
-        }
-        .avaliacao-humor-aluno .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.7rem;
-        }
+        input:focus, textarea:focus, select:focus { border: 1.5px solid var(--c-yellow); }
+        textarea { resize: vertical; min-height: 74px; max-height: 220px; overflow-y: auto; flex-shrink: 0; }
+
+        .avaliacao-humor-aluno form { justify-content: space-around; padding-top: 0.5rem; }
+        .avaliacao-humor-aluno .checkbox-group { display: flex; align-items: center; margin-bottom: 0.7rem; }
         .avaliacao-humor-aluno input[type="checkbox"] {
-            width: auto;
-            height: 1.3em;
-            width: 1.3em;
-            margin-right: 0.7rem;
-            flex-shrink: 0;
-            cursor: pointer;
-            accent-color: var(--c-yellow);
+            width: auto; height: 1.3em; width: 1.3em; margin-right: 0.7rem;
+            flex-shrink: 0; cursor: pointer; accent-color: var(--c-yellow);
         }
-        .avaliacao-humor-aluno label {
-            color: var(--txt);
-            font-size: 1rem;
-            cursor: pointer;
-            flex-grow: 1;
-            line-height: 1.3;
-        }
-        .diario-btns,
-        .aluno-form-actions-wrapper,
-        .financeiro-form-actions-wrapper,
-        .anotacoes-form-actions-wrapper {
+        .avaliacao-humor-aluno label { color: var(--txt); font-size: 1rem; cursor: pointer; flex-grow: 1; line-height: 1.3; }
+
+        /* Action buttons wrappers in forms */
+        .form-actions-wrapper { /* Classe genérica para wrappers de botões de formulário */
             display: flex;
             justify-content: center;
             gap: 0.7rem;
             flex-wrap: wrap;
-            margin-top: auto;
+            margin-top: auto; /* Empurra para o final do flex container (form) */
             padding-top: 0.5rem;
             flex-shrink: 0;
         }
-        .alunos-btns {
-            display: flex;
-            justify-content: center;
-            gap: 0.7rem;
-        }
-        .cadastro-alunos .btn {
-            min-width: 120px;
-        }
-        .card form .btn {
-            margin-right: 0.3rem;
-            margin-left: 0.3rem;
-            margin-bottom: 0.4rem;
-        }
+        /* .diario-btns, .aluno-form-actions-wrapper, .financeiro-form-actions-wrapper, .anotacoes-form-actions-wrapper são agora .form-actions-wrapper */
+        .alunos-btns { display: flex; justify-content: center; gap: 0.7rem; } /* Pode ser necessário ajustar se for parte de form-actions-wrapper */
+        .cadastro-alunos .btn { min-width: 120px; }
+        .card form .btn { margin-right: 0.3rem; margin-left: 0.3rem; margin-bottom: 0.4rem; }
         .card form .btn:first-child { margin-left: 0; }
         .card form .btn:last-child { margin-right: 0; }
-        .table-actions button {
-            background: none; border: none; color: var(--c-green);
-            font-size: 1.13rem; cursor: pointer; transition: color 0.14s;
-            padding: 0.2rem 0.3rem;
-        }
-        .table-actions button:hover { color: var(--c-yellow); }
+
+        /* Tables */
         table {
             width: 100%; border-collapse: collapse; background: #133829;
             color: var(--txt); border-radius: 1rem; margin-bottom: 1rem;
             font-size: 0.97rem; box-shadow: 0 1px 6px #19fff722;
             overflow: hidden; box-sizing: border-box;
         }
+        /* Para tabela de anotações com display:block, o thead não será sticky. 
+           Para thead sticky, envolva a tabela em uma div com max-height e overflow-y: auto,
+           e aplique position: sticky; top: 0; background: var(--c-bg-card); aos th. */
+        #tabelaAnotacoes { /* Estilo específico para a tabela de anotações rápidas no card */
+            margin-top:1rem; margin-left: auto; margin-right: auto; 
+            width: fit-content; /* Ou 100% se quiser ocupar todo o card */
+            flex-grow: 1; 
+            overflow-y: auto; /* Permite scroll na tabela se o conteúdo exceder */
+            display: block; /* Faz a tabela se comportar como bloco, permitindo overflow-y */
+            max-height: 200px; /* Exemplo de altura máxima antes de scrollar */
+        }
+        #tabelaAnotacoes thead th { /* Tentar tornar o header da tabela de anotações sticky */
+            position: sticky;
+            top: -1px; /* Ajuste fino para não sobrepor bordas */
+            background: var(--c-bg-card); /* Cor de fundo do card para o cabeçalho fixo */
+            z-index: 1;
+        }
         table th, table td { padding: 0.6rem 0.4rem; text-align: left; border-bottom: 1px solid #263b2b; }
         table th { color: var(--c-green); font-family: var(--tit); border-bottom: 2px solid var(--c-cyan); }
+        .table-actions button {
+            background: none; border: none; color: var(--c-green);
+            font-size: 1.13rem; cursor: pointer; transition: color 0.14s;
+            padding: 0.2rem 0.3rem;
+        }
+        .table-actions button:hover { color: var(--c-yellow); }
+
+        /* Portals & Main Controls */
         .portal-acesso {
             background: transparent; color: var(--c-green); border-radius: 1.2rem;
             border: 2px solid var(--c-cyan); font-family: var(--tit); text-align: center;
             font-size: 1.08rem; font-weight: bold; box-shadow: 0 2px 12px #19fff733;
             padding: 1rem 0.8rem;
             transition: border .19s, color .19s; cursor: pointer; text-decoration: none;
-            letter-spacing: 1.15px;
-            display: block;
+            letter-spacing: 1.15px; display: block;
         }
         .portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow); }
         .portais-botoes-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem auto 1.5rem auto;
-            max-width: 700px;
-            padding: 0 1rem;
-            box-sizing: border-box;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+            margin: 2rem auto 1.5rem auto; max-width: 700px; padding: 0 1rem; box-sizing: border-box;
         }
-        .portais-botoes-container .portal-acesso {
-            margin: 0;
-            flex-grow: 1;
-            flex-basis: 280px;
-        }
+        .portais-botoes-container .portal-acesso { margin: 0; flex-grow: 1; flex-basis: 280px; }
         .main-controls {
             display: flex; justify-content: center; align-items: center;
             gap: 2.1rem; margin: 2.5rem auto 0 auto;
@@ -360,14 +281,14 @@
             cursor: pointer; transition: border .14s, color .14s, background .14s;
             margin-top: 0.2rem; min-width: 100px; text-align: center;
         }
-        .btn:hover, .btn-export:hover, .btn-import:hover {
-            color: var(--c-green); border: 1.5px solid var(--c-green); background: #1d342a;
-        }
+        .btn:hover, .btn-export:hover, .btn-import:hover { color: var(--c-green); border: 1.5px solid var(--c-green); background: #1d342a; }
         .financeiro-mes-selector .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.9rem; min-width: auto; }
+
+        /* Sugestões (Autocomplete) */
         .sugestoes-container {
             border: 1.5px solid var(--c-green); border-top: none; max-height: 120px;
-            overflow-y: auto; background-color: var(--c-bg-dark); position: relative;
-            z-index: 10; border-radius: 0 0 0.7rem 0.7rem; margin-top: -0.6rem;
+            overflow-y: auto; background-color: var(--c-bg-dark); position: relative; /* era absolute, mudando para relative ao input */
+            z-index: 10; border-radius: 0 0 0.7rem 0.7rem; margin-top: -0.6rem; /* Ajuste para alinhar com input */
             margin-bottom: 0.6rem; scrollbar-width: thin;
             scrollbar-color: var(--c-green) var(--c-bg-dark);
         }
@@ -376,20 +297,22 @@
         .sugestoes-container::-webkit-scrollbar-track { background: var(--c-bg-dark); }
         .sugestao-item { padding: 0.6rem 1rem; cursor: pointer; color: var(--txt); font-size: 0.95rem; }
         .sugestao-item:hover { background-color: #163221; color: var(--c-yellow); }
-        .sugestoes-container:empty,
-        .sugestoes-container:not([style*="display: block"]) { display: none !important; }
+        /* .sugestoes-container:empty, .sugestoes-container:not([style*="display: block"]) { display: none !important; } */
+        /* A visibilidade do sugestoes-container será controlada por JS com a classe .hidden */
+
+
+        /* Footer */
         footer {
             width: 100%; text-align: center; color: #5beebb; font-size: 1.1rem;
             font-family: var(--tit); letter-spacing: 0.2em; background: #133829ea;
             padding: 0.85rem 0; position: relative; bottom: 0; z-index: 100;
             opacity: 0.85; user-select: none; box-shadow: 0 -2px 8px #16271d77;
-            box-sizing: border-box; margin-left: -70px;
+            box-sizing: border-box; margin-left: -70px; /* Compensa padding do body */
         }
         @media (max-width: 800px) { footer { margin-left: -54px; } }
         @media (max-width: 600px) {
-            footer { margin-left: -50px; }
+            footer { margin-left: -50px; font-size: 0.99rem; padding: 0.65rem 0; }
             .main-controls { flex-direction: column; gap: 1.2rem; padding-bottom: calc(2.29rem + 1rem); }
-            footer { font-size: 0.99rem; padding: 0.65rem 0; }
         }
         @media (max-width: 480px) {
             .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; min-height: 260px; }
@@ -399,33 +322,23 @@
             .avaliacao-humor-aluno .checkbox-group { margin-bottom: 0.5rem; }
         }
         @media (max-width: 640px) {
-             .portais-botoes-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .portais-botoes-container .portal-acesso {
-                width: 100%;
-                margin-bottom: 1rem;
-                font-size: 1rem;
-                padding: 1.3rem 0.6rem;
-            }
-            .portais-botoes-container .portal-acesso:last-child {
-                margin-bottom: 0;
-            }
-        }
-        .modal-bg {
-            display: none; position: fixed; z-index: 1000;
-            left: 0; top: 0;
-            width: 100vw; height: 100vh; background: rgba(0, 32, 32, 0.72);
-            justify-content: center; align-items: flex-start; padding: 1rem; /* Default padding for RS Tech modals */
-            box-sizing: border-box; overflow-y: auto;
-        }
-        #modalBibliotecaPrompts.modal-bg { /* Specific adjustment for prompt lib modal background */
-             align-items: center; /* Center the wrapper vertically for prompt lib */
-             padding: 1rem; /* Use consistent padding */
+             .portais-botoes-container { flex-direction: column; align-items: stretch; }
+             .portais-botoes-container .portal-acesso { width: 100%; margin-bottom: 1rem; font-size: 1rem; padding: 1.3rem 0.6rem; }
+             .portais-botoes-container .portal-acesso:last-child { margin-bottom: 0; }
         }
 
+        /* Modals Base */
+        .modal-bg {
+            display: none; /* Controlado por JS com .active */
+            position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 32, 32, 0.72);
+            justify-content: center; align-items: flex-start;
+            padding: 1rem; box-sizing: border-box; overflow-y: auto;
+        }
+        #modalBibliotecaPrompts.modal-bg { align-items: center; padding: 1rem; }
         .modal-bg.active { display: flex; }
+
         .modal-diario, .modal-financeiro, .modal-alunos {
             background: #122921; color: var(--txt); border-radius: 1.1rem;
             box-shadow: 0 8px 34px #1beeea66; padding: 1.5rem; width: 100%;
@@ -433,11 +346,11 @@
             font-size: 1.13rem; display: flex; flex-direction: column;
             gap: 1rem; position: relative; box-sizing: border-box;
         }
-        .modal-diario h3, .modal-financeiro h3, .modal-alunos h3 {
+        .modal-diario h3, .modal-financeiro h3, .modal-alunos h3 { /* Títulos dos Modais */
             margin: 0 0 0.5rem 0; text-align: center; font-family: var(--tit);
             color: var(--c-cyan); flex-shrink: 0;
         }
-        .modal-diario .fechar-modal, .modal-financeiro .fechar-modal, .modal-alunos .fechar-modal {
+        .fechar-modal { /* Estilo base para botões de fechar modais */
             position: absolute; right: 18px; top: 12px; background: none;
             border: none; color: var(--c-yellow); font-size: 1.3rem;
             cursor: pointer; font-family: var(--tit); z-index: 10;
@@ -453,16 +366,16 @@
             padding: 0.5rem; border-bottom: 1px solid #263b2b;
             text-align: center; vertical-align: middle;
         }
-        .table-container-modal td:first-child, .table-container-modal th:first-child {
-            text-align: left; padding-left: 1rem;
-        }
+        .table-container-modal td:first-child, .table-container-modal th:first-child { text-align: left; padding-left: 1rem; }
         .table-container-modal th {
             color: var(--c-green); font-family: var(--tit);
             border-bottom: 2px solid var(--c-cyan); position: sticky;
             top: -1px; background: #133829; z-index: 1;
         }
         .table-container-modal tr:last-child td { border-bottom: none; }
-        .modal-diario-table {
+
+        /* Modal Diário Específico */
+        .modal-diario-table { /* Similar ao table-container-modal mas com fundo diferente */
             width: 100%; overflow-y: auto; overscroll-behavior-y: contain;
             border-radius: 1rem; background: #163221; box-shadow: 0 1px 8px #19fff744;
             flex-grow: 1; min-height: 0; box-sizing: border-box; padding-bottom: 2rem;
@@ -496,6 +409,8 @@
         }
         .modal-diario-filtro input[type="text"]:focus,
         .modal-diario-filtro input[type="date"]:focus { border-color: var(--c-cyan); }
+
+        /* Modal Financeiro Específico */
         .financeiro-mes-selector {
             display: flex; gap: 10px; align-items: center; margin-bottom: 1rem;
             flex-wrap: wrap; flex-shrink: 0;
@@ -507,9 +422,9 @@
             font-family: var(--bod); outline: none; margin-right: 5px;
             flex-grow: 1; min-width: 120px;
         }
-         .financeiro-mes-selector .btn { padding: 0.5rem 0.8rem; font-size: 0.95rem; min-width: auto; }
+        .financeiro-mes-selector .btn { padding: 0.5rem 0.8rem; font-size: 0.95rem; min-width: auto; }
 
-        /* Styles for the Prompt Library Modal Container */
+        /* Prompt Library Modal Container */
         #modalBibliotecaPrompts .modal-biblioteca-prompts-wrapper {
             background-color: #f0f2f5; /* Prompt library background */
             color: #2c3e50; /* Prompt library text color */
@@ -525,7 +440,7 @@
             overflow: hidden; /* Content inside will scroll */
             box-sizing: border-box;
         }
-        #modalBibliotecaPrompts .fechar-modal-biblioteca {
+        #modalBibliotecaPrompts .fechar-modal-biblioteca { /* Estilo específico para fechar modal da biblioteca */
             position: absolute;
             top: 10px;
             right: 15px;
@@ -539,72 +454,74 @@
             line-height: 35px;
             text-align: center;
             cursor: pointer;
-            z-index: 1055;
+            z-index: 1055; /* Acima do conteúdo interno da biblioteca */
             transition: background-color 0.2s;
         }
-        #modalBibliotecaPrompts .fechar-modal-biblioteca:hover {
-            background: #e74c3c;
-        }
+        #modalBibliotecaPrompts .fechar-modal-biblioteca:hover { background: #e74c3c; }
+
         #conteudoModalBibliotecaPromptsInner {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            --cor-primaria: #1abc9c;
-            --cor-primaria-hover: #16a085;
-            --cor-secundaria: #34495e;
-            --cor-sucesso: #2ecc71;
-            --cor-sucesso-hover: #27ae60;
-            --cor-perigo: #e74c3c;
-            --cor-perigo-hover: #c0392b;
-            --cor-fundo: #f0f2f5;
-            --cor-card: #ffffff;
-            --cor-texto: #2c3e50;
-            --cor-texto-secundario: #525f6c;
-            --cor-borda: #dce0e5;
+            width: 100%; height: 100%; overflow-y: auto; position: relative;
+            display: flex; flex-direction: column;
+            --cor-primaria: #1abc9c; --cor-primaria-hover: #16a085;
+            --cor-secundaria: #34495e; --cor-sucesso: #2ecc71;
+            --cor-sucesso-hover: #27ae60; --cor-perigo: #e74c3c;
+            --cor-perigo-hover: #c0392b; --cor-fundo: #f0f2f5;
+            --cor-card: #ffffff; --cor-texto: #2c3e50;
+            --cor-texto-secundario: #525f6c; --cor-borda: #dce0e5;
             --sombra-card: 0 2px 8px rgba(0,0,0,0.06);
-            --border-radius: 0.4rem;
-            --spacing-unit: 1rem;
+            --border-radius: 0.4rem; --spacing-unit: 1rem;
             font-family: 'Roboto', 'Segoe UI', sans-serif;
-            margin: 0;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-            line-height: 1.6;
-            flex-grow: 1;
+            margin: 0; background-color: var(--cor-fundo); color: var(--cor-texto);
+            line-height: 1.6; flex-grow: 1;
         }
-        body.prompt-lib-modal-active {
-             overflow: hidden;
+        body.prompt-lib-modal-active { overflow: hidden; } /* Impede scroll do body quando modal da lib está ativo */
+
+        /* Dashboard Notification Area Style */
+        #dashboardNotificationArea {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 25px;
+            border-radius: 8px;
+            z-index: 2000; /* Alto z-index para ficar sobre outros elementos */
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            font-family: var(--bod);
+            font-size: 1.05rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            min-width: 250px;
+            max-width: 80%;
         }
+        #dashboardNotificationArea.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        #dashboardNotificationArea.hidden-notif { /* para quando está 'escondido' mas ainda no DOM */
+             opacity: 0;
+             transform: translateX(-50%) translateY(20px); /* Efeito de saida */
+        }
+        #dashboardNotificationArea.info { background-color: var(--c-blue); color: white; }
+        #dashboardNotificationArea.success { background-color: var(--c-green); color: var(--c-bg-dark); }
+        #dashboardNotificationArea.error { background-color: var(--c-yellow); color: var(--c-bg-dark); }
+
     </style>
     <style type="text/css" id="promptLibraryStylesScoped">
+        /* Estilos Escopados da Biblioteca de Prompts (mantidos como estavam para integridade da funcionalidade original) */
         #conteudoModalBibliotecaPromptsInner .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             padding: calc(var(--spacing-unit)*1.25) calc(var(--spacing-unit)*1.5);
-            background-color: var(--cor-card);
-            border-bottom: 1px solid var(--cor-borda);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-            margin-bottom: calc(var(--spacing-unit)*1.5);
+            background-color: var(--cor-card); border-bottom: 1px solid var(--cor-borda);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: calc(var(--spacing-unit)*1.5);
             flex-shrink: 0;
         }
-        #conteudoModalBibliotecaPromptsInner .page-header h1 {
-            font-size: 1.8rem;
-            color: var(--cor-primaria);
-            margin: 0;
-        }
-        #conteudoModalBibliotecaPromptsInner .page-header .header-actions button {
-            margin-left: var(--spacing-unit);
-        }
+        #conteudoModalBibliotecaPromptsInner .page-header h1 { font-size: 1.8rem; color: var(--cor-primaria); margin: 0; }
+        #conteudoModalBibliotecaPromptsInner .page-header .header-actions button { margin-left: var(--spacing-unit); }
         #conteudoModalBibliotecaPromptsInner .main-content-area {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
+            max-width: 1100px; width: 100%; margin: 0 auto;
             padding: 0 calc(var(--spacing-unit)*1.5) calc(var(--spacing-unit)*1.5);
-            box-sizing: border-box;
-            flex-grow: 1;
+            box-sizing: border-box; flex-grow: 1;
         }
         #conteudoModalBibliotecaPromptsInner label { display:block; margin-bottom:calc(var(--spacing-unit)*0.4); font-weight:600; font-size:0.9rem; }
         #conteudoModalBibliotecaPromptsInner input[type="text"],
@@ -636,7 +553,7 @@
         #conteudoModalBibliotecaPromptsInner .btn-primario { background-color:var(--cor-primaria); color:white; }
         #conteudoModalBibliotecaPromptsInner .btn-primario:hover { background-color:var(--cor-primaria-hover); }
         #conteudoModalBibliotecaPromptsInner .btn-secundario { background-color:var(--cor-secundaria); color:white; }
-        #conteudoModalBibliotecaPromptsInner .btn-secundario:hover { background-color:#2c3e50; }
+        #conteudoModalBibliotecaPromptsInner .btn-secundario:hover { background-color:#2c3e50; } /* Ajuste para hover do secundário */
         #conteudoModalBibliotecaPromptsInner .btn-sucesso { background-color:var(--cor-sucesso); color:white; }
         #conteudoModalBibliotecaPromptsInner .btn-sucesso:hover { background-color:var(--cor-sucesso-hover); }
         #conteudoModalBibliotecaPromptsInner .btn-perigo { background-color:var(--cor-perigo); color:white; }
@@ -673,22 +590,20 @@
             font-size:0.9rem; color:var(--cor-texto);
         }
         #conteudoModalBibliotecaPromptsInner .prompt-item .date-info { font-size:0.75rem; color:var(--cor-texto-secundario); text-align:right; margin-top:calc(var(--spacing-unit)*0.8); }
-        #conteudoModalBibliotecaPromptsInner .modal-overlay {
-            position:fixed;
-            top:0; left:0; width:100%; height:100%;
+        #conteudoModalBibliotecaPromptsInner .modal-overlay { /* Overlay para modais internos da biblioteca */
+            position:fixed; top:0; left:0; width:100%; height:100%;
             background-color:rgba(0,0,0,0.6);
             display:flex; align-items:center; justify-content:center;
             opacity:0; visibility:hidden; transition:opacity 0.3s ease, visibility 0s 0.3s linear;
-            z-index:1050;
+            z-index:1050; /* Abaixo do fechar-modal-biblioteca, mas acima do conteúdo da página */
         }
         #conteudoModalBibliotecaPromptsInner .modal-overlay.active { opacity:1; visibility:visible; transition-delay: 0s; }
-        #conteudoModalBibliotecaPromptsInner .modal-content {
+        #conteudoModalBibliotecaPromptsInner .modal-content { /* Conteúdo do modal interno da biblioteca */
             background-color:var(--cor-card); padding:calc(var(--spacing-unit)*1.5);
             border-radius:var(--border-radius); box-shadow:0 5px 20px rgba(0,0,0,0.2);
             width:90%; max-width:600px;
             transform:scale(0.9); transition:transform 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height: 90vh; overflow-y: auto;
         }
         #conteudoModalBibliotecaPromptsInner .modal-overlay.active .modal-content { transform:scale(1); }
         #conteudoModalBibliotecaPromptsInner .modal-header {
@@ -703,12 +618,11 @@
         }
         #conteudoModalBibliotecaPromptsInner .modal-close-btn:hover { color:var(--cor-perigo); }
         #conteudoModalBibliotecaPromptsInner .modal-body p { margin-top:0; color:var(--cor-texto-secundario); }
-        #conteudoModalBibliotecaPromptsInner .hidden { display: none !important; }
+        #conteudoModalBibliotecaPromptsInner .hidden { display: none !important; } /* Utilidade da biblioteca */
         #conteudoModalBibliotecaPromptsInner .info-message { text-align:center; padding:var(--spacing-unit)*2; color:var(--cor-texto-secundario); background-color:var(--cor-fundo); border-radius:var(--border-radius); }
-        #conteudoModalBibliotecaPromptsInner #notificationArea {
-            position:absolute;
-            bottom:20px; right:20px;
-            padding:var(--spacing-unit); color:white; z-index:1060;
+        #conteudoModalBibliotecaPromptsInner #notificationArea { /* Notificações da biblioteca */
+            position:absolute; bottom:20px; right:20px;
+            padding:var(--spacing-unit); color:white; z-index:1060; /* Acima de outros elementos da lib */
             opacity:0; transition:opacity 0.4s ease, transform 0.4s ease;
             text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.15);
             transform:translateY(20px); border-radius:var(--border-radius);
@@ -727,11 +641,9 @@
             #conteudoModalBibliotecaPromptsInner .modal-content { width:95%; padding:var(--spacing-unit); }
             #conteudoModalBibliotecaPromptsInner .modal-header h2 { font-size:1.2rem; }
         }
-        #conteudoModalBibliotecaPromptsInner .hidden-visually {
-            position: absolute !important;
-            height: 1px; width: 1px;
-            overflow: hidden;
-            clip: rect(1px, 1px, 1px, 1px);
+        #conteudoModalBibliotecaPromptsInner .hidden-visually { /* Para acessibilidade em labels, etc. */
+            position: absolute !important; height: 1px; width: 1px;
+            overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
             white-space: nowrap;
         }
     </style>
@@ -741,9 +653,9 @@
         <a href="https://classroom.google.com/" target="_blank" class="ataho-link" title="Google Classroom" tabindex="1" aria-label="Google Classroom"><i class="fab fa-google"></i></a>
         <a href="https://meet.google.com/" target="_blank" class="ataho-link" title="Google Meet" tabindex="2" aria-label="Google Meet"><i class="fas fa-video"></i></a>
         <a href="https://drive.google.com/" target="_blank" class="ataho-link" title="Google Drive" tabindex="3" aria-label="Google Drive"><i class="fab fa-google-drive"></i></a>
-        <a href="https://docs.google.com/" target="_blank" class="ataho-link" title="Google Docs" tabindex="4" aria-label="Google Docs" style="font-weight: bold; font-size: 1.4em;">D</a>
-        <a href="https://sheets.google.com/" target="_blank" class="ataho-link" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas" style="font-weight: bold; font-size: 1.4em;">P</a>
-        <a href="https://slides.google.com/" target="_blank" class="ataho-link" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações" style="font-weight: bold; font-size: 1.4em;">A</a>
+        <a href="https://docs.google.com/" target="_blank" class="ataho-link icon-text-custom" title="Google Docs" tabindex="4" aria-label="Google Docs">D</a>
+        <a href="https://sheets.google.com/" target="_blank" class="ataho-link icon-text-custom" title="Google Planilhas" tabindex="5" aria-label="Google Planilhas">P</a>
+        <a href="https://slides.google.com/" target="_blank" class="ataho-link icon-text-custom" title="Google Apresentações" tabindex="7" aria-label="Google Apresentações">A</a>
         <a href="https://calendar.google.com/" target="_blank" class="ataho-link" title="Google Agenda" tabindex="6" aria-label="Google Agenda"><i class="far fa-calendar-alt"></i></a>
         <a href="https://fast.com/" target="_blank" class="ataho-link" title="Teste de Velocidade (Fast)" tabindex="8" aria-label="Teste de Velocidade"><i class="fas fa-tachometer-alt"></i></a>
         <a href="https://convertio.co/pt/" target="_blank" class="ataho-link" title="Convertio" tabindex="9" aria-label="Convertio"><i class="fas fa-globe"></i></a>
@@ -756,11 +668,114 @@
     <header> RS TECH </header>
 
     <main class="dashboard-grid">
-        <div class="card diario-classe">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Diário de Classe</h2>                <form id="formDiarioClasse" onsubmit="event.preventDefault();">                    <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">                    <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">                    <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>                    <div class="diario-btns">                        <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>                        <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>                        <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>                        <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>                    </div>                </form>            </div>            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalDiario()">Visualizar Diário</button>        </div>
-        <div class="card cadastro-alunos">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Cadastro de Alunos (AnyDesk)</h2>                <form id="formCadastroAluno" onsubmit="event.preventDefault(); adicionarAluno();">                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="handleNomeAlunoInput()">                    <div id="sugestoesAlunosContainer" class="sugestoes-container"></div>                    <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">                    <div class="aluno-form-actions-wrapper">                        <div class="alunos-btns">                            <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>                        </div>                        <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>                    </div>                </form>            </div>            <p id="contadorAlunos" style="align-self: center; text-align: center; margin-top: 0.8rem; margin-bottom: 0.8rem; color: var(--c-cyan); font-size: 1.7em; width: 100%;"></p>            <button class="btn" style="margin-top: 0; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>        </div>
-        <div class="card controle-financeiro">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Controle Financeiro</h2>                <form id="formFinanceiro" onsubmit="event.preventDefault(); adicionarFinanceiro();">                    <input id="nomeFinanceiro" placeholder="Nome do Aluno/Descrição" autocomplete="off" oninput="mostrarBotoesFinanceiro()">                    <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()" step="0.01">                    <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">                        <option value="Pago">Pago</option>                        <option value="Pendente">Pendente</option>                    </select>                    <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">                        <option value="Mensalidade">Mensalidade</option>                        <option value="Serviço Extra">Serviço Extra</option>                        <option value="Outro">Outro</option>                    </select>                    <div class="financeiro-form-actions-wrapper">                        <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>                        <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</option>                        <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>                    </div>                </form>            </div>            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Dados</button>        </div>
-        <div class="card avaliacao-humor-aluno">            <h2>Sistema de Avaliação de Humor do Aluno</h2>            <form id="formAvaliacaoHumor" onsubmit="event.preventDefault();">                <div class="checkbox-group">                    <input type="checkbox" id="humorEngajado" name="humorAluno" value="engajado">                    <label for="humorEngajado">Engajado / Participativo</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorAlegre" name="humorAluno" value="alegre">                    <label for="humorAlegre">Alegre / Entusiasmado</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorConfuso" name="humorAluno" value="confuso">                    <label for="humorConfuso">Confuso / Com Dificuldade</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorDistraido" name="humorAluno" value="distraido">                    <label for="humorDistraido">Distraído / Desinteressado</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorAnsioso" name="humorAluno" value="ansioso">                    <label for="humorAnsioso">Ansioso / Estressado</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorSonolento" name="humorAluno" value="sonolento">                    <label for="humorSonolento">Sonolento / Cansado</label>                </div>            </form>        </div>
-        <div class="card anotacoes-rapidas">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Anotações Rápidas</h2>                <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">                    <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">                    <div class="anotacoes-form-actions-wrapper">                        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>                        <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>                        <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>                        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>                    </div>                </form>                <table id="tabelaAnotacoes" style="margin-top:1rem; margin-left: auto; margin-right: auto; width: fit-content; flex-grow: 1; overflow-y: auto; display: block;">                    <thead>                        <tr>                            <th>Anotação</th>                            <th style="width:100px; text-align:center;">Ações</th>                        </tr>                    </thead>                    <tbody></tbody>                </table>            </div>        </div>
+        <div class="card diario-classe">
+            <h2>Diário de Classe</h2>
+            <form id="formDiarioClasse">
+                <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required>
+                <input id="diarioData" type="date" required>
+                <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required></textarea>
+                <div class="form-actions-wrapper diario-btns"> <button class="btn hidden" type="button" id="btnDiarioAdd">Salvar</button>
+                    <button class="btn hidden" type="button" id="btnDiarioEdit">Salvar Edição</button>
+                    <button class="btn hidden" type="button" id="btnDiarioCancel">Cancelar</button>
+                    <button class="btn hidden" type="button" id="btnDiarioLimpar">Limpar</button>
+                </div>
+            </form>
+            <button class="btn" id="btnVisualizarDiario" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;">Visualizar Diário</button>
+        </div>
+
+        <div class="card cadastro-alunos">
+            <h2>Cadastro de Alunos (AnyDesk)</h2>
+            <form id="formCadastroAluno" onsubmit="event.preventDefault(); adicionarAluno();">
+                <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="handleNomeAlunoInput()">
+                <div id="sugestoesAlunosContainer" class="sugestoes-container hidden"></div>
+                <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
+                <div class="form-actions-wrapper aluno-form-actions-wrapper">
+                    <div class="alunos-btns">
+                        <button class="btn hidden" type="submit" id="btnAlunoAdd">Cadastrar</button>
+                        <button class="btn hidden" type="button" id="btnAlunoLimpar" onclick="limparAlunoCampos()">Limpar Tudo</button>
+                    </div>
+                    <button class="btn hidden" type="button" id="btnAlunoEdit" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
+                    <button class="btn hidden" type="button" id="btnAlunoCancel" onclick="cancelarEdicaoAluno()">Cancelar</button>
+                </div>
+            </form>
+            <p id="contadorAlunos" style="align-self: center; text-align: center; margin-top: 0.8rem; margin-bottom: 0.8rem; color: var(--c-cyan); font-size: 1.7em; width: 100%;"></p>
+            <button class="btn" style="margin-top: 0; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
+        </div>
+
+        <div class="card controle-financeiro">
+            <h2>Controle Financeiro</h2>
+            <form id="formFinanceiro" onsubmit="event.preventDefault(); adicionarFinanceiro();">
+                <input id="nomeFinanceiro" placeholder="Nome do Aluno/Descrição" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
+                <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()" step="0.01">
+                <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
+                    <option value="Pago">Pago</option>
+                    <option value="Pendente">Pendente</option>
+                </select>
+                <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
+                    <option value="Mensalidade">Mensalidade</option>
+                    <option value="Serviço Extra">Serviço Extra</option>
+                    <option value="Outro">Outro</option>
+                </select>
+                <div class="form-actions-wrapper financeiro-form-actions-wrapper">
+                    <button class="btn hidden" type="submit" id="btnFinAdd">Lançar</button>
+                    <button class="btn hidden" type="button" id="btnFinEdit" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
+                    <button class="btn hidden" type="button" id="btnFinCancel" onclick="cancelarEdicaoFinanceiro()">Cancelar</button>
+                    <button class="btn hidden" type="button" id="btnFinLimpar" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
+                </div>
+            </form>
+            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Dados</button>
+        </div>
+
+        <div class="card avaliacao-humor-aluno">
+            <h2>Sistema de Avaliação de Humor do Aluno</h2>
+            <form id="formAvaliacaoHumor" onsubmit="event.preventDefault();">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humorEngajado" name="humorAluno" value="engajado">
+                    <label for="humorEngajado">Engajado / Participativo</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humorAlegre" name="humorAluno" value="alegre">
+                    <label for="humorAlegre">Alegre / Entusiasmado</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humorConfuso" name="humorAluno" value="confuso">
+                    <label for="humorConfuso">Confuso / Com Dificuldade</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humorDistraido" name="humorAluno" value="distraido">
+                    <label for="humorDistraido">Distraído / Desinteressado</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humorAnsioso" name="humorAluno" value="ansioso">
+                    <label for="humorAnsioso">Ansioso / Estressado</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="humorSonolento" name="humorAluno" value="sonolento">
+                    <label for="humorSonolento">Sonolento / Cansado</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="card anotacoes-rapidas">
+            <h2>Anotações Rápidas</h2>
+            <form id="formAnotacoesRapidas" onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
+                <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
+                <div class="form-actions-wrapper anotacoes-form-actions-wrapper">
+                    <button class="btn hidden" type="submit" id="btnAddAnotacao">Adicionar</button>
+                    <button class="btn hidden" type="button" id="btnEditAnotacao" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
+                    <button class="btn hidden" type="button" id="btnCancelEditAnotacao" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
+                    <button class="btn hidden" type="button" id="btnLimparAnotacao" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
+                </div>
+            </form>
+            <table id="tabelaAnotacoes"> <thead>
+                    <tr>
+                        <th>Anotação</th>
+                        <th style="width:100px; text-align:center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </main>
 
     <div class="portais-botoes-container">
@@ -776,27 +791,58 @@
         <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
         <label class="btn-import" style="display:inline-block;cursor:pointer;">
             <i class="fas fa-upload"></i> Importar Dados
-            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
+            <input type="file" id="importFile" accept=".json" class="hidden" onchange="importarDados(event)">
         </label>
     </div>
 
-    <div class="modal-bg" id="modalDiario">        <div class="modal-diario">            <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>            <h3>Diário de Classe - Registros</h3>            <div class="modal-diario-filtro">                <label for="filtroNome">Aluno:</label>                <input type="text" id="filtroNome" placeholder="Filtrar por nome">                <label for="filtroData">Data:</label>                <input type="date" id="filtroData">            </div>            <div class="modal-diario-table" id="conteudoModalDiario"></div>        </div>    </div>
-    <div class="modal-bg" id="modalFinanceiro">        <div class="modal-financeiro">            <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>            <h3>Controle Financeiro - Lançamentos</h3>            <div class="financeiro-mes-selector">                <label for="mesAnoSelectFinanceiro">Mês/Ano:</label>                <select id="mesAnoSelectFinanceiro" onchange="atualizarModalFinanceiroComMesSelecionado()"></select>                <button class="btn btn-sm" onclick="navegarMesFinanceiro(-1)" title="Mês Anterior"><i class="fas fa-chevron-left"></i></button>                <button class="btn btn-sm" onclick="navegarMesFinanceiro(1)" title="Próximo Mês"><i class="fas fa-chevron-right"></i></button>                <button class="btn btn-sm" onclick="irParaMesAtualFinanceiro()" title="Ir para Mês Atual">Mês Atual</button>            </div>            <div id="conteudoModalFinanceiro" class="table-container-modal">                </div>        </div>    </div>
-    <div class="modal-bg" id="modalAlunos">        <div class="modal-alunos">            <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>            <h3>Alunos Cadastrados</h3>            <div id="conteudoModalAlunos" class="table-container-modal">            </div>        </div>    </div>
+    <div class="modal-bg" id="modalDiario" role="dialog" aria-modal="true" aria-labelledby="modalDiarioTitle" tabindex="-1">
+        <div class="modal-diario">
+            <button class="fechar-modal" id="fecharModalDiarioBtn" title="Fechar">&times;</button>
+            <h3 id="modalDiarioTitle">Diário de Classe - Registros</h3>
+            <div class="modal-diario-filtro">
+                <label for="filtroNome">Aluno:</label>
+                <input type="text" id="filtroNome" placeholder="Filtrar por nome">
+                <label for="filtroData">Data:</label>
+                <input type="date" id="filtroData">
+            </div>
+            <div class="modal-diario-table" id="conteudoModalDiario"></div>
+        </div>
+    </div>
 
-    <div class="modal-bg" id="modalBibliotecaPrompts">
+    <div class="modal-bg" id="modalFinanceiro" role="dialog" aria-modal="true" aria-labelledby="modalFinanceiroTitle" tabindex="-1">
+        <div class="modal-financeiro">
+            <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
+            <h3 id="modalFinanceiroTitle">Controle Financeiro - Lançamentos</h3>
+            <div class="financeiro-mes-selector">
+                <label for="mesAnoSelectFinanceiro">Mês/Ano:</label>
+                <select id="mesAnoSelectFinanceiro" onchange="atualizarModalFinanceiroComMesSelecionado()"></select>
+                <button class="btn btn-sm" onclick="navegarMesFinanceiro(-1)" title="Mês Anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-sm" onclick="navegarMesFinanceiro(1)" title="Próximo Mês"><i class="fas fa-chevron-right"></i></button>
+                <button class="btn btn-sm" onclick="irParaMesAtualFinanceiro()" title="Ir para Mês Atual">Mês Atual</button>
+            </div>
+            <div id="conteudoModalFinanceiro" class="table-container-modal"></div>
+        </div>
+    </div>
+
+    <div class="modal-bg" id="modalAlunos" role="dialog" aria-modal="true" aria-labelledby="modalAlunosTitle" tabindex="-1">
+        <div class="modal-alunos">
+            <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
+            <h3 id="modalAlunosTitle">Alunos Cadastrados</h3>
+            <div id="conteudoModalAlunos" class="table-container-modal"></div>
+        </div>
+    </div>
+
+    <div class="modal-bg" id="modalBibliotecaPrompts" role="dialog" aria-modal="true" aria-labelledby="modalBibliotecaPromptsTitle" tabindex="-1">
         <div class="modal-biblioteca-prompts-wrapper">
             <button class="fechar-modal-biblioteca" onclick="fecharModalBibliotecaPrompts()" title="Fechar Biblioteca">&times;</button>
             <div id="conteudoModalBibliotecaPromptsInner">
                 <div id="notificationArea" role="log" aria-live="polite" aria-atomic="true"></div>
-
                 <header class="page-header">
-                    <h1>📚 Biblioteca de Prompts</h1>
+                    <h1 id="modalBibliotecaPromptsTitle">📚 Biblioteca de Prompts</h1>
                     <div class="header-actions">
                         <button type="button" id="btnAbrirModalCadastro" class="btn-primario">➕ Novo Prompt</button>
                     </div>
                 </header>
-
                 <main class="main-content-area">
                     <div class="search-filter-sort-bar">
                         <div class="search-input">
@@ -822,14 +868,12 @@
                              <button id="btnLimparFiltros" class="btn-secundario hidden">🧹 Limpar</button>
                         </div>
                     </div>
-
                     <div id="listaPrompts">
                         <p id="mensagemListaVazia" class="info-message">Nenhum prompt cadastrado. Clique em "+ Novo Prompt" para começar!</p>
                     </div>
                 </main>
-
-                <div id="modalCadastro" class="modal-overlay">
-                    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="formTitleModal">
+                <div id="modalCadastro" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="formTitleModal" tabindex="-1">
+                    <div class="modal-content">
                         <header class="modal-header">
                             <h2 id="formTitleModal">Adicionar Novo Prompt</h2>
                             <button type="button" class="modal-close-btn" data-modal-close="modalCadastro" aria-label="Fechar modal de cadastro">&times;</button>
@@ -857,111 +901,673 @@
                         </div>
                     </div>
                 </div>
-
-                </div>
+            </div>
         </div>
     </div>
 
-    <footer> 2025 </footer>
+    <div id="dashboardNotificationArea" class="hidden-notif" aria-live="assertive"></div>
+
+    <footer> <span id="currentYear"></span> RS TECH </footer>
 
     <script>
         // RS TECH DASHBOARD SCRIPT (main)
+
+        // --- Utility Functions ---
         function salvarLocal(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
-        function recuperarLocal(key, fallback) { try { const item = localStorage.getItem(key); const parsedItem = item ? JSON.parse(item) : fallback; if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) { return fallback; } return parsedItem; } catch (e) { console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e); return fallback; } }
-        let diarioEditIdx = null, finEditIdx = null, alunoEditIdx = null, anotacaoEditIdx = null, financeiroSelecionadoMesAno = '';
+        function recuperarLocal(key, fallback) {
+            try {
+                const item = localStorage.getItem(key);
+                const parsedItem = item ? JSON.parse(item) : fallback;
+                // Specific check for controleFinanceiro to ensure it's an object
+                if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) {
+                    return fallback; // fallback is {}
+                }
+                return parsedItem;
+            } catch (e) {
+                console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
+                return fallback;
+            }
+        }
+        function formatarMoeda(valor) {
+            const numero = parseFloat(valor) || 0;
+            return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+        function getFormattedMonthYear(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            return `${year}-${month}`;
+        }
+        function getCurrentMonthYearKey() { return getFormattedMonthYear(new Date()); }
+        // function parseMonthYearKey(monthYearKey) { const parts = monthYearKey.split('-'); return { year: parseInt(parts[0]), month: parseInt(parts[1]) }; }
+        function monthYearKeyToDisplay(monthYearKey) {
+            if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido";
+            const parts = monthYearKey.split('-');
+            return `${parts[1]}/${parts[0]}`;
+        }
+
+        // Simple Non-Blocking Notification System for Dashboard
+        let notificationTimeout;
+        function showDashboardNotification(message, type = 'info', duration = 3000) {
+            const notificationArea = document.getElementById('dashboardNotificationArea');
+            if (!notificationArea) return;
+
+            clearTimeout(notificationTimeout); // Clear previous timeout if any
+
+            notificationArea.textContent = message;
+            notificationArea.className = 'dashboard-notification'; // Reset classes
+            notificationArea.classList.add(type); // Add type class (info, success, error)
+            notificationArea.classList.add('show');
+            notificationArea.classList.remove('hidden-notif');
+
+
+            notificationTimeout = setTimeout(() => {
+                notificationArea.classList.remove('show');
+                notificationArea.classList.add('hidden-notif');
+            }, duration);
+        }
+
+
+        // --- Global State Variables ---
+        let diarioEditIdx = null, finEditIdx = null, alunoEditIdx = null, anotacaoEditIdx = null;
+        let financeiroSelecionadoMesAno = '';
+
+        // --- DOM Element References (Cache frequently used elements) ---
+        // Diário
+        const formDiarioClasse = document.getElementById('formDiarioClasse');
+        const diarioAlunoInput = document.getElementById('diarioAluno');
+        const diarioDataInput = document.getElementById('diarioData');
+        const diarioConteudoInput = document.getElementById('diarioConteudo');
+        const btnDiarioAdd = document.getElementById('btnDiarioAdd');
+        const btnDiarioEdit = document.getElementById('btnDiarioEdit');
+        const btnDiarioCancel = document.getElementById('btnDiarioCancel');
+        const btnDiarioLimpar = document.getElementById('btnDiarioLimpar');
+        const btnVisualizarDiario = document.getElementById('btnVisualizarDiario');
+        const modalDiario = document.getElementById('modalDiario');
+        const fecharModalDiarioBtn = document.getElementById('fecharModalDiarioBtn');
+        const filtroNomeDiarioInput = document.getElementById('filtroNome');
+        const filtroDataDiarioInput = document.getElementById('filtroData');
+        const conteudoModalDiarioDiv = document.getElementById('conteudoModalDiario');
+
+        // Alunos (example, other inputs can be cached similarly)
         const nomeAlunoInput = document.getElementById('nomeAluno');
         const anydeskAlunoInput = document.getElementById('anydeskAluno');
         const sugestoesAlunosContainer = document.getElementById('sugestoesAlunosContainer');
-        function formatarMoeda(valor) { const numero = parseFloat(valor) || 0; return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-        function getFormattedMonthYear(date) { const year = date.getFullYear(); const month = (date.getMonth() + 1).toString().padStart(2, '0'); return `${year}-${month}`; }
-        function getCurrentMonthYearKey() { return getFormattedMonthYear(new Date()); }
-        function parseMonthYearKey(monthYearKey) { const parts = monthYearKey.split('-'); return { year: parseInt(parts[0]), month: parseInt(parts[1]) }; }
-        function monthYearKeyToDisplay(monthYearKey) { if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido"; const parts = monthYearKey.split('-'); return `${parts[1]}/${parts[0]}`; }
 
-        function mostrarBotoesDiario() { const aluno = document.getElementById('diarioAluno').value.trim(), data = document.getElementById('diarioData').value, conteudo = document.getElementById('diarioConteudo').value.trim(), camposPreenchidos = aluno && data && conteudo, algumCampoPreenchido = aluno || data || conteudo; document.getElementById('btnDiarioAdd').style.display = camposPreenchidos && diarioEditIdx === null ? '' : 'none'; document.getElementById('btnDiarioEdit').style.display = camposPreenchidos && diarioEditIdx !== null ? '' : 'none'; document.getElementById('btnDiarioCancel').style.display = diarioEditIdx !== null ? '' : 'none'; document.getElementById('btnDiarioLimpar').style.display = algumCampoPreenchido && diarioEditIdx === null ? '' : 'none'; }
-        function limparCamposDiario() { document.getElementById('formDiarioClasse').reset(); diarioEditIdx = null; mostrarBotoesDiario(); }
-        function editarDiarioClasse(idx) { let lista = recuperarLocal('diarioClasseLista', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar diário:", idx); return; } const registro = lista[idx]; document.getElementById('diarioAluno').value = registro.aluno; document.getElementById('diarioData').value = registro.data; document.getElementById('diarioConteudo').value = registro.conteudo; diarioEditIdx = idx; mostrarBotoesDiario(); fecharModalDiario(); document.getElementById('diarioAluno').focus(); }
-        function removerDiarioClasse(idx) { if (!confirm('Excluir registro do diário?')) return; let lista = recuperarLocal('diarioClasseLista', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover diário:", idx); return; } lista.splice(idx, 1); salvarLocal('diarioClasseLista', lista); if (diarioEditIdx === idx) limparCamposDiario(); else if (diarioEditIdx !== null && idx < diarioEditIdx) diarioEditIdx--; if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); }
-        function confirmarEdicaoDiarioClasse() { salvarDiarioClasse(); }
-        function cancelarEdicaoDiarioClasse() { limparCamposDiario(); }
-        function salvarDiarioClasse() { const aluno = document.getElementById('diarioAluno').value.trim(), data = document.getElementById('diarioData').value, conteudo = document.getElementById('diarioConteudo').value.trim(); if (!aluno || !data || !conteudo) { alert('Preencha todos os campos.'); return; } let lista = recuperarLocal('diarioClasseLista', []); if (diarioEditIdx !== null) { if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) { lista[diarioEditIdx] = { aluno, data, conteudo }; alert('Diário atualizado.'); } else { console.error("Índice de edição inválido:", diarioEditIdx); limparCamposDiario(); return; } } else { lista.push({ aluno, data, conteudo }); alert('Salvo no Diário.'); } salvarLocal('diarioClasseLista', lista); limparCamposDiario(); if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); }
-        function abrirModalDiario() { document.getElementById('modalDiario').classList.add('active'); document.getElementById('filtroNome').value = ''; document.getElementById('filtroData').value = ''; filtrarModalDiario(); }
-        function fecharModalDiario() { document.getElementById('modalDiario').classList.remove('active'); }
-        document.addEventListener('input', function(e) { if ((e.target.id === 'filtroNome' || e.target.id === 'filtroData') && document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); });
-        function filtrarModalDiario() { let listaOriginal = recuperarLocal('diarioClasseLista', []), listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index })), filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase(), filtroData = document.getElementById('filtroData').value, filtrados = listaComIndices.filter(reg => (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) && (!filtroData || reg.data === filtroData)); let html = `<table><thead><tr><th>Data</th><th>Aluno</th><th>Conteúdo</th><th>Ações</th></tr></thead><tbody>`; if (filtrados.length) { filtrados.slice().reverse().forEach(reg => { const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"), conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"); html += `<tr><td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td><td>${alunoHtml}</td><td>${conteudoHtml}</td><td class="table-actions"><button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro.</td></tr>`; } html += `</tbody></table>`; document.getElementById('conteudoModalDiario').innerHTML = html; }
-        function mostrarBotoesFinanceiro() { const nome = document.getElementById('nomeFinanceiro').value.trim(), valor = document.getElementById('valorFinanceiro').value.trim(), camposPreenchidos = nome && valor, isEditing = finEditIdx !== null; document.getElementById('btnFinAdd').style.display = camposPreenchidos && !isEditing ? '' : 'none'; document.getElementById('btnFinEdit').style.display = camposPreenchidos && isEditing ? '' : 'none'; document.getElementById('btnFinCancel').style.display = isEditing ? '' : 'none'; document.getElementById('btnFinLimpar').style.display = (nome || valor) && !isEditing ? '' : 'none'; }
-        function adicionarFinanceiro() { const nome = document.getElementById('nomeFinanceiro').value.trim(), valor = document.getElementById('valorFinanceiro').value.trim(), status = document.getElementById('statusFinanceiro').value, tipo = document.getElementById('tipoFinanceiro').value; if (!nome || !valor) { alert('Preencha nome e valor.'); return; } if (isNaN(parseFloat(valor))) { alert('Valor inválido.'); return; } let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); if (finEditIdx !== null) { const { monthKey, index } = finEditIdx; if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) { controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo }; alert('Financeiro atualizado.'); } else { console.error("Erro ao editar financeiro:", finEditIdx); alert("Erro ao atualizar."); limparFinanceiroCampos(); return; } } else { const currentMonthKey = getCurrentMonthYearKey(); if (!controleFinanceiroData[currentMonthKey]) controleFinanceiroData[currentMonthKey] = []; controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo }); alert('Lançamento adicionado.'); } salvarLocal('controleFinanceiro', controleFinanceiroData); limparFinanceiroCampos(); if (document.getElementById('modalFinanceiro').classList.contains('active')) { const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey(); financeiroSelecionadoMesAno = monthToUpdate; populateMesAnoSelectFinanceiro(); renderizarConteudoModalFinanceiro(monthToUpdate); } }
-        function editarFinanceiro(monthKey, itemIndex) { let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex]; if (!lancamento) { console.error("Lançamento não encontrado:", monthKey, itemIndex); alert("Lançamento não encontrado."); return; } document.getElementById('nomeFinanceiro').value = lancamento.nome; document.getElementById('valorFinanceiro').value = lancamento.valor; document.getElementById('statusFinanceiro').value = lancamento.status; document.getElementById('tipoFinanceiro').value = lancamento.tipo; finEditIdx = { monthKey: monthKey, index: itemIndex }; mostrarBotoesFinanceiro(); fecharModalFinanceiro(); document.getElementById('nomeFinanceiro').focus(); }
-        function removerFinanceiro(monthKey, itemIndex) { if (!confirm('Excluir lançamento financeiro?')) return; let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) { console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex); alert("Lançamento não encontrado."); return; } controleFinanceiroData[monthKey].splice(itemIndex, 1); salvarLocal('controleFinanceiro', controleFinanceiroData); if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) limparFinanceiroCampos(); else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) finEditIdx.index--; if (document.getElementById('modalFinanceiro').classList.contains('active')) { populateMesAnoSelectFinanceiro(); renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); } }
+
+        // --- Diário de Classe ---
+        function mostrarBotoesDiario() {
+            if (!diarioAlunoInput || !diarioDataInput || !diarioConteudoInput || !btnDiarioAdd || !btnDiarioEdit || !btnDiarioCancel || !btnDiarioLimpar) return;
+            const aluno = diarioAlunoInput.value.trim();
+            const data = diarioDataInput.value;
+            const conteudo = diarioConteudoInput.value.trim();
+            const camposPreenchidos = aluno && data && conteudo;
+            const algumCampoPreenchido = aluno || data || conteudo;
+
+            btnDiarioAdd.classList.toggle('hidden', !(camposPreenchidos && diarioEditIdx === null));
+            btnDiarioEdit.classList.toggle('hidden', !(camposPreenchidos && diarioEditIdx !== null));
+            btnDiarioCancel.classList.toggle('hidden', diarioEditIdx === null);
+            btnDiarioLimpar.classList.toggle('hidden', !(algumCampoPreenchido && diarioEditIdx === null));
+        }
+
+        function limparCamposDiario() {
+            if (formDiarioClasse) formDiarioClasse.reset();
+            diarioEditIdx = null;
+            mostrarBotoesDiario();
+        }
+
+        function editarDiarioClasse(idx) {
+            let lista = recuperarLocal('diarioClasseLista', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para editar diário:", idx);
+                return;
+            }
+            const registro = lista[idx];
+            if (diarioAlunoInput) diarioAlunoInput.value = registro.aluno;
+            if (diarioDataInput) diarioDataInput.value = registro.data;
+            if (diarioConteudoInput) diarioConteudoInput.value = registro.conteudo;
+            diarioEditIdx = idx;
+            mostrarBotoesDiario();
+            fecharModalDiario();
+            if (diarioAlunoInput) diarioAlunoInput.focus();
+        }
+
+        function removerDiarioClasse(idx) {
+            if (!confirm('Excluir registro do diário?')) return;
+            let lista = recuperarLocal('diarioClasseLista', []);
+            if (idx < 0 || idx >= lista.length) {
+                console.error("Índice inválido para remover diário:", idx);
+                return;
+            }
+            lista.splice(idx, 1);
+            salvarLocal('diarioClasseLista', lista);
+            if (diarioEditIdx === idx) limparCamposDiario();
+            else if (diarioEditIdx !== null && idx < diarioEditIdx) diarioEditIdx--;
+
+            if (modalDiario && modalDiario.classList.contains('active')) filtrarModalDiario();
+            showDashboardNotification('Registro do diário removido.', 'info');
+        }
+
+        function confirmarEdicaoDiarioClasse() {
+            salvarDiarioClasse();
+        }
+
+        function cancelarEdicaoDiarioClasse() {
+            limparCamposDiario();
+            showDashboardNotification('Edição do diário cancelada.', 'info');
+        }
+
+        function salvarDiarioClasse() {
+            if (!diarioAlunoInput || !diarioDataInput || !diarioConteudoInput) return;
+            const aluno = diarioAlunoInput.value.trim();
+            const data = diarioDataInput.value;
+            const conteudo = diarioConteudoInput.value.trim();
+
+            if (!aluno || !data || !conteudo) {
+                showDashboardNotification('Preencha todos os campos do diário.', 'error');
+                return;
+            }
+            let lista = recuperarLocal('diarioClasseLista', []);
+            if (diarioEditIdx !== null) {
+                if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
+                    lista[diarioEditIdx] = { aluno, data, conteudo };
+                    showDashboardNotification('Diário atualizado com sucesso!', 'success');
+                } else {
+                    console.error("Índice de edição inválido:", diarioEditIdx);
+                    limparCamposDiario();
+                    return;
+                }
+            } else {
+                lista.push({ aluno, data, conteudo });
+                showDashboardNotification('Salvo no Diário com sucesso!', 'success');
+            }
+            salvarLocal('diarioClasseLista', lista);
+            limparCamposDiario();
+            if (modalDiario && modalDiario.classList.contains('active')) filtrarModalDiario();
+        }
+
+        function abrirModalDiario() {
+            if (modalDiario) modalDiario.classList.add('active');
+            if (filtroNomeDiarioInput) filtroNomeDiarioInput.value = '';
+            if (filtroDataDiarioInput) filtroDataDiarioInput.value = '';
+            filtrarModalDiario();
+            if (modalDiario) modalDiario.focus(); // Accessibility: focus the modal
+        }
+
+        function fecharModalDiario() {
+            if (modalDiario) modalDiario.classList.remove('active');
+        }
+
+        function filtrarModalDiario() {
+            if(!conteudoModalDiarioDiv || !filtroNomeDiarioInput || !filtroDataDiarioInput) return;
+
+            let listaOriginal = recuperarLocal('diarioClasseLista', []);
+            let listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
+            let filtroNomeVal = filtroNomeDiarioInput.value.trim().toLowerCase();
+            let filtroDataVal = filtroDataDiarioInput.value;
+
+            let filtrados = listaComIndices.filter(reg =>
+                (!filtroNomeVal || String(reg.aluno || '').toLowerCase().includes(filtroNomeVal)) &&
+                (!filtroDataVal || reg.data === filtroDataVal)
+            );
+
+            let html = `<table><thead><tr><th>Data</th><th>Aluno</th><th>Conteúdo</th><th>Ações</th></tr></thead><tbody>`;
+            if (filtrados.length) {
+                filtrados.slice().reverse().forEach(reg => {
+                    const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    html += `<tr>
+                                <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
+                                <td>${alunoHtml}</td>
+                                <td>${conteudoHtml}</td>
+                                <td class="table-actions">
+                                    <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
+                                </td>
+                             </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            conteudoModalDiarioDiv.innerHTML = html;
+        }
+
+
+        // --- Controle Financeiro (mantendo onchange/onclick para brevidade, idealmente refatorar como Diário) ---
+        function mostrarBotoesFinanceiro() {
+            const nome = document.getElementById('nomeFinanceiro').value.trim();
+            const valor = document.getElementById('valorFinanceiro').value.trim();
+            const camposPreenchidos = nome && valor;
+            const isEditing = finEditIdx !== null;
+            document.getElementById('btnFinAdd').classList.toggle('hidden', !(camposPreenchidos && !isEditing));
+            document.getElementById('btnFinEdit').classList.toggle('hidden', !(camposPreenchidos && isEditing));
+            document.getElementById('btnFinCancel').classList.toggle('hidden', !isEditing);
+            document.getElementById('btnFinLimpar').classList.toggle('hidden', !((nome || valor) && !isEditing));
+        }
+
+        function adicionarFinanceiro() {
+            const nome = document.getElementById('nomeFinanceiro').value.trim();
+            const valor = document.getElementById('valorFinanceiro').value.trim();
+            const status = document.getElementById('statusFinanceiro').value;
+            const tipo = document.getElementById('tipoFinanceiro').value;
+
+            if (!nome || !valor) { showDashboardNotification('Preencha nome e valor no financeiro.', 'error'); return; }
+            if (isNaN(parseFloat(valor))) { showDashboardNotification('Valor financeiro inválido.', 'error'); return; }
+
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            if (finEditIdx !== null) {
+                const { monthKey, index } = finEditIdx;
+                if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) {
+                    controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo };
+                    showDashboardNotification('Financeiro atualizado.', 'success');
+                } else {
+                    console.error("Erro ao editar financeiro:", finEditIdx);
+                    showDashboardNotification("Erro ao atualizar lançamento financeiro.", 'error');
+                    limparFinanceiroCampos(); return;
+                }
+            } else {
+                const currentMonthKey = getCurrentMonthYearKey();
+                if (!controleFinanceiroData[currentMonthKey]) controleFinanceiroData[currentMonthKey] = [];
+                controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo });
+                showDashboardNotification('Lançamento financeiro adicionado.', 'success');
+            }
+            salvarLocal('controleFinanceiro', controleFinanceiroData);
+            limparFinanceiroCampos();
+            if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
+                financeiroSelecionadoMesAno = monthToUpdate;
+                populateMesAnoSelectFinanceiro();
+                renderizarConteudoModalFinanceiro(monthToUpdate);
+            }
+        }
+        function editarFinanceiro(monthKey, itemIndex) {
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex];
+            if (!lancamento) {
+                console.error("Lançamento financeiro não encontrado:", monthKey, itemIndex);
+                showDashboardNotification("Lançamento financeiro não encontrado.", 'error'); return;
+            }
+            document.getElementById('nomeFinanceiro').value = lancamento.nome;
+            document.getElementById('valorFinanceiro').value = lancamento.valor;
+            document.getElementById('statusFinanceiro').value = lancamento.status;
+            document.getElementById('tipoFinanceiro').value = lancamento.tipo;
+            finEditIdx = { monthKey: monthKey, index: itemIndex };
+            mostrarBotoesFinanceiro();
+            fecharModalFinanceiro();
+            document.getElementById('nomeFinanceiro').focus();
+        }
+        function removerFinanceiro(monthKey, itemIndex) {
+            if (!confirm('Excluir lançamento financeiro?')) return;
+            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) {
+                console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex);
+                showDashboardNotification("Lançamento não encontrado.", 'error'); return;
+            }
+            controleFinanceiroData[monthKey].splice(itemIndex, 1);
+            salvarLocal('controleFinanceiro', controleFinanceiroData);
+
+            if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) limparFinanceiroCampos();
+            else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) finEditIdx.index--;
+
+            if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                populateMesAnoSelectFinanceiro();
+                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
+            }
+            showDashboardNotification('Lançamento financeiro removido.', 'info');
+        }
         function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
         function limparFinanceiroCampos() { document.getElementById('formFinanceiro').reset(); finEditIdx = null; mostrarBotoesFinanceiro(); }
-        function cancelarEdicaoFinanceiro() { limparFinanceiroCampos(); }
-        function getAllMonthKeysSorted(financeiroData) { return Object.keys(financeiroData).sort((a, b) => { const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1), dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1); return dateB - dateA; }); }
-        function populateMesAnoSelectFinanceiro() { const selectElement = document.getElementById('mesAnoSelectFinanceiro'); selectElement.innerHTML = ''; const controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); let monthKeys = getAllMonthKeysSorted(controleFinanceiroData); const currentMonthKey = getCurrentMonthYearKey(); if (!monthKeys.includes(currentMonthKey)) { monthKeys.push(currentMonthKey); monthKeys = monthKeys.sort((a, b) => { const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1), dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1); return dateB - dateA; }); } if (monthKeys.length === 0) monthKeys.push(currentMonthKey); monthKeys.forEach(key => { const option = document.createElement('option'); option.value = key; option.textContent = monthYearKeyToDisplay(key); selectElement.appendChild(option); }); if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) selectElement.value = financeiroSelecionadoMesAno; else if (monthKeys.length > 0) { selectElement.value = monthKeys[0]; financeiroSelecionadoMesAno = monthKeys[0]; } }
-        function renderizarConteudoModalFinanceiro(monthKey) { financeiroSelecionadoMesAno = monthKey; const selectElement = document.getElementById('mesAnoSelectFinanceiro'); if(selectElement.value !== monthKey) selectElement.value = monthKey; const controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); const lancamentosDoMes = controleFinanceiroData[monthKey] || []; let totalPago = 0, totalAReceber = 0; lancamentosDoMes.forEach(item => { const valorItem = parseFloat(item.valor) || 0; if (item.status === 'Pago') totalPago += valorItem; else totalAReceber += valorItem; }); let somatorioHtml = `<div style="padding:10px 5px;margin-bottom:15px;background:#102b1f;border-radius:8px;text-align:center;border:1px solid var(--c-green);"><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total Pago:</strong> <span style="color:var(--c-green);font-weight:bold;">${formatarMoeda(totalPago)}</span></p><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total a Receber:</strong> <span style="color:var(--c-yellow);font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p></div>`; let tabelaHtml = `<table><thead><tr><th>Nome/Descrição</th><th>Valor</th><th>Status</th><th>Tipo</th><th>Ações</th></tr></thead><tbody>`; if (lancamentosDoMes.length) { lancamentosDoMes.forEach((item, index) => { const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"), valorFormatado = formatarMoeda(item.valor), statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"), tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"); tabelaHtml += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${valorFormatado}</td><td style="text-align:center;color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td><td style="text-align:center;">${tipoHtml}</td><td class="table-actions"><button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`; } tabelaHtml += `</tbody></table>`; document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml; }
-        function atualizarModalFinanceiroComMesSelecionado() { const selectedMonthKey = document.getElementById('mesAnoSelectFinanceiro').value; renderizarConteudoModalFinanceiro(selectedMonthKey); }
-        function navegarMesFinanceiro(offset) { const selectElement = document.getElementById('mesAnoSelectFinanceiro'), currentIndex = selectElement.selectedIndex, newIndex = currentIndex + offset; if (newIndex >= 0 && newIndex < selectElement.options.length) { selectElement.selectedIndex = newIndex; atualizarModalFinanceiroComMesSelecionado(); } }
-        function irParaMesAtualFinanceiro() { const currentMonthKey = getCurrentMonthYearKey(), selectElement = document.getElementById('mesAnoSelectFinanceiro'); populateMesAnoSelectFinanceiro(); selectElement.value = currentMonthKey; if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) selectElement.value = selectElement.options[0].value; renderizarConteudoModalFinanceiro(selectElement.value); }
-        function abrirModalFinanceiro() { populateMesAnoSelectFinanceiro(); const currentMonthKey = getCurrentMonthYearKey(), controleFinanceiroData = recuperarLocal('controleFinanceiro', {}), allMonths = getAllMonthKeysSorted(controleFinanceiroData); if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {} else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) financeiroSelecionadoMesAno = currentMonthKey; else if (allMonths.length > 0) financeiroSelecionadoMesAno = allMonths[0]; else financeiroSelecionadoMesAno = currentMonthKey; document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno; renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); document.getElementById('modalFinanceiro').classList.add('active'); }
+        function cancelarEdicaoFinanceiro() { limparFinanceiroCampos(); showDashboardNotification('Edição financeira cancelada.', 'info'); }
+        function getAllMonthKeysSorted(financeiroData) {
+            return Object.keys(financeiroData).sort((a, b) => {
+                const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
+                const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
+                return dateB - dateA; // Mais recentes primeiro
+            });
+        }
+        function populateMesAnoSelectFinanceiro() {
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            selectElement.innerHTML = '';
+            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            let monthKeys = getAllMonthKeysSorted(controleFinanceiroData);
+            const currentMonthKey = getCurrentMonthYearKey();
+
+            if (!monthKeys.includes(currentMonthKey)) { // Adiciona mês atual se não existir lançamentos nele
+                monthKeys.push(currentMonthKey);
+                monthKeys = monthKeys.sort((a, b) => {
+                     const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
+                     const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
+                     return dateB - dateA;
+                });
+            }
+            if (monthKeys.length === 0) monthKeys.push(currentMonthKey); // Garante pelo menos o mês atual
+
+            monthKeys.forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = monthYearKeyToDisplay(key);
+                selectElement.appendChild(option);
+            });
+
+            if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
+                selectElement.value = financeiroSelecionadoMesAno;
+            } else if (monthKeys.length > 0) {
+                selectElement.value = monthKeys[0]; // Default para o mais recente com dados ou o atual
+                financeiroSelecionadoMesAno = monthKeys[0];
+            }
+        }
+        function renderizarConteudoModalFinanceiro(monthKey) {
+            financeiroSelecionadoMesAno = monthKey;
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            if(selectElement.value !== monthKey) selectElement.value = monthKey; // Sincroniza o select
+
+            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            const lancamentosDoMes = controleFinanceiroData[monthKey] || [];
+            let totalPago = 0, totalAReceber = 0;
+            lancamentosDoMes.forEach(item => {
+                const valorItem = parseFloat(item.valor) || 0;
+                if (item.status === 'Pago') totalPago += valorItem; else totalAReceber += valorItem;
+            });
+
+            let somatorioHtml = `<div style="padding:10px 5px;margin-bottom:15px;background:#102b1f;border-radius:8px;text-align:center;border:1px solid var(--c-green);"><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total Pago:</strong> <span style="color:var(--c-green);font-weight:bold;">${formatarMoeda(totalPago)}</span></p><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total a Receber:</strong> <span style="color:var(--c-yellow);font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p></div>`;
+            let tabelaHtml = `<table><thead><tr><th>Nome/Descrição</th><th>Valor</th><th>Status</th><th>Tipo</th><th>Ações</th></tr></thead><tbody>`;
+            if (lancamentosDoMes.length) {
+                lancamentosDoMes.forEach((item, index) => {
+                    const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const valorFormatado = formatarMoeda(item.valor);
+                    const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    tabelaHtml += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${valorFormatado}</td><td style="text-align:center;color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td><td style="text-align:center;">${tipoHtml}</td><td class="table-actions"><button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                });
+            } else {
+                tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`;
+            }
+            tabelaHtml += `</tbody></table>`;
+            document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml;
+        }
+        function atualizarModalFinanceiroComMesSelecionado() {
+            const selectedMonthKey = document.getElementById('mesAnoSelectFinanceiro').value;
+            renderizarConteudoModalFinanceiro(selectedMonthKey);
+        }
+        function navegarMesFinanceiro(offset) {
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            const currentIndex = selectElement.selectedIndex;
+            const newIndex = currentIndex + offset;
+            if (newIndex >= 0 && newIndex < selectElement.options.length) {
+                selectElement.selectedIndex = newIndex;
+                atualizarModalFinanceiroComMesSelecionado();
+            }
+        }
+        function irParaMesAtualFinanceiro() {
+            const currentMonthKey = getCurrentMonthYearKey();
+            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
+            populateMesAnoSelectFinanceiro(); // Garante que o select está atualizado
+            selectElement.value = currentMonthKey;
+            // Se o mês atual não tiver opção (ex, sem lançamentos e não foi adicionado), seleciona o primeiro
+            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) {
+                selectElement.value = selectElement.options[0].value;
+            }
+            renderizarConteudoModalFinanceiro(selectElement.value);
+        }
+        function abrirModalFinanceiro() {
+            populateMesAnoSelectFinanceiro();
+            const currentMonthKey = getCurrentMonthYearKey();
+            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
+            const allMonths = getAllMonthKeysSorted(controleFinanceiroData);
+
+            if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {
+                // Mantém o mês selecionado se válido
+            } else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) {
+                financeiroSelecionadoMesAno = currentMonthKey;
+            } else if (allMonths.length > 0) {
+                financeiroSelecionadoMesAno = allMonths[0]; // Mais recente
+            } else {
+                financeiroSelecionadoMesAno = currentMonthKey; // Fallback
+            }
+            document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno;
+            renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
+            document.getElementById('modalFinanceiro').classList.add('active');
+            document.getElementById('modalFinanceiro').focus();
+        }
         function fecharModalFinanceiro() { document.getElementById('modalFinanceiro').classList.remove('active'); }
+
+
+        // --- Cadastro de Alunos (AnyDesk) ---
         function handleNomeAlunoInput() { mostrarBotoesAluno(); sugerirAlunos(); }
-        function sugerirAlunos() { const valorInput = nomeAlunoInput.value.trim().toLowerCase(); sugestoesAlunosContainer.innerHTML = ''; if (valorInput.length === 0) { sugestoesAlunosContainer.style.display = 'none'; return; } const alunos = recuperarLocal('alunosAnyDesk', []); const filtrados = alunos.filter(aluno => aluno.nome.toLowerCase().includes(valorInput)); if (filtrados.length > 0) { filtrados.forEach(aluno => { const divItem = document.createElement('div'); divItem.classList.add('sugestao-item'); divItem.textContent = aluno.nome; divItem.onclick = () => { nomeAlunoInput.value = aluno.nome; anydeskAlunoInput.value = aluno.anydesk; sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; mostrarBotoesAluno(); anydeskAlunoInput.focus(); }; sugestoesAlunosContainer.appendChild(divItem); }); sugestoesAlunosContainer.style.display = 'block'; } else { sugestoesAlunosContainer.style.display = 'none'; } }
-        if (nomeAlunoInput) nomeAlunoInput.addEventListener('blur', function() { setTimeout(() => { if (sugestoesAlunosContainer && !sugestoesAlunosContainer.matches(':hover')) { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; } }, 150); });
-        if (sugestoesAlunosContainer) sugestoesAlunosContainer.addEventListener('mouseleave', function() { if (document.activeElement !== nomeAlunoInput) { setTimeout(() => { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; }, 150); } });
-        function mostrarBotoesAluno() { const nome = nomeAlunoInput.value.trim(), anydesk = anydeskAlunoInput.value.trim(), showAdd = nome && anydesk && alunoEditIdx === null, showEdit = nome && anydesk && alunoEditIdx !== null, showAnyButton = nome || anydesk; document.getElementById('btnAlunoAdd').style.display = showAdd ? '' : 'none'; document.getElementById('btnAlunoEdit').style.display = showEdit ? '' : 'none'; document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none'; document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none'; }
-        function adicionarAluno() { const nome = nomeAlunoInput.value.trim(), anydesk = anydeskAlunoInput.value.trim(); if (!nome || !anydesk) { alert('Preencha nome e AnyDesk.'); return; } let lista = recuperarLocal('alunosAnyDesk', []); if (alunoEditIdx === null) lista.push({ nome, anydesk }); else { if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) lista[alunoEditIdx] = { nome, anydesk }; else { console.error("Índice de edição inválido:", alunoEditIdx); limparAlunoCampos(); return; } } salvarLocal('alunosAnyDesk', lista); limparAlunoCampos(); atualizarContadorAlunos(); if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos(); }
-        function editarAluno(idx) { let lista = recuperarLocal('alunosAnyDesk', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar aluno:", idx); return; } nomeAlunoInput.value = lista[idx].nome; anydeskAlunoInput.value = lista[idx].anydesk; alunoEditIdx = idx; mostrarBotoesAluno(); fecharModalAlunos(); nomeAlunoInput.focus(); }
-        function confirmarEdicaoAluno() { adicionarAluno(); }
-        function cancelarEdicaoAluno() { limparAlunoCampos(); }
-        function removerAluno(idx) { if (!confirm('Excluir aluno?')) return; let lista = recuperarLocal('alunosAnyDesk', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover aluno:", idx); return; } lista.splice(idx, 1); salvarLocal('alunosAnyDesk', lista); if (alunoEditIdx === idx) limparAlunoCampos(); else if (alunoEditIdx !== null && idx < alunoEditIdx) alunoEditIdx--; atualizarContadorAlunos(); if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos(); }
-        function limparAlunoCampos() { if (document.getElementById('formCadastroAluno')) document.getElementById('formCadastroAluno').reset(); else { if(nomeAlunoInput) nomeAlunoInput.value = ''; if(anydeskAlunoInput) anydeskAlunoInput.value = ''; } alunoEditIdx = null; if (sugestoesAlunosContainer) { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; } mostrarBotoesAluno(); }
-        function abrirModalAlunos() { let listaOriginal = recuperarLocal('alunosAnyDesk', []), listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index })); listaComIndices.sort((a, b) => { const nomeA = String(a.nome||'').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""), nomeB = String(b.nome||'').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); if(nomeA < nomeB)return -1; if(nomeA > nomeB)return 1; const anydeskA=String(a.anydesk||'').toLowerCase(),anydeskB=String(b.anydesk||'').toLowerCase(); if(anydeskA < anydeskB)return -1; if(anydeskA > anydeskB)return 1; return 0; }); let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`; if (listaComIndices.length) { listaComIndices.forEach(item => { const nomeHtml = String(item.nome||'').replace(/</g,"&lt;").replace(/>/g,"&gt;"), anydeskHtml = String(item.anydesk||'').replace(/</g,"&lt;").replace(/>/g,"&gt;"); html += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${anydeskHtml}</td><td class="table-actions" style="text-align:center;"><button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`; } html += `</tbody></table>`; document.getElementById('conteudoModalAlunos').innerHTML = html; document.getElementById('modalAlunos').classList.add('active'); }
-        function fecharModalAlunos() { document.getElementById('modalAlunos').classList.remove('active'); }
-        function atualizarContadorAlunos() { const contadorElemento = document.getElementById('contadorAlunos'); if (contadorElemento) { const alunos = recuperarLocal('alunosAnyDesk', []); contadorElemento.textContent = `Total de Alunos: ${alunos.length}`; } }
-        function mostrarBotoesAnotacao() { const val = document.getElementById('anotacaoInput').value.trim(), isEditing = anotacaoEditIdx !== null; document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none'; document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none'; document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none'; document.getElementById('btnLimparAnotacao').style.display = val && !isEditing ? '' : 'none'; }
-        function salvarOuAtualizarAnotacao() { const val = document.getElementById('anotacaoInput').value.trim(); if (!val) return; let anotacoes = recuperarLocal('anotacoesRapidas', []); if (anotacaoEditIdx !== null) { if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) anotacoes[anotacaoEditIdx] = val; else console.error("Índice de edição inválido:", anotacaoEditIdx); } else anotacoes.push(val); salvarLocal('anotacoesRapidas', anotacoes); limparAnotacaoCampos(); listarAnotacoes(); }
-        function editarAnotacao(idxExibicao) { let anotacoes = recuperarLocal('anotacoesRapidas', []), originalIndex = anotacoes.length - 1 - idxExibicao; if (originalIndex >= 0 && originalIndex < anotacoes.length) { document.getElementById('anotacaoInput').value = anotacoes[originalIndex]; anotacaoEditIdx = originalIndex; mostrarBotoesAnotacao(); document.getElementById('anotacaoInput').focus(); } else { console.error("Índice inválido para editar anotação:", idxExibicao); limparAnotacaoCampos(); } }
-        function cancelarEdicaoAnotacao() { limparAnotacaoCampos(); }
-        function removerAnotacao(idxExibicao) { if (!confirm('Excluir anotação?')) return; let anotacoes = recuperarLocal('anotacoesRapidas', []), originalIndexToRemove = anotacoes.length - 1 - idxExibicao; if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) { if (anotacaoEditIdx === originalIndexToRemove) limparAnotacaoCampos(); anotacoes.splice(originalIndexToRemove, 1); salvarLocal('anotacoesRapidas', anotacoes); listarAnotacoes(); if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) anotacaoEditIdx--; } else console.error("Índice inválido para remover anotação:", idxExibicao); }
-        function limparAnotacaoCampos() { document.getElementById('anotacaoInput').value = ''; anotacaoEditIdx = null; mostrarBotoesAnotacao(); }
-        function listarAnotacoes() { let anotacoes = recuperarLocal('anotacoesRapidas', []), tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0]; tbody.innerHTML = ''; if (Array.isArray(anotacoes)) { anotacoes.slice().reverse().forEach((a, idxExibicao) => { const anotacaoHtml = String(a||'').replace(/</g,"&lt;").replace(/>/g,"&gt;"); tbody.innerHTML += `<tr><td>${anotacaoHtml}</td><td class="table-actions" style="text-align:center;"><button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { console.error("Dados de 'anotacoesRapidas' não são array:", anotacoes); salvarLocal('anotacoesRapidas', []); } }
+        function sugerirAlunos() {
+            if(!nomeAlunoInput || !sugestoesAlunosContainer) return;
+            const valorInput = nomeAlunoInput.value.trim().toLowerCase();
+            sugestoesAlunosContainer.innerHTML = '';
+            if (valorInput.length === 0) {
+                sugestoesAlunosContainer.classList.add('hidden');
+                return;
+            }
+            const alunos = recuperarLocal('alunosAnyDesk', []);
+            const filtrados = alunos.filter(aluno => aluno.nome.toLowerCase().includes(valorInput));
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                let mainPromptLibModal = document.getElementById('modalBibliotecaPrompts');
-                let activePromptLibInternalModal = mainPromptLibModal ? mainPromptLibModal.querySelector('#conteudoModalBibliotecaPromptsInner .modal-overlay.active') : null;
+            if (filtrados.length > 0) {
+                filtrados.forEach(aluno => {
+                    const divItem = document.createElement('div');
+                    divItem.classList.add('sugestao-item');
+                    divItem.textContent = aluno.nome;
+                    divItem.onclick = () => {
+                        nomeAlunoInput.value = aluno.nome;
+                        if(anydeskAlunoInput) anydeskAlunoInput.value = aluno.anydesk;
+                        sugestoesAlunosContainer.innerHTML = '';
+                        sugestoesAlunosContainer.classList.add('hidden');
+                        mostrarBotoesAluno();
+                        if(anydeskAlunoInput) anydeskAlunoInput.focus();
+                    };
+                    sugestoesAlunosContainer.appendChild(divItem);
+                });
+                sugestoesAlunosContainer.classList.remove('hidden');
+            } else {
+                sugestoesAlunosContainer.classList.add('hidden');
+            }
+        }
+        function mostrarBotoesAluno() {
+            if(!nomeAlunoInput || !anydeskAlunoInput) return;
+            const nome = nomeAlunoInput.value.trim();
+            const anydesk = anydeskAlunoInput.value.trim();
+            const showAdd = nome && anydesk && alunoEditIdx === null;
+            const showEdit = nome && anydesk && alunoEditIdx !== null;
+            const showAnyButton = nome || anydesk;
 
-                if (activePromptLibInternalModal) { // Let prompt lib's own JS handle its internal modals first
-                    // Its own escape listener should handle this and call stopPropagation.
-                    // If not, we might need to explicitly call its closeModal here.
-                } else if (mainPromptLibModal && mainPromptLibModal.classList.contains('active')) {
-                    fecharModalBibliotecaPrompts();
-                } else if (document.getElementById('modalDiario').classList.contains('active')) {
-                    fecharModalDiario();
-                } else if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                    fecharModalFinanceiro();
-                } else if (document.getElementById('modalAlunos').classList.contains('active')) {
-                    fecharModalAlunos();
-                } else if (sugestoesAlunosContainer && sugestoesAlunosContainer.style.display === 'block') {
-                    sugestoesAlunosContainer.innerHTML = '';
-                    sugestoesAlunosContainer.style.display = 'none';
+            document.getElementById('btnAlunoAdd').classList.toggle('hidden', !showAdd);
+            document.getElementById('btnAlunoEdit').classList.toggle('hidden', !showEdit);
+            document.getElementById('btnAlunoCancel').classList.toggle('hidden', alunoEditIdx === null);
+            document.getElementById('btnAlunoLimpar').classList.toggle('hidden', !(showAnyButton && alunoEditIdx === null));
+        }
+        function adicionarAluno() {
+            if(!nomeAlunoInput || !anydeskAlunoInput) return;
+            const nome = nomeAlunoInput.value.trim();
+            const anydesk = anydeskAlunoInput.value.trim();
+            if (!nome || !anydesk) { showDashboardNotification('Preencha nome e AnyDesk do aluno.', 'error'); return; }
+
+            let lista = recuperarLocal('alunosAnyDesk', []);
+            if (alunoEditIdx === null) {
+                lista.push({ nome, anydesk });
+                showDashboardNotification('Aluno cadastrado com sucesso!', 'success');
+            } else {
+                if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
+                    lista[alunoEditIdx] = { nome, anydesk };
+                    showDashboardNotification('Dados do aluno atualizados!', 'success');
                 } else {
-                    if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
-                    if (alunoEditIdx !== null) cancelarEdicaoAluno();
-                    if (finEditIdx !== null) cancelarEdicaoFinanceiro();
-                    if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+                    console.error("Índice de edição de aluno inválido:", alunoEditIdx);
+                    limparAlunoCampos(); return;
                 }
             }
-        });
-        document.addEventListener('click', function(event) { const nomeAlunoEl = document.getElementById('nomeAluno'); if (sugestoesAlunosContainer && nomeAlunoEl && !nomeAlunoEl.contains(event.target) && !sugestoesAlunosContainer.contains(event.target)) { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; } });
+            salvarLocal('alunosAnyDesk', lista);
+            limparAlunoCampos();
+            atualizarContadorAlunos();
+            if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
+        }
+        function editarAluno(idx) {
+            let lista = recuperarLocal('alunosAnyDesk', []);
+            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar aluno:", idx); return; }
+            if(nomeAlunoInput) nomeAlunoInput.value = lista[idx].nome;
+            if(anydeskAlunoInput) anydeskAlunoInput.value = lista[idx].anydesk;
+            alunoEditIdx = idx;
+            mostrarBotoesAluno();
+            fecharModalAlunos();
+            if(nomeAlunoInput) nomeAlunoInput.focus();
+        }
+        function confirmarEdicaoAluno() { adicionarAluno(); }
+        function cancelarEdicaoAluno() { limparAlunoCampos(); showDashboardNotification('Edição de aluno cancelada.', 'info');}
+        function removerAluno(idx) {
+            if (!confirm('Excluir aluno?')) return;
+            let lista = recuperarLocal('alunosAnyDesk', []);
+            if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover aluno:", idx); return; }
+            lista.splice(idx, 1);
+            salvarLocal('alunosAnyDesk', lista);
 
+            if (alunoEditIdx === idx) limparAlunoCampos();
+            else if (alunoEditIdx !== null && idx < alunoEditIdx) alunoEditIdx--;
+
+            atualizarContadorAlunos();
+            if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
+            showDashboardNotification('Aluno removido.', 'info');
+        }
+        function limparAlunoCampos() {
+            const form = document.getElementById('formCadastroAluno');
+            if (form) form.reset();
+            else { // Fallback se o form não for encontrado por algum motivo
+                if(nomeAlunoInput) nomeAlunoInput.value = '';
+                if(anydeskAlunoInput) anydeskAlunoInput.value = '';
+            }
+            alunoEditIdx = null;
+            if (sugestoesAlunosContainer) {
+                sugestoesAlunosContainer.innerHTML = '';
+                sugestoesAlunosContainer.classList.add('hidden');
+            }
+            mostrarBotoesAluno();
+        }
+        function abrirModalAlunos() {
+            let listaOriginal = recuperarLocal('alunosAnyDesk', []);
+            let listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
+            listaComIndices.sort((a, b) => {
+                const nomeA = String(a.nome||'').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+                const nomeB = String(b.nome||'').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+                if(nomeA < nomeB)return -1; if(nomeA > nomeB)return 1;
+                const anydeskA=String(a.anydesk||'').toLowerCase(),anydeskB=String(b.anydesk||'').toLowerCase();
+                if(anydeskA < anydeskB)return -1; if(anydeskA > anydeskB)return 1; return 0;
+            });
+            let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
+            if (listaComIndices.length) {
+                listaComIndices.forEach(item => {
+                    const nomeHtml = String(item.nome||'').replace(/</g,"&lt;").replace(/>/g,"&gt;");
+                    const anydeskHtml = String(item.anydesk||'').replace(/</g,"&lt;").replace(/>/g,"&gt;");
+                    html += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${anydeskHtml}</td><td class="table-actions" style="text-align:center;"><button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                });
+            } else { html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`; }
+            html += `</tbody></table>`;
+            document.getElementById('conteudoModalAlunos').innerHTML = html;
+            const modal = document.getElementById('modalAlunos');
+            modal.classList.add('active');
+            modal.focus();
+        }
+        function fecharModalAlunos() { document.getElementById('modalAlunos').classList.remove('active'); }
+        function atualizarContadorAlunos() {
+            const contadorElemento = document.getElementById('contadorAlunos');
+            if (contadorElemento) {
+                const alunos = recuperarLocal('alunosAnyDesk', []);
+                contadorElemento.textContent = `Total de Alunos: ${alunos.length}`;
+            }
+        }
+
+        // --- Anotações Rápidas ---
+        function mostrarBotoesAnotacao() {
+            const val = document.getElementById('anotacaoInput').value.trim();
+            const isEditing = anotacaoEditIdx !== null;
+            document.getElementById('btnAddAnotacao').classList.toggle('hidden', !(val && !isEditing));
+            document.getElementById('btnEditAnotacao').classList.toggle('hidden', !(val && isEditing));
+            document.getElementById('btnCancelEditAnotacao').classList.toggle('hidden', !isEditing);
+            document.getElementById('btnLimparAnotacao').classList.toggle('hidden', !(val && !isEditing));
+        }
+        function salvarOuAtualizarAnotacao() {
+            const val = document.getElementById('anotacaoInput').value.trim();
+            if (!val) return;
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            if (anotacaoEditIdx !== null) {
+                if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
+                     anotacoes[anotacaoEditIdx] = val;
+                     showDashboardNotification('Anotação atualizada!', 'success');
+                } else {
+                    console.error("Índice de edição de anotação inválido:", anotacaoEditIdx);
+                }
+            } else {
+                anotacoes.push(val);
+                showDashboardNotification('Anotação adicionada!', 'success');
+            }
+            salvarLocal('anotacoesRapidas', anotacoes);
+            limparAnotacaoCampos();
+            listarAnotacoes();
+        }
+        function editarAnotacao(idxExibicao) { // idxExibicao é o índice na lista invertida
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            // O índice original é o reverso do índice de exibição
+            let originalIndex = anotacoes.length - 1 - idxExibicao;
+            if (originalIndex >= 0 && originalIndex < anotacoes.length) {
+                document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
+                anotacaoEditIdx = originalIndex; // Armazena o índice original para edição
+                mostrarBotoesAnotacao();
+                document.getElementById('anotacaoInput').focus();
+            } else {
+                console.error("Índice inválido para editar anotação (Exibição vs Original):", idxExibicao, originalIndex);
+                limparAnotacaoCampos(); // Reseta se o índice for inválido
+            }
+        }
+        function cancelarEdicaoAnotacao() { limparAnotacaoCampos(); showDashboardNotification('Edição de anotação cancelada.', 'info');}
+        function removerAnotacao(idxExibicao) {
+            if (!confirm('Excluir anotação?')) return;
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
+
+            if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
+                if (anotacaoEditIdx === originalIndexToRemove) limparAnotacaoCampos(); // Limpa se estiver editando o item removido
+                anotacoes.splice(originalIndexToRemove, 1);
+                salvarLocal('anotacoesRapidas', anotacoes);
+                listarAnotacoes(); // Atualiza a lista
+                // Ajusta anotacaoEditIdx se um item anterior ao editado foi removido
+                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
+                    anotacaoEditIdx--;
+                }
+                 showDashboardNotification('Anotação removida.', 'info');
+            } else {
+                console.error("Índice inválido para remover anotação (Exibição vs Original):", idxExibicao, originalIndexToRemove);
+            }
+        }
+        function limparAnotacaoCampos() {
+            document.getElementById('anotacaoInput').value = '';
+            anotacaoEditIdx = null;
+            mostrarBotoesAnotacao();
+        }
+        function listarAnotacoes() {
+            let anotacoes = recuperarLocal('anotacoesRapidas', []);
+            const tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (Array.isArray(anotacoes)) {
+                // Exibe as anotações em ordem inversa (mais recentes primeiro)
+                anotacoes.slice().reverse().forEach((a, idxExibicao) => { // idxExibicao é o índice na lista invertida
+                    const anotacaoHtml = String(a||'').replace(/</g,"&lt;").replace(/>/g,"&gt;");
+                    tbody.innerHTML += `<tr><td>${anotacaoHtml}</td><td class="table-actions" style="text-align:center;"><button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`;
+                });
+            } else {
+                console.error("Dados de 'anotacoesRapidas' não são array:", anotacoes);
+                salvarLocal('anotacoesRapidas', []); // Corrige para um array vazio
+            }
+        }
+
+        // --- Import/Export ---
         function exportarDados() {
             const dados = {
                 diarioClasseLista: recuperarLocal('diarioClasseLista', []),
                 alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
                 anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
                 controleFinanceiro: recuperarLocal('controleFinanceiro', {}),
-                bibliotecaPromptsData: recuperarLocal('bibliotecaPrompts_layout_modais_v2', []) // Unified export
+                bibliotecaPromptsData: recuperarLocal('bibliotecaPrompts_layout_modais_v2', [])
             };
             const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
@@ -970,6 +1576,7 @@
             const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
             a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
             document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+            showDashboardNotification('Dados exportados com sucesso!', 'success');
         }
         function importarDados(event) {
             const file = event.target.files[0]; if (!file) return;
@@ -977,81 +1584,284 @@
             reader.onload = function(e) {
                 try {
                     const dadosImportados = JSON.parse(e.target.result);
-                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Arquivo inválido!");
+                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Arquivo JSON inválido!");
 
-                    if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista); else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
-                    if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk); else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
-                    if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas); else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
-                    if (typeof dadosImportados.controleFinanceiro === "object" && dadosImportados.controleFinanceiro !== null && !Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro); else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', {});
+                    // Importa com verificação de tipo e fallback para array/objeto vazio
+                    salvarLocal('diarioClasseLista', Array.isArray(dadosImportados.diarioClasseLista) ? dadosImportados.diarioClasseLista : []);
+                    salvarLocal('alunosAnyDesk', Array.isArray(dadosImportados.alunosAnyDesk) ? dadosImportados.alunosAnyDesk : []);
+                    salvarLocal('anotacoesRapidas', Array.isArray(dadosImportados.anotacoesRapidas) ? dadosImportados.anotacoesRapidas : []);
+                    salvarLocal('controleFinanceiro', (typeof dadosImportados.controleFinanceiro === "object" && dadosImportados.controleFinanceiro !== null && !Array.isArray(dadosImportados.controleFinanceiro)) ? dadosImportados.controleFinanceiro : {});
+                    salvarLocal('bibliotecaPrompts_layout_modais_v2', Array.isArray(dadosImportados.bibliotecaPromptsData) ? dadosImportados.bibliotecaPromptsData : []);
 
-                    // Unified import for Prompt Library
-                    if (Array.isArray(dadosImportados.bibliotecaPromptsData)) {
-                        salvarLocal('bibliotecaPrompts_layout_modais_v2', dadosImportados.bibliotecaPromptsData);
-                    } else if ("bibliotecaPromptsData" in dadosImportados) {
-                        salvarLocal('bibliotecaPrompts_layout_modais_v2', []);
-                    }
-
+                    // Resetar formulários e atualizar exibições
                     limparCamposDiario(); limparAlunoCampos(); limparFinanceiroCampos(); limparAnotacaoCampos();
                     listarAnotacoes(); atualizarContadorAlunos();
 
-                    if (typeof window.refreshPromptLibraryView === 'function') { // Refresh prompt library UI
-                        window.refreshPromptLibraryView();
-                    }
+                    if (typeof window.refreshPromptLibraryView === 'function') { window.refreshPromptLibraryView(); }
 
-                    alert("Dados importados! Listas e formulários atualizados.");
-                } catch (err) { alert("Falha na importação: " + err.message);
+                    showDashboardNotification("Dados importados com sucesso! Listas e formulários atualizados.", 'success');
+                } catch (err) {
+                    showDashboardNotification("Falha na importação: " + err.message, 'error');
                 } finally {
+                    // Atualizar modais se estiverem abertos e resetar estados de edição
                     if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
                     if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
                     if (document.getElementById('modalFinanceiro').classList.contains('active')) { financeiroSelecionadoMesAno = ''; abrirModalFinanceiro(); }
                     mostrarBotoesDiario(); mostrarBotoesAluno(); mostrarBotoesFinanceiro(); mostrarBotoesAnotacao();
                 }
             };
-            reader.readAsText(file); event.target.value = "";
+            reader.readAsText(file);
+            event.target.value = ""; // Limpa o input de arquivo para permitir reimportar o mesmo arquivo
         }
 
-        function abrirModalBibliotecaPrompts() { const modal = document.getElementById('modalBibliotecaPrompts'); if (modal) modal.classList.add('active'); }
-        function fecharModalBibliotecaPrompts() { const modal = document.getElementById('modalBibliotecaPrompts'); if (modal) modal.classList.remove('active'); }
+        // --- Biblioteca de Prompts Modals ---
+        function abrirModalBibliotecaPrompts() {
+            const modal = document.getElementById('modalBibliotecaPrompts');
+            if (modal) {
+                modal.classList.add('active');
+                modal.focus();
+                 if (typeof window.refreshPromptLibraryView === 'function') { // Garante que a lib está atualizada ao abrir
+                    window.refreshPromptLibraryView();
+                }
+            }
+        }
+        function fecharModalBibliotecaPrompts() {
+            const modal = document.getElementById('modalBibliotecaPrompts');
+            if (modal) modal.classList.remove('active');
+        }
 
+        // --- Footer Year ---
+        function setFooterYear() {
+            const yearSpan = document.getElementById('currentYear');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        }
+
+        // --- Event Listeners and Initializations ---
         document.addEventListener('DOMContentLoaded', () => {
-            limparCamposDiario(); limparAlunoCampos(); limparFinanceiroCampos(); limparAnotacaoCampos();
-            listarAnotacoes(); atualizarContadorAlunos();
-            const currentFinMonth = getCurrentMonthYearKey(), finData = recuperarLocal('controleFinanceiro', {}), sortedFinMonths = getAllMonthKeysSorted(finData);
-            if (sortedFinMonths.includes(currentFinMonth)) financeiroSelecionadoMesAno = currentFinMonth;
-            else if (sortedFinMonths.length > 0) financeiroSelecionadoMesAno = sortedFinMonths[0];
-            else financeiroSelecionadoMesAno = currentFinMonth;
-        });
-    </script>
+            setFooterYear();
 
+            // Diário de Classe Event Listeners
+            if (formDiarioClasse) {
+                formDiarioClasse.addEventListener('submit', (event) => event.preventDefault()); // Apenas previne o submit padrão
+                 // Adiciona listeners de input para mostrar/esconder botões
+                [diarioAlunoInput, diarioDataInput, diarioConteudoInput].forEach(input => {
+                    if (input) input.addEventListener('input', mostrarBotoesDiario);
+                });
+            }
+            if (btnDiarioAdd) btnDiarioAdd.addEventListener('click', salvarDiarioClasse);
+            if (btnDiarioEdit) btnDiarioEdit.addEventListener('click', confirmarEdicaoDiarioClasse);
+            if (btnDiarioCancel) btnDiarioCancel.addEventListener('click', cancelarEdicaoDiarioClasse);
+            if (btnDiarioLimpar) btnDiarioLimpar.addEventListener('click', limparCamposDiario);
+            if (btnVisualizarDiario) btnVisualizarDiario.addEventListener('click', abrirModalDiario);
+            if (fecharModalDiarioBtn) fecharModalDiarioBtn.addEventListener('click', fecharModalDiario);
+            if (filtroNomeDiarioInput) filtroNomeDiarioInput.addEventListener('input', filtrarModalDiario);
+            if (filtroDataDiarioInput) filtroDataDiarioInput.addEventListener('input', filtrarModalDiario);
+
+
+            // Sugestões Alunos: blur e mouseleave (exemplo de listeners mais complexos)
+            if (nomeAlunoInput) {
+                nomeAlunoInput.addEventListener('blur', function() {
+                    setTimeout(() => { // Timeout para permitir clique no item da sugestão
+                        if (sugestoesAlunosContainer && !sugestoesAlunosContainer.matches(':hover')) {
+                            sugestoesAlunosContainer.innerHTML = '';
+                            sugestoesAlunosContainer.classList.add('hidden');
+                        }
+                    }, 150);
+                });
+            }
+            if (sugestoesAlunosContainer) {
+                sugestoesAlunosContainer.addEventListener('mouseleave', function() {
+                    // Só esconde se o input não estiver focado, para permitir voltar e continuar digitando
+                    if (document.activeElement !== nomeAlunoInput) {
+                         setTimeout(() => {
+                            sugestoesAlunosContainer.innerHTML = '';
+                            sugestoesAlunosContainer.classList.add('hidden');
+                        }, 150);
+                    }
+                });
+            }
+             // Fechar sugestões se clicar fora
+            document.addEventListener('click', function(event) {
+                if (sugestoesAlunosContainer && nomeAlunoInput &&
+                    !nomeAlunoInput.contains(event.target) &&
+                    !sugestoesAlunosContainer.contains(event.target)) {
+                    sugestoesAlunosContainer.innerHTML = '';
+                    sugestoesAlunosContainer.classList.add('hidden');
+                }
+            });
+
+
+            // Initial state and listings
+            limparCamposDiario(); // Garante estado inicial correto dos botões
+            limparAlunoCampos();
+            limparFinanceiroCampos();
+            limparAnotacaoCampos();
+            listarAnotacoes();
+            atualizarContadorAlunos();
+
+            // Configuração inicial para o seletor de mês do financeiro
+            const currentFinMonth = getCurrentMonthYearKey();
+            const finData = recuperarLocal('controleFinanceiro', {});
+            const sortedFinMonths = getAllMonthKeysSorted(finData);
+            if (sortedFinMonths.includes(currentFinMonth)) {
+                financeiroSelecionadoMesAno = currentFinMonth;
+            } else if (sortedFinMonths.length > 0) {
+                financeiroSelecionadoMesAno = sortedFinMonths[0];
+            } else {
+                financeiroSelecionadoMesAno = currentFinMonth;
+            }
+            // Não chamar populateMesAnoSelectFinanceiro() aqui, pois abrirModalFinanceiro já faz isso.
+        });
+
+        // Global Keydown Listener (Escape Key)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                let mainPromptLibModal = document.getElementById('modalBibliotecaPrompts');
+                let activePromptLibInternalModal = mainPromptLibModal ? mainPromptLibModal.querySelector('#conteudoModalBibliotecaPromptsInner .modal-overlay.active') : null;
+
+                if (activePromptLibInternalModal) {
+                    // Deixa o script da biblioteca de prompts lidar com seus modais internos primeiro
+                    // (o script da biblioteca já tem um listener para Escape que deve chamar stopPropagation)
+                } else if (mainPromptLibModal && mainPromptLibModal.classList.contains('active')) {
+                    fecharModalBibliotecaPrompts();
+                } else if (modalDiario && modalDiario.classList.contains('active')) {
+                    fecharModalDiario();
+                } else if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                    fecharModalFinanceiro();
+                } else if (document.getElementById('modalAlunos').classList.contains('active')) {
+                    fecharModalAlunos();
+                } else if (sugestoesAlunosContainer && !sugestoesAlunosContainer.classList.contains('hidden')) {
+                    sugestoesAlunosContainer.innerHTML = '';
+                    sugestoesAlunosContainer.classList.add('hidden');
+                } else {
+                    // Cancela edições em andamento se nenhum modal estiver ativo
+                    if (diarioEditIdx !== null) cancelarEdicaoDiarioClasse();
+                    if (alunoEditIdx !== null) cancelarEdicaoAluno();
+                    if (finEditIdx !== null) cancelarEdicaoFinanceiro();
+                    if (anotacaoEditIdx !== null) cancelarEdicaoAnotacao();
+                }
+            }
+        });
+
+    </script>
     <script>
         // SCRIPT FOR PROMPT LIBRARY (scoped and modified)
+        // Mantido como estava para preservar sua funcionalidade específica,
+        // apenas com pequenas adaptações para coexistir melhor (ex: foco e aria em modais)
         document.addEventListener('DOMContentLoaded', () => {
             const promptLibContainer = document.getElementById('conteudoModalBibliotecaPromptsInner');
             if (!promptLibContainer) return;
 
             const btnAbrirModalCadastro = promptLibContainer.querySelector('#btnAbrirModalCadastro');
-            // btnAbrirModalGerenciamento related elements are removed
             const modalCadastro = promptLibContainer.querySelector('#modalCadastro');
-            // modalGerenciamento is removed
             const formTitleModal = promptLibContainer.querySelector('#formTitleModal');
             const btnSalvarPromptModal = promptLibContainer.querySelector('#btnSalvarPrompt');
-            let previousActiveElement = null;
+            let previousActiveElementForPromptLib = null; // Variável de foco específica para a lib
 
-            function openModal(modalElement) { /* ... (same as before, for internal modals) ... */ if (modalElement) { modalElement.classList.add('active'); document.body.classList.add('prompt-lib-modal-active'); const focusable = modalElement.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'); if (focusable) focusable.focus(); else { const modalContent = modalElement.querySelector('.modal-content'); if(modalContent) { modalContent.setAttribute('tabindex', '-1'); modalContent.focus(); } } } }
-            function closeModal(modalElement) { /* ... (same as before, for internal modals) ... */ if (modalElement) { modalElement.classList.remove('active'); const anyPromptLibInternalModalActive = promptLibContainer.querySelector('.modal-overlay.active'); if (!anyPromptLibInternalModalActive) document.body.classList.remove('prompt-lib-modal-active'); if(previousActiveElement) { previousActiveElement.focus(); previousActiveElement = null; } } }
+            function openPromptLibModal(modalElement) {
+                if (modalElement) {
+                    previousActiveElementForPromptLib = document.activeElement;
+                    modalElement.classList.add('active');
+                    document.body.classList.add('prompt-lib-modal-active'); // Para travar scroll do body
+                    // Tenta focar o primeiro elemento focável, ou o próprio conteúdo do modal
+                    const focusable = modalElement.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    if (focusable) {
+                        focusable.focus();
+                    } else {
+                        const modalContent = modalElement.querySelector('.modal-content');
+                        if (modalContent) {
+                            modalContent.setAttribute('tabindex', '-1'); // Torna focável
+                            modalContent.focus();
+                        }
+                    }
+                }
+            }
+            function closePromptLibModal(modalElement) {
+                if (modalElement) {
+                    modalElement.classList.remove('active');
+                    // Só remove a classe do body se nenhum outro modal da lib estiver ativo
+                    const anyPromptLibInternalModalActive = promptLibContainer.querySelector('.modal-overlay.active');
+                    if (!anyPromptLibInternalModalActive) {
+                        document.body.classList.remove('prompt-lib-modal-active');
+                    }
+                    if (previousActiveElementForPromptLib) {
+                        previousActiveElementForPromptLib.focus();
+                        previousActiveElementForPromptLib = null;
+                    }
+                }
+            }
 
-            if(btnAbrirModalCadastro) { btnAbrirModalCadastro.addEventListener('click', () => { previousActiveElement = document.activeElement; promptLibContainer.querySelector('#formCadastroPrompt').reset(); promptLibContainer.querySelector('#promptIdEdicao').value = ''; formTitleModal.textContent = '➕ Adicionar Novo Prompt'; btnSalvarPromptModal.innerHTML = '🚀 Salvar Prompt'; btnSalvarPromptModal.classList.remove('btn-sucesso'); btnSalvarPromptModal.classList.add('btn-primario'); openModal(modalCadastro); }); }
-            // Event listener for btnAbrirModalGerenciamento REMOVED
+            if (btnAbrirModalCadastro) {
+                btnAbrirModalCadastro.addEventListener('click', () => {
+                    // previousActiveElementForPromptLib é setado dentro de openPromptLibModal
+                    promptLibContainer.querySelector('#formCadastroPrompt').reset();
+                    promptLibContainer.querySelector('#promptIdEdicao').value = '';
+                    if(formTitleModal) formTitleModal.textContent = '➕ Adicionar Novo Prompt';
+                    if(btnSalvarPromptModal) {
+                        btnSalvarPromptModal.innerHTML = '🚀 Salvar Prompt';
+                        btnSalvarPromptModal.classList.remove('btn-sucesso');
+                        btnSalvarPromptModal.classList.add('btn-primario');
+                    }
+                    openPromptLibModal(modalCadastro);
+                });
+            }
 
-            promptLibContainer.querySelectorAll('[data-modal-close]').forEach(button => { button.addEventListener('click', () => { const modalId = button.dataset.modalClose; closeModal(promptLibContainer.querySelector(`#${modalId}`)); }); });
-            promptLibContainer.querySelectorAll('.modal-overlay').forEach(overlay => { overlay.addEventListener('click', (event) => { if (event.target === overlay) closeModal(overlay); }); });
-            document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && document.getElementById('modalBibliotecaPrompts')?.classList.contains('active')) { const activeInternalModal = promptLibContainer.querySelector('.modal-overlay.active'); if (activeInternalModal) { event.stopPropagation(); closeModal(activeInternalModal); } } });
+            promptLibContainer.querySelectorAll('[data-modal-close]').forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.dataset.modalClose;
+                    closePromptLibModal(promptLibContainer.querySelector(`#${modalId}`));
+                });
+            });
+            promptLibContainer.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (event) => {
+                    if (event.target === overlay) closePromptLibModal(overlay);
+                });
+            });
 
-            window.carregarPromptParaEdicaoGlobal = function(id) { /* ... (same as before) ... */ const p = prompts.find(item => item.id === id); if (p) { previousActiveElement = document.activeElement; editingPromptId = id; promptLibContainer.querySelector('#promptIdEdicao').value = id; promptLibContainer.querySelector('#promptTitulo').value = p.titulo; promptLibContainer.querySelector('#promptTexto').value = p.texto; promptLibContainer.querySelector('#promptCategorias').value = p.categorias.join(', '); formTitleModal.textContent = '✏️ Editando Prompt'; btnSalvarPromptModal.innerHTML = '💾 Salvar Alterações'; btnSalvarPromptModal.classList.replace('btn-primario','btn-sucesso'); openModal(modalCadastro); } };
-            window.resetarFormularioEModoEdicaoGlobal = function() { /* ... (same as before) ... */ promptLibContainer.querySelector('#formCadastroPrompt').reset(); editingPromptId = null; promptLibContainer.querySelector('#promptIdEdicao').value = ''; formTitleModal.textContent = '➕ Adicionar Novo Prompt'; btnSalvarPromptModal.innerHTML = '🚀 Salvar Prompt'; btnSalvarPromptModal.classList.replace('btn-sucesso','btn-primario'); };
+            // Listener de Escape específico para os modais internos da biblioteca de prompts
+            document.addEventListener('keydown', (event) => {
+                // Verifica se o modal principal da biblioteca está ativo antes de processar Escape para modais internos
+                if (event.key === 'Escape' && document.getElementById('modalBibliotecaPrompts')?.classList.contains('active')) {
+                    const activeInternalModal = promptLibContainer.querySelector('.modal-overlay.active');
+                    if (activeInternalModal) {
+                        event.stopPropagation(); // Impede que o listener global de Escape feche o modal principal da lib
+                        closePromptLibModal(activeInternalModal);
+                    }
+                }
+            });
+
+            // Funções globais da biblioteca (usadas internamente ou por onclicks em HTML gerado)
+            window.carregarPromptParaEdicaoGlobal = function(id) {
+                const p = prompts.find(item => item.id === id);
+                if (p) {
+                    // previousActiveElementForPromptLib é setado dentro de openPromptLibModal
+                    editingPromptId = id;
+                    promptLibContainer.querySelector('#promptIdEdicao').value = id;
+                    promptLibContainer.querySelector('#promptTitulo').value = p.titulo;
+                    promptLibContainer.querySelector('#promptTexto').value = p.texto;
+                    promptLibContainer.querySelector('#promptCategorias').value = p.categorias.join(', ');
+                    if(formTitleModal) formTitleModal.textContent = '✏️ Editando Prompt';
+                    if(btnSalvarPromptModal) {
+                         btnSalvarPromptModal.innerHTML = '💾 Salvar Alterações';
+                         btnSalvarPromptModal.classList.replace('btn-primario','btn-sucesso');
+                    }
+                    openPromptLibModal(modalCadastro);
+                }
+            };
+            window.resetarFormularioEModoEdicaoGlobal = function() {
+                const form = promptLibContainer.querySelector('#formCadastroPrompt');
+                if(form) form.reset();
+                editingPromptId = null;
+                const idInput = promptLibContainer.querySelector('#promptIdEdicao');
+                if(idInput) idInput.value = '';
+                if(formTitleModal) formTitleModal.textContent = '➕ Adicionar Novo Prompt';
+                if(btnSalvarPromptModal) {
+                    btnSalvarPromptModal.innerHTML = '🚀 Salvar Prompt';
+                    btnSalvarPromptModal.classList.replace('btn-sucesso','btn-primario');
+                }
+            };
 
             const formCadastroPrompt = promptLibContainer.querySelector('#formCadastroPrompt');
-            const promptIdEdicaoInput = promptLibContainer.querySelector('#promptIdEdicao');
             const promptTituloInput = promptLibContainer.querySelector('#promptTitulo');
             const promptTextoInput = promptLibContainer.querySelector('#promptTexto');
             const promptCategoriasInput = promptLibContainer.querySelector('#promptCategorias');
@@ -1060,27 +1870,157 @@
             const filtroCategoriaSelect = promptLibContainer.querySelector('#filtroCategoria');
             const ordemPromptSelect = promptLibContainer.querySelector('#ordemPrompt');
             const btnLimparFiltros = promptLibContainer.querySelector('#btnLimparFiltros');
-            // btnExportarDados and importFileInput (for prompt lib) REMOVED
             const mensagemListaVazia = promptLibContainer.querySelector('#mensagemListaVazia');
-            const notificationArea = promptLibContainer.querySelector('#notificationArea');
+            const notificationArea = promptLibContainer.querySelector('#notificationArea'); // Notificações da Lib
             let prompts = [], todasCategorias = new Set(), editingPromptId = null;
 
-            function showNotification(message, type = 'info', duration = 3500) { /* ... (same as before) ... */ if(!notificationArea) return; notificationArea.textContent = message; notificationArea.className = ''; void notificationArea.offsetWidth; notificationArea.classList.add('show'); notificationArea.classList.add(type); setTimeout(() => { notificationArea.classList.remove('show'); }, duration); }
-            function salvarPromptsNoStorage() { localStorage.setItem('bibliotecaPrompts_layout_modais_v2', JSON.stringify(prompts)); } // Stays for internal ops
-            function carregarPromptsDoStorage() { /* ... (same as before) ... */ const promptsSalvos = localStorage.getItem('bibliotecaPrompts_layout_modais_v2'); if (promptsSalvos) { prompts = JSON.parse(promptsSalvos).map(p => ({ ...p, dataAdicao: p.dataAdicao ? new Date(p.dataAdicao) : new Date(), dataModificacao: p.dataModificacao ? new Date(p.dataModificacao) : new Date() })); } } // Stays
+            function showPromptLibNotification(message, type = 'info', duration = 3500) {
+                if(!notificationArea) return;
+                notificationArea.textContent = message;
+                notificationArea.className = ''; // Limpa classes antigas
+                void notificationArea.offsetWidth; // Força reflow para reiniciar animação
+                notificationArea.classList.add('show');
+                notificationArea.classList.add(type); // Adiciona tipo (success, error, info)
+                setTimeout(() => {
+                    notificationArea.classList.remove('show');
+                }, duration);
+            }
+            function salvarPromptsNoStorage() { localStorage.setItem('bibliotecaPrompts_layout_modais_v2', JSON.stringify(prompts)); }
+            function carregarPromptsDoStorage() {
+                const promptsSalvos = localStorage.getItem('bibliotecaPrompts_layout_modais_v2');
+                if (promptsSalvos) {
+                    prompts = JSON.parse(promptsSalvos).map(p => ({
+                        ...p,
+                        dataAdicao: p.dataAdicao ? new Date(p.dataAdicao) : new Date(),
+                        dataModificacao: p.dataModificacao ? new Date(p.dataModificacao) : new Date()
+                    }));
+                } else {
+                    prompts = [];
+                }
+            }
             function gerarIdUnico() { return '_' + Math.random().toString(36).substring(2, 11); }
-            function atualizarCategoriasUnicas() { /* ... (same as before) ... */ if(!filtroCategoriaSelect && !prompts) return; todasCategorias.clear(); prompts.forEach(prompt => prompt.categorias.forEach(cat => todasCategorias.add(cat.toLowerCase()))); popularFiltroCategorias(); }
-            function popularFiltroCategorias() { /* ... (same as before) ... */ if(!filtroCategoriaSelect) return; const valAnt = filtroCategoriaSelect.value; filtroCategoriaSelect.innerHTML = '<option value="">Todas Categorias</option>'; Array.from(todasCategorias).sort().forEach(cat => { if (cat) { const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat.charAt(0).toUpperCase() + cat.slice(1); filtroCategoriaSelect.appendChild(opt); } }); if (Array.from(filtroCategoriaSelect.options).some(o => o.value === valAnt)) filtroCategoriaSelect.value = valAnt; }
-            function formatarData(data) { if (!(data instanceof Date) || isNaN(data)) return 'Data inválida'; return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
-            function renderizarPrompts() { /* ... (same as before, check for nulls carefully) ... */ if(!listaPromptsDiv || !buscaPromptInput || !filtroCategoriaSelect || !ordemPromptSelect || !mensagemListaVazia) return; listaPromptsDiv.innerHTML = ''; const termo = buscaPromptInput.value.toLowerCase(), catSel = filtroCategoriaSelect.value.toLowerCase(), ordem = ordemPromptSelect.value; let filtrados = prompts.filter(p => (p.titulo.toLowerCase().includes(termo) || p.texto.toLowerCase().includes(termo) || p.categorias.some(c => c.toLowerCase().includes(termo))) && (catSel ? p.categorias.includes(catSel) : true)); filtrados.sort((a,b)=>{ switch(ordem){ case 'tituloAsc':return a.titulo.localeCompare(b.titulo); case 'tituloDesc':return b.titulo.localeCompare(a.titulo); case 'dataAsc':return new Date(a.dataModificacao)-new Date(b.dataModificacao); case 'dataDesc':default:return new Date(b.dataModificacao)-new Date(a.dataModificacao);}}); mensagemListaVazia.classList.toggle('hidden', filtrados.length > 0); if(filtrados.length === 0 && !listaPromptsDiv.contains(mensagemListaVazia)) listaPromptsDiv.appendChild(mensagemListaVazia); filtrados.forEach(p => {const articleEl = document.createElement('article'); articleEl.className = 'prompt-item'; articleEl.dataset.id = p.id; const header=document.createElement('div'); header.className='prompt-item-header'; const h3=document.createElement('h3'); h3.textContent=p.titulo; header.appendChild(h3); const actions=document.createElement('div'); actions.className='prompt-item-actions'; const btnEd=document.createElement('button'); btnEd.innerHTML='✏️ <span class="hidden-mobile">Editar</span>'; btnEd.className='btn-secundario'; btnEd.setAttribute('aria-label',`Editar prompt ${p.titulo}`); btnEd.onclick=()=>window.carregarPromptParaEdicaoGlobal(p.id); const btnCop=document.createElement('button'); btnCop.innerHTML='📋 <span class="hidden-mobile">Copiar</span>'; btnCop.className='btn-primario'; btnCop.setAttribute('aria-label',`Copiar prompt ${p.titulo}`); btnCop.onclick=()=>copiarPromptTexto(p.texto); const btnEx=document.createElement('button'); btnEx.innerHTML='🗑️ <span class="hidden-mobile">Excluir</span>'; btnEx.className='btn-perigo'; btnEx.setAttribute('aria-label',`Excluir prompt ${p.titulo}`); btnEx.onclick=()=>excluirPrompt(p.id); actions.append(btnEd,btnCop,btnEx); header.appendChild(actions); articleEl.appendChild(header); if(p.categorias.length){const tags=document.createElement('div'); tags.className='tags'; tags.innerHTML=p.categorias.map(c =>`<span class="tag">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`).join(''); articleEl.appendChild(tags);} const txt=document.createElement('div'); txt.className='prompt-text'; txt.textContent=p.texto; articleEl.appendChild(txt); const date=document.createElement('div'); date.className='date-info'; date.textContent=`Modificado: ${formatarData(new Date(p.dataModificacao))}`; articleEl.appendChild(date); listaPromptsDiv.appendChild(articleEl);}); if(btnLimparFiltros) btnLimparFiltros.classList.toggle('hidden', !termo && !catSel); }
-            function handleFormSubmit(event) { /* ... (same as before) ... */ event.preventDefault(); if(!promptTituloInput || !promptTextoInput || !promptCategoriasInput) return; const tit = promptTituloInput.value.trim(), txt = promptTextoInput.value.trim(), cats = promptCategoriasInput.value.split(',').map(c => c.trim().toLowerCase()).filter(c => c); if (!tit || !txt) { showNotification('Título e Texto são obrigatórios!', 'error'); return; } const agora = new Date(); if (editingPromptId) { const idx = prompts.findIndex(p => p.id === editingPromptId); if (idx > -1) { prompts[idx] = { ...prompts[idx], titulo:tit, texto:txt, categorias:cats, dataModificacao:agora }; showNotification('Prompt atualizado!', 'success');} } else { prompts.unshift({ id:gerarIdUnico(), titulo:tit, texto:txt, categorias:cats, dataAdicao:agora, dataModificacao:agora }); showNotification('Prompt cadastrado!', 'success'); } salvarPromptsNoStorage(); atualizarCategoriasUnicas(); renderizarPrompts(); closeModal(modalCadastro); window.resetarFormularioEModoEdicaoGlobal(); }
-            function copiarPromptTexto(texto) { navigator.clipboard.writeText(texto).then(() => showNotification('Copiado!', 'info')).catch(() => showNotification('Erro ao copiar.', 'error'));}
-            function excluirPrompt(id) { /* ... (same as before) ... */ const p = prompts.find(item => item.id === id); if (confirm(`Excluir "${p?.titulo || 'este prompt'}"?`)) { prompts = prompts.filter(item => item.id !== id); salvarPromptsNoStorage(); atualizarCategoriasUnicas(); renderizarPrompts(); showNotification('Excluído!', 'success'); if (id === editingPromptId) { closeModal(modalCadastro); window.resetarFormularioEModoEdicaoGlobal(); } } }
-            function limparFiltrosDeBusca() { /* ... (same as before) ... */ if(buscaPromptInput) buscaPromptInput.value = ''; if(filtroCategoriaSelect) filtroCategoriaSelect.value = ''; if(btnLimparFiltros) btnLimparFiltros.classList.add('hidden'); renderizarPrompts(); showNotification('Filtros limpos.', 'info', 2000); }
-            // exportarDadosJson() REMOVED
-            // importarDadosJson() REMOVED
+            function atualizarCategoriasUnicas() {
+                if(!filtroCategoriaSelect || !prompts) return;
+                todasCategorias.clear();
+                prompts.forEach(prompt => prompt.categorias.forEach(cat => todasCategorias.add(cat.toLowerCase())));
+                popularFiltroCategorias();
+            }
+            function popularFiltroCategorias() {
+                if(!filtroCategoriaSelect) return;
+                const valAnt = filtroCategoriaSelect.value;
+                filtroCategoriaSelect.innerHTML = '<option value="">Todas Categorias</option>';
+                Array.from(todasCategorias).sort().forEach(cat => {
+                    if (cat) { // Evita categorias vazias
+                        const opt = document.createElement('option');
+                        opt.value = cat;
+                        opt.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                        filtroCategoriaSelect.appendChild(opt);
+                    }
+                });
+                // Tenta restaurar valor anterior do filtro se ainda existir
+                if (Array.from(filtroCategoriaSelect.options).some(o => o.value === valAnt)) {
+                    filtroCategoriaSelect.value = valAnt;
+                }
+            }
+            function formatarData(data) {
+                if (!(data instanceof Date) || isNaN(data)) return 'Data inválida';
+                return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            }
+            function renderizarPrompts() {
+                if(!listaPromptsDiv || !buscaPromptInput || !filtroCategoriaSelect || !ordemPromptSelect || !mensagemListaVazia) return;
+                listaPromptsDiv.innerHTML = '';
+                const termo = buscaPromptInput.value.toLowerCase();
+                const catSel = filtroCategoriaSelect.value.toLowerCase();
+                const ordem = ordemPromptSelect.value;
 
-            // Expose refresh function for global import
+                let filtrados = prompts.filter(p =>
+                    (p.titulo.toLowerCase().includes(termo) || p.texto.toLowerCase().includes(termo) || p.categorias.some(c => c.toLowerCase().includes(termo))) &&
+                    (catSel ? p.categorias.includes(catSel) : true)
+                );
+                filtrados.sort((a,b)=>{
+                    switch(ordem){
+                        case 'tituloAsc':return a.titulo.localeCompare(b.titulo);
+                        case 'tituloDesc':return b.titulo.localeCompare(a.titulo);
+                        case 'dataAsc':return new Date(a.dataModificacao) - new Date(b.dataModificacao);
+                        case 'dataDesc':default:return new Date(b.dataModificacao) - new Date(a.dataModificacao);
+                    }
+                });
+
+                mensagemListaVazia.classList.toggle('hidden', filtrados.length > 0);
+                // Se a lista estiver vazia e a mensagem não estiver lá, adiciona (raro, mas para garantir)
+                if(filtrados.length === 0 && !listaPromptsDiv.contains(mensagemListaVazia)) {
+                    listaPromptsDiv.appendChild(mensagemListaVazia);
+                }
+
+                filtrados.forEach(p => {
+                    const articleEl = document.createElement('article');
+                    articleEl.className = 'prompt-item'; articleEl.dataset.id = p.id;
+                    const header=document.createElement('div'); header.className='prompt-item-header';
+                    const h3=document.createElement('h3'); h3.textContent=p.titulo; header.appendChild(h3);
+                    const actions=document.createElement('div'); actions.className='prompt-item-actions';
+                    const btnEd=document.createElement('button'); btnEd.innerHTML='✏️ <span class="hidden-mobile">Editar</span>'; btnEd.className='btn-secundario'; btnEd.setAttribute('aria-label',`Editar prompt ${p.titulo}`); btnEd.onclick=()=>window.carregarPromptParaEdicaoGlobal(p.id);
+                    const btnCop=document.createElement('button'); btnCop.innerHTML='📋 <span class="hidden-mobile">Copiar</span>'; btnCop.className='btn-primario'; btnCop.setAttribute('aria-label',`Copiar prompt ${p.titulo}`); btnCop.onclick=()=>copiarPromptTexto(p.texto);
+                    const btnEx=document.createElement('button'); btnEx.innerHTML='🗑️ <span class="hidden-mobile">Excluir</span>'; btnEx.className='btn-perigo'; btnEx.setAttribute('aria-label',`Excluir prompt ${p.titulo}`); btnEx.onclick=()=>excluirPrompt(p.id);
+                    actions.append(btnEd,btnCop,btnEx); header.appendChild(actions); articleEl.appendChild(header);
+                    if(p.categorias.length){const tags=document.createElement('div'); tags.className='tags'; tags.innerHTML=p.categorias.map(c =>`<span class="tag">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`).join(''); articleEl.appendChild(tags);}
+                    const txt=document.createElement('div'); txt.className='prompt-text'; txt.textContent=p.texto; articleEl.appendChild(txt);
+                    const date=document.createElement('div'); date.className='date-info'; date.textContent=`Modificado: ${formatarData(new Date(p.dataModificacao))}`; articleEl.appendChild(date);
+                    listaPromptsDiv.appendChild(articleEl);
+                });
+                if(btnLimparFiltros) btnLimparFiltros.classList.toggle('hidden', !termo && !catSel);
+            }
+            function handleFormSubmit(event) {
+                event.preventDefault();
+                if(!promptTituloInput || !promptTextoInput || !promptCategoriasInput) return;
+                const tit = promptTituloInput.value.trim();
+                const txt = promptTextoInput.value.trim();
+                const cats = promptCategoriasInput.value.split(',').map(c => c.trim().toLowerCase()).filter(c => c); // Filtra categorias vazias
+                if (!tit || !txt) { showPromptLibNotification('Título e Texto do prompt são obrigatórios!', 'error'); return; }
+
+                const agora = new Date();
+                if (editingPromptId) {
+                    const idx = prompts.findIndex(p => p.id === editingPromptId);
+                    if (idx > -1) {
+                        prompts[idx] = { ...prompts[idx], titulo:tit, texto:txt, categorias:cats, dataModificacao:agora };
+                        showPromptLibNotification('Prompt atualizado com sucesso!', 'success');
+                    }
+                } else {
+                    prompts.unshift({ id:gerarIdUnico(), titulo:tit, texto:txt, categorias:cats, dataAdicao:agora, dataModificacao:agora });
+                    showPromptLibNotification('Prompt cadastrado com sucesso!', 'success');
+                }
+                salvarPromptsNoStorage();
+                atualizarCategoriasUnicas();
+                renderizarPrompts();
+                closePromptLibModal(modalCadastro);
+                window.resetarFormularioEModoEdicaoGlobal();
+            }
+            function copiarPromptTexto(texto) {
+                navigator.clipboard.writeText(texto)
+                    .then(() => showPromptLibNotification('Texto do prompt copiado!', 'info'))
+                    .catch(() => showPromptLibNotification('Erro ao copiar texto do prompt.', 'error'));
+            }
+            function excluirPrompt(id) {
+                const p = prompts.find(item => item.id === id);
+                if (confirm(`Tem certeza que deseja excluir o prompt "${p?.titulo || 'este prompt'}"?`)) {
+                    prompts = prompts.filter(item => item.id !== id);
+                    salvarPromptsNoStorage();
+                    atualizarCategoriasUnicas();
+                    renderizarPrompts();
+                    showPromptLibNotification('Prompt excluído com sucesso!', 'success');
+                    if (id === editingPromptId) { // Se estiver editando o prompt excluído
+                        closePromptLibModal(modalCadastro);
+                        window.resetarFormularioEModoEdicaoGlobal();
+                    }
+                }
+            }
+            function limparFiltrosDeBusca() {
+                if(buscaPromptInput) buscaPromptInput.value = '';
+                if(filtroCategoriaSelect) filtroCategoriaSelect.value = '';
+                if(btnLimparFiltros) btnLimparFiltros.classList.add('hidden');
+                renderizarPrompts();
+                showPromptLibNotification('Filtros de busca limpos.', 'info', 2000);
+            }
+
             window.refreshPromptLibraryView = function() {
                 if (!promptLibContainer) return;
                 carregarPromptsDoStorage();
@@ -1088,6 +2028,8 @@
                 renderizarPrompts();
                 if (prompts.length === 0 && mensagemListaVazia) {
                      mensagemListaVazia.classList.remove('hidden');
+                } else if (mensagemListaVazia) {
+                    mensagemListaVazia.classList.add('hidden');
                 }
             };
 
@@ -1096,8 +2038,8 @@
             if(filtroCategoriaSelect) filtroCategoriaSelect.addEventListener('change', renderizarPrompts);
             if(ordemPromptSelect) ordemPromptSelect.addEventListener('change', renderizarPrompts);
             if(btnLimparFiltros) btnLimparFiltros.addEventListener('click', limparFiltrosDeBusca);
-            // Event listeners for export/import buttons REMOVED
 
+            // Carregamento inicial da biblioteca de prompts
             carregarPromptsDoStorage();
             atualizarCategoriasUnicas();
             renderizarPrompts();
