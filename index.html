@@ -1,4 +1,14 @@
-<!DOCTYPE html><html lang="pt-br"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>RS TECH</title>    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">    <style>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet"> {/* Font for Prompt Library */}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <style>
+        /* RS TECH Base Styles (Original - completo) */
         :root {
             --c-cyan: #19fff7;
             --c-green: #46ff86;
@@ -47,7 +57,7 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
-            z-index: 101;
+            z-index: 101; /* Original z-index */
             box-shadow: 2px 0 14px #19fff733;
             padding-top: 0.4rem;
             padding-bottom: 0;
@@ -136,7 +146,6 @@
         /* Layout do Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            /* Padrão para telas largas (acima de 1100px): 3 colunas */
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             padding: 2rem 2vw 1rem 2vw;
@@ -144,48 +153,38 @@
             margin: auto;
             box-sizing: border-box;
         }
-        /* Em telas largas (> 1100px), Anotações Rápidas ocupa 2 colunas */
-        /* Esta regra se aplica porque não há media query mais específica para min-width */
         .card.anotacoes-rapidas {
             grid-column: span 2;
         }
-        /* O card de humor ocupará 1 coluna por padrão no grid de 3 colunas */
-
-        /* Telas médias (ex: tablets em paisagem, notebooks menores) - 2 colunas */
         @media (max-width: 1100px) {
             .dashboard-grid {
-                grid-template-columns: 1fr 1fr; /* Duas colunas */
+                grid-template-columns: 1fr 1fr;
                 gap: 1.1rem;
             }
-            /* Cards de humor e anotações ocupam a largura total da linha (ambas as colunas) */
             .card.avaliacao-humor-aluno,
             .card.anotacoes-rapidas {
-                grid-column: 1 / -1; /* Ocupa todas as colunas disponíveis na linha */
+                grid-column: 1 / -1;
             }
         }
-        /* Telas pequenas (ex: tablets em retrato, smartphones grandes) - 1 coluna */
         @media (max-width: 799px) {
             .dashboard-grid {
-                grid-template-columns: 1fr; /* Uma coluna */
+                grid-template-columns: 1fr;
                 gap: 1.1rem;
             }
-            /* Cards de humor e anotações voltam ao fluxo normal (ocupando 1 coluna automaticamente) */
             .card.avaliacao-humor-aluno,
             .card.anotacoes-rapidas {
                 grid-column: auto;
             }
             .card {
-                min-height: 300px; /* Altura mínima ajustada para cards */
+                min-height: 300px;
             }
         }
-        /* Telas muito pequenas (smartphones) */
         @media (max-width: 599px) {
             .dashboard-grid {
                 gap: 0.5rem;
                 padding: 0.5rem 0.1rem;
             }
         }
-        /* Estilo Base do Card */
         .card {
             background: var(--c-bg-card);
             border-radius: 1.5rem;
@@ -220,7 +219,6 @@
             flex-direction: column;
             flex-grow: 1;
         }
-        /* Inputs e Textarea Gerais */
         .card textarea,
         .card input,
         .card select {
@@ -258,7 +256,6 @@
             overflow-y: auto;
             flex-shrink: 0;
         }
-        /* Card de Avaliação de Humor */
         .avaliacao-humor-aluno form {
             justify-content: space-around;
             padding-top: 0.5rem;
@@ -284,7 +281,6 @@
             flex-grow: 1;
             line-height: 1.3;
         }
-        /* Botões dentro dos Cards */
         .diario-btns,
         .aluno-form-actions-wrapper,
         .financeiro-form-actions-wrapper,
@@ -312,7 +308,6 @@
         }
         .card form .btn:first-child { margin-left: 0; }
         .card form .btn:last-child { margin-right: 0; }
-        /* Tabelas e Ações em Tabelas */
         .table-actions button {
             background: none; border: none; color: var(--c-green);
             font-size: 1.13rem; cursor: pointer; transition: color 0.14s;
@@ -327,38 +322,31 @@
         }
         table th, table td { padding: 0.6rem 0.4rem; text-align: left; border-bottom: 1px solid #263b2b; }
         table th { color: var(--c-green); font-family: var(--tit); border-bottom: 2px solid var(--c-cyan); }
-        
-        /* Link Portal Principal e Controles Gerais (Estilo base do .portal-acesso) */
         .portal-acesso {
             background: transparent; color: var(--c-green); border-radius: 1.2rem;
             border: 2px solid var(--c-cyan); font-family: var(--tit); text-align: center;
             font-size: 1.08rem; font-weight: bold; box-shadow: 0 2px 12px #19fff733;
-            padding: 1rem 0.8rem; /* Padding ajustado */
+            padding: 1rem 0.8rem;
             transition: border .19s, color .19s; cursor: pointer; text-decoration: none;
             letter-spacing: 1.15px;
-            display: block; /* Mantido para compatibilidade, mas será item flex no container */
+            display: block;
         }
         .portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow); }
-        
-        /* Novo container para os botões do portal */
         .portais-botoes-container {
             display: flex;
-            flex-wrap: wrap; /* Permite que os botões quebrem para a linha de baixo em telas menores */
-            justify-content: center; /* Centraliza os botões no container */
-            gap: 1rem; /* Espaço entre os botões */
-            margin: 2rem auto 1.5rem auto; /* Centraliza o container, similar ao .portal-acesso original */
-            max-width: 700px; /* Mantém a restrição de largura máxima original para o grupo */
-            padding: 0 1rem; /* Adiciona um pouco de preenchimento horizontal */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem auto 1.5rem auto;
+            max-width: 700px;
+            padding: 0 1rem;
             box-sizing: border-box;
         }
-
-        /* Ajustes para .portal-acesso quando dentro deste container */
         .portais-botoes-container .portal-acesso {
-            margin: 0; /* Remove as margens automáticas que eram para centralizar um único botão de bloco */
-            flex-grow: 1; /* Permite que os botões cresçam e compartilhem espaço */
-            flex-basis: 280px; /* Sugere uma largura base antes de crescer/encolher (ajuste conforme necessário) */
+            margin: 0;
+            flex-grow: 1;
+            flex-basis: 280px;
         }
-
         .main-controls {
             display: flex; justify-content: center; align-items: center;
             gap: 2.1rem; margin: 2.5rem auto 0 auto;
@@ -376,8 +364,6 @@
             color: var(--c-green); border: 1.5px solid var(--c-green); background: #1d342a;
         }
         .financeiro-mes-selector .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.9rem; min-width: auto; }
-        
-        /* Sugestões de Alunos */
         .sugestoes-container {
             border: 1.5px solid var(--c-green); border-top: none; max-height: 120px;
             overflow-y: auto; background-color: var(--c-bg-dark); position: relative;
@@ -392,8 +378,6 @@
         .sugestao-item:hover { background-color: #163221; color: var(--c-yellow); }
         .sugestoes-container:empty,
         .sugestoes-container:not([style*="display: block"]) { display: none !important; }
-        
-        /* Footer */
         footer {
             width: 100%; text-align: center; color: #5beebb; font-size: 1.1rem;
             font-family: var(--tit); letter-spacing: 0.2em; background: #133829ea;
@@ -402,16 +386,11 @@
             box-sizing: border-box; margin-left: -70px;
         }
         @media (max-width: 800px) { footer { margin-left: -54px; } }
-        
         @media (max-width: 600px) {
             footer { margin-left: -50px; }
             .main-controls { flex-direction: column; gap: 1.2rem; padding-bottom: calc(2.29rem + 1rem); }
-            /* Ajustes para o link do portal principal e o novo botão em telas menores (já incluído no .portais-botoes-container @media query) */
-            /* .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem; } <-- Esta linha específica pode ser removida se o media query para .portais-botoes-container já lida com isso */
             footer { font-size: 0.99rem; padding: 0.65rem 0; }
         }
-        
-        /* Ajustes finais para telas muito pequenas */
         @media (max-width: 480px) {
             .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; min-height: 260px; }
             .dashboard-grid { padding: 0.6rem 0.1rem; }
@@ -419,31 +398,33 @@
             .avaliacao-humor-aluno label { font-size: 0.95rem; }
             .avaliacao-humor-aluno .checkbox-group { margin-bottom: 0.5rem; }
         }
-
-        /* Media query específico para os botões do portal */
-        @media (max-width: 640px) { 
-            .portais-botoes-container {
-                flex-direction: column; /* Empilha os botões verticalmente */
-                align-items: stretch; /* Faz os botões ocuparem a largura total do container */
+        @media (max-width: 640px) {
+             .portais-botoes-container {
+                flex-direction: column;
+                align-items: stretch;
             }
             .portais-botoes-container .portal-acesso {
-                width: 100%; /* Garante que ocupem a largura total quando empilhados */
-                margin-bottom: 1rem; /* Adiciona espaço quando empilhados */
-                font-size: 1rem; /* Mantém o tamanho da fonte original de telas pequenas */
-                padding: 1.3rem 0.6rem; /* Mantém o padding original de telas pequenas */
+                width: 100%;
+                margin-bottom: 1rem;
+                font-size: 1rem;
+                padding: 1.3rem 0.6rem;
             }
             .portais-botoes-container .portal-acesso:last-child {
                 margin-bottom: 0;
             }
         }
-
-        /* Estilos dos Modais */
         .modal-bg {
-            display: none; position: fixed; z-index: 1010; left: 0; top: 0;
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0;
             width: 100vw; height: 100vh; background: rgba(0, 32, 32, 0.72);
-            justify-content: center; align-items: flex-start; padding: 1rem;
+            justify-content: center; align-items: flex-start; padding: 1rem; /* Default padding for RS Tech modals */
             box-sizing: border-box; overflow-y: auto;
         }
+        #modalBibliotecaPrompts.modal-bg { /* Specific adjustment for prompt lib modal background */
+             align-items: center; /* Center the wrapper vertically for prompt lib */
+             padding: 1rem; /* Use consistent padding */
+        }
+
         .modal-bg.active { display: flex; }
         .modal-diario, .modal-financeiro, .modal-alunos {
             background: #122921; color: var(--txt); border-radius: 1.1rem;
@@ -461,7 +442,6 @@
             border: none; color: var(--c-yellow); font-size: 1.3rem;
             cursor: pointer; font-family: var(--tit); z-index: 10;
         }
-        /* Container de Tabela dentro do Modal */
         .table-container-modal {
             flex-grow: 1; min-height: 0; overflow-y: auto;
             overscroll-behavior-y: contain; border-radius: 0.8rem;
@@ -482,7 +462,6 @@
             top: -1px; background: #133829; z-index: 1;
         }
         .table-container-modal tr:last-child td { border-bottom: none; }
-        /* Modal Diário */
         .modal-diario-table {
             width: 100%; overflow-y: auto; overscroll-behavior-y: contain;
             border-radius: 1rem; background: #163221; box-shadow: 0 1px 8px #19fff744;
@@ -501,7 +480,6 @@
         .modal-diario-table td.table-actions { text-align: center; }
         .modal-diario-table tr:last-child td { border-bottom: none; }
         .modal-diario-table td { color: #def2e1; word-break: break-word; }
-        /* Filtros do Modal Diário */
         .modal-diario-filtro {
             display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: flex-start;
             margin-bottom: 0.5rem; align-items: flex-end; flex-shrink: 0;
@@ -518,7 +496,6 @@
         }
         .modal-diario-filtro input[type="text"]:focus,
         .modal-diario-filtro input[type="date"]:focus { border-color: var(--c-cyan); }
-        /* Seletor de Mês Financeiro */
         .financeiro-mes-selector {
             display: flex; gap: 10px; align-items: center; margin-bottom: 1rem;
             flex-wrap: wrap; flex-shrink: 0;
@@ -531,6 +508,232 @@
             flex-grow: 1; min-width: 120px;
         }
          .financeiro-mes-selector .btn { padding: 0.5rem 0.8rem; font-size: 0.95rem; min-width: auto; }
+
+        /* Styles for the Prompt Library Modal Container */
+        #modalBibliotecaPrompts .modal-biblioteca-prompts-wrapper {
+            background-color: #f0f2f5; /* Prompt library background */
+            color: #2c3e50; /* Prompt library text color */
+            font-family: 'Roboto', 'Segoe UI', sans-serif; /* Prompt library font */
+            border-radius: 0.7rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 95%;
+            max-width: 1200px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative; /* For absolute positioning of close button */
+            overflow: hidden; /* Content inside will scroll */
+            box-sizing: border-box;
+        }
+        #modalBibliotecaPrompts .fechar-modal-biblioteca {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #34495e;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.5rem;
+            line-height: 35px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 1055;
+            transition: background-color 0.2s;
+        }
+        #modalBibliotecaPrompts .fechar-modal-biblioteca:hover {
+            background: #e74c3c;
+        }
+        #conteudoModalBibliotecaPromptsInner {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            --cor-primaria: #1abc9c;
+            --cor-primaria-hover: #16a085;
+            --cor-secundaria: #34495e;
+            --cor-sucesso: #2ecc71;
+            --cor-sucesso-hover: #27ae60;
+            --cor-perigo: #e74c3c;
+            --cor-perigo-hover: #c0392b;
+            --cor-fundo: #f0f2f5;
+            --cor-card: #ffffff;
+            --cor-texto: #2c3e50;
+            --cor-texto-secundario: #525f6c;
+            --cor-borda: #dce0e5;
+            --sombra-card: 0 2px 8px rgba(0,0,0,0.06);
+            --border-radius: 0.4rem;
+            --spacing-unit: 1rem;
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        body.prompt-lib-modal-active {
+             overflow: hidden;
+        }
+    </style>
+    <style type="text/css" id="promptLibraryStylesScoped">
+        #conteudoModalBibliotecaPromptsInner .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: calc(var(--spacing-unit)*1.25) calc(var(--spacing-unit)*1.5);
+            background-color: var(--cor-card);
+            border-bottom: 1px solid var(--cor-borda);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            margin-bottom: calc(var(--spacing-unit)*1.5);
+            flex-shrink: 0;
+        }
+        #conteudoModalBibliotecaPromptsInner .page-header h1 {
+            font-size: 1.8rem;
+            color: var(--cor-primaria);
+            margin: 0;
+        }
+        #conteudoModalBibliotecaPromptsInner .page-header .header-actions button {
+            margin-left: var(--spacing-unit);
+        }
+        #conteudoModalBibliotecaPromptsInner .main-content-area {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 calc(var(--spacing-unit)*1.5) calc(var(--spacing-unit)*1.5);
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+        #conteudoModalBibliotecaPromptsInner label { display:block; margin-bottom:calc(var(--spacing-unit)*0.4); font-weight:600; font-size:0.9rem; }
+        #conteudoModalBibliotecaPromptsInner input[type="text"],
+        #conteudoModalBibliotecaPromptsInner textarea,
+        #conteudoModalBibliotecaPromptsInner select {
+            width:100%; padding:calc(var(--spacing-unit)*0.75); margin-bottom:var(--spacing-unit);
+            border:1px solid var(--cor-borda); border-radius:var(--border-radius); box-sizing:border-box;
+            font-size:0.95rem; background-color: #fff;
+        }
+        #conteudoModalBibliotecaPromptsInner textarea { resize:vertical; min-height:100px; }
+        #conteudoModalBibliotecaPromptsInner input:focus,
+        #conteudoModalBibliotecaPromptsInner textarea:focus,
+        #conteudoModalBibliotecaPromptsInner select:focus {
+            border-color:var(--cor-primaria); box-shadow:0 0 0 0.2rem rgba(var(--cor-primaria),.15); outline:none;
+        }
+        #conteudoModalBibliotecaPromptsInner .form-actions { display:flex; gap:calc(var(--spacing-unit)*0.75); margin-top:var(--spacing-unit); justify-content:flex-end; }
+        #conteudoModalBibliotecaPromptsInner button,
+        #conteudoModalBibliotecaPromptsInner .button-like {
+            padding:calc(var(--spacing-unit)*0.7) calc(var(--spacing-unit)*1.3); border:none; border-radius:var(--border-radius);
+            cursor:pointer; font-size:0.9rem; font-weight:500;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            text-decoration:none; display:inline-flex; align-items:center; justify-content:center;
+            gap:calc(var(--spacing-unit)*0.4); box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        #conteudoModalBibliotecaPromptsInner button:hover,
+        #conteudoModalBibliotecaPromptsInner .button-like:hover { transform:translateY(-1px); box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+        #conteudoModalBibliotecaPromptsInner button:active,
+        #conteudoModalBibliotecaPromptsInner .button-like:active { transform:translateY(0px); box-shadow:0 1px 2px rgba(0,0,0,0.05); }
+        #conteudoModalBibliotecaPromptsInner .btn-primario { background-color:var(--cor-primaria); color:white; }
+        #conteudoModalBibliotecaPromptsInner .btn-primario:hover { background-color:var(--cor-primaria-hover); }
+        #conteudoModalBibliotecaPromptsInner .btn-secundario { background-color:var(--cor-secundaria); color:white; }
+        #conteudoModalBibliotecaPromptsInner .btn-secundario:hover { background-color:#2c3e50; }
+        #conteudoModalBibliotecaPromptsInner .btn-sucesso { background-color:var(--cor-sucesso); color:white; }
+        #conteudoModalBibliotecaPromptsInner .btn-sucesso:hover { background-color:var(--cor-sucesso-hover); }
+        #conteudoModalBibliotecaPromptsInner .btn-perigo { background-color:var(--cor-perigo); color:white; }
+        #conteudoModalBibliotecaPromptsInner .btn-perigo:hover { background-color:var(--cor-perigo-hover); }
+        #conteudoModalBibliotecaPromptsInner .btn-outline { background-color:transparent; color:var(--cor-secundaria); border:1px solid var(--cor-borda); }
+        #conteudoModalBibliotecaPromptsInner .btn-outline:hover { background-color:rgba(0,0,0,0.03); color:var(--cor-primaria); border-color:var(--cor-primaria); }
+        #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar {
+            display:flex; flex-wrap:wrap; gap:var(--spacing-unit); margin-bottom:calc(var(--spacing-unit)*1.5); align-items:flex-end;
+            padding: var(--spacing-unit); background-color:var(--cor-card); border-radius:var(--border-radius); box-shadow:var(--sombra-card);
+        }
+        #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar .search-input { flex:2 1 250px; }
+        #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar .filter-select,
+        #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar .sort-select { flex:1 1 160px; }
+        #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar .clear-button-wrapper { margin-left:auto; }
+        #conteudoModalBibliotecaPromptsInner #listaPrompts { margin-top: var(--spacing-unit); }
+        #conteudoModalBibliotecaPromptsInner .prompt-item {
+            background-color:var(--cor-card); padding:calc(var(--spacing-unit)*1.2); margin-bottom:var(--spacing-unit);
+            border-radius:var(--border-radius); border:1px solid var(--cor-borda); box-shadow:var(--sombra-card);
+        }
+        #conteudoModalBibliotecaPromptsInner .prompt-item-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:calc(var(--spacing-unit)*0.7); gap:var(--spacing-unit); }
+        #conteudoModalBibliotecaPromptsInner .prompt-item-header h3 { margin:0; color:var(--cor-primaria); font-size:1.15rem; font-weight:600; flex-grow:1; }
+        #conteudoModalBibliotecaPromptsInner .prompt-item-actions { display:flex; gap:calc(var(--spacing-unit)*0.5); flex-shrink:0; }
+        #conteudoModalBibliotecaPromptsInner .prompt-item-actions button { padding:calc(var(--spacing-unit)*0.3) calc(var(--spacing-unit)*0.6); font-size:0.8rem; }
+        #conteudoModalBibliotecaPromptsInner .prompt-item .tags { margin-bottom:calc(var(--spacing-unit)*0.8); }
+        #conteudoModalBibliotecaPromptsInner .prompt-item .tag {
+            display:inline-block; background-color:var(--cor-fundo); color:var(--cor-texto-secundario);
+            padding:calc(var(--spacing-unit)*0.15) calc(var(--spacing-unit)*0.5);
+            border-radius:calc(var(--border-radius)*0.7); font-size:0.75rem;
+            margin-right:calc(var(--spacing-unit)*0.3); margin-bottom:calc(var(--spacing-unit)*0.3);
+        }
+        #conteudoModalBibliotecaPromptsInner .prompt-item .prompt-text {
+            white-space:pre-wrap; margin-bottom:calc(var(--spacing-unit)*0.8); background-color:#fcfcfc;
+            padding:calc(var(--spacing-unit)*0.8); border-radius:var(--border-radius); border:1px solid #f0f0f0;
+            font-size:0.9rem; color:var(--cor-texto);
+        }
+        #conteudoModalBibliotecaPromptsInner .prompt-item .date-info { font-size:0.75rem; color:var(--cor-texto-secundario); text-align:right; margin-top:calc(var(--spacing-unit)*0.8); }
+        #conteudoModalBibliotecaPromptsInner .modal-overlay {
+            position:fixed;
+            top:0; left:0; width:100%; height:100%;
+            background-color:rgba(0,0,0,0.6);
+            display:flex; align-items:center; justify-content:center;
+            opacity:0; visibility:hidden; transition:opacity 0.3s ease, visibility 0s 0.3s linear;
+            z-index:1050;
+        }
+        #conteudoModalBibliotecaPromptsInner .modal-overlay.active { opacity:1; visibility:visible; transition-delay: 0s; }
+        #conteudoModalBibliotecaPromptsInner .modal-content {
+            background-color:var(--cor-card); padding:calc(var(--spacing-unit)*1.5);
+            border-radius:var(--border-radius); box-shadow:0 5px 20px rgba(0,0,0,0.2);
+            width:90%; max-width:600px;
+            transform:scale(0.9); transition:transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        #conteudoModalBibliotecaPromptsInner .modal-overlay.active .modal-content { transform:scale(1); }
+        #conteudoModalBibliotecaPromptsInner .modal-header {
+            display:flex; justify-content:space-between; align-items:center;
+            margin-bottom:var(--spacing-unit); padding-bottom:var(--spacing-unit);
+            border-bottom:1px solid var(--cor-borda);
+        }
+        #conteudoModalBibliotecaPromptsInner .modal-header h2 { margin:0; font-size:1.4rem; color:var(--cor-primaria); }
+        #conteudoModalBibliotecaPromptsInner .modal-close-btn {
+            background:none; border:none; font-size:1.8rem; color:var(--cor-texto-secundario);
+            cursor:pointer; padding:0; line-height:1;
+        }
+        #conteudoModalBibliotecaPromptsInner .modal-close-btn:hover { color:var(--cor-perigo); }
+        #conteudoModalBibliotecaPromptsInner .modal-body p { margin-top:0; color:var(--cor-texto-secundario); }
+        #conteudoModalBibliotecaPromptsInner .hidden { display: none !important; }
+        #conteudoModalBibliotecaPromptsInner .info-message { text-align:center; padding:var(--spacing-unit)*2; color:var(--cor-texto-secundario); background-color:var(--cor-fundo); border-radius:var(--border-radius); }
+        #conteudoModalBibliotecaPromptsInner #notificationArea {
+            position:absolute;
+            bottom:20px; right:20px;
+            padding:var(--spacing-unit); color:white; z-index:1060;
+            opacity:0; transition:opacity 0.4s ease, transform 0.4s ease;
+            text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+            transform:translateY(20px); border-radius:var(--border-radius);
+            min-width: 280px;
+        }
+        #conteudoModalBibliotecaPromptsInner #notificationArea.show { opacity:1; transform:translateY(0); }
+        #conteudoModalBibliotecaPromptsInner #notificationArea.success { background-color:var(--cor-sucesso); }
+        #conteudoModalBibliotecaPromptsInner #notificationArea.error { background-color:var(--cor-perigo); }
+        #conteudoModalBibliotecaPromptsInner #notificationArea.info { background-color:var(--cor-primaria); }
+        @media (max-width: 768px) {
+            #conteudoModalBibliotecaPromptsInner .page-header { flex-direction:column; gap:var(--spacing-unit); }
+            #conteudoModalBibliotecaPromptsInner .page-header h1 { font-size:1.6rem; }
+            #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar { flex-direction:column; align-items:stretch; padding:calc(var(--spacing-unit)*0.8); }
+            #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar .clear-button-wrapper { margin-left:0; margin-top:var(--spacing-unit); }
+            #conteudoModalBibliotecaPromptsInner .search-filter-sort-bar .clear-button-wrapper button { width:100%; }
+            #conteudoModalBibliotecaPromptsInner .modal-content { width:95%; padding:var(--spacing-unit); }
+            #conteudoModalBibliotecaPromptsInner .modal-header h2 { font-size:1.2rem; }
+        }
+        #conteudoModalBibliotecaPromptsInner .hidden-visually {
+            position: absolute !important;
+            height: 1px; width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -550,138 +753,23 @@
         <a href="https://ravellsl.github.io/ferramenta-busca-noticias/" target="_blank" class="ataho-link" title="Notícias" tabindex="13" aria-label="Notícias"><i class="fas fa-newspaper"></i></a>
     </nav>
 
-    <header>
-        RS TECH
-    </header>
+    <header> RS TECH </header>
 
     <main class="dashboard-grid">
-        <div class="card diario-classe">
-            <div style="display: flex; flex-direction: column; flex-grow: 1;">
-                <h2>Diário de Classe</h2>
-                <form id="formDiarioClasse" onsubmit="event.preventDefault();">
-                    <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">
-                    <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">
-                    <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>
-                    <div class="diario-btns">
-                        <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>
-                        <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>
-                        <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>
-                    </div>
-                </form>
-            </div>
-            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalDiario()">Visualizar Diário</button>
-        </div>
-
-        <div class="card cadastro-alunos">
-            <div style="display: flex; flex-direction: column; flex-grow: 1;">
-                <h2>Cadastro de Alunos (AnyDesk)</h2>
-                <form id="formCadastroAluno" onsubmit="event.preventDefault(); adicionarAluno();">
-                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="handleNomeAlunoInput()">
-                    <div id="sugestoesAlunosContainer" class="sugestoes-container"></div>
-                    <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">
-                    <div class="aluno-form-actions-wrapper">
-                        <div class="alunos-btns">
-                            <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>
-                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>
-                        </div>
-                        <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-            <p id="contadorAlunos" style="align-self: center; text-align: center; margin-top: 0.8rem; margin-bottom: 0.8rem; color: var(--c-cyan); font-size: 1.7em; width: 100%;"></p>
-            <button class="btn" style="margin-top: 0; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>
-        </div>
-
-        <div class="card controle-financeiro">
-            <div style="display: flex; flex-direction: column; flex-grow: 1;">
-                <h2>Controle Financeiro</h2>
-                <form id="formFinanceiro" onsubmit="event.preventDefault(); adicionarFinanceiro();">
-                    <input id="nomeFinanceiro" placeholder="Nome do Aluno/Descrição" autocomplete="off" oninput="mostrarBotoesFinanceiro()">
-                    <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()" step="0.01">
-                    <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">
-                        <option value="Pago">Pago</option>
-                        <option value="Pendente">Pendente</option>
-                    </select>
-                    <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">
-                        <option value="Mensalidade">Mensalidade</option>
-                        <option value="Serviço Extra">Serviço Extra</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                    <div class="financeiro-form-actions-wrapper">
-                        <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>
-                        <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</option>
-                        <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>
-                    </div>
-                </form>
-            </div>
-            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Dados</button>
-        </div>
-
-        <div class="card avaliacao-humor-aluno">
-            <h2>Sistema de Avaliação de Humor do Aluno</h2>
-            <form id="formAvaliacaoHumor" onsubmit="event.preventDefault();">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="humorEngajado" name="humorAluno" value="engajado">
-                    <label for="humorEngajado">Engajado / Participativo</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="humorAlegre" name="humorAluno" value="alegre">
-                    <label for="humorAlegre">Alegre / Entusiasmado</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="humorConfuso" name="humorAluno" value="confuso">
-                    <label for="humorConfuso">Confuso / Com Dificuldade</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="humorDistraido" name="humorAluno" value="distraido">
-                    <label for="humorDistraido">Distraído / Desinteressado</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="humorAnsioso" name="humorAluno" value="ansioso">
-                    <label for="humorAnsioso">Ansioso / Estressado</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="humorSonolento" name="humorAluno" value="sonolento">
-                    <label for="humorSonolento">Sonolento / Cansado</label>
-                </div>
-            </form>
-        </div>
-
-        <div class="card anotacoes-rapidas">
-            <div style="display: flex; flex-direction: column; flex-grow: 1;">
-                <h2>Anotações Rápidas</h2>
-                <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">
-                    <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">
-                    <div class="anotacoes-form-actions-wrapper">
-                        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>
-                        <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>
-                        <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>
-                        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>
-                    </div>
-                </form>
-                <table id="tabelaAnotacoes" style="margin-top:1rem; margin-left: auto; margin-right: auto; width: fit-content; flex-grow: 1; overflow-y: auto; display: block;">
-                    <thead>
-                        <tr>
-                            <th>Anotação</th>
-                            <th style="width:100px; text-align:center;">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+        <div class="card diario-classe">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Diário de Classe</h2>                <form id="formDiarioClasse" onsubmit="event.preventDefault();">                    <input id="diarioAluno" type="text" placeholder="Nome do Aluno" autocomplete="off" required oninput="mostrarBotoesDiario()">                    <input id="diarioData" type="date" required oninput="mostrarBotoesDiario()">                    <textarea id="diarioConteudo" rows="4" placeholder="Conteúdo ministrado..." required oninput="mostrarBotoesDiario()"></textarea>                    <div class="diario-btns">                        <button class="btn" type="button" id="btnDiarioAdd" onclick="salvarDiarioClasse()" style="display:none;">Salvar</button>                        <button class="btn" type="button" id="btnDiarioEdit" style="display:none;" onclick="confirmarEdicaoDiarioClasse()">Salvar Edição</button>                        <button class="btn" type="button" id="btnDiarioCancel" style="display:none;" onclick="cancelarEdicaoDiarioClasse()">Cancelar</button>                        <button class="btn" type="button" id="btnDiarioLimpar" onclick="limparCamposDiario()" style="display:none;">Limpar</button>                    </div>                </form>            </div>            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalDiario()">Visualizar Diário</button>        </div>
+        <div class="card cadastro-alunos">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Cadastro de Alunos (AnyDesk)</h2>                <form id="formCadastroAluno" onsubmit="event.preventDefault(); adicionarAluno();">                    <input id="nomeAluno" placeholder="Nome do Aluno" autocomplete="off" oninput="handleNomeAlunoInput()">                    <div id="sugestoesAlunosContainer" class="sugestoes-container"></div>                    <input id="anydeskAluno" placeholder="AnyDesk do Aluno" autocomplete="off" oninput="mostrarBotoesAluno()">                    <div class="aluno-form-actions-wrapper">                        <div class="alunos-btns">                            <button class="btn" type="submit" id="btnAlunoAdd" style="display:none;">Cadastrar</button>                            <button class="btn" type="button" id="btnAlunoLimpar" style="display:none;" onclick="limparAlunoCampos()">Limpar Tudo</button>                        </div>                        <button class="btn" type="button" id="btnAlunoEdit" style="display:none;" onclick="confirmarEdicaoAluno()">Salvar Edição</button>                        <button class="btn" type="button" id="btnAlunoCancel" style="display:none;" onclick="cancelarEdicaoAluno()">Cancelar</button>                    </div>                </form>            </div>            <p id="contadorAlunos" style="align-self: center; text-align: center; margin-top: 0.8rem; margin-bottom: 0.8rem; color: var(--c-cyan); font-size: 1.7em; width: 100%;"></p>            <button class="btn" style="margin-top: 0; width:100%; flex-shrink: 0;" onclick="abrirModalAlunos()">Visualizar Alunos</button>        </div>
+        <div class="card controle-financeiro">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Controle Financeiro</h2>                <form id="formFinanceiro" onsubmit="event.preventDefault(); adicionarFinanceiro();">                    <input id="nomeFinanceiro" placeholder="Nome do Aluno/Descrição" autocomplete="off" oninput="mostrarBotoesFinanceiro()">                    <input id="valorFinanceiro" type="number" placeholder="Valor (R$)" autocomplete="off" oninput="mostrarBotoesFinanceiro()" step="0.01">                    <select id="statusFinanceiro" onchange="mostrarBotoesFinanceiro()">                        <option value="Pago">Pago</option>                        <option value="Pendente">Pendente</option>                    </select>                    <select id="tipoFinanceiro" onchange="mostrarBotoesFinanceiro()" style="margin-bottom:0.6rem;">                        <option value="Mensalidade">Mensalidade</option>                        <option value="Serviço Extra">Serviço Extra</option>                        <option value="Outro">Outro</option>                    </select>                    <div class="financeiro-form-actions-wrapper">                        <button class="btn" type="submit" id="btnFinAdd" style="display:none;">Lançar</button>                        <button class="btn" type="button" id="btnFinEdit" style="display:none;" onclick="confirmarEdicaoFinanceiro()">Salvar Edição</button>                        <button class="btn" type="button" id="btnFinCancel" style="display:none;" onclick="cancelarEdicaoFinanceiro()">Cancelar</option>                        <button class="btn" type="button" id="btnFinLimpar" style="display:none;" onclick="limparFinanceiroCampos()">Limpar Tudo</button>                    </div>                </form>            </div>            <button class="btn" style="margin-top: 0.8rem; width:100%; flex-shrink: 0;" onclick="abrirModalFinanceiro()">Visualizar Dados</button>        </div>
+        <div class="card avaliacao-humor-aluno">            <h2>Sistema de Avaliação de Humor do Aluno</h2>            <form id="formAvaliacaoHumor" onsubmit="event.preventDefault();">                <div class="checkbox-group">                    <input type="checkbox" id="humorEngajado" name="humorAluno" value="engajado">                    <label for="humorEngajado">Engajado / Participativo</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorAlegre" name="humorAluno" value="alegre">                    <label for="humorAlegre">Alegre / Entusiasmado</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorConfuso" name="humorAluno" value="confuso">                    <label for="humorConfuso">Confuso / Com Dificuldade</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorDistraido" name="humorAluno" value="distraido">                    <label for="humorDistraido">Distraído / Desinteressado</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorAnsioso" name="humorAluno" value="ansioso">                    <label for="humorAnsioso">Ansioso / Estressado</label>                </div>                <div class="checkbox-group">                    <input type="checkbox" id="humorSonolento" name="humorAluno" value="sonolento">                    <label for="humorSonolento">Sonolento / Cansado</label>                </div>            </form>        </div>
+        <div class="card anotacoes-rapidas">            <div style="display: flex; flex-direction: column; flex-grow: 1;">                <h2>Anotações Rápidas</h2>                <form onsubmit="event.preventDefault(); salvarOuAtualizarAnotacao();">                    <input id="anotacaoInput" placeholder="Digite uma anotação rápida" autocomplete="off" oninput="mostrarBotoesAnotacao()">                    <div class="anotacoes-form-actions-wrapper">                        <button class="btn" type="submit" id="btnAddAnotacao" style="display:none;">Adicionar</button>                        <button class="btn" type="button" id="btnEditAnotacao" style="display:none;" onclick="salvarOuAtualizarAnotacao()">Salvar Edição</button>                        <button class="btn" type="button" id="btnCancelEditAnotacao" style="display:none;" onclick="cancelarEdicaoAnotacao()">Cancelar</button>                        <button class="btn" type="button" id="btnLimparAnotacao" style="display:none;" onclick="limparAnotacaoCampos()">Limpar Tudo</button>                    </div>                </form>                <table id="tabelaAnotacoes" style="margin-top:1rem; margin-left: auto; margin-right: auto; width: fit-content; flex-grow: 1; overflow-y: auto; display: block;">                    <thead>                        <tr>                            <th>Anotação</th>                            <th style="width:100px; text-align:center;">Ações</th>                        </tr>                    </thead>                    <tbody></tbody>                </table>            </div>        </div>
     </main>
 
     <div class="portais-botoes-container">
         <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
             <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
         </a>
-        <a class="portal-acesso" href="https://ravellsl.github.io/biblioteca-de-prompts/" target="_blank">
+        <button class="portal-acesso" id="btnAbrirBibliotecaPrompts" onclick="abrirModalBibliotecaPrompts()">
             <i class="fas fa-book"></i> BIBLIOTECA DE PROMPTS
-        </a>
+        </button>
     </div>
 
     <div class="main-controls">
@@ -692,798 +780,169 @@
         </label>
     </div>
 
-    <div class="modal-bg" id="modalDiario">
-        <div class="modal-diario">
-            <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>
-            <h3>Diário de Classe - Registros</h3>
-            <div class="modal-diario-filtro">
-                <label for="filtroNome">Aluno:</label>
-                <input type="text" id="filtroNome" placeholder="Filtrar por nome">
-                <label for="filtroData">Data:</label>
-                <input type="date" id="filtroData">
-            </div>
-            <div class="modal-diario-table" id="conteudoModalDiario"></div>
-        </div>
-    </div>
+    <div class="modal-bg" id="modalDiario">        <div class="modal-diario">            <button class="fechar-modal" onclick="fecharModalDiario()" title="Fechar">&times;</button>            <h3>Diário de Classe - Registros</h3>            <div class="modal-diario-filtro">                <label for="filtroNome">Aluno:</label>                <input type="text" id="filtroNome" placeholder="Filtrar por nome">                <label for="filtroData">Data:</label>                <input type="date" id="filtroData">            </div>            <div class="modal-diario-table" id="conteudoModalDiario"></div>        </div>    </div>
+    <div class="modal-bg" id="modalFinanceiro">        <div class="modal-financeiro">            <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>            <h3>Controle Financeiro - Lançamentos</h3>            <div class="financeiro-mes-selector">                <label for="mesAnoSelectFinanceiro">Mês/Ano:</label>                <select id="mesAnoSelectFinanceiro" onchange="atualizarModalFinanceiroComMesSelecionado()"></select>                <button class="btn btn-sm" onclick="navegarMesFinanceiro(-1)" title="Mês Anterior"><i class="fas fa-chevron-left"></i></button>                <button class="btn btn-sm" onclick="navegarMesFinanceiro(1)" title="Próximo Mês"><i class="fas fa-chevron-right"></i></button>                <button class="btn btn-sm" onclick="irParaMesAtualFinanceiro()" title="Ir para Mês Atual">Mês Atual</button>            </div>            <div id="conteudoModalFinanceiro" class="table-container-modal">                </div>        </div>    </div>
+    <div class="modal-bg" id="modalAlunos">        <div class="modal-alunos">            <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>            <h3>Alunos Cadastrados</h3>            <div id="conteudoModalAlunos" class="table-container-modal">            </div>        </div>    </div>
 
-    <div class="modal-bg" id="modalFinanceiro">
-        <div class="modal-financeiro">
-            <button class="fechar-modal" onclick="fecharModalFinanceiro()" title="Fechar">&times;</button>
-            <h3>Controle Financeiro - Lançamentos</h3>
-            <div class="financeiro-mes-selector">
-                <label for="mesAnoSelectFinanceiro">Mês/Ano:</label>
-                <select id="mesAnoSelectFinanceiro" onchange="atualizarModalFinanceiroComMesSelecionado()"></select>
-                <button class="btn btn-sm" onclick="navegarMesFinanceiro(-1)" title="Mês Anterior"><i class="fas fa-chevron-left"></i></button>
-                <button class="btn btn-sm" onclick="navegarMesFinanceiro(1)" title="Próximo Mês"><i class="fas fa-chevron-right"></i></button>
-                <button class="btn btn-sm" onclick="irParaMesAtualFinanceiro()" title="Ir para Mês Atual">Mês Atual</button>
-            </div>
-            <div id="conteudoModalFinanceiro" class="table-container-modal">
+    <div class="modal-bg" id="modalBibliotecaPrompts">
+        <div class="modal-biblioteca-prompts-wrapper">
+            <button class="fechar-modal-biblioteca" onclick="fecharModalBibliotecaPrompts()" title="Fechar Biblioteca">&times;</button>
+            <div id="conteudoModalBibliotecaPromptsInner">
+                <div id="notificationArea" role="log" aria-live="polite" aria-atomic="true"></div>
+
+                <header class="page-header">
+                    <h1>📚 Biblioteca de Prompts</h1>
+                    <div class="header-actions">
+                        <button type="button" id="btnAbrirModalCadastro" class="btn-primario">➕ Novo Prompt</button>
+                    </div>
+                </header>
+
+                <main class="main-content-area">
+                    <div class="search-filter-sort-bar">
+                        <div class="search-input">
+                            <label for="buscaPrompt" class="hidden-visually">Buscar Prompts</label>
+                            <input type="text" id="buscaPrompt" placeholder="Buscar por título, conteúdo ou categoria..." aria-label="Buscar prompts">
+                        </div>
+                        <div class="filter-select">
+                            <label for="filtroCategoria" class="hidden-visually">Filtrar por Categoria</label>
+                            <select id="filtroCategoria" aria-label="Filtrar por categoria">
+                                <option value="">Todas Categorias</option>
+                            </select>
+                        </div>
+                        <div class="sort-select">
+                            <label for="ordemPrompt" class="hidden-visually">Ordenar Prompts</label>
+                            <select id="ordemPrompt" aria-label="Ordenar prompts">
+                                <option value="dataDesc">Mais Recentes</option>
+                                <option value="dataAsc">Mais Antigos</option>
+                                <option value="tituloAsc">Título (A-Z)</option>
+                                <option value="tituloDesc">Título (Z-A)</option>
+                            </select>
+                        </div>
+                        <div class="clear-button-wrapper">
+                             <button id="btnLimparFiltros" class="btn-secundario hidden">🧹 Limpar</button>
+                        </div>
+                    </div>
+
+                    <div id="listaPrompts">
+                        <p id="mensagemListaVazia" class="info-message">Nenhum prompt cadastrado. Clique em "+ Novo Prompt" para começar!</p>
+                    </div>
+                </main>
+
+                <div id="modalCadastro" class="modal-overlay">
+                    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="formTitleModal">
+                        <header class="modal-header">
+                            <h2 id="formTitleModal">Adicionar Novo Prompt</h2>
+                            <button type="button" class="modal-close-btn" data-modal-close="modalCadastro" aria-label="Fechar modal de cadastro">&times;</button>
+                        </header>
+                        <div class="modal-body">
+                            <form id="formCadastroPrompt">
+                                <input type="hidden" id="promptIdEdicao" value="">
+                                <div>
+                                    <label for="promptTitulo">Título:</label>
+                                    <input type="text" id="promptTitulo" name="promptTitulo" required>
+                                </div>
+                                <div>
+                                    <label for="promptTexto">Prompt Completo:</label>
+                                    <textarea id="promptTexto" name="promptTexto" rows="5" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="promptCategorias">Categorias (separadas por vírgula):</label>
+                                    <input type="text" id="promptCategorias" name="promptCategorias" placeholder="Ex: marketing, python">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-outline" data-modal-close="modalCadastro">Cancelar</button>
+                                    <button type="submit" id="btnSalvarPrompt" class="btn-primario">🚀 Salvar Prompt</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
         </div>
     </div>
 
-    <div class="modal-bg" id="modalAlunos">
-        <div class="modal-alunos">
-            <button class="fechar-modal" onclick="fecharModalAlunos()" title="Fechar">&times;</button>
-            <h3>Alunos Cadastrados</h3>
-            <div id="conteudoModalAlunos" class="table-container-modal">
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        2025
-    </footer>
+    <footer> 2025 </footer>
 
     <script>
-        // Utilitários de armazenamento
-        function salvarLocal(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
-        function recuperarLocal(key, fallback) {
-            const item = localStorage.getItem(key);
-            try {
-                const parsedItem = item ? JSON.parse(item) : fallback;
-                if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) {
-                    return fallback;
-                }
-                return parsedItem;
-            } catch (e) {
-                console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e);
-                return fallback;
-            }
-        }
-
-        let diarioEditIdx = null;
-        let finEditIdx = null;
-        let alunoEditIdx = null;
-        let anotacaoEditIdx = null;
-        let financeiroSelecionadoMesAno = '';
-
-        // Elementos DOM para Cadastro de Alunos (Autocompletar)
+        // RS TECH DASHBOARD SCRIPT (main)
+        function salvarLocal(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+        function recuperarLocal(key, fallback) { try { const item = localStorage.getItem(key); const parsedItem = item ? JSON.parse(item) : fallback; if (key === 'controleFinanceiro' && (parsedItem === null || Array.isArray(parsedItem))) { return fallback; } return parsedItem; } catch (e) { console.warn("Erro ao parsear JSON do localStorage para a chave:", key, e); return fallback; } }
+        let diarioEditIdx = null, finEditIdx = null, alunoEditIdx = null, anotacaoEditIdx = null, financeiroSelecionadoMesAno = '';
         const nomeAlunoInput = document.getElementById('nomeAluno');
         const anydeskAlunoInput = document.getElementById('anydeskAluno');
         const sugestoesAlunosContainer = document.getElementById('sugestoesAlunosContainer');
+        function formatarMoeda(valor) { const numero = parseFloat(valor) || 0; return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+        function getFormattedMonthYear(date) { const year = date.getFullYear(); const month = (date.getMonth() + 1).toString().padStart(2, '0'); return `${year}-${month}`; }
+        function getCurrentMonthYearKey() { return getFormattedMonthYear(new Date()); }
+        function parseMonthYearKey(monthYearKey) { const parts = monthYearKey.split('-'); return { year: parseInt(parts[0]), month: parseInt(parts[1]) }; }
+        function monthYearKeyToDisplay(monthYearKey) { if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido"; const parts = monthYearKey.split('-'); return `${parts[1]}/${parts[0]}`; }
 
-        // Função Utilitária para formatar moeda
-        function formatarMoeda(valor) {
-            const numero = parseFloat(valor) || 0;
-            return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
-        // Funções Utilitárias de Data para Financeiro
-        function getFormattedMonthYear(date) {
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            return `${year}-${month}`;
-        }
-        function getCurrentMonthYearKey() {
-            return getFormattedMonthYear(new Date());
-        }
-        function parseMonthYearKey(monthYearKey) {
-            const parts = monthYearKey.split('-');
-            return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
-        }
-        function monthYearKeyToDisplay(monthYearKey) {
-             if (!monthYearKey || typeof monthYearKey !== 'string' || !monthYearKey.includes('-')) return "Inválido";
-            const parts = monthYearKey.split('-');
-            return `${parts[1]}/${parts[0]}`;
-        }
-
-        // ---------------- DIÁRIO DE CLASSE ----------------
-        function mostrarBotoesDiario() {
-            const aluno = document.getElementById('diarioAluno').value.trim();
-            const data = document.getElementById('diarioData').value;
-            const conteudo = document.getElementById('diarioConteudo').value.trim();
-            const camposPreenchidos = aluno && data && conteudo;
-            const algumCampoPreenchido = aluno || data || conteudo;
-
-            document.getElementById('btnDiarioAdd').style.display = camposPreenchidos && diarioEditIdx === null ? '' : 'none';
-            document.getElementById('btnDiarioEdit').style.display = camposPreenchidos && diarioEditIdx !== null ? '' : 'none';
-            document.getElementById('btnDiarioCancel').style.display = diarioEditIdx !== null ? '' : 'none';
-            document.getElementById('btnDiarioLimpar').style.display = algumCampoPreenchido && diarioEditIdx === null ? '' : 'none';
-        }
-        function limparCamposDiario() {
-            document.getElementById('formDiarioClasse').reset();
-            diarioEditIdx = null;
-            mostrarBotoesDiario();
-        }
-        function editarDiarioClasse(idx) {
-            let lista = recuperarLocal('diarioClasseLista', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para editar registro do diário:", idx);
-                return;
-            }
-            const registro = lista[idx];
-            document.getElementById('diarioAluno').value = registro.aluno;
-            document.getElementById('diarioData').value = registro.data;
-            document.getElementById('diarioConteudo').value = registro.conteudo;
-            diarioEditIdx = idx;
-            mostrarBotoesDiario();
-            fecharModalDiario();
-            document.getElementById('diarioAluno').focus();
-        }
-        function removerDiarioClasse(idx) {
-            if (!confirm('Tem certeza que deseja excluir este registro do diário?')) return;
-            let lista = recuperarLocal('diarioClasseLista', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para remover registro do diário:", idx);
-                return;
-            }
-            lista.splice(idx, 1);
-            salvarLocal('diarioClasseLista', lista);
-
-            if (diarioEditIdx === idx) {
-                limparCamposDiario();
-            } else if (diarioEditIdx !== null && idx < diarioEditIdx) {
-                diarioEditIdx--;
-            }
-            if (document.getElementById('modalDiario').classList.contains('active')) {
-                filtrarModalDiario();
-            }
-        }
-        function confirmarEdicaoDiarioClasse() {
-            salvarDiarioClasse();
-        }
-        function cancelarEdicaoDiarioClasse() {
-            limparCamposDiario();
-        }
-        function salvarDiarioClasse() {
-            const aluno = document.getElementById('diarioAluno').value.trim();
-            const data = document.getElementById('diarioData').value;
-            const conteudo = document.getElementById('diarioConteudo').value.trim();
-
-            if (!aluno || !data || !conteudo) {
-                alert('Preencha todos os campos do diário.');
-                return;
-            }
-            let lista = recuperarLocal('diarioClasseLista', []);
-
-            if (diarioEditIdx !== null) {
-                if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) {
-                    lista[diarioEditIdx] = { aluno, data, conteudo };
-                    alert('Registro do diário atualizado com sucesso.');
-                } else {
-                    console.error("Índice de edição inválido para diário:", diarioEditIdx);
-                    limparCamposDiario();
-                    return;
-                }
-            } else {
-                lista.push({ aluno, data, conteudo });
-                alert('Registro salvo no Diário de Classe.');
-            }
-            salvarLocal('diarioClasseLista', lista);
-            limparCamposDiario();
-
-            if (document.getElementById('modalDiario').classList.contains('active')) {
-                filtrarModalDiario();
-            }
-        }
-        function abrirModalDiario() {
-            document.getElementById('modalDiario').classList.add('active');
-            document.getElementById('filtroNome').value = '';
-            document.getElementById('filtroData').value = '';
-            filtrarModalDiario();
-        }
-        function fecharModalDiario() {
-            document.getElementById('modalDiario').classList.remove('active');
-        }
-        document.addEventListener('input', function(e) {
-            if ((e.target.id === 'filtroNome' || e.target.id === 'filtroData') && document.getElementById('modalDiario').classList.contains('active')) {
-                filtrarModalDiario();
-            }
-        });
-        function filtrarModalDiario() {
-            let listaOriginal = recuperarLocal('diarioClasseLista', []);
-            const listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index }));
-
-            const filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase();
-            const filtroData = document.getElementById('filtroData').value;
-
-            let filtrados = listaComIndices.filter(reg =>
-                (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) &&
-                (!filtroData || reg.data === filtroData)
-            );
-
-            let html = `<table><thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Aluno</th>
-                    <th>Conteúdo Ministrado</th>
-                    <th>Ações</th>
-                </tr>
-            </thead><tbody>`;
-
-            if (filtrados.length) {
-                filtrados.slice().reverse().forEach(reg => {
-                    const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    const conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    html += `<tr>
-                        <td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td>
-                        <td>${alunoHtml}</td>
-                        <td>${conteudoHtml}</td>
-                        <td class="table-actions">
-                            <button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
-                });
-            } else {
-                html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro encontrado.</td></tr>`;
-            }
-            html += `</tbody></table>`;
-            document.getElementById('conteudoModalDiario').innerHTML = html;
-        }
-
-        // ---------------- CONTROLE FINANCEIRO ----------------
-        function mostrarBotoesFinanceiro() {
-            const nome = document.getElementById('nomeFinanceiro').value.trim();
-            const valor = document.getElementById('valorFinanceiro').value.trim();
-            const camposPreenchidos = nome && valor;
-            const isEditing = finEditIdx !== null;
-
-            document.getElementById('btnFinAdd').style.display = camposPreenchidos && !isEditing ? '' : 'none';
-            document.getElementById('btnFinEdit').style.display = camposPreenchidos && isEditing ? '' : 'none';
-            document.getElementById('btnFinCancel').style.display = isEditing ? '' : 'none';
-            document.getElementById('btnFinLimpar').style.display = (nome || valor) && !isEditing ? '' : 'none';
-        }
-        function adicionarFinanceiro() {
-            const nome = document.getElementById('nomeFinanceiro').value.trim();
-            const valor = document.getElementById('valorFinanceiro').value.trim();
-            const status = document.getElementById('statusFinanceiro').value;
-            const tipo = document.getElementById('tipoFinanceiro').value;
-
-            if (!nome || !valor) {
-                alert('Preencha nome/descrição e valor.');
-                return;
-            }
-            if (isNaN(parseFloat(valor))) {
-                alert('O valor inserido não é um número válido.');
-                return;
-            }
-
-            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-
-            if (finEditIdx !== null) {
-                const { monthKey, index } = finEditIdx;
-                if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) {
-                    controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo };
-                    alert('Lançamento financeiro atualizado com sucesso.');
-                } else {
-                    console.error("Erro ao encontrar lançamento para edição:", finEditIdx);
-                    alert("Erro ao atualizar. Lançamento não encontrado.");
-                    limparFinanceiroCampos();
-                    return;
-                }
-            } else {
-                const currentMonthKey = getCurrentMonthYearKey();
-                if (!controleFinanceiroData[currentMonthKey]) {
-                    controleFinanceiroData[currentMonthKey] = [];
-                }
-                controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo });
-                alert('Novo lançamento financeiro adicionado ao mês atual.');
-            }
-
-            salvarLocal('controleFinanceiro', controleFinanceiroData);
-            limparFinanceiroCampos();
-
-            if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey();
-                financeiroSelecionadoMesAno = monthToUpdate;
-                populateMesAnoSelectFinanceiro();
-                renderizarConteudoModalFinanceiro(monthToUpdate);
-            }
-        }
-        function editarFinanceiro(monthKey, itemIndex) {
-            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex];
-
-            if (!lancamento) {
-                console.error("Lançamento não encontrado para edição:", monthKey, itemIndex);
-                alert("Lançamento não encontrado.");
-                return;
-            }
-
-            document.getElementById('nomeFinanceiro').value = lancamento.nome;
-            document.getElementById('valorFinanceiro').value = lancamento.valor;
-            document.getElementById('statusFinanceiro').value = lancamento.status;
-            document.getElementById('tipoFinanceiro').value = lancamento.tipo;
-
-            finEditIdx = { monthKey: monthKey, index: itemIndex };
-            mostrarBotoesFinanceiro();
-            fecharModalFinanceiro();
-            document.getElementById('nomeFinanceiro').focus();
-        }
-        function removerFinanceiro(monthKey, itemIndex) {
-            if (!confirm('Tem certeza que deseja excluir este lançamento financeiro?')) return;
-
-            let controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) {
-                console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex);
-                alert("Lançamento não encontrado para remoção.");
-                return;
-            }
-
-            controleFinanceiroData[monthKey].splice(itemIndex, 1);
-            salvarLocal('controleFinanceiro', controleFinanceiroData);
-
-            if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) {
-                limparFinanceiroCampos();
-            } else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) {
-                 finEditIdx.index--;
-            }
-
-            if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                populateMesAnoSelectFinanceiro();
-                renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
-            }
-        }
-        function confirmarEdicaoFinanceiro() {
-            adicionarFinanceiro();
-        }
-        function limparFinanceiroCampos() {
-            document.getElementById('formFinanceiro').reset();
-            finEditIdx = null;
-            mostrarBotoesFinanceiro();
-        }
-        function cancelarEdicaoFinanceiro() {
-            limparFinanceiroCampos();
-        }
-        function getAllMonthKeysSorted(financeiroData) {
-            return Object.keys(financeiroData).sort((a, b) => {
-                const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
-                const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
-                return dateB - dateA;
-            });
-        }
-        function populateMesAnoSelectFinanceiro() {
-            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            selectElement.innerHTML = '';
-
-            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            let monthKeys = getAllMonthKeysSorted(controleFinanceiroData);
-            const currentMonthKey = getCurrentMonthYearKey();
-
-            if (!monthKeys.includes(currentMonthKey)) {
-                monthKeys.push(currentMonthKey);
-                 monthKeys = monthKeys.sort((a, b) => {
-                    const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1);
-                    const dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1);
-                    return dateB - dateA;
-                });
-            }
-
-            if (monthKeys.length === 0) {
-                 monthKeys.push(currentMonthKey);
-            }
-
-            monthKeys.forEach(key => {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = monthYearKeyToDisplay(key);
-                selectElement.appendChild(option);
-            });
-
-             if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) {
-                selectElement.value = financeiroSelecionadoMesAno;
-            } else if (monthKeys.length > 0) {
-                selectElement.value = monthKeys[0];
-                financeiroSelecionadoMesAno = monthKeys[0];
-            }
-        }
-        function renderizarConteudoModalFinanceiro(monthKey) {
-            financeiroSelecionadoMesAno = monthKey;
-            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            if(selectElement.value !== monthKey) selectElement.value = monthKey;
-
-            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            const lancamentosDoMes = controleFinanceiroData[monthKey] || [];
-
-            let totalPago = 0;
-            let totalAReceber = 0;
-
-            lancamentosDoMes.forEach(item => {
-                const valorItem = parseFloat(item.valor) || 0;
-                if (item.status === 'Pago') {
-                    totalPago += valorItem;
-                } else {
-                    totalAReceber += valorItem;
-                }
-            });
-
-            let somatorioHtml = `
-                <div style="padding: 10px 5px; margin-bottom: 15px; background: #102b1f; border-radius: 8px; text-align: center; border: 1px solid var(--c-green);">
-                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total Pago (Mês):</strong> <span style="color: var(--c-green); font-weight:bold;">${formatarMoeda(totalPago)}</span></p>
-                    <p style="margin: 8px 0; font-size: 1.08em; color: var(--txt);"><strong>Total a Receber (Mês):</strong> <span style="color: var(--c-yellow); font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p>
-                </div>`;
-
-            let tabelaHtml = `<table>
-                <thead>
-                    <tr>
-                        <th>Nome/Descrição</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Tipo</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            if (lancamentosDoMes.length) {
-                lancamentosDoMes.forEach((item, index) => {
-                    const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    const valorFormatado = formatarMoeda(item.valor);
-                    const statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    const tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    tabelaHtml += `<tr>
-                        <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
-                        <td style="text-align:center;">${valorFormatado}</td>
-                        <td style="text-align:center; color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td>
-                        <td style="text-align:center;">${tipoHtml}</td>
-                        <td class="table-actions">
-                            <button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
-                });
-            } else {
-                tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`;
-            }
-            tabelaHtml += `</tbody></table>`;
-            document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml;
-        }
-        function atualizarModalFinanceiroComMesSelecionado() {
-            const selectedMonthKey = document.getElementById('mesAnoSelectFinanceiro').value;
-            renderizarConteudoModalFinanceiro(selectedMonthKey);
-        }
-        function navegarMesFinanceiro(offset) {
-            const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            const currentIndex = selectElement.selectedIndex;
-            const newIndex = currentIndex + offset;
-
-            if (newIndex >= 0 && newIndex < selectElement.options.length) {
-                selectElement.selectedIndex = newIndex;
-                atualizarModalFinanceiroComMesSelecionado();
-            }
-        }
-        function irParaMesAtualFinanceiro() {
-            const currentMonthKey = getCurrentMonthYearKey();
-             const selectElement = document.getElementById('mesAnoSelectFinanceiro');
-            populateMesAnoSelectFinanceiro();
-            selectElement.value = currentMonthKey;
-            if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) {
-                 selectElement.value = selectElement.options[0].value;
-            }
-            renderizarConteudoModalFinanceiro(selectElement.value);
-        }
-        function abrirModalFinanceiro() {
-            populateMesAnoSelectFinanceiro();
-            const currentMonthKey = getCurrentMonthYearKey();
-            const controleFinanceiroData = recuperarLocal('controleFinanceiro', {});
-            const allMonths = getAllMonthKeysSorted(controleFinanceiroData);
-
-            if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {
-                // Mantém o último selecionado se ainda válido
-            } else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) {
-                financeiroSelecionadoMesAno = currentMonthKey;
-            } else if (allMonths.length > 0) {
-                financeiroSelecionadoMesAno = allMonths[0];
-            } else {
-                 financeiroSelecionadoMesAno = currentMonthKey;
-            }
-
-            document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno;
-            renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno);
-            document.getElementById('modalFinanceiro').classList.add('active');
-        }
-        function fecharModalFinanceiro() {
-            document.getElementById('modalFinanceiro').classList.remove('active');
-        }
-
-        // ---------------- CADASTRO DE ALUNOS ----------------
-        function handleNomeAlunoInput() {
-            mostrarBotoesAluno();
-            sugerirAlunos();
-        }
-        function sugerirAlunos() {
-            const valorInput = nomeAlunoInput.value.trim().toLowerCase();
-            sugestoesAlunosContainer.innerHTML = '';
-
-            if (valorInput.length === 0) {
-                sugestoesAlunosContainer.style.display = 'none';
-                return;
-            }
-            const alunos = recuperarLocal('alunosAnyDesk', []);
-            const filtrados = alunos.filter(aluno =>
-                aluno.nome.toLowerCase().includes(valorInput)
-            );
-
-            if (filtrados.length > 0) {
-                filtrados.forEach(aluno => {
-                    const divItem = document.createElement('div');
-                    divItem.classList.add('sugestao-item');
-                    divItem.textContent = aluno.nome;
-                    divItem.onclick = () => {
-                        nomeAlunoInput.value = aluno.nome;
-                        anydeskAlunoInput.value = aluno.anydesk;
-                        sugestoesAlunosContainer.innerHTML = '';
-                        sugestoesAlunosContainer.style.display = 'none';
-                        mostrarBotoesAluno();
-                        anydeskAlunoInput.focus();
-                    };
-                    sugestoesAlunosContainer.appendChild(divItem);
-                });
-                sugestoesAlunosContainer.style.display = 'block';
-            } else {
-                sugestoesAlunosContainer.style.display = 'none';
-            }
-        }
-        nomeAlunoInput.addEventListener('blur', function() {
-            setTimeout(() => {
-                if (!sugestoesAlunosContainer.matches(':hover')) {
-                      sugestoesAlunosContainer.innerHTML = '';
-                     sugestoesAlunosContainer.style.display = 'none';
-                }
-            }, 150);
-        });
-        sugestoesAlunosContainer.addEventListener('mouseleave', function() {
-             if (document.activeElement !== nomeAlunoInput) {
-                setTimeout(() => {
-                     sugestoesAlunosContainer.innerHTML = '';
-                    sugestoesAlunosContainer.style.display = 'none';
-                }, 150);
-             }
-        });
-
-        function mostrarBotoesAluno() {
-            const nome = nomeAlunoInput.value.trim();
-            const anydesk = anydeskAlunoInput.value.trim();
-            const showAdd = nome && anydesk && alunoEditIdx === null;
-            const showEdit = nome && anydesk && alunoEditIdx !== null;
-            const showAnyButton = nome || anydesk;
-
-            document.getElementById('btnAlunoAdd').style.display = showAdd ? '' : 'none';
-            document.getElementById('btnAlunoEdit').style.display = showEdit ? '' : 'none';
-            document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none';
-            document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none';
-        }
-        function adicionarAluno() {
-            const nome = nomeAlunoInput.value.trim();
-            const anydesk = anydeskAlunoInput.value.trim();
-            if (!nome || !anydesk) { alert('Preencha ambos os campos.'); return; }
-            let lista = recuperarLocal('alunosAnyDesk', []);
-            if (alunoEditIdx === null) {
-                lista.push({ nome, anydesk });
-            } else {
-                if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) {
-                    lista[alunoEditIdx] = { nome, anydesk };
-                } else {
-                    console.error("Índice de edição inválido:", alunoEditIdx);
-                    limparAlunoCampos();
-                    return;
-                }
-            }
-            salvarLocal('alunosAnyDesk', lista);
-            limparAlunoCampos();
-            atualizarContadorAlunos();
-            if (document.getElementById('modalAlunos').classList.contains('active')) {
-                abrirModalAlunos();
-            }
-        }
-        function editarAluno(idx) {
-            let lista = recuperarLocal('alunosAnyDesk', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para edição:", idx);
-                return;
-            }
-            nomeAlunoInput.value = lista[idx].nome;
-            anydeskAlunoInput.value = lista[idx].anydesk;
-            alunoEditIdx = idx;
-            mostrarBotoesAluno();
-            fecharModalAlunos();
-            nomeAlunoInput.focus();
-        }
+        function mostrarBotoesDiario() { const aluno = document.getElementById('diarioAluno').value.trim(), data = document.getElementById('diarioData').value, conteudo = document.getElementById('diarioConteudo').value.trim(), camposPreenchidos = aluno && data && conteudo, algumCampoPreenchido = aluno || data || conteudo; document.getElementById('btnDiarioAdd').style.display = camposPreenchidos && diarioEditIdx === null ? '' : 'none'; document.getElementById('btnDiarioEdit').style.display = camposPreenchidos && diarioEditIdx !== null ? '' : 'none'; document.getElementById('btnDiarioCancel').style.display = diarioEditIdx !== null ? '' : 'none'; document.getElementById('btnDiarioLimpar').style.display = algumCampoPreenchido && diarioEditIdx === null ? '' : 'none'; }
+        function limparCamposDiario() { document.getElementById('formDiarioClasse').reset(); diarioEditIdx = null; mostrarBotoesDiario(); }
+        function editarDiarioClasse(idx) { let lista = recuperarLocal('diarioClasseLista', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar diário:", idx); return; } const registro = lista[idx]; document.getElementById('diarioAluno').value = registro.aluno; document.getElementById('diarioData').value = registro.data; document.getElementById('diarioConteudo').value = registro.conteudo; diarioEditIdx = idx; mostrarBotoesDiario(); fecharModalDiario(); document.getElementById('diarioAluno').focus(); }
+        function removerDiarioClasse(idx) { if (!confirm('Excluir registro do diário?')) return; let lista = recuperarLocal('diarioClasseLista', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover diário:", idx); return; } lista.splice(idx, 1); salvarLocal('diarioClasseLista', lista); if (diarioEditIdx === idx) limparCamposDiario(); else if (diarioEditIdx !== null && idx < diarioEditIdx) diarioEditIdx--; if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); }
+        function confirmarEdicaoDiarioClasse() { salvarDiarioClasse(); }
+        function cancelarEdicaoDiarioClasse() { limparCamposDiario(); }
+        function salvarDiarioClasse() { const aluno = document.getElementById('diarioAluno').value.trim(), data = document.getElementById('diarioData').value, conteudo = document.getElementById('diarioConteudo').value.trim(); if (!aluno || !data || !conteudo) { alert('Preencha todos os campos.'); return; } let lista = recuperarLocal('diarioClasseLista', []); if (diarioEditIdx !== null) { if (diarioEditIdx >= 0 && diarioEditIdx < lista.length) { lista[diarioEditIdx] = { aluno, data, conteudo }; alert('Diário atualizado.'); } else { console.error("Índice de edição inválido:", diarioEditIdx); limparCamposDiario(); return; } } else { lista.push({ aluno, data, conteudo }); alert('Salvo no Diário.'); } salvarLocal('diarioClasseLista', lista); limparCamposDiario(); if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); }
+        function abrirModalDiario() { document.getElementById('modalDiario').classList.add('active'); document.getElementById('filtroNome').value = ''; document.getElementById('filtroData').value = ''; filtrarModalDiario(); }
+        function fecharModalDiario() { document.getElementById('modalDiario').classList.remove('active'); }
+        document.addEventListener('input', function(e) { if ((e.target.id === 'filtroNome' || e.target.id === 'filtroData') && document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario(); });
+        function filtrarModalDiario() { let listaOriginal = recuperarLocal('diarioClasseLista', []), listaComIndices = listaOriginal.map((item, index) => ({ ...item, originalIndex: index })), filtroNome = document.getElementById('filtroNome').value.trim().toLowerCase(), filtroData = document.getElementById('filtroData').value, filtrados = listaComIndices.filter(reg => (!filtroNome || String(reg.aluno || '').toLowerCase().includes(filtroNome)) && (!filtroData || reg.data === filtroData)); let html = `<table><thead><tr><th>Data</th><th>Aluno</th><th>Conteúdo</th><th>Ações</th></tr></thead><tbody>`; if (filtrados.length) { filtrados.slice().reverse().forEach(reg => { const alunoHtml = String(reg.aluno || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"), conteudoHtml = String(reg.conteudo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"); html += `<tr><td>${reg.data ? reg.data.split('-').reverse().join('/') : ''}</td><td>${alunoHtml}</td><td>${conteudoHtml}</td><td class="table-actions"><button onclick="editarDiarioClasse(${reg.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerDiarioClasse(${reg.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { html += `<tr><td colspan="4" style="text-align:center;color:#bff;">Nenhum registro.</td></tr>`; } html += `</tbody></table>`; document.getElementById('conteudoModalDiario').innerHTML = html; }
+        function mostrarBotoesFinanceiro() { const nome = document.getElementById('nomeFinanceiro').value.trim(), valor = document.getElementById('valorFinanceiro').value.trim(), camposPreenchidos = nome && valor, isEditing = finEditIdx !== null; document.getElementById('btnFinAdd').style.display = camposPreenchidos && !isEditing ? '' : 'none'; document.getElementById('btnFinEdit').style.display = camposPreenchidos && isEditing ? '' : 'none'; document.getElementById('btnFinCancel').style.display = isEditing ? '' : 'none'; document.getElementById('btnFinLimpar').style.display = (nome || valor) && !isEditing ? '' : 'none'; }
+        function adicionarFinanceiro() { const nome = document.getElementById('nomeFinanceiro').value.trim(), valor = document.getElementById('valorFinanceiro').value.trim(), status = document.getElementById('statusFinanceiro').value, tipo = document.getElementById('tipoFinanceiro').value; if (!nome || !valor) { alert('Preencha nome e valor.'); return; } if (isNaN(parseFloat(valor))) { alert('Valor inválido.'); return; } let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); if (finEditIdx !== null) { const { monthKey, index } = finEditIdx; if (controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][index]) { controleFinanceiroData[monthKey][index] = { nome, valor, status, tipo }; alert('Financeiro atualizado.'); } else { console.error("Erro ao editar financeiro:", finEditIdx); alert("Erro ao atualizar."); limparFinanceiroCampos(); return; } } else { const currentMonthKey = getCurrentMonthYearKey(); if (!controleFinanceiroData[currentMonthKey]) controleFinanceiroData[currentMonthKey] = []; controleFinanceiroData[currentMonthKey].push({ nome, valor, status, tipo }); alert('Lançamento adicionado.'); } salvarLocal('controleFinanceiro', controleFinanceiroData); limparFinanceiroCampos(); if (document.getElementById('modalFinanceiro').classList.contains('active')) { const monthToUpdate = finEditIdx ? finEditIdx.monthKey : getCurrentMonthYearKey(); financeiroSelecionadoMesAno = monthToUpdate; populateMesAnoSelectFinanceiro(); renderizarConteudoModalFinanceiro(monthToUpdate); } }
+        function editarFinanceiro(monthKey, itemIndex) { let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); const lancamento = controleFinanceiroData[monthKey] && controleFinanceiroData[monthKey][itemIndex]; if (!lancamento) { console.error("Lançamento não encontrado:", monthKey, itemIndex); alert("Lançamento não encontrado."); return; } document.getElementById('nomeFinanceiro').value = lancamento.nome; document.getElementById('valorFinanceiro').value = lancamento.valor; document.getElementById('statusFinanceiro').value = lancamento.status; document.getElementById('tipoFinanceiro').value = lancamento.tipo; finEditIdx = { monthKey: monthKey, index: itemIndex }; mostrarBotoesFinanceiro(); fecharModalFinanceiro(); document.getElementById('nomeFinanceiro').focus(); }
+        function removerFinanceiro(monthKey, itemIndex) { if (!confirm('Excluir lançamento financeiro?')) return; let controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); if (!controleFinanceiroData[monthKey] || !controleFinanceiroData[monthKey][itemIndex]) { console.error("Lançamento não encontrado para remoção:", monthKey, itemIndex); alert("Lançamento não encontrado."); return; } controleFinanceiroData[monthKey].splice(itemIndex, 1); salvarLocal('controleFinanceiro', controleFinanceiroData); if (finEditIdx && finEditIdx.monthKey === monthKey && finEditIdx.index === itemIndex) limparFinanceiroCampos(); else if (finEditIdx && finEditIdx.monthKey === monthKey && itemIndex < finEditIdx.index) finEditIdx.index--; if (document.getElementById('modalFinanceiro').classList.contains('active')) { populateMesAnoSelectFinanceiro(); renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); } }
+        function confirmarEdicaoFinanceiro() { adicionarFinanceiro(); }
+        function limparFinanceiroCampos() { document.getElementById('formFinanceiro').reset(); finEditIdx = null; mostrarBotoesFinanceiro(); }
+        function cancelarEdicaoFinanceiro() { limparFinanceiroCampos(); }
+        function getAllMonthKeysSorted(financeiroData) { return Object.keys(financeiroData).sort((a, b) => { const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1), dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1); return dateB - dateA; }); }
+        function populateMesAnoSelectFinanceiro() { const selectElement = document.getElementById('mesAnoSelectFinanceiro'); selectElement.innerHTML = ''; const controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); let monthKeys = getAllMonthKeysSorted(controleFinanceiroData); const currentMonthKey = getCurrentMonthYearKey(); if (!monthKeys.includes(currentMonthKey)) { monthKeys.push(currentMonthKey); monthKeys = monthKeys.sort((a, b) => { const dateA = new Date(a.substring(0,4), parseInt(a.substring(5,7)) - 1), dateB = new Date(b.substring(0,4), parseInt(b.substring(5,7)) - 1); return dateB - dateA; }); } if (monthKeys.length === 0) monthKeys.push(currentMonthKey); monthKeys.forEach(key => { const option = document.createElement('option'); option.value = key; option.textContent = monthYearKeyToDisplay(key); selectElement.appendChild(option); }); if (financeiroSelecionadoMesAno && monthKeys.includes(financeiroSelecionadoMesAno)) selectElement.value = financeiroSelecionadoMesAno; else if (monthKeys.length > 0) { selectElement.value = monthKeys[0]; financeiroSelecionadoMesAno = monthKeys[0]; } }
+        function renderizarConteudoModalFinanceiro(monthKey) { financeiroSelecionadoMesAno = monthKey; const selectElement = document.getElementById('mesAnoSelectFinanceiro'); if(selectElement.value !== monthKey) selectElement.value = monthKey; const controleFinanceiroData = recuperarLocal('controleFinanceiro', {}); const lancamentosDoMes = controleFinanceiroData[monthKey] || []; let totalPago = 0, totalAReceber = 0; lancamentosDoMes.forEach(item => { const valorItem = parseFloat(item.valor) || 0; if (item.status === 'Pago') totalPago += valorItem; else totalAReceber += valorItem; }); let somatorioHtml = `<div style="padding:10px 5px;margin-bottom:15px;background:#102b1f;border-radius:8px;text-align:center;border:1px solid var(--c-green);"><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total Pago:</strong> <span style="color:var(--c-green);font-weight:bold;">${formatarMoeda(totalPago)}</span></p><p style="margin:8px 0;font-size:1.08em;color:var(--txt);"><strong>Total a Receber:</strong> <span style="color:var(--c-yellow);font-weight:bold;">${formatarMoeda(totalAReceber)}</span></p></div>`; let tabelaHtml = `<table><thead><tr><th>Nome/Descrição</th><th>Valor</th><th>Status</th><th>Tipo</th><th>Ações</th></tr></thead><tbody>`; if (lancamentosDoMes.length) { lancamentosDoMes.forEach((item, index) => { const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"), valorFormatado = formatarMoeda(item.valor), statusHtml = String(item.status || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"), tipoHtml = String(item.tipo || '').replace(/</g, "&lt;").replace(/>/g, "&gt;"); tabelaHtml += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${valorFormatado}</td><td style="text-align:center;color:${item.status === 'Pago' ? 'var(--c-green)' : 'var(--c-yellow)'};">${statusHtml}</td><td style="text-align:center;">${tipoHtml}</td><td class="table-actions"><button onclick="editarFinanceiro('${monthKey}', ${index})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerFinanceiro('${monthKey}', ${index})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { tabelaHtml += `<tr><td colspan="5" style="text-align:center;color:#bff;">Nenhum lançamento para ${monthYearKeyToDisplay(monthKey)}.</td></tr>`; } tabelaHtml += `</tbody></table>`; document.getElementById('conteudoModalFinanceiro').innerHTML = somatorioHtml + tabelaHtml; }
+        function atualizarModalFinanceiroComMesSelecionado() { const selectedMonthKey = document.getElementById('mesAnoSelectFinanceiro').value; renderizarConteudoModalFinanceiro(selectedMonthKey); }
+        function navegarMesFinanceiro(offset) { const selectElement = document.getElementById('mesAnoSelectFinanceiro'), currentIndex = selectElement.selectedIndex, newIndex = currentIndex + offset; if (newIndex >= 0 && newIndex < selectElement.options.length) { selectElement.selectedIndex = newIndex; atualizarModalFinanceiroComMesSelecionado(); } }
+        function irParaMesAtualFinanceiro() { const currentMonthKey = getCurrentMonthYearKey(), selectElement = document.getElementById('mesAnoSelectFinanceiro'); populateMesAnoSelectFinanceiro(); selectElement.value = currentMonthKey; if(selectElement.value !== currentMonthKey && selectElement.options.length > 0) selectElement.value = selectElement.options[0].value; renderizarConteudoModalFinanceiro(selectElement.value); }
+        function abrirModalFinanceiro() { populateMesAnoSelectFinanceiro(); const currentMonthKey = getCurrentMonthYearKey(), controleFinanceiroData = recuperarLocal('controleFinanceiro', {}), allMonths = getAllMonthKeysSorted(controleFinanceiroData); if (financeiroSelecionadoMesAno && allMonths.includes(financeiroSelecionadoMesAno)) {} else if (allMonths.includes(currentMonthKey) || Object.keys(controleFinanceiroData).length === 0) financeiroSelecionadoMesAno = currentMonthKey; else if (allMonths.length > 0) financeiroSelecionadoMesAno = allMonths[0]; else financeiroSelecionadoMesAno = currentMonthKey; document.getElementById('mesAnoSelectFinanceiro').value = financeiroSelecionadoMesAno; renderizarConteudoModalFinanceiro(financeiroSelecionadoMesAno); document.getElementById('modalFinanceiro').classList.add('active'); }
+        function fecharModalFinanceiro() { document.getElementById('modalFinanceiro').classList.remove('active'); }
+        function handleNomeAlunoInput() { mostrarBotoesAluno(); sugerirAlunos(); }
+        function sugerirAlunos() { const valorInput = nomeAlunoInput.value.trim().toLowerCase(); sugestoesAlunosContainer.innerHTML = ''; if (valorInput.length === 0) { sugestoesAlunosContainer.style.display = 'none'; return; } const alunos = recuperarLocal('alunosAnyDesk', []); const filtrados = alunos.filter(aluno => aluno.nome.toLowerCase().includes(valorInput)); if (filtrados.length > 0) { filtrados.forEach(aluno => { const divItem = document.createElement('div'); divItem.classList.add('sugestao-item'); divItem.textContent = aluno.nome; divItem.onclick = () => { nomeAlunoInput.value = aluno.nome; anydeskAlunoInput.value = aluno.anydesk; sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; mostrarBotoesAluno(); anydeskAlunoInput.focus(); }; sugestoesAlunosContainer.appendChild(divItem); }); sugestoesAlunosContainer.style.display = 'block'; } else { sugestoesAlunosContainer.style.display = 'none'; } }
+        if (nomeAlunoInput) nomeAlunoInput.addEventListener('blur', function() { setTimeout(() => { if (sugestoesAlunosContainer && !sugestoesAlunosContainer.matches(':hover')) { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; } }, 150); });
+        if (sugestoesAlunosContainer) sugestoesAlunosContainer.addEventListener('mouseleave', function() { if (document.activeElement !== nomeAlunoInput) { setTimeout(() => { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; }, 150); } });
+        function mostrarBotoesAluno() { const nome = nomeAlunoInput.value.trim(), anydesk = anydeskAlunoInput.value.trim(), showAdd = nome && anydesk && alunoEditIdx === null, showEdit = nome && anydesk && alunoEditIdx !== null, showAnyButton = nome || anydesk; document.getElementById('btnAlunoAdd').style.display = showAdd ? '' : 'none'; document.getElementById('btnAlunoEdit').style.display = showEdit ? '' : 'none'; document.getElementById('btnAlunoCancel').style.display = alunoEditIdx !== null ? '' : 'none'; document.getElementById('btnAlunoLimpar').style.display = showAnyButton && alunoEditIdx === null ? '' : 'none'; }
+        function adicionarAluno() { const nome = nomeAlunoInput.value.trim(), anydesk = anydeskAlunoInput.value.trim(); if (!nome || !anydesk) { alert('Preencha nome e AnyDesk.'); return; } let lista = recuperarLocal('alunosAnyDesk', []); if (alunoEditIdx === null) lista.push({ nome, anydesk }); else { if (alunoEditIdx >= 0 && alunoEditIdx < lista.length) lista[alunoEditIdx] = { nome, anydesk }; else { console.error("Índice de edição inválido:", alunoEditIdx); limparAlunoCampos(); return; } } salvarLocal('alunosAnyDesk', lista); limparAlunoCampos(); atualizarContadorAlunos(); if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos(); }
+        function editarAluno(idx) { let lista = recuperarLocal('alunosAnyDesk', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para editar aluno:", idx); return; } nomeAlunoInput.value = lista[idx].nome; anydeskAlunoInput.value = lista[idx].anydesk; alunoEditIdx = idx; mostrarBotoesAluno(); fecharModalAlunos(); nomeAlunoInput.focus(); }
         function confirmarEdicaoAluno() { adicionarAluno(); }
-        function cancelarEdicaoAluno() {
-            limparAlunoCampos();
-        }
-        function removerAluno(idx) {
-            if (!confirm('Tem certeza que deseja excluir este aluno?')) return;
-            let lista = recuperarLocal('alunosAnyDesk', []);
-            if (idx < 0 || idx >= lista.length) {
-                console.error("Índice inválido para remoção:", idx);
-                return;
-            }
-            lista.splice(idx, 1);
-            salvarLocal('alunosAnyDesk', lista);
-            if (alunoEditIdx === idx) {
-                limparAlunoCampos();
-            } else if (alunoEditIdx !== null && idx < alunoEditIdx) {
-                alunoEditIdx--;
-            }
-            atualizarContadorAlunos();
-            if (document.getElementById('modalAlunos').classList.contains('active')) {
-                abrirModalAlunos();
-            }
-        }
-        function limparAlunoCampos() {
-            if (document.getElementById('formCadastroAluno')) {
-                 document.getElementById('formCadastroAluno').reset();
-            } else {
-                if(nomeAlunoInput) nomeAlunoInput.value = ''; // Check if elements exist
-                if(anydeskAlunoInput) anydeskAlunoInput.value = '';
-            }
-            alunoEditIdx = null;
-            sugestoesAlunosContainer.innerHTML = '';
-            sugestoesAlunosContainer.style.display = 'none';
-            mostrarBotoesAluno();
-        }
-        function abrirModalAlunos() {
-            let listaOriginal = recuperarLocal('alunosAnyDesk', []);
-            const listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index }));
-            listaComIndices.sort((a, b) => {
-                const nomeA = String(a.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                const nomeB = String(b.nome || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                if (nomeA < nomeB) return -1;
-                if (nomeA > nomeB) return 1;
-                const anydeskA = String(a.anydesk || '').toLowerCase();
-                const anydeskB = String(b.anydesk || '').toLowerCase();
-                if (anydeskA < anydeskB) return -1;
-                if (anydeskA > anydeskB) return 1;
-                return 0;
-            });
-
-            let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`;
-            if (listaComIndices.length) {
-                listaComIndices.forEach(item => {
-                    const nomeHtml = String(item.nome || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    const anydeskHtml = String(item.anydesk || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    html += `<tr>
-                        <td style="text-align:left; padding-left:10px;">${nomeHtml}</td>
-                        <td style="text-align:center;">${anydeskHtml}</td>
-                        <td class="table-actions" style="text-align:center;">
-                            <button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>`;
-                });
-            } else {
-                html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`;
-            }
-            html += `</tbody></table>`;
-            document.getElementById('conteudoModalAlunos').innerHTML = html;
-            document.getElementById('modalAlunos').classList.add('active');
-        }
-        function fecharModalAlunos() {
-            document.getElementById('modalAlunos').classList.remove('active');
-        }
-        function atualizarContadorAlunos() {
-            const contadorElemento = document.getElementById('contadorAlunos');
-            if (contadorElemento) { // Check if element exists
-                const alunos = recuperarLocal('alunosAnyDesk', []);
-                const totalAlunos = alunos.length;
-                contadorElemento.textContent = `Total de Alunos Cadastrados: ${totalAlunos}`;
-            }
-        }
-
-        // -- Anotações Rápidas --
-        function mostrarBotoesAnotacao() {
-            const val = document.getElementById('anotacaoInput').value.trim();
-            const isEditing = anotacaoEditIdx !== null;
-
-            document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none';
-            document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none';
-            document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none';
-            document.getElementById('btnLimparAnotacao').style.display = val && !isEditing ? '' : 'none';
-        }
-        function salvarOuAtualizarAnotacao() {
-            const val = document.getElementById('anotacaoInput').value.trim();
-            if (!val) return;
-            let anotacoes = recuperarLocal('anotacoesRapidas', []);
-
-            if (anotacaoEditIdx !== null) {
-                if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) {
-                    anotacoes[anotacaoEditIdx] = val;
-                } else {
-                    console.error("Índice de edição inválido para anotação:", anotacaoEditIdx);
-                }
-            } else {
-                anotacoes.push(val);
-            }
-            salvarLocal('anotacoesRapidas', anotacoes);
-            limparAnotacaoCampos();
-            listarAnotacoes();
-        }
-        function editarAnotacao(idxExibicao) {
-            let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndex = anotacoes.length - 1 - idxExibicao;
-
-            if (originalIndex >= 0 && originalIndex < anotacoes.length) {
-                document.getElementById('anotacaoInput').value = anotacoes[originalIndex];
-                anotacaoEditIdx = originalIndex;
-                mostrarBotoesAnotacao();
-                document.getElementById('anotacaoInput').focus();
-            } else {
-                console.error("Índice de exibição inválido para editar anotação:", idxExibicao, "Original index:", originalIndex);
-                limparAnotacaoCampos();
-            }
-        }
-        function cancelarEdicaoAnotacao() {
-            limparAnotacaoCampos();
-        }
-        function removerAnotacao(idxExibicao) {
-            if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
-            let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let originalIndexToRemove = anotacoes.length - 1 - idxExibicao;
-
-            if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) {
-                if (anotacaoEditIdx === originalIndexToRemove) {
-                    limparAnotacaoCampos();
-                }
-                anotacoes.splice(originalIndexToRemove, 1);
-                salvarLocal('anotacoesRapidas', anotacoes);
-                listarAnotacoes();
-
-                if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) {
-                    anotacaoEditIdx--;
-                }
-            } else {
-                console.error("Índice de exibição inválido para remover anotação:", idxExibicao);
-            }
-        }
-        function limparAnotacaoCampos() {
-            document.getElementById('anotacaoInput').value = '';
-            anotacaoEditIdx = null;
-            mostrarBotoesAnotacao();
-        }
-        function listarAnotacoes() {
-            let anotacoes = recuperarLocal('anotacoesRapidas', []);
-            let tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = '';
-            if (Array.isArray(anotacoes)) {
-                anotacoes.slice().reverse().forEach((a, idxExibicao) => {
-                    const anotacaoHtml = String(a || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${anotacaoHtml}</td>
-                            <td class="table-actions" style="text-align:center;">
-                                <button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button>
-                                <button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>`;
-                });
-            } else {
-                console.error("Os dados de 'anotacoesRapidas' recuperados do localStorage não são um array:", anotacoes);
-                salvarLocal('anotacoesRapidas', []);
-            }
-        }
+        function cancelarEdicaoAluno() { limparAlunoCampos(); }
+        function removerAluno(idx) { if (!confirm('Excluir aluno?')) return; let lista = recuperarLocal('alunosAnyDesk', []); if (idx < 0 || idx >= lista.length) { console.error("Índice inválido para remover aluno:", idx); return; } lista.splice(idx, 1); salvarLocal('alunosAnyDesk', lista); if (alunoEditIdx === idx) limparAlunoCampos(); else if (alunoEditIdx !== null && idx < alunoEditIdx) alunoEditIdx--; atualizarContadorAlunos(); if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos(); }
+        function limparAlunoCampos() { if (document.getElementById('formCadastroAluno')) document.getElementById('formCadastroAluno').reset(); else { if(nomeAlunoInput) nomeAlunoInput.value = ''; if(anydeskAlunoInput) anydeskAlunoInput.value = ''; } alunoEditIdx = null; if (sugestoesAlunosContainer) { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; } mostrarBotoesAluno(); }
+        function abrirModalAlunos() { let listaOriginal = recuperarLocal('alunosAnyDesk', []), listaComIndices = listaOriginal.map((aluno, index) => ({ ...aluno, originalIndex: index })); listaComIndices.sort((a, b) => { const nomeA = String(a.nome||'').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""), nomeB = String(b.nome||'').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); if(nomeA < nomeB)return -1; if(nomeA > nomeB)return 1; const anydeskA=String(a.anydesk||'').toLowerCase(),anydeskB=String(b.anydesk||'').toLowerCase(); if(anydeskA < anydeskB)return -1; if(anydeskA > anydeskB)return 1; return 0; }); let html = `<table><thead><tr><th>Nome</th><th>AnyDesk</th><th style="text-align:center;">Ações</th></tr></thead><tbody>`; if (listaComIndices.length) { listaComIndices.forEach(item => { const nomeHtml = String(item.nome||'').replace(/</g,"&lt;").replace(/>/g,"&gt;"), anydeskHtml = String(item.anydesk||'').replace(/</g,"&lt;").replace(/>/g,"&gt;"); html += `<tr><td style="text-align:left;padding-left:10px;">${nomeHtml}</td><td style="text-align:center;">${anydeskHtml}</td><td class="table-actions" style="text-align:center;"><button onclick="editarAluno(${item.originalIndex})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerAluno(${item.originalIndex})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { html += `<tr><td colspan="3" style="text-align:center;color:#bff;">Nenhum aluno cadastrado.</td></tr>`; } html += `</tbody></table>`; document.getElementById('conteudoModalAlunos').innerHTML = html; document.getElementById('modalAlunos').classList.add('active'); }
+        function fecharModalAlunos() { document.getElementById('modalAlunos').classList.remove('active'); }
+        function atualizarContadorAlunos() { const contadorElemento = document.getElementById('contadorAlunos'); if (contadorElemento) { const alunos = recuperarLocal('alunosAnyDesk', []); contadorElemento.textContent = `Total de Alunos: ${alunos.length}`; } }
+        function mostrarBotoesAnotacao() { const val = document.getElementById('anotacaoInput').value.trim(), isEditing = anotacaoEditIdx !== null; document.getElementById('btnAddAnotacao').style.display = val && !isEditing ? '' : 'none'; document.getElementById('btnEditAnotacao').style.display = val && isEditing ? '' : 'none'; document.getElementById('btnCancelEditAnotacao').style.display = isEditing ? '' : 'none'; document.getElementById('btnLimparAnotacao').style.display = val && !isEditing ? '' : 'none'; }
+        function salvarOuAtualizarAnotacao() { const val = document.getElementById('anotacaoInput').value.trim(); if (!val) return; let anotacoes = recuperarLocal('anotacoesRapidas', []); if (anotacaoEditIdx !== null) { if (anotacaoEditIdx >= 0 && anotacaoEditIdx < anotacoes.length) anotacoes[anotacaoEditIdx] = val; else console.error("Índice de edição inválido:", anotacaoEditIdx); } else anotacoes.push(val); salvarLocal('anotacoesRapidas', anotacoes); limparAnotacaoCampos(); listarAnotacoes(); }
+        function editarAnotacao(idxExibicao) { let anotacoes = recuperarLocal('anotacoesRapidas', []), originalIndex = anotacoes.length - 1 - idxExibicao; if (originalIndex >= 0 && originalIndex < anotacoes.length) { document.getElementById('anotacaoInput').value = anotacoes[originalIndex]; anotacaoEditIdx = originalIndex; mostrarBotoesAnotacao(); document.getElementById('anotacaoInput').focus(); } else { console.error("Índice inválido para editar anotação:", idxExibicao); limparAnotacaoCampos(); } }
+        function cancelarEdicaoAnotacao() { limparAnotacaoCampos(); }
+        function removerAnotacao(idxExibicao) { if (!confirm('Excluir anotação?')) return; let anotacoes = recuperarLocal('anotacoesRapidas', []), originalIndexToRemove = anotacoes.length - 1 - idxExibicao; if (originalIndexToRemove >= 0 && originalIndexToRemove < anotacoes.length) { if (anotacaoEditIdx === originalIndexToRemove) limparAnotacaoCampos(); anotacoes.splice(originalIndexToRemove, 1); salvarLocal('anotacoesRapidas', anotacoes); listarAnotacoes(); if (anotacaoEditIdx !== null && originalIndexToRemove < anotacaoEditIdx) anotacaoEditIdx--; } else console.error("Índice inválido para remover anotação:", idxExibicao); }
+        function limparAnotacaoCampos() { document.getElementById('anotacaoInput').value = ''; anotacaoEditIdx = null; mostrarBotoesAnotacao(); }
+        function listarAnotacoes() { let anotacoes = recuperarLocal('anotacoesRapidas', []), tbody = document.getElementById('tabelaAnotacoes').getElementsByTagName('tbody')[0]; tbody.innerHTML = ''; if (Array.isArray(anotacoes)) { anotacoes.slice().reverse().forEach((a, idxExibicao) => { const anotacaoHtml = String(a||'').replace(/</g,"&lt;").replace(/>/g,"&gt;"); tbody.innerHTML += `<tr><td>${anotacaoHtml}</td><td class="table-actions" style="text-align:center;"><button onclick="editarAnotacao(${idxExibicao})" title="Editar"><i class="fas fa-edit"></i></button><button onclick="removerAnotacao(${idxExibicao})" title="Remover"><i class="fas fa-trash"></i></button></td></tr>`; }); } else { console.error("Dados de 'anotacoesRapidas' não são array:", anotacoes); salvarLocal('anotacoesRapidas', []); } }
 
         document.addEventListener('keydown', function(e) {
             if (e.key === "Escape") {
-                if (document.getElementById('modalDiario').classList.contains('active')) fecharModalDiario();
-                if (document.getElementById('modalFinanceiro').classList.contains('active')) fecharModalFinanceiro();
-                if (document.getElementById('modalAlunos').classList.contains('active')) fecharModalAlunos();
+                let mainPromptLibModal = document.getElementById('modalBibliotecaPrompts');
+                let activePromptLibInternalModal = mainPromptLibModal ? mainPromptLibModal.querySelector('#conteudoModalBibliotecaPromptsInner .modal-overlay.active') : null;
 
-                if (sugestoesAlunosContainer.style.display === 'block') {
+                if (activePromptLibInternalModal) { // Let prompt lib's own JS handle its internal modals first
+                    // Its own escape listener should handle this and call stopPropagation.
+                    // If not, we might need to explicitly call its closeModal here.
+                } else if (mainPromptLibModal && mainPromptLibModal.classList.contains('active')) {
+                    fecharModalBibliotecaPrompts();
+                } else if (document.getElementById('modalDiario').classList.contains('active')) {
+                    fecharModalDiario();
+                } else if (document.getElementById('modalFinanceiro').classList.contains('active')) {
+                    fecharModalFinanceiro();
+                } else if (document.getElementById('modalAlunos').classList.contains('active')) {
+                    fecharModalAlunos();
+                } else if (sugestoesAlunosContainer && sugestoesAlunosContainer.style.display === 'block') {
                     sugestoesAlunosContainer.innerHTML = '';
                     sugestoesAlunosContainer.style.display = 'none';
                 } else {
@@ -1494,23 +953,15 @@
                 }
             }
         });
-        document.addEventListener('click', function(event) {
-            const nomeAlunoInputElement = document.getElementById('nomeAluno');
-            const isClickInsideNomeAluno = nomeAlunoInputElement && nomeAlunoInputElement.contains(event.target);
-            const isClickInsideSugestoes = sugestoesAlunosContainer.contains(event.target);
-
-            if (!isClickInsideNomeAluno && !isClickInsideSugestoes) {
-                sugestoesAlunosContainer.innerHTML = '';
-                sugestoesAlunosContainer.style.display = 'none';
-            }
-        });
+        document.addEventListener('click', function(event) { const nomeAlunoEl = document.getElementById('nomeAluno'); if (sugestoesAlunosContainer && nomeAlunoEl && !nomeAlunoEl.contains(event.target) && !sugestoesAlunosContainer.contains(event.target)) { sugestoesAlunosContainer.innerHTML = ''; sugestoesAlunosContainer.style.display = 'none'; } });
 
         function exportarDados() {
             const dados = {
                 diarioClasseLista: recuperarLocal('diarioClasseLista', []),
                 alunosAnyDesk: recuperarLocal('alunosAnyDesk', []),
                 anotacoesRapidas: recuperarLocal('anotacoesRapidas', []),
-                controleFinanceiro: recuperarLocal('controleFinanceiro', {})
+                controleFinanceiro: recuperarLocal('controleFinanceiro', {}),
+                bibliotecaPromptsData: recuperarLocal('bibliotecaPrompts_layout_modais_v2', []) // Unified export
             };
             const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
@@ -1518,101 +969,140 @@
             a.href = url;
             const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "");
             a.download = `dashboard_rs_tech_backup_${timestamp}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
         }
         function importarDados(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const dadosImportados = JSON.parse(e.target.result);
-                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Formato de arquivo inválido!");
+                    if (typeof dadosImportados !== "object" || dadosImportados === null) throw new Error("Arquivo inválido!");
 
-                    if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista);
-                    else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
+                    if (Array.isArray(dadosImportados.diarioClasseLista)) salvarLocal('diarioClasseLista', dadosImportados.diarioClasseLista); else if ("diarioClasseLista" in dadosImportados) salvarLocal('diarioClasseLista', []);
+                    if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk); else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
+                    if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas); else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
+                    if (typeof dadosImportados.controleFinanceiro === "object" && dadosImportados.controleFinanceiro !== null && !Array.isArray(dadosImportados.controleFinanceiro)) salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro); else if ("controleFinanceiro" in dadosImportados) salvarLocal('controleFinanceiro', {});
 
-                    if (Array.isArray(dadosImportados.alunosAnyDesk)) salvarLocal('alunosAnyDesk', dadosImportados.alunosAnyDesk);
-                    else if ("alunosAnyDesk" in dadosImportados) salvarLocal('alunosAnyDesk', []);
-
-                    if (Array.isArray(dadosImportados.anotacoesRapidas)) salvarLocal('anotacoesRapidas', dadosImportados.anotacoesRapidas);
-                    else if ("anotacoesRapidas" in dadosImportados) salvarLocal('anotacoesRapidas', []);
-
-                    if (typeof dadosImportados.controleFinanceiro === "object" &&
-                        dadosImportados.controleFinanceiro !== null &&
-                        !Array.isArray(dadosImportados.controleFinanceiro)) {
-                        salvarLocal('controleFinanceiro', dadosImportados.controleFinanceiro);
-                    } else if ("controleFinanceiro" in dadosImportados) {
-                        salvarLocal('controleFinanceiro', {});
+                    // Unified import for Prompt Library
+                    if (Array.isArray(dadosImportados.bibliotecaPromptsData)) {
+                        salvarLocal('bibliotecaPrompts_layout_modais_v2', dadosImportados.bibliotecaPromptsData);
+                    } else if ("bibliotecaPromptsData" in dadosImportados) {
+                        salvarLocal('bibliotecaPrompts_layout_modais_v2', []);
                     }
 
-                    limparCamposDiario();
-                    limparAlunoCampos();
-                    limparFinanceiroCampos();
-                    limparAnotacaoCampos();
-                    listarAnotacoes();
-                    atualizarContadorAlunos();
+                    limparCamposDiario(); limparAlunoCampos(); limparFinanceiroCampos(); limparAnotacaoCampos();
+                    listarAnotacoes(); atualizarContadorAlunos();
 
-                    alert("Dados importados com sucesso! As listas e formulários foram atualizados.");
-                } catch (err) {
-                    alert("Falha na importação: " + err.message);
+                    if (typeof window.refreshPromptLibraryView === 'function') { // Refresh prompt library UI
+                        window.refreshPromptLibraryView();
+                    }
+
+                    alert("Dados importados! Listas e formulários atualizados.");
+                } catch (err) { alert("Falha na importação: " + err.message);
                 } finally {
                     if (document.getElementById('modalDiario').classList.contains('active')) filtrarModalDiario();
                     if (document.getElementById('modalAlunos').classList.contains('active')) abrirModalAlunos();
-                    if (document.getElementById('modalFinanceiro').classList.contains('active')) {
-                        financeiroSelecionadoMesAno = '';
-                        abrirModalFinanceiro();
-                    }
-                    mostrarBotoesDiario();
-                    mostrarBotoesAluno();
-                    mostrarBotoesFinanceiro();
-                    mostrarBotoesAnotacao();
+                    if (document.getElementById('modalFinanceiro').classList.contains('active')) { financeiroSelecionadoMesAno = ''; abrirModalFinanceiro(); }
+                    mostrarBotoesDiario(); mostrarBotoesAluno(); mostrarBotoesFinanceiro(); mostrarBotoesAnotacao();
                 }
             };
-            reader.readAsText(file);
-            event.target.value = "";
+            reader.readAsText(file); event.target.value = "";
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            limparCamposDiario();
-            limparAlunoCampos();
-            limparFinanceiroCampos();
-            limparAnotacaoCampos();
-            listarAnotacoes();
-            atualizarContadorAlunos();
 
-            const currentFinMonth = getCurrentMonthYearKey();
-            const finData = recuperarLocal('controleFinanceiro', {});
-            const sortedFinMonths = getAllMonthKeysSorted(finData);
-            if (sortedFinMonths.includes(currentFinMonth)){
-                financeiroSelecionadoMesAno = currentFinMonth;
-            } else if (sortedFinMonths.length > 0) {
-                financeiroSelecionadoMesAno = sortedFinMonths[0];
-            } else {
-                financeiroSelecionadoMesAno = currentFinMonth;
-            }
-            // Garante que os elementos de input para aluno existam antes de adicionar listeners
-            if(nomeAlunoInput) {
-                 nomeAlunoInput.addEventListener('blur', function() {
-                    setTimeout(() => {
-                        if (!sugestoesAlunosContainer.matches(':hover')) {
-                            sugestoesAlunosContainer.innerHTML = '';
-                            sugestoesAlunosContainer.style.display = 'none';
-                        }
-                    }, 150);
-                });
-            }
-            if(sugestoesAlunosContainer) {
-                sugestoesAlunosContainer.addEventListener('mouseleave', function() {
-                    if (document.activeElement !== nomeAlunoInput) {
-                        setTimeout(() => {
-                            sugestoesAlunosContainer.innerHTML = '';
-                            sugestoesAlunosContainer.style.display = 'none';
-                        }, 150);
-                    }
-                });
+        function abrirModalBibliotecaPrompts() { const modal = document.getElementById('modalBibliotecaPrompts'); if (modal) modal.classList.add('active'); }
+        function fecharModalBibliotecaPrompts() { const modal = document.getElementById('modalBibliotecaPrompts'); if (modal) modal.classList.remove('active'); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            limparCamposDiario(); limparAlunoCampos(); limparFinanceiroCampos(); limparAnotacaoCampos();
+            listarAnotacoes(); atualizarContadorAlunos();
+            const currentFinMonth = getCurrentMonthYearKey(), finData = recuperarLocal('controleFinanceiro', {}), sortedFinMonths = getAllMonthKeysSorted(finData);
+            if (sortedFinMonths.includes(currentFinMonth)) financeiroSelecionadoMesAno = currentFinMonth;
+            else if (sortedFinMonths.length > 0) financeiroSelecionadoMesAno = sortedFinMonths[0];
+            else financeiroSelecionadoMesAno = currentFinMonth;
+        });
+    </script>
+
+    <script>
+        // SCRIPT FOR PROMPT LIBRARY (scoped and modified)
+        document.addEventListener('DOMContentLoaded', () => {
+            const promptLibContainer = document.getElementById('conteudoModalBibliotecaPromptsInner');
+            if (!promptLibContainer) return;
+
+            const btnAbrirModalCadastro = promptLibContainer.querySelector('#btnAbrirModalCadastro');
+            // btnAbrirModalGerenciamento related elements are removed
+            const modalCadastro = promptLibContainer.querySelector('#modalCadastro');
+            // modalGerenciamento is removed
+            const formTitleModal = promptLibContainer.querySelector('#formTitleModal');
+            const btnSalvarPromptModal = promptLibContainer.querySelector('#btnSalvarPrompt');
+            let previousActiveElement = null;
+
+            function openModal(modalElement) { /* ... (same as before, for internal modals) ... */ if (modalElement) { modalElement.classList.add('active'); document.body.classList.add('prompt-lib-modal-active'); const focusable = modalElement.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'); if (focusable) focusable.focus(); else { const modalContent = modalElement.querySelector('.modal-content'); if(modalContent) { modalContent.setAttribute('tabindex', '-1'); modalContent.focus(); } } } }
+            function closeModal(modalElement) { /* ... (same as before, for internal modals) ... */ if (modalElement) { modalElement.classList.remove('active'); const anyPromptLibInternalModalActive = promptLibContainer.querySelector('.modal-overlay.active'); if (!anyPromptLibInternalModalActive) document.body.classList.remove('prompt-lib-modal-active'); if(previousActiveElement) { previousActiveElement.focus(); previousActiveElement = null; } } }
+
+            if(btnAbrirModalCadastro) { btnAbrirModalCadastro.addEventListener('click', () => { previousActiveElement = document.activeElement; promptLibContainer.querySelector('#formCadastroPrompt').reset(); promptLibContainer.querySelector('#promptIdEdicao').value = ''; formTitleModal.textContent = '➕ Adicionar Novo Prompt'; btnSalvarPromptModal.innerHTML = '🚀 Salvar Prompt'; btnSalvarPromptModal.classList.remove('btn-sucesso'); btnSalvarPromptModal.classList.add('btn-primario'); openModal(modalCadastro); }); }
+            // Event listener for btnAbrirModalGerenciamento REMOVED
+
+            promptLibContainer.querySelectorAll('[data-modal-close]').forEach(button => { button.addEventListener('click', () => { const modalId = button.dataset.modalClose; closeModal(promptLibContainer.querySelector(`#${modalId}`)); }); });
+            promptLibContainer.querySelectorAll('.modal-overlay').forEach(overlay => { overlay.addEventListener('click', (event) => { if (event.target === overlay) closeModal(overlay); }); });
+            document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && document.getElementById('modalBibliotecaPrompts')?.classList.contains('active')) { const activeInternalModal = promptLibContainer.querySelector('.modal-overlay.active'); if (activeInternalModal) { event.stopPropagation(); closeModal(activeInternalModal); } } });
+
+            window.carregarPromptParaEdicaoGlobal = function(id) { /* ... (same as before) ... */ const p = prompts.find(item => item.id === id); if (p) { previousActiveElement = document.activeElement; editingPromptId = id; promptLibContainer.querySelector('#promptIdEdicao').value = id; promptLibContainer.querySelector('#promptTitulo').value = p.titulo; promptLibContainer.querySelector('#promptTexto').value = p.texto; promptLibContainer.querySelector('#promptCategorias').value = p.categorias.join(', '); formTitleModal.textContent = '✏️ Editando Prompt'; btnSalvarPromptModal.innerHTML = '💾 Salvar Alterações'; btnSalvarPromptModal.classList.replace('btn-primario','btn-sucesso'); openModal(modalCadastro); } };
+            window.resetarFormularioEModoEdicaoGlobal = function() { /* ... (same as before) ... */ promptLibContainer.querySelector('#formCadastroPrompt').reset(); editingPromptId = null; promptLibContainer.querySelector('#promptIdEdicao').value = ''; formTitleModal.textContent = '➕ Adicionar Novo Prompt'; btnSalvarPromptModal.innerHTML = '🚀 Salvar Prompt'; btnSalvarPromptModal.classList.replace('btn-sucesso','btn-primario'); };
+
+            const formCadastroPrompt = promptLibContainer.querySelector('#formCadastroPrompt');
+            const promptIdEdicaoInput = promptLibContainer.querySelector('#promptIdEdicao');
+            const promptTituloInput = promptLibContainer.querySelector('#promptTitulo');
+            const promptTextoInput = promptLibContainer.querySelector('#promptTexto');
+            const promptCategoriasInput = promptLibContainer.querySelector('#promptCategorias');
+            const listaPromptsDiv = promptLibContainer.querySelector('#listaPrompts');
+            const buscaPromptInput = promptLibContainer.querySelector('#buscaPrompt');
+            const filtroCategoriaSelect = promptLibContainer.querySelector('#filtroCategoria');
+            const ordemPromptSelect = promptLibContainer.querySelector('#ordemPrompt');
+            const btnLimparFiltros = promptLibContainer.querySelector('#btnLimparFiltros');
+            // btnExportarDados and importFileInput (for prompt lib) REMOVED
+            const mensagemListaVazia = promptLibContainer.querySelector('#mensagemListaVazia');
+            const notificationArea = promptLibContainer.querySelector('#notificationArea');
+            let prompts = [], todasCategorias = new Set(), editingPromptId = null;
+
+            function showNotification(message, type = 'info', duration = 3500) { /* ... (same as before) ... */ if(!notificationArea) return; notificationArea.textContent = message; notificationArea.className = ''; void notificationArea.offsetWidth; notificationArea.classList.add('show'); notificationArea.classList.add(type); setTimeout(() => { notificationArea.classList.remove('show'); }, duration); }
+            function salvarPromptsNoStorage() { localStorage.setItem('bibliotecaPrompts_layout_modais_v2', JSON.stringify(prompts)); } // Stays for internal ops
+            function carregarPromptsDoStorage() { /* ... (same as before) ... */ const promptsSalvos = localStorage.getItem('bibliotecaPrompts_layout_modais_v2'); if (promptsSalvos) { prompts = JSON.parse(promptsSalvos).map(p => ({ ...p, dataAdicao: p.dataAdicao ? new Date(p.dataAdicao) : new Date(), dataModificacao: p.dataModificacao ? new Date(p.dataModificacao) : new Date() })); } } // Stays
+            function gerarIdUnico() { return '_' + Math.random().toString(36).substring(2, 11); }
+            function atualizarCategoriasUnicas() { /* ... (same as before) ... */ if(!filtroCategoriaSelect && !prompts) return; todasCategorias.clear(); prompts.forEach(prompt => prompt.categorias.forEach(cat => todasCategorias.add(cat.toLowerCase()))); popularFiltroCategorias(); }
+            function popularFiltroCategorias() { /* ... (same as before) ... */ if(!filtroCategoriaSelect) return; const valAnt = filtroCategoriaSelect.value; filtroCategoriaSelect.innerHTML = '<option value="">Todas Categorias</option>'; Array.from(todasCategorias).sort().forEach(cat => { if (cat) { const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat.charAt(0).toUpperCase() + cat.slice(1); filtroCategoriaSelect.appendChild(opt); } }); if (Array.from(filtroCategoriaSelect.options).some(o => o.value === valAnt)) filtroCategoriaSelect.value = valAnt; }
+            function formatarData(data) { if (!(data instanceof Date) || isNaN(data)) return 'Data inválida'; return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+            function renderizarPrompts() { /* ... (same as before, check for nulls carefully) ... */ if(!listaPromptsDiv || !buscaPromptInput || !filtroCategoriaSelect || !ordemPromptSelect || !mensagemListaVazia) return; listaPromptsDiv.innerHTML = ''; const termo = buscaPromptInput.value.toLowerCase(), catSel = filtroCategoriaSelect.value.toLowerCase(), ordem = ordemPromptSelect.value; let filtrados = prompts.filter(p => (p.titulo.toLowerCase().includes(termo) || p.texto.toLowerCase().includes(termo) || p.categorias.some(c => c.toLowerCase().includes(termo))) && (catSel ? p.categorias.includes(catSel) : true)); filtrados.sort((a,b)=>{ switch(ordem){ case 'tituloAsc':return a.titulo.localeCompare(b.titulo); case 'tituloDesc':return b.titulo.localeCompare(a.titulo); case 'dataAsc':return new Date(a.dataModificacao)-new Date(b.dataModificacao); case 'dataDesc':default:return new Date(b.dataModificacao)-new Date(a.dataModificacao);}}); mensagemListaVazia.classList.toggle('hidden', filtrados.length > 0); if(filtrados.length === 0 && !listaPromptsDiv.contains(mensagemListaVazia)) listaPromptsDiv.appendChild(mensagemListaVazia); filtrados.forEach(p => {const articleEl = document.createElement('article'); articleEl.className = 'prompt-item'; articleEl.dataset.id = p.id; const header=document.createElement('div'); header.className='prompt-item-header'; const h3=document.createElement('h3'); h3.textContent=p.titulo; header.appendChild(h3); const actions=document.createElement('div'); actions.className='prompt-item-actions'; const btnEd=document.createElement('button'); btnEd.innerHTML='✏️ <span class="hidden-mobile">Editar</span>'; btnEd.className='btn-secundario'; btnEd.setAttribute('aria-label',`Editar prompt ${p.titulo}`); btnEd.onclick=()=>window.carregarPromptParaEdicaoGlobal(p.id); const btnCop=document.createElement('button'); btnCop.innerHTML='📋 <span class="hidden-mobile">Copiar</span>'; btnCop.className='btn-primario'; btnCop.setAttribute('aria-label',`Copiar prompt ${p.titulo}`); btnCop.onclick=()=>copiarPromptTexto(p.texto); const btnEx=document.createElement('button'); btnEx.innerHTML='🗑️ <span class="hidden-mobile">Excluir</span>'; btnEx.className='btn-perigo'; btnEx.setAttribute('aria-label',`Excluir prompt ${p.titulo}`); btnEx.onclick=()=>excluirPrompt(p.id); actions.append(btnEd,btnCop,btnEx); header.appendChild(actions); articleEl.appendChild(header); if(p.categorias.length){const tags=document.createElement('div'); tags.className='tags'; tags.innerHTML=p.categorias.map(c =>`<span class="tag">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`).join(''); articleEl.appendChild(tags);} const txt=document.createElement('div'); txt.className='prompt-text'; txt.textContent=p.texto; articleEl.appendChild(txt); const date=document.createElement('div'); date.className='date-info'; date.textContent=`Modificado: ${formatarData(new Date(p.dataModificacao))}`; articleEl.appendChild(date); listaPromptsDiv.appendChild(articleEl);}); if(btnLimparFiltros) btnLimparFiltros.classList.toggle('hidden', !termo && !catSel); }
+            function handleFormSubmit(event) { /* ... (same as before) ... */ event.preventDefault(); if(!promptTituloInput || !promptTextoInput || !promptCategoriasInput) return; const tit = promptTituloInput.value.trim(), txt = promptTextoInput.value.trim(), cats = promptCategoriasInput.value.split(',').map(c => c.trim().toLowerCase()).filter(c => c); if (!tit || !txt) { showNotification('Título e Texto são obrigatórios!', 'error'); return; } const agora = new Date(); if (editingPromptId) { const idx = prompts.findIndex(p => p.id === editingPromptId); if (idx > -1) { prompts[idx] = { ...prompts[idx], titulo:tit, texto:txt, categorias:cats, dataModificacao:agora }; showNotification('Prompt atualizado!', 'success');} } else { prompts.unshift({ id:gerarIdUnico(), titulo:tit, texto:txt, categorias:cats, dataAdicao:agora, dataModificacao:agora }); showNotification('Prompt cadastrado!', 'success'); } salvarPromptsNoStorage(); atualizarCategoriasUnicas(); renderizarPrompts(); closeModal(modalCadastro); window.resetarFormularioEModoEdicaoGlobal(); }
+            function copiarPromptTexto(texto) { navigator.clipboard.writeText(texto).then(() => showNotification('Copiado!', 'info')).catch(() => showNotification('Erro ao copiar.', 'error'));}
+            function excluirPrompt(id) { /* ... (same as before) ... */ const p = prompts.find(item => item.id === id); if (confirm(`Excluir "${p?.titulo || 'este prompt'}"?`)) { prompts = prompts.filter(item => item.id !== id); salvarPromptsNoStorage(); atualizarCategoriasUnicas(); renderizarPrompts(); showNotification('Excluído!', 'success'); if (id === editingPromptId) { closeModal(modalCadastro); window.resetarFormularioEModoEdicaoGlobal(); } } }
+            function limparFiltrosDeBusca() { /* ... (same as before) ... */ if(buscaPromptInput) buscaPromptInput.value = ''; if(filtroCategoriaSelect) filtroCategoriaSelect.value = ''; if(btnLimparFiltros) btnLimparFiltros.classList.add('hidden'); renderizarPrompts(); showNotification('Filtros limpos.', 'info', 2000); }
+            // exportarDadosJson() REMOVED
+            // importarDadosJson() REMOVED
+
+            // Expose refresh function for global import
+            window.refreshPromptLibraryView = function() {
+                if (!promptLibContainer) return;
+                carregarPromptsDoStorage();
+                atualizarCategoriasUnicas();
+                renderizarPrompts();
+                if (prompts.length === 0 && mensagemListaVazia) {
+                     mensagemListaVazia.classList.remove('hidden');
+                }
+            };
+
+            if(formCadastroPrompt) formCadastroPrompt.addEventListener('submit', handleFormSubmit);
+            if(buscaPromptInput) buscaPromptInput.addEventListener('input', renderizarPrompts);
+            if(filtroCategoriaSelect) filtroCategoriaSelect.addEventListener('change', renderizarPrompts);
+            if(ordemPromptSelect) ordemPromptSelect.addEventListener('change', renderizarPrompts);
+            if(btnLimparFiltros) btnLimparFiltros.addEventListener('click', limparFiltrosDeBusca);
+            // Event listeners for export/import buttons REMOVED
+
+            carregarPromptsDoStorage();
+            atualizarCategoriasUnicas();
+            renderizarPrompts();
+            if (prompts.length === 0 && mensagemListaVazia) {
+                 mensagemListaVazia.classList.remove('hidden');
             }
         });
     </script>
