@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RS TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
-    <style>
+<!DOCTYPE html><html lang="pt-br"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>RS TECH</title>    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">    <style>
         :root {
             --c-cyan: #19fff7;
             --c-green: #46ff86;
@@ -108,7 +100,6 @@
             background: var(--c-green);
             border-radius: 4px;
         }
-
         /* Ajustes para telas menores da barra lateral */
         @media (max-width: 800px) {
             .atalhos-lateral {
@@ -142,7 +133,6 @@
                 font-size: 1rem;
             }
         }
-
         /* Layout do Dashboard Grid */
         .dashboard-grid {
             display: grid;
@@ -154,14 +144,12 @@
             margin: auto;
             box-sizing: border-box;
         }
-
         /* Em telas largas (> 1100px), Anotações Rápidas ocupa 2 colunas */
         /* Esta regra se aplica porque não há media query mais específica para min-width */
         .card.anotacoes-rapidas {
             grid-column: span 2;
         }
         /* O card de humor ocupará 1 coluna por padrão no grid de 3 colunas */
-
 
         /* Telas médias (ex: tablets em paisagem, notebooks menores) - 2 colunas */
         @media (max-width: 1100px) {
@@ -175,7 +163,6 @@
                 grid-column: 1 / -1; /* Ocupa todas as colunas disponíveis na linha */
             }
         }
-
         /* Telas pequenas (ex: tablets em retrato, smartphones grandes) - 1 coluna */
         @media (max-width: 799px) {
             .dashboard-grid {
@@ -191,7 +178,6 @@
                 min-height: 300px; /* Altura mínima ajustada para cards */
             }
         }
-
         /* Telas muito pequenas (smartphones) */
         @media (max-width: 599px) {
             .dashboard-grid {
@@ -199,7 +185,6 @@
                 padding: 0.5rem 0.1rem;
             }
         }
-
         /* Estilo Base do Card */
         .card {
             background: var(--c-bg-card);
@@ -235,7 +220,6 @@
             flex-direction: column;
             flex-grow: 1;
         }
-
         /* Inputs e Textarea Gerais */
         .card textarea,
         .card input,
@@ -274,7 +258,6 @@
             overflow-y: auto;
             flex-shrink: 0;
         }
-
         /* Card de Avaliação de Humor */
         .avaliacao-humor-aluno form {
             justify-content: space-around;
@@ -301,7 +284,6 @@
             flex-grow: 1;
             line-height: 1.3;
         }
-
         /* Botões dentro dos Cards */
         .diario-btns,
         .aluno-form-actions-wrapper,
@@ -330,7 +312,6 @@
         }
         .card form .btn:first-child { margin-left: 0; }
         .card form .btn:last-child { margin-right: 0; }
-
         /* Tabelas e Ações em Tabelas */
         .table-actions button {
             background: none; border: none; color: var(--c-green);
@@ -346,17 +327,38 @@
         }
         table th, table td { padding: 0.6rem 0.4rem; text-align: left; border-bottom: 1px solid #263b2b; }
         table th { color: var(--c-green); font-family: var(--tit); border-bottom: 2px solid var(--c-cyan); }
-
-        /* Link Portal Principal e Controles Gerais */
+        
+        /* Link Portal Principal e Controles Gerais (Estilo base do .portal-acesso) */
         .portal-acesso {
             background: transparent; color: var(--c-green); border-radius: 1.2rem;
             border: 2px solid var(--c-cyan); font-family: var(--tit); text-align: center;
             font-size: 1.08rem; font-weight: bold; box-shadow: 0 2px 12px #19fff733;
-            padding: 2rem 1rem; margin: 2rem auto 1.5rem auto; max-width: 700px;
+            padding: 1rem 0.8rem; /* Padding ajustado */
             transition: border .19s, color .19s; cursor: pointer; text-decoration: none;
-            letter-spacing: 1.15px; display: block;
+            letter-spacing: 1.15px;
+            display: block; /* Mantido para compatibilidade, mas será item flex no container */
         }
         .portal-acesso:hover { color: var(--c-yellow); border-color: var(--c-yellow); }
+        
+        /* Novo container para os botões do portal */
+        .portais-botoes-container {
+            display: flex;
+            flex-wrap: wrap; /* Permite que os botões quebrem para a linha de baixo em telas menores */
+            justify-content: center; /* Centraliza os botões no container */
+            gap: 1rem; /* Espaço entre os botões */
+            margin: 2rem auto 1.5rem auto; /* Centraliza o container, similar ao .portal-acesso original */
+            max-width: 700px; /* Mantém a restrição de largura máxima original para o grupo */
+            padding: 0 1rem; /* Adiciona um pouco de preenchimento horizontal */
+            box-sizing: border-box;
+        }
+
+        /* Ajustes para .portal-acesso quando dentro deste container */
+        .portais-botoes-container .portal-acesso {
+            margin: 0; /* Remove as margens automáticas que eram para centralizar um único botão de bloco */
+            flex-grow: 1; /* Permite que os botões cresçam e compartilhem espaço */
+            flex-basis: 280px; /* Sugere uma largura base antes de crescer/encolher (ajuste conforme necessário) */
+        }
+
         .main-controls {
             display: flex; justify-content: center; align-items: center;
             gap: 2.1rem; margin: 2.5rem auto 0 auto;
@@ -374,7 +376,7 @@
             color: var(--c-green); border: 1.5px solid var(--c-green); background: #1d342a;
         }
         .financeiro-mes-selector .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.9rem; min-width: auto; }
-
+        
         /* Sugestões de Alunos */
         .sugestoes-container {
             border: 1.5px solid var(--c-green); border-top: none; max-height: 120px;
@@ -390,7 +392,7 @@
         .sugestao-item:hover { background-color: #163221; color: var(--c-yellow); }
         .sugestoes-container:empty,
         .sugestoes-container:not([style*="display: block"]) { display: none !important; }
-
+        
         /* Footer */
         footer {
             width: 100%; text-align: center; color: #5beebb; font-size: 1.1rem;
@@ -400,13 +402,15 @@
             box-sizing: border-box; margin-left: -70px;
         }
         @media (max-width: 800px) { footer { margin-left: -54px; } }
+        
         @media (max-width: 600px) {
             footer { margin-left: -50px; }
             .main-controls { flex-direction: column; gap: 1.2rem; padding-bottom: calc(2.29rem + 1rem); }
-            .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem; }
+            /* Ajustes para o link do portal principal e o novo botão em telas menores (já incluído no .portais-botoes-container @media query) */
+            /* .portal-acesso { font-size: 1rem; padding: 1.3rem 0.6rem; } <-- Esta linha específica pode ser removida se o media query para .portais-botoes-container já lida com isso */
             footer { font-size: 0.99rem; padding: 0.65rem 0; }
         }
-
+        
         /* Ajustes finais para telas muito pequenas */
         @media (max-width: 480px) {
             .card { padding: 1.1rem 0.2rem 0.8rem 0.2rem; min-height: 260px; }
@@ -414,6 +418,23 @@
             .main-controls { padding-bottom: calc(2.29rem + 2rem); }
             .avaliacao-humor-aluno label { font-size: 0.95rem; }
             .avaliacao-humor-aluno .checkbox-group { margin-bottom: 0.5rem; }
+        }
+
+        /* Media query específico para os botões do portal */
+        @media (max-width: 640px) { 
+            .portais-botoes-container {
+                flex-direction: column; /* Empilha os botões verticalmente */
+                align-items: stretch; /* Faz os botões ocuparem a largura total do container */
+            }
+            .portais-botoes-container .portal-acesso {
+                width: 100%; /* Garante que ocupem a largura total quando empilhados */
+                margin-bottom: 1rem; /* Adiciona espaço quando empilhados */
+                font-size: 1rem; /* Mantém o tamanho da fonte original de telas pequenas */
+                padding: 1.3rem 0.6rem; /* Mantém o padding original de telas pequenas */
+            }
+            .portais-botoes-container .portal-acesso:last-child {
+                margin-bottom: 0;
+            }
         }
 
         /* Estilos dos Modais */
@@ -440,7 +461,6 @@
             border: none; color: var(--c-yellow); font-size: 1.3rem;
             cursor: pointer; font-family: var(--tit); z-index: 10;
         }
-
         /* Container de Tabela dentro do Modal */
         .table-container-modal {
             flex-grow: 1; min-height: 0; overflow-y: auto;
@@ -462,7 +482,6 @@
             top: -1px; background: #133829; z-index: 1;
         }
         .table-container-modal tr:last-child td { border-bottom: none; }
-
         /* Modal Diário */
         .modal-diario-table {
             width: 100%; overflow-y: auto; overscroll-behavior-y: contain;
@@ -482,7 +501,6 @@
         .modal-diario-table td.table-actions { text-align: center; }
         .modal-diario-table tr:last-child td { border-bottom: none; }
         .modal-diario-table td { color: #def2e1; word-break: break-word; }
-
         /* Filtros do Modal Diário */
         .modal-diario-filtro {
             display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: flex-start;
@@ -500,7 +518,6 @@
         }
         .modal-diario-filtro input[type="text"]:focus,
         .modal-diario-filtro input[type="date"]:focus { border-color: var(--c-cyan); }
-
         /* Seletor de Mês Financeiro */
         .financeiro-mes-selector {
             display: flex; gap: 10px; align-items: center; margin-bottom: 1rem;
@@ -658,9 +675,14 @@
         </div>
     </main>
 
-    <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
-        <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
-    </a>
+    <div class="portais-botoes-container">
+        <a class="portal-acesso" href="https://ravellsl.github.io/rstech/" target="_blank">
+            <i class="fas fa-external-link-alt"></i> ACESSO AO PORTAL PRINCIPAL
+        </a>
+        <a class="portal-acesso" href="https://ravellsl.github.io/biblioteca-de-prompts/" target="_blank">
+            <i class="fas fa-book"></i> BIBLIOTECA DE PROMPTS
+        </a>
+    </div>
 
     <div class="main-controls">
         <button class="btn-export" onclick="exportarDados()"><i class="fas fa-download"></i> Exportar Dados</button>
